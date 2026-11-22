@@ -24,6 +24,7 @@ from .rules import CONTEXT_RULES
 
 STAGE_LABEL = {"R1": "Brute force", "R2": "Password spraying", "R3": "Logon after failures",
                "R6": "Privilege change", "R7": "Suspicious execution", "R8": "Log clearing",
+               "R9": "Lateral movement", "R10": "Data staging",
                "ANOM": "Off-hours logon from new device/IP"}
 
 

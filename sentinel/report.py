@@ -110,6 +110,30 @@ _env = Environment(autoescape=select_autoescape(default=True, default_for_string
 _tpl = _env.from_string(TEMPLATE)
 
 
+EDGE_PATHS = [r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
+              r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
+              r"C:\Program Files\Google\Chrome\Application\chrome.exe"]
+
+
+def pdf_available() -> str | None:
+    from pathlib import Path
+    return next((p for p in EDGE_PATHS if Path(p).exists()), None)
+
+
+def html_to_pdf(html_path, pdf_path, timeout=60) -> bool:
+    """Print a local HTML report to PDF with the locally installed Edge/Chrome (headless, offline)."""
+    import subprocess
+    from pathlib import Path
+    exe = pdf_available()
+    if not exe:
+        return False
+    html_path, pdf_path = Path(html_path).resolve(), Path(pdf_path).resolve()
+    prof = Path(html_path).parent / ".pdf-profile"
+    subprocess.run([exe, "--headless=new", "--disable-gpu", "--no-pdf-header-footer", f"--user-data-dir={prof}",
+                    f"--print-to-pdf={pdf_path}", html_path.as_uri()], timeout=timeout, capture_output=True)
+    return pdf_path.exists() and pdf_path.stat().st_size > 0
+
+
 def _ts(x):
     return pd.Timestamp(x).strftime("%Y-%m-%d %H:%M:%S")
 

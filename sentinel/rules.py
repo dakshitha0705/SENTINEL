@@ -23,10 +23,14 @@ RULES = {
     "R6": ("Unauthorised privileged group change", ["T1098"], "high"),
     "R7": ("Suspicious process execution", ["T1059.001"], "high"),
     "R8": ("Audit log cleared", ["T1070.001"], "high"),
+    # R9 is context-only: in stress seed 1001 it fired on an administrator visiting 3 new servers.
+    "R9": ("Lateral movement to several new hosts", ["T1021"], "low"),
+    "R10": ("Bulk copy / archive staging to removable or remote location", ["T1039", "T1074"], "medium"),
+    "R11": ("USB storage device connected", ["T1052.001"], "low"),
     "CTX": ("Special privileges assigned at logon (4672)", [], "none"),
 }
-CONTEXT_RULES = {"R4", "R5", "CTX"}
-PRIMARY_RULES = {"R1", "R2", "R3", "R6", "R7", "R8"}
+CONTEXT_RULES = {"R4", "R5", "R9", "R11", "CTX"}
+PRIMARY_RULES = {"R1", "R2", "R3", "R6", "R7", "R8", "R10"}
 
 
 def _fmt(ts) -> str:
@@ -288,6 +292,66 @@ def rule_log_cleared(ev, cfg, prior_alerts):
     return alerts
 
 
+# --------------------------------------------------------------------------- R9 / R10 / R11 (additional)
+
+def rule_lateral(ev, cfg, base: pd.DataFrame):
+    """>= min_hosts distinct hosts NEW for the account (confident-enough history) within the window."""
+    c = cfg["detection"].get("lateral_movement", {"min_new_hosts": 3, "window_minutes": 30})
+    svc = set(cfg["allowlists"]["service_accounts"])
+    win = timedelta(minutes=c["window_minutes"])
+    if base.empty:
+        return []
+    new = base[(base["host_known"] == False) & (base["n_prior"] >= cfg["detection"]["baseline"]["min_logins_for_new_context"])]  # noqa: E712
+    logins = ev.set_index("event_id", drop=False)
+    alerts = []
+    for user, g in new.groupby("user"):
+        if user in svc:
+            continue
+        rows = logins.loc[g.index].sort_values("timestamp")
+        times, hosts = list(rows["timestamp"]), list(rows["host"])
+        lo, used = 0, set()
+        for hi in range(len(rows)):
+            while times[hi] - times[lo] > win:
+                lo += 1
+            window_hosts = set(hosts[lo:hi + 1])
+            if len(window_hosts) >= c["min_new_hosts"] and not (set(rows["event_id"].iloc[lo:hi + 1]) & used):
+                sub = rows.iloc[lo:hi + 1]
+                used |= set(sub["event_id"])
+                alerts.append(_alert("R9", sub,
+                    f"{user} logged on to {len(window_hosts)} hosts never used before by this account within "
+                    f"{(times[hi] - times[lo]).total_seconds() / 60:.1f} min: {', '.join(sorted(window_hosts))}",
+                    confidence="medium", details={"new_hosts": sorted(window_hosts), "logons": len(sub)}))
+    return alerts
+
+
+BULK_RE = re.compile(r"(robocopy\b.*\s/(mir|e|s)\b|xcopy\b.*\s/(s|e)\b|\b7z(\.exe)?\s+a\b|\brar(\.exe)?\s+a\b|"
+                     r"compress-archive\b|\btar(\.exe)?\s+-?c)", re.I)
+DEST_RE = re.compile(r"(?<![a-z])([d-z]):\\|\\\\[\w.-]+\\", re.I)
+
+
+def rule_bulk_copy(ev, cfg):
+    procs = ev[(ev["action"] == "process_start") & (ev["command_line"] != "")]
+    alerts = []
+    for i, r in procs.iterrows():
+        cmd = r["command_line"]
+        if BULK_RE.search(cmd) and DEST_RE.search(cmd):
+            alerts.append(_alert("R10", ev.loc[[i]],
+                f"{r['user']} on {r['host']} ran a recursive copy/archive command writing to a removable drive or "
+                f"network location: {cmd[:160]}", confidence="medium", details={"command": cmd[:300]}))
+    return alerts
+
+
+def rule_usb(ev, cfg):
+    dev = ev[ev["action"] == "device_connected"]
+    alerts = []
+    for i, r in dev.iterrows():
+        raw = r["raw"].lower()
+        if any(k in raw for k in ("usb", "mass storage", "diskdrive", "disk drive", "removable")):
+            alerts.append(_alert("R11", ev.loc[[i]], f"External storage device recognised on {r['host']}"
+                                 + (f" during {r['user']}'s session" if r["user"] else ""), confidence="high"))
+    return alerts
+
+
 # --------------------------------------------------------------------------- driver
 
 def rule_coverage(ev: pd.DataFrame) -> dict:
@@ -303,6 +367,9 @@ def rule_coverage(ev: pd.DataFrame) -> dict:
         "R6": (has("group_add") and (ev.loc[ev["action"] == "group_add", "group"] != "").any(), "needs group membership events (4728/4732/4756)"),
         "R7": (has("process_start") and ((ev["command_line"] != "") | (ev["process"] != "")).any(), "needs process creation events (4688)"),
         "R8": (has("log_cleared"), "needs audit-log-cleared events (1102)"),
+        "R9": (has("login_success") and (ev["host"] != "").any(), "needs successful logons with destination host"),
+        "R10": (has("process_start") and (ev["command_line"] != "").any(), "needs process command lines"),
+        "R11": (has("device_connected"), "needs device-recognised events (6416, PnP auditing)"),
     }
     return {k: {"evaluated": bool(v[0]), "requirement": v[1]} for k, v in status.items()}
 
@@ -323,6 +390,12 @@ def run_rules(ev: pd.DataFrame, cfg: dict):
         alerts += rule_priv_group(ev, cfg)
     if coverage["R7"]["evaluated"]:
         alerts += rule_process(ev, cfg)
+    if coverage["R9"]["evaluated"]:
+        alerts += rule_lateral(ev, cfg, base)
+    if coverage["R10"]["evaluated"]:
+        alerts += rule_bulk_copy(ev, cfg)
+    if coverage["R11"]["evaluated"]:
+        alerts += rule_usb(ev, cfg)
     if coverage["R8"]["evaluated"]:
         alerts += rule_log_cleared(ev, cfg, alerts)
     alerts.sort(key=lambda a: (a["start"], a["rule"]))

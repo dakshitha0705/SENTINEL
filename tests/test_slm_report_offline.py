@@ -1,4 +1,4 @@
-﻿"""SLM timeout/fallback, report generation and offline guarantees."""
+"""SLM timeout/fallback, report generation and offline guarantees."""
 import json
 import re
 import socket

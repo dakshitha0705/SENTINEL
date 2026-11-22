@@ -16,6 +16,9 @@ detection:
     min_days: 3
     min_logins_for_new_context: 3   # R5 is not evaluated with less history than this
     hour_tolerance: 1     # a login hour within +-1h of any prior login hour is "usual"
+  lateral_movement:       # R9 (additional rule)
+    min_new_hosts: 3
+    window_minutes: 30
   privileged_groups:      # R6
     - administrators
     - domain admins

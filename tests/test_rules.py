@@ -128,6 +128,33 @@ def test_r8_log_clear_weighted_by_preceding_activity():
     assert [a["details"]["preceded_by_suspicious"] for a in r8] == [True, False]
 
 
+def test_r9_lateral_movement_context():
+    b = LogBuilder().history("jdoe", "WS1", "10.0.0.5")
+    for k, h in enumerate(["SRV-A", "SRV-B", "SRV-C"]):
+        b.logon(b.at(5, 11, 5 * k), "jdoe", h, "10.0.0.5")
+    a = b.analyze()
+    r9 = [x for x in a.alerts if x["rule"] == "R9"]
+    assert len(r9) == 1 and r9[0]["context"] and len(r9[0]["details"]["new_hosts"]) == 3
+    assert not a.incidents   # context-only: never an incident on its own
+
+
+def test_r10_bulk_copy_and_r11_usb():
+    import json
+    from sentinel.ingest import ingest
+    from sentinel.pipeline import analyze_dataset
+    b = LogBuilder()
+    b.process(b.at(2, 22), "jdoe", "WS1", "robocopy.exe", "cmd.exe", r"robocopy C:\Finance E:\dump /E")
+    b.process(b.at(2, 22, 1), "jdoe", "WS1", "robocopy.exe", "cmd.exe", r"robocopy C:\a C:\b /E")   # local: no alert
+    files = b.files()
+    usb = json.dumps([{"TimeCreated": "2026-11-04T21:58:00Z", "EventID": 6416, "Computer": "WS1",
+                       "SubjectUserName": "jdoe", "ClassName": "DiskDrive", "DeviceDescription": "USB Mass Storage"}]).encode()
+    a = analyze_dataset(ingest(files + [("usb.json", usb)]), CFG)
+    assert [x["rule"] for x in a.alerts if x["rule"] in ("R10", "R11")] == ["R11", "R10"]
+    assert len(a.incidents) == 1 and {"R10", "R11"} <= set(a.incidents[0]["rules"])
+    assert a.coverage["R11"]["evaluated"]
+    assert not analyze_dataset(ingest(files), CFG).coverage["R11"]["evaluated"]
+
+
 def test_4672_is_context_only():
     b = LogBuilder()
     b.logon(b.at(2, 9), "admin01", "DC01", "10.0.9.10").priv(b.at(2, 9, 0, 1), "admin01", "DC01")

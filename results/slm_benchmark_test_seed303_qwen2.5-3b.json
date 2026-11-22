@@ -1,0 +1,156 @@
+{
+ "summary": {
+  "dataset": "test_seed303",
+  "model": "qwen2.5:3b",
+  "incidents": 5,
+  "slm_answers": 5,
+  "fallbacks": 0,
+  "factual_claims": 16,
+  "verified": 14,
+  "verification_rate": 0.875,
+  "mean_wall_s": 6.24,
+  "mean_tokens_per_s": 92.9,
+  "ollama": {
+   "host": "http://127.0.0.1:11434",
+   "model": "qwen2.5:3b",
+   "reachable": true,
+   "model_installed": true,
+   "models": [
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.68,
+     "quant": "Q4_K_M",
+     "params": "7.6B"
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 1.93,
+     "quant": "Q4_K_M",
+     "params": "3.1B"
+    }
+   ],
+   "loaded": [
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 2.16,
+     "vram_gb": 2.16,
+     "gpu_share": 1.0
+    }
+   ],
+   "error": null,
+   "version": "0.40.16"
+  }
+ },
+ "incidents": [
+  {
+   "incident_id": "INC-0002",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 6.78,
+   "tokens_per_s": 90.7,
+   "output_tokens": 556,
+   "prompt_tokens": 2170,
+   "load_s": 0.02,
+   "factual_claims": 3,
+   "verified": 2,
+   "unverified": [
+    {
+     "text": "The incident was linked in time sequence via strong links.",
+     "problems": [
+      "statement content not supported by cited facts (overlap 20%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.6666666666666666,
+   "hypotheses": 2,
+   "grounded_hypotheses": 2,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 6.71,
+   "tokens_per_s": 88.8,
+   "output_tokens": 555,
+   "prompt_tokens": 2392,
+   "load_s": 0.01,
+   "factual_claims": 4,
+   "verified": 4,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 2,
+   "grounded_hypotheses": 2,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0001",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 5.92,
+   "tokens_per_s": 94.7,
+   "output_tokens": 536,
+   "prompt_tokens": 1273,
+   "load_s": 0.01,
+   "factual_claims": 3,
+   "verified": 2,
+   "unverified": [
+    {
+     "text": "varun.das added themselves to the 'Domain Admins' group on DC01 by logging in from a new source IP (10.0.2.21) outside of any approved change window at 15:52 UTC.",
+     "problems": [
+      "'10.0.2.21' is not in the cited facts",
+      "IP 10.0.2.21 is not in the cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.6666666666666666,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0005",
+   "level": "Medium",
+   "source": "slm",
+   "error": null,
+   "wall_s": 5.22,
+   "tokens_per_s": 96.0,
+   "output_tokens": 481,
+   "prompt_tokens": 1139,
+   "load_s": 0.01,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 2,
+   "grounded_hypotheses": 2,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0003",
+   "level": "Low",
+   "source": "slm",
+   "error": null,
+   "wall_s": 6.59,
+   "tokens_per_s": 94.3,
+   "output_tokens": 596,
+   "prompt_tokens": 1639,
+   "load_s": 0.01,
+   "factual_claims": 4,
+   "verified": 4,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 2,
+   "grounded_hypotheses": 2,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  }
+ ]
+}

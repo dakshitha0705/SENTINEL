@@ -8,7 +8,7 @@ import pandas as pd
 SEV_COLOR = {"Critical": "#C2413A", "High": "#C8773A", "Medium": "#B39B3A", "Low": "#5E8AA8"}
 RULE_SHORT = {"R1": "Brute force", "R2": "Spraying", "R3": "Logon after failures", "R4": "Unusual time",
               "R5": "New device/IP", "R6": "Privilege change", "R7": "Suspicious process", "R8": "Log cleared",
-              "CTX": "4672 context"}
+              "R9": "Lateral movement", "R10": "Bulk copy", "R11": "USB device", "CTX": "4672 context"}
 
 CSS = """
 <style>

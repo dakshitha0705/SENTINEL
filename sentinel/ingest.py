@@ -28,13 +28,13 @@ MAPPABLE_FIELDS = [
 
 ACTIONS = [
     "login_success", "login_failure", "logout", "privilege_logon", "group_add",
-    "process_start", "log_cleared", "other",
+    "process_start", "log_cleared", "device_connected", "other",
 ]
 
 EVENT_CODE_ACTIONS = {
     "4624": "login_success", "4625": "login_failure", "4634": "logout", "4647": "logout",
     "4672": "privilege_logon", "4728": "group_add", "4732": "group_add", "4756": "group_add",
-    "4688": "process_start", "1102": "log_cleared",
+    "4688": "process_start", "1102": "log_cleared", "6416": "device_connected",
 }
 GROUP_ADD_CODES = {"4728", "4732", "4756"}
 AUTH_ACTIONS = {"login_success", "login_failure", "logout", "privilege_logon", "group_add"}

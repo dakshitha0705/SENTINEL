@@ -1,4 +1,4 @@
-﻿"""Local SLM integration (Ollama HTTP API on 127.0.0.1) under the Evidence Contract.
+"""Local SLM integration (Ollama HTTP API on 127.0.0.1) under the Evidence Contract.
 
 The SLM receives only the compact evidence pack (numbered facts) - never raw log dumps - and must
 return schema-constrained JSON citing fact IDs. Output is then checked by verifier.py.

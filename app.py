@@ -1,4 +1,4 @@
-﻿"""SENTINEL - Offline Security Incident Triage Assistant (Tinyverse Hackathon, PS 02).
+"""SENTINEL - Offline Security Incident Triage Assistant (Tinyverse Hackathon, PS 02).
 
 Run:  .venv\\Scripts\\streamlit run app.py
 Everything runs locally; the only network traffic is to the local Ollama server on 127.0.0.1.
@@ -24,7 +24,7 @@ from sentinel.ingest import MAPPABLE_FIELDS, guess_mapping, ingest, normalize, r
 from sentinel.perf import Monitor, connection_snapshot, internet_reachable, system_info
 from sentinel.pipeline import analyze_dataset
 from sentinel.playbooks import load_playbooks, mitre_info
-from sentinel.report import render_report
+from sentinel.report import html_to_pdf, pdf_available, render_report
 from sentinel.rules import RULES
 from sentinel.slm import ask, explain, status as slm_status, template_explanation
 from sentinel.ui import CSS, RULE_SHORT, SEV_COLOR, duration, esc, kpi, pill, tag, ts
@@ -110,6 +110,30 @@ def run_analysis(auto_explain: bool):
     prog.progress(1.0, text=f"Done in {time.perf_counter() - t0:.1f} s")
 
 
+# --------------------------------------------------------------------------- URL shortcuts (demo / screenshots)
+# ?sample=<folder>&page=<n>&incident=<rank>  loads a bundled sample, runs the analysis and opens a page.
+_qp = st.query_params
+if _qp.get("sample") and S.get("_qp_done") != _qp.get("sample"):
+    folder = SAMPLES / _qp["sample"]
+    if folder.is_dir():
+        files = [p for p in sorted(folder.iterdir()) if p.suffix in (".csv", ".json", ".jsonl")
+                 and p.stem not in ("labels", "ground_truth") and not (p.stem == "auth_logs" and p.suffix == ".json")
+                 and not (p.stem == "endpoint_logs" and p.suffix == ".csv")]
+        S.files = {p.name: p.read_bytes() for p in files}
+        S.mappings = {}
+        if _qp["sample"] == "demo_unseen" and _qp.get("corrected") == "1":
+            g = guess_mapping(read_file("siem_auth_export.csv", S.files["siem_auth_export.csv"]).frame)
+            g.update({"actor": "Initiated By", "target_user": "Member Added"})
+            S.mappings["siem_auth_export.csv"] = g
+        S.sample_name = _qp["sample"]
+        with st.spinner("Loading sample and running analysis…"):
+            run_analysis(auto_explain=_qp.get("explain", "1") == "1")
+    S._qp_done = _qp.get("sample")
+    if _qp.get("page", "").isdigit():
+        S.nav = PAGES[int(_qp["page"]) % len(PAGES)]
+    if _qp.get("incident", "").isdigit() and S.analysis and S.analysis.incidents:
+        S.selected = S.analysis.incidents[min(int(_qp["incident"]), len(S.analysis.incidents) - 1)]["incident_id"]
+
 # --------------------------------------------------------------------------- sidebar
 
 with st.sidebar:
@@ -123,11 +147,11 @@ with st.sidebar:
     a = analysis()
     if a:
         st.caption(f"Dataset: {', '.join(f['name'] for f in a.dataset.files)}")
-        st.caption(f"{len(a.events):,} events Â· {len(a.incidents)} incidents")
+        st.caption(f"{len(a.events):,} events · {len(a.incidents)} incidents")
     stat = slm_status(CFG)
     ok = stat["reachable"] and stat["model_installed"]
-    st.caption(("Local SLM: " + CFG["slm"]["model"] + (" Â· ready" if ok else " Â· unavailable (template mode)")))
-    st.caption(f"v{__version__} Â· runs fully offline")
+    st.caption(("Local SLM: " + CFG["slm"]["model"] + (" · ready" if ok else " · unavailable (template mode)")))
+    st.caption(f"v{__version__} · runs fully offline")
 
 
 # --------------------------------------------------------------------------- page: upload
@@ -169,7 +193,7 @@ def page_upload():
         loads[name] = load
         guess = S.mappings.get(name) or guess_mapping(load.frame)
         cols = ["(none)"] + [c for c in load.frame.columns if c != "__row"]
-        with st.expander(f"{name} Â· {load.fmt.upper()} Â· {len(load.frame):,} records Â· SHA-256 {load.sha256[:16]}â€¦",
+        with st.expander(f"{name} · {load.fmt.upper()} · {len(load.frame):,} records · SHA-256 {load.sha256[:16]}…",
                          expanded=len(S.files) <= 2):
             grid = st.columns(5)
             new = {}
@@ -251,7 +275,7 @@ def page_queue():
         sup = ws.matching_suppressions(con, i, a.alerts_by_id)
         rows.append({"ID": i["incident_id"], "Severity": i["severity"]["level"], "Score": i["severity"]["score"],
                      "Confidence": i["severity"]["confidence"]["level"], "Title": i["title"],
-                     "Accounts": ", ".join(i["users"][:4]) + (" â€¦" if len(i["users"]) > 4 else ""),
+                     "Accounts": ", ".join(i["users"][:4]) + (" …" if len(i["users"]) > 4 else ""),
                      "Hosts": ", ".join(i["hosts"][:3]), "Start (UTC)": ts(i["start"]),
                      "Duration": duration(i["start"], i["end"]), "Events": len(i["event_ids"]),
                      "MITRE": ", ".join(i["mitre"][:4]),
@@ -264,7 +288,7 @@ def page_queue():
     else:
         st.dataframe(df, hide_index=True, use_container_width=True,
                      column_config={"Score": st.column_config.ProgressColumn("Score", min_value=0, max_value=100, format="%d")})
-        pick = st.selectbox("Open incident", df["ID"], format_func=lambda x: f"{x} Â· {df.set_index('ID').at[x, 'Title']}")
+        pick = st.selectbox("Open incident", df["ID"], format_func=lambda x: f"{x} · {df.set_index('ID').at[x, 'Title']}")
         if st.button("Investigate selected incident", type="primary"):
             S.selected = pick
             S.goto = "Incident investigation"
@@ -314,7 +338,7 @@ def page_investigate():
     ids = [i["incident_id"] for i in a.incidents]
     sel = S.get("selected") if S.get("selected") in ids else ids[0]
     iid = st.selectbox("Incident", ids, index=ids.index(sel),
-                       format_func=lambda x: f"{x} Â· {a.incident(x)['severity']['level']} {a.incident(x)['severity']['score']} Â· {a.incident(x)['title']}")
+                       format_func=lambda x: f"{x} · {a.incident(x)['severity']['level']} {a.incident(x)['severity']['score']} · {a.incident(x)['title']}")
     S.selected = iid
     inc = a.incident(iid)
     pack = a.packs[iid]
@@ -324,7 +348,7 @@ def page_investigate():
                 f'({esc(sev["confidence"]["reason"])})</span>', unsafe_allow_html=True)
     k = st.columns(5)
     for c, (lab, v) in zip(k, [("Start (UTC)", ts(inc["start"])), ("Duration", duration(inc["start"], inc["end"])),
-                               ("Accounts", ", ".join(inc["users"][:3]) + (" â€¦" if len(inc["users"]) > 3 else "")),
+                               ("Accounts", ", ".join(inc["users"][:3]) + (" …" if len(inc["users"]) > 3 else "")),
                                ("Hosts", ", ".join(inc["hosts"][:3])), ("Source IPs", ", ".join(inc["ips"][:3]) or "-")]):
         c.markdown(kpi(lab, v), unsafe_allow_html=True)
     st.write("")
@@ -337,13 +361,13 @@ def page_investigate():
                    "(shared account only): shown, never scored.")
         for s in storyline(inc, a.alerts_by_id):
             cls = "sn-step" + (" weak" if s["membership"] == "weak" else "") + (" ctx" if s["context"] else "")
-            link = (f'<div class="link"><b>{s["link"]["strength"]} link</b> Â· {esc(s["link"]["reason"])}</div>'
+            link = (f'<div class="link"><b>{s["link"]["strength"]} link</b> · {esc(s["link"]["reason"])}</div>'
                     if s["link"] else '<div class="link">incident seed</div>')
             eids = s["event_ids"]
-            eid_txt = ", ".join(eids) if len(eids) <= 4 else f"{eids[0]} â€¦ {eids[-1]} ({len(eids)} events)"
+            eid_txt = ", ".join(eids) if len(eids) <= 4 else f"{eids[0]} … {eids[-1]} ({len(eids)} events)"
             st.markdown(f'<div class="{cls}"><span class="t">{ts(s["time"])}</span> &nbsp;{tag(s["rule"])} '
                         f'<span class="r">{esc(s["name"])}</span>{" " + tag("context") if s["context"] else ""}'
-                        f'<div class="why">{esc(s["reason"])}</div><div class="link">{esc(s["alert_id"])} Â· {esc(eid_txt)}</div>{link}</div>',
+                        f'<div class="why">{esc(s["reason"])}</div><div class="link">{esc(s["alert_id"])} · {esc(eid_txt)}</div>{link}</div>',
                         unsafe_allow_html=True)
             with st.expander(f"Evidence rows for {s['alert_id']} ({len(eids)})"):
                 rows = ev.loc[eids, ["timestamp", "source_file", "source_row", "event_code", "action", "user", "host",
@@ -364,7 +388,7 @@ def page_investigate():
                 buf.append(t)
                 if len(buf) % 8 == 0:
                     box.code("".join(buf)[-1500:], language="json")
-            with st.spinner("Local SLM is reading the evidence packâ€¦"):
+            with st.spinner("Local SLM is reading the evidence pack…"):
                 explanation_for(iid, use_slm=True, on_token=on_tok, force=bool(cached))
             box.empty()
         if tmpl:
@@ -375,9 +399,9 @@ def page_investigate():
             res, ver = S.explanations[iid]
             stt = ver["stats"]
             src = {"slm": "Local SLM (live)", "cache": "Local SLM (cached)", "template": "Deterministic template"}[res["source"]]
-            meta = f"{src} Â· {res.get('model') or ''}"
+            meta = f"{src} · {res.get('model') or ''}"
             if res.get("stats", {}).get("tokens_per_s"):
-                meta += f" Â· {res['stats']['wall_s']} s Â· {res['stats']['tokens_per_s']} tok/s"
+                meta += f" · {res['stats']['wall_s']} s · {res['stats']['tokens_per_s']} tok/s"
             rate = f"{stt['verification_rate']:.0%}" if stt["verification_rate"] is not None else "n/a"
             st.markdown(f'<span class="sn-muted">{esc(meta)}</span> &nbsp; {tag(f"verified {stt["verified"]}/{stt["factual_claims"]} = {rate}")}',
                         unsafe_allow_html=True)
@@ -401,7 +425,7 @@ def page_investigate():
                 for h in ver["hypotheses"]:
                     lab = '<span class="sn-hyp">HYPOTHESIS</span>' if h["status"] == "Grounded hypothesis" else '<span class="sn-bad">UNGROUNDED</span>'
                     html += (f'<div class="sn-claim">{lab} {esc(h["text"])} <span class="sn-cite">supports [{esc(", ".join(h["supporting_fact_ids"]))}]'
-                             f'{" Â· contradicts [" + esc(", ".join(h["contradicting_fact_ids"])) + "]" if h["contradicting_fact_ids"] else ""}</span>'
+                             f'{" · contradicts [" + esc(", ".join(h["contradicting_fact_ids"])) + "]" if h["contradicting_fact_ids"] else ""}</span>'
                              f'<div class="sn-muted">How to confirm: {esc(h["how_to_confirm"])}</div></div>')
                 st.markdown(html + "</div>", unsafe_allow_html=True)
                 facts = {f["id"]: f for f in pack["facts"]}
@@ -444,7 +468,7 @@ def page_investigate():
         st.dataframe(rows.drop(columns=["raw"]), hide_index=True, use_container_width=True)
         pick = st.selectbox("Inspect original record", inc["event_ids"])
         r = ev.loc[pick]
-        st.caption(f"{r['source_file']} row {r['source_row']} Â· original record, unmodified:")
+        st.caption(f"{r['source_file']} row {r['source_row']} · original record, unmodified:")
         st.code(json.dumps(json.loads(r["raw"]), indent=2), language="json")
 
     with t5:
@@ -453,13 +477,13 @@ def page_investigate():
             st.markdown("**MITRE ATT&CK (offline reference)**")
             for t in inc["mitre"]:
                 m = mitre_info(t)
-                st.markdown(f"{tag(m['id'])} **{esc(m['name'])}** Â· {esc(', '.join(m['tactics']))}<br>"
+                st.markdown(f"{tag(m['id'])} **{esc(m['name'])}** · {esc(', '.join(m['tactics']))}<br>"
                             f"<span class='sn-muted'>{esc(m['summary'])}</span>", unsafe_allow_html=True)
         with c2:
             st.markdown("**Candidate playbooks for this incident** (analyst-approved actions only)")
             pb = load_playbooks()
             for p in pack["playbooks"]:
-                with st.expander(f"{p['id']} Â· {p['title']}"):
+                with st.expander(f"{p['id']} · {p['title']}"):
                     for stp in pb[p["id"]]["steps"]:
                         st.markdown(f"- {stp}")
 
@@ -469,10 +493,21 @@ def page_investigate():
         REPORTS.mkdir(exist_ok=True)
         fname = f"SENTINEL_{iid}_{datetime.now():%Y%m%d_%H%M%S}.html"
         st.download_button("Download HTML report", html.encode("utf-8"), file_name=fname, mime="text/html", type="primary")
-        if st.button("Save report to reports/ folder"):
+        b1, b2 = st.columns([1, 1])
+        if b1.button("Save report to reports/ folder"):
             (REPORTS / fname).write_text(html, encoding="utf-8")
             st.success(f"Saved {REPORTS / fname}")
-        st.caption(f"Report uses: {res['source']} explanation Â· self-contained HTML, no external assets.")
+        if b2.button("Export PDF (local Edge, offline)", disabled=not pdf_available()):
+            hp = REPORTS / fname
+            hp.write_text(html, encoding="utf-8")
+            pp = hp.with_suffix(".pdf")
+            with st.spinner("Printing PDF with the local browser engine…"):
+                ok_pdf = html_to_pdf(hp, pp)
+            if ok_pdf:
+                st.download_button("Download PDF", pp.read_bytes(), file_name=pp.name, mime="application/pdf")
+            else:
+                st.error("PDF export failed; the HTML report is still available.")
+        st.caption(f"Report uses: {res['source']} explanation · self-contained HTML, no external assets.")
         components.html(html, height=700, scrolling=True)
 
 
@@ -485,14 +520,14 @@ def page_accuracy():
     mp = RESULTS / "metrics.json"
     if st.button("Re-run evaluation now (deterministic, ~15 s)"):
         import subprocess, sys
-        with st.spinner("Generating datasets and evaluatingâ€¦"):
+        with st.spinner("Generating datasets and evaluating…"):
             out = subprocess.run([sys.executable, str(ROOT / "scripts" / "evaluate.py")], capture_output=True, text=True, cwd=ROOT)
         st.code(out.stdout[-3000:] or out.stderr[-3000:])
     if not mp.exists():
         st.warning("No evaluation results yet. Run `python scripts/evaluate.py`.")
         return
     m = json.loads(mp.read_text(encoding="utf-8"))
-    st.caption(f"Results file generated {m['generated_at']} Â· matching rule: {m['matching_rule']}")
+    st.caption(f"Results file generated {m['generated_at']} · matching rule: {m['matching_rule']}")
     for label, agg in [("Held-out test seeds", m["test_aggregate"]), ("Stress seeds (out-of-envelope)", m.get("stress_aggregate"))]:
         if not agg:
             continue
@@ -588,7 +623,7 @@ def page_monitor():
     for col, (lab, v) in zip(c, [("CPU load", f"{sysi['cpu_percent']}% of {sysi['logical_cpus']} threads"),
                                  ("System RAM used", f"{sysi['ram_used_percent']}% of {sysi['ram_total_gb']} GB"),
                                  ("SENTINEL process RAM", f"{sysi['process_rss_mb']} MB"),
-                                 ("GPU", f"{g.get('utilization_percent', '-')}% Â· {g.get('memory_used_mb', '-')}/{g.get('memory_total_mb', '-')} MB" if g else "not detected"),
+                                 ("GPU", f"{g.get('utilization_percent', '-')}% · {g.get('memory_used_mb', '-')}/{g.get('memory_total_mb', '-')} MB" if g else "not detected"),
                                  ("GPU name", g.get("name", "-"))]):
         col.markdown(kpi(lab, v), unsafe_allow_html=True)
     st.write("")
@@ -627,7 +662,7 @@ def page_monitor():
     op = RESULTS / "offline_run.json"
     if op.exists():
         rec = json.loads(op.read_text(encoding="utf-8"))
-        st.markdown(f"Recorded **{rec.get('recorded_at')}** Â· internet reachable during run: **{rec.get('internet_reachable')}** Â· "
+        st.markdown(f"Recorded **{rec.get('recorded_at')}** · internet reachable during run: **{rec.get('internet_reachable')}** · "
                     f"external connections observed: **{len(rec.get('monitor', {}).get('external_connections', []))}**")
         st.json(rec)
     else:
@@ -646,7 +681,7 @@ def page_workspace():
         return
     ids = [i["incident_id"] for i in a.incidents]
     iid = st.selectbox("Incident", ids, index=ids.index(S.get("selected")) if S.get("selected") in ids else 0,
-                       format_func=lambda x: f"{x} Â· {a.incident(x)['title']}")
+                       format_func=lambda x: f"{x} · {a.incident(x)['title']}")
     inc = a.incident(iid)
     key = ws.incident_key(a, inc)
     t1, t2, t3 = st.tabs(["Ask the incident", "Disposition & notes", "Suppression proposals & audit"])
@@ -672,7 +707,7 @@ def page_workspace():
         if st.button("Ask", type="primary"):
             question = free.strip() or (q if q != "(type your own below)" else "")
             if question:
-                with st.spinner("Local SLM answering from the evidence packâ€¦"):
+                with st.spinner("Local SLM answering from the evidence pack…"):
                     r = ask(a.packs[iid], question, CFG, [(x, json.dumps(y["raw_output"])) for x, y in hist])
                 ver = verify_output({"summary": r["output"].get("answer", [])}, a.packs[iid], S.known_entities)
                 hist.append((question, {"verified": ver, "cannot_answer": r["output"].get("cannot_answer"),
@@ -705,7 +740,7 @@ def page_workspace():
                 st.rerun()
         with c2:
             for s in ws.suppressions(con):
-                st.markdown(f"**SUP-{s['id']}** Â· {s['rule']} Â· `{s['match']}` Â· *{s['status']}* Â· {esc(s['reason'])}")
+                st.markdown(f"**SUP-{s['id']}** · {s['rule']} · `{s['match']}` · *{s['status']}* · {esc(s['reason'])}")
                 b = st.columns(3)
                 if s["status"] == "proposed":
                     if b[0].button("Approve", key=f"ap{s['id']}"):
