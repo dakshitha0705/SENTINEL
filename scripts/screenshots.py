@@ -36,14 +36,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sample", default="demo_unseen")
     ap.add_argument("--base", default="http://127.0.0.1:8501")
+    ap.add_argument("--incident", type=int, default=1, help="rank of the incident to open (0 = highest)")
+    ap.add_argument("--only", nargs="*", help="capture only these shot names")
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     with sync_playwright() as p:
         b = p.chromium.launch(channel="msedge", headless=True)
         pg = b.new_page(viewport={"width": 1600, "height": 1000}, device_scale_factor=1)
-        pg.goto(f"{a.base}/?sample={a.sample}&corrected=1&page=0&incident=0")
+        pg.goto(f"{a.base}/?sample={a.sample}&corrected=1&page=0&incident={a.incident}")
         wait_idle(pg, 240)   # first load runs the analysis + SLM on top incidents
-        for name, page_idx, tab in SHOTS:
+        for name, page_idx, tab in [x for x in SHOTS if not a.only or x[0] in a.only]:
             pg.locator("[data-testid='stSidebar'] [role='radiogroup'] label").nth(page_idx).click()
             wait_idle(pg)
             if tab:
@@ -52,6 +54,13 @@ def main():
                 if tab == "Evidence vs. hypothesis" and pg.get_by_role("button", name="Explain with local SLM").count():
                     pg.get_by_role("button", name="Explain with local SLM").click()
                     wait_idle(pg, 180)
+            if name == "09_workspace":
+                pg.get_by_role("textbox", name="Question").fill("What happened after the successful login?")
+                pg.get_by_role("textbox", name="Question").press("Enter")
+                wait_idle(pg)
+                pg.get_by_role("button", name="Ask").click()
+                pg.wait_for_selector("text=Q: What happened", timeout=180000)
+                wait_idle(pg, 60)
             pg.screenshot(path=str(OUT / f"{name}.png"), full_page=False)
             print("saved", name)
         b.close()

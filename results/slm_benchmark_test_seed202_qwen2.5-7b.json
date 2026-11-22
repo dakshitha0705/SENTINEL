@@ -1,0 +1,188 @@
+{
+ "summary": {
+  "dataset": "test_seed202",
+  "model": "qwen2.5:7b",
+  "incidents": 5,
+  "slm_answers": 5,
+  "fallbacks": 0,
+  "factual_claims": 13,
+  "verified": 7,
+  "verification_rate": 0.538,
+  "mean_wall_s": 10.26,
+  "mean_tokens_per_s": 48.0,
+  "ollama": {
+   "host": "http://127.0.0.1:11434",
+   "model": "qwen2.5:7b",
+   "reachable": true,
+   "model_installed": true,
+   "models": [
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.68,
+     "quant": "Q4_K_M",
+     "params": "7.6B"
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 1.93,
+     "quant": "Q4_K_M",
+     "params": "3.1B"
+    }
+   ],
+   "loaded": [
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.76,
+     "vram_gb": 4.76,
+     "gpu_share": 1.0
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 2.16,
+     "vram_gb": 2.16,
+     "gpu_share": 1.0
+    }
+   ],
+   "error": null,
+   "version": "0.40.16"
+  }
+ },
+ "incidents": [
+  {
+   "incident_id": "INC-0001",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 9.05,
+   "tokens_per_s": 47.8,
+   "output_tokens": 394,
+   "prompt_tokens": 2180,
+   "load_s": 0.01,
+   "factual_claims": 3,
+   "verified": 3,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0005",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 14.05,
+   "tokens_per_s": 47.5,
+   "output_tokens": 618,
+   "prompt_tokens": 2577,
+   "load_s": 0.02,
+   "factual_claims": 3,
+   "verified": 2,
+   "unverified": [
+    {
+     "text": "Between 20:50 UTC and 21:34 UTC on November 13, 2026, priya.shetty experienced a brute force attack from IP address 185.220.101.108, followed by a successful logon at 21:02 UTC, unusual login time and source IP for this user, unauthorized addition to the Administrators group on WS-FIN-01, and suspicious process executions using PowerShell and certutil commands.",
+     "problems": [
+      "time 21:34 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.6666666666666666,
+   "hypotheses": 2,
+   "grounded_hypotheses": 2,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0002",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 10.34,
+   "tokens_per_s": 48.4,
+   "output_tokens": 478,
+   "prompt_tokens": 1292,
+   "load_s": 0.01,
+   "factual_claims": 3,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "On November 12, 2026, between 13:30 and 13:46 UTC, naveen.bose logged in to DC01 from a new IP (10.0.4.23) for the first time since at least three days prior, followed by an unauthorized addition of this account to the 'Domain Admins' group on the same host.",
+     "problems": [
+      "number 3 not found in cited facts"
+     ]
+    },
+    {
+     "text": "This incident involved an unusual source IP for naveen.bose on DC01, indicating potential new access or activity from a different location than usual.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 14%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.3333333333333333,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0004",
+   "level": "Medium",
+   "source": "slm",
+   "error": null,
+   "wall_s": 9.09,
+   "tokens_per_s": 48.3,
+   "output_tokens": 424,
+   "prompt_tokens": 1111,
+   "load_s": 0.01,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "From 12:57:44 to 13:02:36 UTC on November 13, 2026, IP address 203.0.113.52 attempted to log in with different credentials for eight accounts (naveen.bose, naveen.das, nisha.gupta, priya.shetty, rohan.iyer, shalini.bose, shalini.kulkarni, suresh.kulkarni) on DC01, making up to two attempts per account in total.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 14%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0003",
+   "level": "Low",
+   "source": "slm",
+   "error": null,
+   "wall_s": 8.77,
+   "tokens_per_s": 48.1,
+   "output_tokens": 396,
+   "prompt_tokens": 1632,
+   "load_s": 0.01,
+   "factual_claims": 2,
+   "verified": 0,
+   "unverified": [
+    {
+     "text": "Between 01:10 UTC and 01:15 UTC on 2026-11-13, shalini.bose logged into FIN-SRV01 from an unusual time (F2) and a new IP address (F3), followed by another login to FS01 at 01:15 UTC with the same pattern.",
+     "problems": [
+      "time 01:15 not found in cited facts",
+      "'fs01' is not in the cited facts"
+     ]
+    },
+    {
+     "text": "shalini.bose logged into FIN-SRV01 and then FS01 from a new IP address (10.0.81.206) at unusual times, with no prior logons in the last hour.",
+     "problems": [
+      "'fs01' is not in the cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 1,
+   "actions_rejected": 0
+  }
+ ]
+}

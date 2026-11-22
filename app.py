@@ -696,7 +696,9 @@ def page_workspace():
                             + (f'<div class="sn-muted">{esc("; ".join(c["problems"]))}</div>' if c["problems"] else ""),
                             unsafe_allow_html=True)
             if ans.get("cannot_answer"):
-                st.markdown(f'<span class="sn-muted">Not answerable from the evidence: {esc(ans["cannot_answer"])}</span>', unsafe_allow_html=True)
+                st.markdown(f'<span class="sn-muted">Model note (not verified): {esc(ans["cannot_answer"])}</span>', unsafe_allow_html=True)
+            if not ans["verified"]["summary"] and not ans.get("cannot_answer") and not ans.get("error"):
+                st.markdown('<span class="sn-muted">The model returned no answer for this question.</span>', unsafe_allow_html=True)
             if ans.get("error"):
                 st.caption(f"SLM error: {ans['error']}")
         presets = ["Why was this incident classified with this severity?", "Which events support the compromise hypothesis?",

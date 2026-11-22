@@ -6,7 +6,8 @@ labelled **Verified** only if *all* of the following hold:
 1. it cites at least one fact ID and every cited ID exists in the pack;
 2. every number it states matches a number recorded in the cited facts;
 3. every clock time it states matches a time recorded in the cited facts;
-4. every user, host and IP it mentions appears in the cited facts (and no unknown IP/host is named);
+4. every user, host and IP it mentions appears in the cited facts (and no unknown IP/host is named),
+   and every EVT-/ALR-/INC- identifier it names belongs to the cited facts;
 5. typed fields the model returned (entities / numbers) match the cited facts;
 6. its content is grounded in the cited facts (word overlap), so a valid citation attached to an
    unrelated sentence does not pass;
@@ -37,7 +38,9 @@ own same so very can could may might should would will shall has have had do doe
 about against between through same up down out off again further once here why how incident activity
 account accounts user users host hosts event events log logs logon logons login logins observed indicates
 indicate suggests suggest shows show showing occurred recorded detected detection detections evidence
-potential possible possibly likely appears appear seems""".split())
+potential possible possibly likely appears appear seems device devices involved involving involve security
+related mentioned mention based fact facts multiple alerts alert stated states state listed list including
+includes include occurred occur specifically""".split())
 
 OVERCLAIM_RE = re.compile(
     r"\b(definitely|certainly|undoubtedly|without (a )?doubt|proves? (that )?|proof that|"
@@ -144,6 +147,8 @@ def verify_claim(claim: dict, pack: dict, known_entities: set, require_grounding
     problems, checks = [], []
     if not text:
         problems.append("empty statement")
+    elif len(re.findall(r"[A-Za-z0-9]", text)) < 8:
+        problems.append("statement has no checkable content")
     if not cited:
         problems.append("no fact IDs cited")
     missing = [c for c in cited if c not in facts]
@@ -195,6 +200,16 @@ def verify_claim(claim: dict, pack: dict, known_entities: set, require_grounding
     for h in HOSTLIKE_RE.findall(text):
         if h.lower() not in ents and h.lower() not in {e.lower() for e in all_known} and not h.startswith(("EVT", "ALR", "INC", "PB")):
             problems.append(f"unknown host/name '{h}'")
+    # event / alert / incident IDs named in the sentence must belong to the cited facts
+    cited_ids = set()
+    for f in valid:
+        cited_ids |= {x.upper() for x in f.get("event_ids", [])}
+        cited_ids |= {x.upper() for x in re.findall(r"\b(?:EVT|ALR|INC)-\d+\b", f["text"])}
+        if f.get("ref"):
+            cited_ids.add(str(f["ref"]).upper())
+    for rid in set(re.findall(r"\b(?:EVT|ALR|INC)-\d+\b", text, re.I)):
+        if rid.upper() not in cited_ids:
+            problems.append(f"{rid.upper()} is not referenced by the cited facts")
     for e in claim.get("entities") or []:
         if str(e).lower() not in ents:
             problems.append(f"typed entity '{e}' not in cited facts")

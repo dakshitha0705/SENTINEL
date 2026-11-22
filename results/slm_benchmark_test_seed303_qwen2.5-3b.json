@@ -5,11 +5,11 @@
   "incidents": 5,
   "slm_answers": 5,
   "fallbacks": 0,
-  "factual_claims": 16,
-  "verified": 14,
-  "verification_rate": 0.875,
-  "mean_wall_s": 6.24,
-  "mean_tokens_per_s": 92.9,
+  "factual_claims": 14,
+  "verified": 8,
+  "verification_rate": 0.571,
+  "mean_wall_s": 6.63,
+  "mean_tokens_per_s": 91.1,
   "ollama": {
    "host": "http://127.0.0.1:11434",
    "model": "qwen2.5:3b",
@@ -35,6 +35,12 @@
      "size_gb": 2.16,
      "vram_gb": 2.16,
      "gpu_share": 1.0
+    },
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.76,
+     "vram_gb": 4.76,
+     "gpu_share": 1.0
     }
    ],
    "error": null,
@@ -47,64 +53,18 @@
    "level": "Critical",
    "source": "slm",
    "error": null,
-   "wall_s": 6.78,
-   "tokens_per_s": 90.7,
-   "output_tokens": 556,
+   "wall_s": 6.53,
+   "tokens_per_s": 89.4,
+   "output_tokens": 545,
    "prompt_tokens": 2170,
-   "load_s": 0.02,
-   "factual_claims": 3,
-   "verified": 2,
-   "unverified": [
-    {
-     "text": "The incident was linked in time sequence via strong links.",
-     "problems": [
-      "statement content not supported by cited facts (overlap 20%)"
-     ]
-    }
-   ],
-   "verification_rate": 0.6666666666666666,
-   "hypotheses": 2,
-   "grounded_hypotheses": 2,
-   "actions_accepted": 2,
-   "actions_rejected": 0
-  },
-  {
-   "incident_id": "INC-0004",
-   "level": "Critical",
-   "source": "slm",
-   "error": null,
-   "wall_s": 6.71,
-   "tokens_per_s": 88.8,
-   "output_tokens": 555,
-   "prompt_tokens": 2392,
-   "load_s": 0.01,
-   "factual_claims": 4,
-   "verified": 4,
-   "unverified": [],
-   "verification_rate": 1.0,
-   "hypotheses": 2,
-   "grounded_hypotheses": 2,
-   "actions_accepted": 2,
-   "actions_rejected": 0
-  },
-  {
-   "incident_id": "INC-0001",
-   "level": "High",
-   "source": "slm",
-   "error": null,
-   "wall_s": 5.92,
-   "tokens_per_s": 94.7,
-   "output_tokens": 536,
-   "prompt_tokens": 1273,
    "load_s": 0.01,
    "factual_claims": 3,
    "verified": 2,
    "unverified": [
     {
-     "text": "varun.das added themselves to the 'Domain Admins' group on DC01 by logging in from a new source IP (10.0.2.21) outside of any approved change window at 15:52 UTC.",
+     "text": "The log",
      "problems": [
-      "'10.0.2.21' is not in the cited facts",
-      "IP 10.0.2.21 is not in the cited facts"
+      "statement has no checkable content"
      ]
     }
    ],
@@ -115,21 +75,87 @@
    "actions_rejected": 0
   },
   {
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 7.94,
+   "tokens_per_s": 90.9,
+   "output_tokens": 678,
+   "prompt_tokens": 2392,
+   "load_s": 0.01,
+   "factual_claims": 3,
+   "verified": 2,
+   "unverified": [
+    {
+     "text": "The incident spans R1-R7 with F13 as its severity.",
+     "problems": [
+      "statement content not supported by cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.6666666666666666,
+   "hypotheses": 3,
+   "grounded_hypotheses": 3,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0001",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 6.74,
+   "tokens_per_s": 92.9,
+   "output_tokens": 599,
+   "prompt_tokens": 1273,
+   "load_s": 0.01,
+   "factual_claims": 3,
+   "verified": 2,
+   "unverified": [
+    {
+     "text": "This was linked with a previous logon event by varun.das from DC01 on November 18, 2026, at 15:50 UTC (EVT-000941).",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.6666666666666666,
+   "hypotheses": 2,
+   "grounded_hypotheses": 2,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
    "incident_id": "INC-0005",
    "level": "Medium",
    "source": "slm",
    "error": null,
-   "wall_s": 5.22,
-   "tokens_per_s": 96.0,
-   "output_tokens": 481,
+   "wall_s": 5.71,
+   "tokens_per_s": 91.2,
+   "output_tokens": 503,
    "prompt_tokens": 1139,
    "load_s": 0.01,
-   "factual_claims": 2,
-   "verified": 2,
-   "unverified": [],
-   "verification_rate": 1.0,
-   "hypotheses": 2,
-   "grounded_hypotheses": 2,
+   "factual_claims": 3,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "No successful login followed these failures within the next 15 minutes as recorded in logs, indicating only an attempt and not access by this IP address.",
+     "problems": [
+      "number 15 not found in cited facts",
+      "statement content weakly related to cited facts (overlap 11%)"
+     ]
+    },
+    {
+     "text": "The source IP of 198.51.100.161 attempted to logon to multiple accounts on DC01 but did not succeed in any login, as no successful logons were recorded within the next 15 minutes.",
+     "problems": [
+      "number 15 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.3333333333333333,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
    "actions_accepted": 2,
    "actions_rejected": 0
   },
@@ -138,15 +164,22 @@
    "level": "Low",
    "source": "slm",
    "error": null,
-   "wall_s": 6.59,
-   "tokens_per_s": 94.3,
-   "output_tokens": 596,
-   "prompt_tokens": 1639,
+   "wall_s": 6.22,
+   "tokens_per_s": 91.0,
+   "output_tokens": 537,
+   "prompt_tokens": 1641,
    "load_s": 0.01,
-   "factual_claims": 4,
-   "verified": 4,
-   "unverified": [],
-   "verification_rate": 1.0,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "Gaurav.bose authenticated from a new device (IP: 10.0.62.22) at unusual times, without prior logons within an hour of these hours in the past three days.",
+     "problems": [
+      "number 3 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
    "hypotheses": 2,
    "grounded_hypotheses": 2,
    "actions_accepted": 2,

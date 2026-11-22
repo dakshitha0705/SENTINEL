@@ -71,6 +71,20 @@ def test_valid_citation_on_unrelated_statement_rejected():
     assert v["status"] == "Unverified"
 
 
+def test_wrong_event_or_alert_id_rejected():
+    _, p, ke = analysed()
+    f = next(x for x in p["facts"] if "R1 " in x["text"])
+    good = f["event_ids"][0]
+    assert verify_claim({"text": f"jdoe failed to log on ({good}).", "fact_ids": [f["id"]]}, p, ke)["status"] == "Verified"
+    v = verify_claim({"text": "jdoe failed to log on (EVT-999999, ALR-9999).", "fact_ids": [f["id"]]}, p, ke)
+    assert v["status"] == "Unverified" and any("EVT-999999" in x for x in v["problems"])
+
+
+def test_contentless_statement_rejected():
+    _, p, ke = analysed()
+    assert verify_claim({"text": "...", "fact_ids": [fid_for(p, "R1")]}, p, ke)["status"] == "Unverified"
+
+
 def test_overclaiming_intent_rejected():
     _, p, ke = analysed()
     f = fid_for(p, "R3")

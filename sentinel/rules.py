@@ -180,10 +180,14 @@ def rule_baseline(ev, cfg, base: pd.DataFrame):
     logins = ev[ev["action"] == "login_success"].set_index("event_id", drop=False)
     alerts = []
     for eid, b in base.iterrows():
+        fire_r4 = b["confident"] and b["hour_usual"] is False and b["user"] not in svc
+        fire_r5 = b["n_prior"] >= bcfg["min_logins_for_new_context"] and (b["host_known"] is False or b["ip_known"] is False)
+        if not (fire_r4 or fire_r5):
+            continue
         row = logins.loc[eid]
         one = logins.loc[[eid]]
         conf_label = "high" if b["confident"] else "low"
-        if b["confident"] and b["hour_usual"] is False and b["user"] not in svc:
+        if fire_r4:
             hrs = ", ".join(f"{h:02d}" for h in b["usual_hours"])
             alerts.append(_alert("R4", one,
                 f"{b['user']} logged on at {row['timestamp']:%H:%M} UTC; no prior logon within "

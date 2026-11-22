@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-22T17:09:20+00:00",
+ "generated_at": "2026-11-22T17:16:05+00:00",
  "matching_rule": ">=50% of ground-truth event IDs; benign flagged on any overlap",
  "dev": {
   "dataset": "dev_seed7",
@@ -180,12 +180,12 @@
    "endpoint_logs.json"
   ],
   "timings_s": {
-   "detection_s": 0.4183,
-   "correlation_s": 0.0035,
+   "detection_s": 0.182,
+   "correlation_s": 0.0033,
    "severity_s": 0.0001,
-   "evidence_s": 0.041,
-   "analysis_total_s": 0.463,
-   "ingest_s": 0.1441
+   "evidence_s": 0.0449,
+   "analysis_total_s": 0.2303,
+   "ingest_s": 0.2066
   }
  },
  "test": [
@@ -368,12 +368,12 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.4562,
+    "detection_s": 0.1693,
     "correlation_s": 0.0037,
     "severity_s": 0.0001,
-    "evidence_s": 0.0389,
-    "analysis_total_s": 0.499,
-    "ingest_s": 0.1305
+    "evidence_s": 0.0385,
+    "analysis_total_s": 0.2117,
+    "ingest_s": 0.1867
    }
   },
   {
@@ -555,12 +555,12 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 1.3866,
-    "correlation_s": 0.0227,
+    "detection_s": 0.6082,
+    "correlation_s": 0.022,
     "severity_s": 0.0004,
-    "evidence_s": 0.2215,
-    "analysis_total_s": 1.6312,
-    "ingest_s": 0.1208
+    "evidence_s": 0.2083,
+    "analysis_total_s": 0.8389,
+    "ingest_s": 0.1564
    }
   },
   {
@@ -742,12 +742,12 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 3.1157,
-    "correlation_s": 0.0141,
-    "severity_s": 0.0003,
-    "evidence_s": 0.2075,
-    "analysis_total_s": 3.3376,
-    "ingest_s": 0.9431
+    "detection_s": 1.3023,
+    "correlation_s": 0.0242,
+    "severity_s": 0.0004,
+    "evidence_s": 0.2437,
+    "analysis_total_s": 1.5707,
+    "ingest_s": 0.9616
    }
   }
  ],
@@ -1026,12 +1026,12 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 2.9498,
-    "correlation_s": 0.0363,
+    "detection_s": 1.0565,
+    "correlation_s": 0.0238,
     "severity_s": 0.0004,
-    "evidence_s": 0.2569,
-    "analysis_total_s": 3.2434,
-    "ingest_s": 0.9302
+    "evidence_s": 0.2059,
+    "analysis_total_s": 1.2866,
+    "ingest_s": 0.8834
    }
   },
   {
@@ -1213,12 +1213,12 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 3.5592,
-    "correlation_s": 0.0219,
+    "detection_s": 1.0559,
+    "correlation_s": 0.021,
     "severity_s": 0.0004,
-    "evidence_s": 0.2099,
-    "analysis_total_s": 3.7913,
-    "ingest_s": 1.1286
+    "evidence_s": 0.1932,
+    "analysis_total_s": 1.2705,
+    "ingest_s": 0.936
    }
   },
   {
@@ -1400,12 +1400,12 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 3.9289,
-    "correlation_s": 0.0387,
+    "detection_s": 1.1794,
+    "correlation_s": 0.0235,
     "severity_s": 0.0004,
-    "evidence_s": 0.2963,
-    "analysis_total_s": 4.2643,
-    "ingest_s": 1.245
+    "evidence_s": 0.211,
+    "analysis_total_s": 1.4143,
+    "ingest_s": 0.9855
    }
   },
   {
@@ -1587,12 +1587,12 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 2.8028,
-    "correlation_s": 0.0219,
+    "detection_s": 1.1279,
+    "correlation_s": 0.0212,
     "severity_s": 0.0004,
-    "evidence_s": 0.219,
-    "analysis_total_s": 3.044,
-    "ingest_s": 0.8586
+    "evidence_s": 0.2199,
+    "analysis_total_s": 1.3695,
+    "ingest_s": 0.8788
    }
   },
   {
@@ -1783,12 +1783,12 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 3.083,
-    "correlation_s": 0.0222,
+    "detection_s": 1.1869,
+    "correlation_s": 0.0217,
     "severity_s": 0.0004,
-    "evidence_s": 0.2276,
-    "analysis_total_s": 3.3333,
-    "ingest_s": 0.9381
+    "evidence_s": 0.2104,
+    "analysis_total_s": 1.4193,
+    "ingest_s": 1.0635
    }
   },
   {
@@ -1807,7 +1807,7 @@
    "false_positive_incidents": [
     {
      "incident_id": "INC-0006",
-     "title": "Off-hours logon from new device/IP (admin01 on WS-IT-01)",
+     "title": "Off-hours logon from new device/IP (admin01 on SQL01)",
      "level": "Low",
      "score": 15,
      "events": 3,
@@ -1905,7 +1905,7 @@
     },
     {
      "incident_id": "INC-0006",
-     "title": "Off-hours logon from new device/IP (admin01 on WS-IT-01)",
+     "title": "Off-hours logon from new device/IP (admin01 on SQL01)",
      "level": "Low",
      "score": 15,
      "events": 3,
@@ -1995,12 +1995,12 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 3.098,
-    "correlation_s": 0.0271,
-    "severity_s": 0.0005,
-    "evidence_s": 0.2573,
-    "analysis_total_s": 3.3828,
-    "ingest_s": 0.9898
+    "detection_s": 1.1701,
+    "correlation_s": 0.0267,
+    "severity_s": 0.0006,
+    "evidence_s": 0.2513,
+    "analysis_total_s": 1.4488,
+    "ingest_s": 1.0082
    }
   },
   {
@@ -2180,12 +2180,12 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 2.4879,
-    "correlation_s": 0.019,
-    "severity_s": 0.0006,
-    "evidence_s": 0.1329,
-    "analysis_total_s": 2.6404,
-    "ingest_s": 0.6225
+    "detection_s": 0.9772,
+    "correlation_s": 0.0178,
+    "severity_s": 0.0003,
+    "evidence_s": 0.1288,
+    "analysis_total_s": 1.1241,
+    "ingest_s": 0.8453
    }
   },
   {
@@ -2367,12 +2367,12 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 2.7899,
-    "correlation_s": 0.0188,
-    "severity_s": 0.0003,
-    "evidence_s": 0.1742,
-    "analysis_total_s": 2.9831,
-    "ingest_s": 0.8828
+    "detection_s": 1.118,
+    "correlation_s": 0.0221,
+    "severity_s": 0.0004,
+    "evidence_s": 0.1973,
+    "analysis_total_s": 1.3378,
+    "ingest_s": 0.8991
    }
   },
   {
@@ -2573,12 +2573,12 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 2.6427,
-    "correlation_s": 0.0258,
-    "severity_s": 0.0005,
-    "evidence_s": 0.2167,
-    "analysis_total_s": 2.8855,
-    "ingest_s": 0.888
+    "detection_s": 1.1524,
+    "correlation_s": 0.0264,
+    "severity_s": 0.0004,
+    "evidence_s": 0.2509,
+    "analysis_total_s": 1.4301,
+    "ingest_s": 0.9004
    }
   },
   {
@@ -2760,12 +2760,12 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 2.687,
-    "correlation_s": 0.0222,
+    "detection_s": 1.0424,
+    "correlation_s": 0.0217,
     "severity_s": 0.0004,
-    "evidence_s": 0.2703,
-    "analysis_total_s": 2.9799,
-    "ingest_s": 0.652
+    "evidence_s": 0.2215,
+    "analysis_total_s": 1.286,
+    "ingest_s": 0.9202
    }
   }
  ],

@@ -1,0 +1,147 @@
+{
+ "summary": {
+  "dataset": "test_seed303",
+  "model": "qwen2.5:7b",
+  "incidents": 5,
+  "slm_answers": 5,
+  "fallbacks": 0,
+  "factual_claims": 13,
+  "verified": 13,
+  "verification_rate": 1.0,
+  "mean_wall_s": 10.14,
+  "mean_tokens_per_s": 47.6,
+  "ollama": {
+   "host": "http://127.0.0.1:11434",
+   "model": "qwen2.5:7b",
+   "reachable": true,
+   "model_installed": true,
+   "models": [
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.68,
+     "quant": "Q4_K_M",
+     "params": "7.6B"
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 1.93,
+     "quant": "Q4_K_M",
+     "params": "3.1B"
+    }
+   ],
+   "loaded": [
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.76,
+     "vram_gb": 4.76,
+     "gpu_share": 1.0
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 2.16,
+     "vram_gb": 2.16,
+     "gpu_share": 1.0
+    }
+   ],
+   "error": null,
+   "version": "0.40.16"
+  }
+ },
+ "incidents": [
+  {
+   "incident_id": "INC-0002",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 10.08,
+   "tokens_per_s": 47.5,
+   "output_tokens": 440,
+   "prompt_tokens": 2170,
+   "load_s": 0.01,
+   "factual_claims": 3,
+   "verified": 3,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 11.37,
+   "tokens_per_s": 47.2,
+   "output_tokens": 491,
+   "prompt_tokens": 2392,
+   "load_s": 0.02,
+   "factual_claims": 3,
+   "verified": 3,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0001",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 10.83,
+   "tokens_per_s": 47.8,
+   "output_tokens": 496,
+   "prompt_tokens": 1273,
+   "load_s": 0.02,
+   "factual_claims": 3,
+   "verified": 3,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0005",
+   "level": "Medium",
+   "source": "slm",
+   "error": null,
+   "wall_s": 8.89,
+   "tokens_per_s": 48.2,
+   "output_tokens": 412,
+   "prompt_tokens": 1139,
+   "load_s": 0.01,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0003",
+   "level": "Low",
+   "source": "slm",
+   "error": null,
+   "wall_s": 9.55,
+   "tokens_per_s": 47.4,
+   "output_tokens": 424,
+   "prompt_tokens": 1641,
+   "load_s": 0.01,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 1,
+   "actions_rejected": 1
+  }
+ ]
+}

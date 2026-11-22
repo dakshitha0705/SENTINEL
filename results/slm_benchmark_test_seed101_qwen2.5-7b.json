@@ -1,0 +1,168 @@
+{
+ "summary": {
+  "dataset": "test_seed101",
+  "model": "qwen2.5:7b",
+  "incidents": 5,
+  "slm_answers": 5,
+  "fallbacks": 0,
+  "factual_claims": 15,
+  "verified": 12,
+  "verification_rate": 0.8,
+  "mean_wall_s": 10.37,
+  "mean_tokens_per_s": 48.2,
+  "ollama": {
+   "host": "http://127.0.0.1:11434",
+   "model": "qwen2.5:7b",
+   "reachable": true,
+   "model_installed": true,
+   "models": [
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.68,
+     "quant": "Q4_K_M",
+     "params": "7.6B"
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 1.93,
+     "quant": "Q4_K_M",
+     "params": "3.1B"
+    }
+   ],
+   "loaded": [
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.76,
+     "vram_gb": 4.76,
+     "gpu_share": 1.0
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 2.16,
+     "vram_gb": 2.16,
+     "gpu_share": 1.0
+    }
+   ],
+   "error": null,
+   "version": "0.40.16"
+  }
+ },
+ "incidents": [
+  {
+   "incident_id": "INC-0001",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 10.56,
+   "tokens_per_s": 48.3,
+   "output_tokens": 472,
+   "prompt_tokens": 2187,
+   "load_s": 0.01,
+   "factual_claims": 4,
+   "verified": 4,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 12.22,
+   "tokens_per_s": 47.3,
+   "output_tokens": 531,
+   "prompt_tokens": 2593,
+   "load_s": 0.01,
+   "factual_claims": 3,
+   "verified": 2,
+   "unverified": [
+    {
+     "text": "At 01:17:06 UTC, a suspicious PowerShell script",
+     "problems": [
+      "time 01:17 not found in cited facts",
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.6666666666666666,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0002",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 10.43,
+   "tokens_per_s": 48.3,
+   "output_tokens": 474,
+   "prompt_tokens": 1625,
+   "load_s": 0.01,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0003",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 10.2,
+   "tokens_per_s": 48.4,
+   "output_tokens": 473,
+   "prompt_tokens": 1282,
+   "load_s": 0.01,
+   "factual_claims": 3,
+   "verified": 3,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0005",
+   "level": "Low",
+   "source": "slm",
+   "error": null,
+   "wall_s": 8.46,
+   "tokens_per_s": 48.5,
+   "output_tokens": 381,
+   "prompt_tokens": 1622,
+   "load_s": 0.01,
+   "factual_claims": 3,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "Another logon attempt was made to FS01 at 03:58 UTC with the same characteristics.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    },
+    {
+     "text": "rahul.verma logged into FIN-SRV01 and then to FS01 from a new source IP address at unusual times, which are not typical for this user.",
+     "problems": [
+      "'fs01' is not in the cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.3333333333333333,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 1,
+   "actions_rejected": 0
+  }
+ ]
+}

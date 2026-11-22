@@ -1,0 +1,321 @@
+{
+ "summary": {
+  "questions": 25,
+  "empty_replies": 6,
+  "sentences": 18,
+  "verified": 15,
+  "verification_rate": 0.833,
+  "mean_wall_s": 0.61
+ },
+ "rows": [
+  {
+   "incident": "INC-0001",
+   "question": "What happened after the successful login?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 1.36,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "After a successful login by admin02 from source IP 10.0.46.85 at FIN-SRV01, suspicious activities were observed including credential dumping via mimikatz.exe and clearing of audit logs (Security log)."
+   ]
+  },
+  {
+   "incident": "INC-0001",
+   "question": "Why was this incident classified with this severity?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 1.25,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "This incident was classified with a Critical (score 100/100) severity based on factors R4 Unusual login time for this user +5; R5 New device or source IP for this user +5; R7 Suspicious process execution +25; R8 Audit log cleared +25; Log cleared after suspicious activity +10; Credential dumping observed +20; Privileged account involved +15."
+   ]
+  },
+  {
+   "incident": "INC-0001",
+   "question": "Which devices were involved?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 1.1,
+   "sentences": 3,
+   "verified": 3,
+   "cannot_answer": "",
+   "answer": [
+    "Devices FIN-SRV01 were involved based on fact F1 which states 'Incident INC-0001 spans 2026-11-19 02:43:23-03:03:06 UTC with 6 alerts over 5 log events.",
+    "Accounts: admin02.",
+    "Hosts: FIN-SRV01.'"
+   ]
+  },
+  {
+   "incident": "INC-0001",
+   "question": "What evidence contradicts the hypothesis?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 0.32,
+   "sentences": 0,
+   "verified": 0,
+   "cannot_answer": "There are no contradicting facts provided in the given evidence pack.",
+   "answer": []
+  },
+  {
+   "incident": "INC-0001",
+   "question": "What is the attacker's home country?",
+   "attempts": 2,
+   "error": null,
+   "wall_s": 0.16,
+   "sentences": 0,
+   "verified": 0,
+   "cannot_answer": "",
+   "answer": []
+  },
+  {
+   "incident": "INC-0005",
+   "question": "What happened after the successful login?",
+   "attempts": 2,
+   "error": null,
+   "wall_s": 0.15,
+   "sentences": 0,
+   "verified": 0,
+   "cannot_answer": "",
+   "answer": []
+  },
+  {
+   "incident": "INC-0005",
+   "question": "Why was this incident classified with this severity?",
+   "attempts": 2,
+   "error": null,
+   "wall_s": 1.27,
+   "sentences": 1,
+   "verified": 0,
+   "cannot_answer": "",
+   "answer": [
+    "This incident was classified with Severity Critical (score 100/100) due to multiple independent high-signal detections including R1 Brute force +15, R3 Successful logon after failures +25, R4 Unusual login time for this user +5, R5 New device or source IP for this user +5, R6 Unauthorised privileged group change +25, and R7 Suspicious process execution +25."
+   ]
+  },
+  {
+   "incident": "INC-0005",
+   "question": "Which devices were involved?",
+   "attempts": 2,
+   "error": null,
+   "wall_s": 0.85,
+   "sentences": 1,
+   "verified": 0,
+   "cannot_answer": "",
+   "answer": [
+    "The device WS-SALES-09 was involved as it is mentioned in multiple alerts and detections related to this incident involving kavya.shetty's activities on that host."
+   ]
+  },
+  {
+   "incident": "INC-0005",
+   "question": "What evidence contradicts the hypothesis?",
+   "attempts": 2,
+   "error": null,
+   "wall_s": 0.16,
+   "sentences": 0,
+   "verified": 0,
+   "cannot_answer": "",
+   "answer": []
+  },
+  {
+   "incident": "INC-0005",
+   "question": "What is the attacker's home country?",
+   "attempts": 2,
+   "error": null,
+   "wall_s": 0.32,
+   "sentences": 0,
+   "verified": 0,
+   "cannot_answer": "No information about the attacker's identity, location, or intent is provided in the given facts.",
+   "answer": []
+  },
+  {
+   "incident": "INC-0004",
+   "question": "What happened after the successful login?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 0.94,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "sanjay.reddy logged on successfully from 192.0.2.37 8.2 min after 1 failed attempts from the same source (R2 burst)."
+   ]
+  },
+  {
+   "incident": "INC-0004",
+   "question": "Why was this incident classified with this severity?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 0.79,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "This incident was classified with a Critical (score 85/100) severity due to factors R2 Password spraying +25; R3 Successful logon after failures +25; and Privileged account involved +15."
+   ]
+  },
+  {
+   "incident": "INC-0004",
+   "question": "Which devices were involved?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 0.43,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "Hosts DC01 were involved in the security incident as mentioned in fact F1."
+   ]
+  },
+  {
+   "incident": "INC-0004",
+   "question": "What evidence contradicts the hypothesis?",
+   "attempts": 2,
+   "error": null,
+   "wall_s": 0.14,
+   "sentences": 0,
+   "verified": 0,
+   "cannot_answer": "",
+   "answer": []
+  },
+  {
+   "incident": "INC-0004",
+   "question": "What is the attacker's home country?",
+   "attempts": 2,
+   "error": null,
+   "wall_s": 0.15,
+   "sentences": 0,
+   "verified": 0,
+   "cannot_answer": "",
+   "answer": []
+  },
+  {
+   "incident": "INC-0002",
+   "question": "What happened after the successful login?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 0.6,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "Privileged group change occurred after the successful login of isha.gupta on DC01."
+   ]
+  },
+  {
+   "incident": "INC-0002",
+   "question": "Why was this incident classified with this severity?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 0.92,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "Severity High (score 65/100): R5 New device or source IP for this user +5; R6 Unauthorised privileged group change +25; Privileged account involved +15; Domain-wide admin group targeted +10; Critical asset involved +10."
+   ]
+  },
+  {
+   "incident": "INC-0002",
+   "question": "Which devices were involved?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 0.37,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "The device involved in this security incident is DC01."
+   ]
+  },
+  {
+   "incident": "INC-0002",
+   "question": "What evidence contradicts the hypothesis?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 0.62,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "Logon EVT-001123 by isha.gupta at 12:49:12 falls within the account's usual logon hours."
+   ]
+  },
+  {
+   "incident": "INC-0002",
+   "question": "What is the attacker's home country?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 0.32,
+   "sentences": 0,
+   "verified": 0,
+   "cannot_answer": "No information about the attacker's home country is provided in the evidence pack.",
+   "answer": []
+  },
+  {
+   "incident": "INC-0003",
+   "question": "What happened after the successful login?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 1.37,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "After a successful login, kavya.gupta logged on again from/to source IP 10.0.71.135 at unusual times (01:48 and 01:58 UTC) with no prior logon within +-1h of these hours in the previous 10 earlier logons."
+   ]
+  },
+  {
+   "incident": "INC-0003",
+   "question": "Why was this incident classified with this severity?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 0.78,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "Severity Low (score 20/100) is due to R4 Unusual login time for this user +5 and R5 New device or source IP for this user +5; Critical asset involved +10."
+   ]
+  },
+  {
+   "incident": "INC-0003",
+   "question": "Which devices were involved?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 0.47,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "Devices FIN-SRV01, FS01 were involved in this incident as mentioned in fact F1."
+   ]
+  },
+  {
+   "incident": "INC-0003",
+   "question": "What evidence contradicts the hypothesis?",
+   "attempts": 2,
+   "error": null,
+   "wall_s": 0.15,
+   "sentences": 0,
+   "verified": 0,
+   "cannot_answer": "",
+   "answer": []
+  },
+  {
+   "incident": "INC-0003",
+   "question": "What is the attacker's home country?",
+   "attempts": 1,
+   "error": null,
+   "wall_s": 0.38,
+   "sentences": 1,
+   "verified": 0,
+   "cannot_answer": "",
+   "answer": [
+    "Information about the attacker's home country is missing based on provided evidence."
+   ]
+  }
+ ]
+}
