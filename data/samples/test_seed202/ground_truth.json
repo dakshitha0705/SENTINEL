@@ -1,0 +1,240 @@
+{
+ "dataset": "test_seed202",
+ "generator_params": {
+  "seed": 202,
+  "name": "test_seed202",
+  "start": "2026-11-09",
+  "days": 7,
+  "n_regular": 18,
+  "n_workstations": 11,
+  "bf_failures": [
+   8,
+   40
+  ],
+  "bf_duration_min": [
+   3,
+   12
+  ],
+  "spray_users": [
+   5,
+   9
+  ],
+  "spray_duration_min": [
+   4,
+   14
+  ],
+  "spray_success_prob": 0.0,
+  "success_delay_min": [
+   2,
+   14
+  ],
+  "step_gap_min": [
+   5,
+   25
+  ],
+  "s5_hour": [
+   1,
+   3
+  ],
+  "description": "Held-out test seed: slower brute force (some below the R1 density threshold)."
+ },
+ "week_start": "2026-11-09",
+ "events": 1437,
+ "auth_events": 638,
+ "endpoint_events": 799,
+ "accounts": 23,
+ "hosts": 21,
+ "incidents": [
+  {
+   "scenario_id": "S1",
+   "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+   "type": "malicious",
+   "expected_severity": "Critical",
+   "description": "Brute force against priya.shetty on WS-FIN-01, successful logon, account added to local Administrators, encoded PowerShell and certutil download.",
+   "record_ids": [
+    101286,
+    101287,
+    101288,
+    101289,
+    101290,
+    101291,
+    101292,
+    101293,
+    101294,
+    101295,
+    101296,
+    101297,
+    101298,
+    101299,
+    101300,
+    101301,
+    101302,
+    101303,
+    101304,
+    101305,
+    101306,
+    101307,
+    101308,
+    101309,
+    101312,
+    101313,
+    101314
+   ]
+  },
+  {
+   "scenario_id": "S2",
+   "name": "Password spraying",
+   "type": "malicious",
+   "expected_severity": "Medium",
+   "description": "One external source tries a few passwords against many accounts on DC01.",
+   "record_ids": [
+    101164,
+    101165,
+    101166,
+    101167,
+    101168,
+    101169,
+    101170,
+    101171,
+    101172,
+    101173,
+    101174,
+    101175,
+    101176
+   ]
+  },
+  {
+   "scenario_id": "S3",
+   "name": "Unauthorised privileged group membership change (insider)",
+   "type": "malicious",
+   "expected_severity": "High",
+   "description": "Non-admin naveen.bose logs on to DC01 and adds themself to Domain Admins.",
+   "record_ids": [
+    100914,
+    100920,
+    100922
+   ]
+  },
+  {
+   "scenario_id": "S4",
+   "name": "Credential dumping followed by audit-log clearing",
+   "type": "malicious",
+   "expected_severity": "Critical",
+   "description": "admin02 credentials used at night from an unknown internal host on FIN-SRV01; Mimikatz executed and the Security log cleared.",
+   "record_ids": [
+    100766,
+    100767,
+    100769,
+    100772,
+    100773
+   ]
+  },
+  {
+   "scenario_id": "S5",
+   "name": "Off-hours logon from an unfamiliar device",
+   "type": "malicious",
+   "expected_severity": "Low",
+   "description": "shalini.bose authenticates at night from a never-seen address to FIN-SRV01 and FS01.",
+   "record_ids": [
+    101031,
+    101032
+   ]
+  }
+ ],
+ "benign": [
+  {
+   "scenario_id": "B1",
+   "name": "Approved night maintenance (admin01, change window)",
+   "type": "benign",
+   "expected_severity": null,
+   "description": "",
+   "record_ids": [
+    101389,
+    101390,
+    101391,
+    101392,
+    101393,
+    101394
+   ]
+  },
+  {
+   "scenario_id": "B2",
+   "name": "Password typed wrongly 2-3 times (shalini.kulkarni)",
+   "type": "benign",
+   "expected_severity": null,
+   "description": "",
+   "record_ids": [
+    100915,
+    100916,
+    100917
+   ]
+  },
+  {
+   "scenario_id": "B3",
+   "name": "New laptop rollout",
+   "type": "benign",
+   "expected_severity": null,
+   "description": "",
+   "record_ids": [
+    100559,
+    100561,
+    100586,
+    100587,
+    100626,
+    100627
+   ]
+  },
+  {
+   "scenario_id": "B4",
+   "name": "Approved group membership change (admin02, change window)",
+   "type": "benign",
+   "expected_severity": null,
+   "description": "",
+   "record_ids": [
+    101395,
+    101396,
+    101397
+   ]
+  },
+  {
+   "scenario_id": "B5",
+   "name": "Legitimate administrator script (admin02)",
+   "type": "benign",
+   "expected_severity": null,
+   "description": "",
+   "record_ids": [
+    100900,
+    100901
+   ]
+  },
+  {
+   "scenario_id": "B6",
+   "name": "Forgotten password, several retries (manoj.verma)",
+   "type": "benign",
+   "expected_severity": null,
+   "description": "",
+   "record_ids": [
+    100553,
+    100554,
+    100555,
+    100556,
+    100557,
+    100558,
+    100560,
+    100565
+   ]
+  },
+  {
+   "scenario_id": "B7",
+   "name": "Scheduled service-account backup at night (svc_backup)",
+   "type": "benign",
+   "expected_severity": null,
+   "description": "",
+   "record_ids": [
+    100759,
+    100760,
+    100761
+   ]
+  }
+ ]
+}

@@ -1,0 +1,2904 @@
+{
+ "generated_at": "2026-11-22T16:52:29+00:00",
+ "matching_rule": ">=50% of ground-truth event IDs; benign flagged on any overlap",
+ "dev": {
+  "dataset": "dev_seed7",
+  "events": 1590,
+  "gt_incidents": 5,
+  "gt_benign": 7,
+  "detected_incidents": 5,
+  "incident_precision": 1.0,
+  "incident_recall": 1.0,
+  "f1": 1.0,
+  "false_positive_rate": 0.0,
+  "flagged_benign": [],
+  "false_positive_incidents": [],
+  "missed_incidents": [],
+  "correlation_jaccard_mean": 0.933,
+  "severity_agreement": 1.0,
+  "severity_pairs": [
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Medium",
+    "Medium"
+   ],
+   [
+    "Low",
+    "Low"
+   ]
+  ],
+  "incidents": [
+   {
+    "incident_id": "INC-0001",
+    "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (deepak.joshi on WS-HR-07)",
+    "level": "Critical",
+    "score": 100,
+    "events": 19,
+    "benign_overlap": [],
+    "matched": "S1",
+    "coverage": 1.0,
+    "jaccard": 1.0,
+    "expected_level": "Critical"
+   },
+   {
+    "incident_id": "INC-0003",
+    "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+    "level": "Critical",
+    "score": 100,
+    "events": 5,
+    "benign_overlap": [],
+    "matched": "S4",
+    "coverage": 1.0,
+    "jaccard": 1.0,
+    "expected_level": "Critical"
+   },
+   {
+    "incident_id": "INC-0002",
+    "title": "Privilege change (nisha.shetty on DC01)",
+    "level": "High",
+    "score": 60,
+    "events": 2,
+    "benign_overlap": [],
+    "matched": "S3",
+    "coverage": 0.667,
+    "jaccard": 0.667,
+    "expected_level": "High"
+   },
+   {
+    "incident_id": "INC-0005",
+    "title": "Password spraying (11 accounts on DC01)",
+    "level": "Medium",
+    "score": 50,
+    "events": 17,
+    "benign_overlap": [],
+    "matched": "S2",
+    "coverage": 1.0,
+    "jaccard": 1.0,
+    "expected_level": "Medium"
+   },
+   {
+    "incident_id": "INC-0004",
+    "title": "Off-hours logon from new device/IP (deepak.bose on FIN-SRV01)",
+    "level": "Low",
+    "score": 20,
+    "events": 2,
+    "benign_overlap": [],
+    "matched": "S5",
+    "coverage": 1.0,
+    "jaccard": 1.0,
+    "expected_level": "Low"
+   }
+  ],
+  "per_rule": {
+   "R1": {
+    "alerts": 1,
+    "flagged_events": 15,
+    "malicious_events": 15,
+    "precision": 1.0
+   },
+   "R2": {
+    "alerts": 1,
+    "flagged_events": 17,
+    "malicious_events": 17,
+    "precision": 1.0
+   },
+   "R3": {
+    "alerts": 1,
+    "flagged_events": 1,
+    "malicious_events": 1,
+    "precision": 1.0
+   },
+   "R4": {
+    "alerts": 7,
+    "flagged_events": 7,
+    "malicious_events": 3,
+    "precision": 0.429
+   },
+   "R5": {
+    "alerts": 17,
+    "flagged_events": 17,
+    "malicious_events": 5,
+    "precision": 0.294
+   },
+   "R6": {
+    "alerts": 2,
+    "flagged_events": 2,
+    "malicious_events": 2,
+    "precision": 1.0
+   },
+   "R7": {
+    "alerts": 4,
+    "flagged_events": 4,
+    "malicious_events": 4,
+    "precision": 1.0
+   },
+   "R8": {
+    "alerts": 1,
+    "flagged_events": 1,
+    "malicious_events": 1,
+    "precision": 1.0
+   }
+  },
+  "event_confusion": {
+   "labels": [
+    "benign",
+    "malicious"
+   ],
+   "matrix": [
+    [
+     1544,
+     0
+    ],
+    [
+     1,
+     45
+    ]
+   ],
+   "event_precision": 1.0,
+   "event_recall": 0.978,
+   "event_f1": 0.989
+  },
+  "input_files": [
+   "auth_logs.csv",
+   "endpoint_logs.json"
+  ],
+  "timings_s": {
+   "detection_s": 0.3834,
+   "correlation_s": 0.0036,
+   "severity_s": 0.0001,
+   "evidence_s": 0.0519,
+   "analysis_total_s": 0.4389,
+   "ingest_s": 0.2164
+  }
+ },
+ "test": [
+  {
+   "dataset": "test_seed101",
+   "events": 1657,
+   "gt_incidents": 5,
+   "gt_benign": 7,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.933,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0001",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (deepak.gupta on WS-ENG-13)",
+     "level": "Critical",
+     "score": 100,
+     "events": 25,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Password spraying -> Logon after failures (6 accounts on DC01)",
+     "level": "High",
+     "score": 75,
+     "events": 8,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Privilege change (tara.menon on DC01)",
+     "level": "High",
+     "score": 65,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 0.667,
+     "jaccard": 0.667,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Off-hours logon from new device/IP (rahul.verma on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 21,
+     "malicious_events": 21,
+     "precision": 1.0
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 7,
+     "malicious_events": 7,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 12,
+     "flagged_events": 12,
+     "malicious_events": 4,
+     "precision": 0.333
+    },
+    "R5": {
+     "alerts": 15,
+     "flagged_events": 15,
+     "malicious_events": 6,
+     "precision": 0.4
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1614,
+      0
+     ],
+     [
+      1,
+      42
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 0.977,
+    "event_f1": 0.988
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 1.7365,
+    "correlation_s": 0.0222,
+    "severity_s": 0.0004,
+    "evidence_s": 0.1939,
+    "analysis_total_s": 1.9529,
+    "ingest_s": 0.171
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "events": 1437,
+   "gt_incidents": 5,
+   "gt_benign": 7,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.933,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Medium",
+     "Medium"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0001",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (priya.shetty on WS-FIN-01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 27,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Privilege change (naveen.bose on DC01)",
+     "level": "High",
+     "score": 60,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 0.667,
+     "jaccard": 0.667,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Password spraying (8 accounts on DC01)",
+     "level": "Medium",
+     "score": 35,
+     "events": 13,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Medium"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Off-hours logon from new device/IP (shalini.bose on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 23,
+     "malicious_events": 23,
+     "precision": 1.0
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 13,
+     "malicious_events": 13,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 8,
+     "flagged_events": 8,
+     "malicious_events": 4,
+     "precision": 0.5
+    },
+    "R5": {
+     "alerts": 15,
+     "flagged_events": 15,
+     "malicious_events": 5,
+     "precision": 0.333
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1387,
+      0
+     ],
+     [
+      1,
+      49
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 0.98,
+    "event_f1": 0.99
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 2.3619,
+    "correlation_s": 0.0216,
+    "severity_s": 0.0004,
+    "evidence_s": 0.2094,
+    "analysis_total_s": 2.5933,
+    "ingest_s": 0.7799
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "events": 1865,
+   "gt_incidents": 5,
+   "gt_benign": 7,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.933,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Medium",
+     "Medium"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0002",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (deepak.joshi on WS-HR-07)",
+     "level": "Critical",
+     "score": 100,
+     "events": 23,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0001",
+     "title": "Privilege change (varun.das on DC01)",
+     "level": "High",
+     "score": 65,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 0.667,
+     "jaccard": 0.667,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Password spraying (11 accounts on DC01)",
+     "level": "Medium",
+     "score": 50,
+     "events": 16,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Medium"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Off-hours logon from new device/IP (gaurav.bose on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 19,
+     "malicious_events": 19,
+     "precision": 1.0
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 16,
+     "malicious_events": 16,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 12,
+     "flagged_events": 12,
+     "malicious_events": 3,
+     "precision": 0.25
+    },
+    "R5": {
+     "alerts": 20,
+     "flagged_events": 20,
+     "malicious_events": 5,
+     "precision": 0.25
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1816,
+      0
+     ],
+     [
+      1,
+      48
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 0.98,
+    "event_f1": 0.99
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 2.8844,
+    "correlation_s": 0.0251,
+    "severity_s": 0.0004,
+    "evidence_s": 0.2186,
+    "analysis_total_s": 3.1284,
+    "ingest_s": 0.9573
+   }
+  }
+ ],
+ "test_aggregate": {
+  "datasets": [
+   "test_seed101",
+   "test_seed202",
+   "test_seed303"
+  ],
+  "detected_incidents": 15,
+  "matched_detected": 15,
+  "gt_incidents": 15,
+  "gt_detected": 15,
+  "benign_lookalikes": 21,
+  "benign_flagged": 0,
+  "incident_precision": 1.0,
+  "incident_recall": 1.0,
+  "f1": 1.0,
+  "false_positive_rate": 0.0,
+  "correlation_jaccard_mean": 0.933,
+  "severity_agreement": 1.0,
+  "severity_pairs": [
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Medium",
+    "Medium"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Medium",
+    "Medium"
+   ],
+   [
+    "Low",
+    "Low"
+   ]
+  ]
+ },
+ "format_robustness": {
+  "json": {
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0
+  },
+  "csv": {
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0
+  }
+ },
+ "stress": [
+  {
+   "dataset": "stress_seed1001",
+   "events": 1520,
+   "gt_incidents": 5,
+   "gt_benign": 7,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.933,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0002",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Brute force -> Privilege change -> Suspicious execution (nisha.menon on WS-FIN-01)",
+     "level": "Critical",
+     "score": 95,
+     "events": 22,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Password spraying -> Logon after failures (7 accounts on DC01)",
+     "level": "High",
+     "score": 70,
+     "events": 13,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0001",
+     "title": "Privilege change (shalini.reddy on DC01)",
+     "level": "High",
+     "score": 65,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 0.667,
+     "jaccard": 0.667,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Off-hours logon from new device/IP (neha.rao on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 18,
+     "malicious_events": 18,
+     "precision": 1.0
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 12,
+     "malicious_events": 12,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 9,
+     "flagged_events": 9,
+     "malicious_events": 4,
+     "precision": 0.444
+    },
+    "R5": {
+     "alerts": 20,
+     "flagged_events": 20,
+     "malicious_events": 6,
+     "precision": 0.3
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1475,
+      0
+     ],
+     [
+      1,
+      44
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 0.978,
+    "event_f1": 0.989
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 2.3042,
+    "correlation_s": 0.0241,
+    "severity_s": 0.0004,
+    "evidence_s": 0.2055,
+    "analysis_total_s": 2.5342,
+    "ingest_s": 0.8789
+   }
+  },
+  {
+   "dataset": "stress_seed1002",
+   "events": 1655,
+   "gt_incidents": 5,
+   "gt_benign": 7,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.905,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Medium",
+     "Medium"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0001",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (deepak.rao on WS-FIN-01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 18,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Privilege change (rohan.kulkarni on DC01)",
+     "level": "High",
+     "score": 65,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 0.667,
+     "jaccard": 0.667,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Password spraying (5 accounts on DC01)",
+     "level": "Medium",
+     "score": 50,
+     "events": 7,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 0.857,
+     "expected_level": "Medium"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Off-hours logon from new device/IP (meera.pillai on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 14,
+     "malicious_events": 14,
+     "precision": 1.0
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 6,
+     "malicious_events": 6,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 7,
+     "flagged_events": 7,
+     "malicious_events": 3,
+     "precision": 0.429
+    },
+    "R5": {
+     "alerts": 14,
+     "flagged_events": 14,
+     "malicious_events": 5,
+     "precision": 0.357
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1620,
+      1
+     ],
+     [
+      1,
+      33
+     ]
+    ],
+    "event_precision": 0.971,
+    "event_recall": 0.971,
+    "event_f1": 0.971
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 2.5259,
+    "correlation_s": 0.0223,
+    "severity_s": 0.0005,
+    "evidence_s": 0.2133,
+    "analysis_total_s": 2.7621,
+    "ingest_s": 0.8662
+   }
+  },
+  {
+   "dataset": "stress_seed1003",
+   "events": 1857,
+   "gt_incidents": 5,
+   "gt_benign": 7,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.933,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0002",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (aditya.shetty on WS-ENG-08)",
+     "level": "Critical",
+     "score": 100,
+     "events": 19,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Password spraying -> Logon after failures (7 accounts on DC01)",
+     "level": "High",
+     "score": 65,
+     "events": 11,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0001",
+     "title": "Privilege change (shalini.kumar on DC01)",
+     "level": "High",
+     "score": 60,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 0.667,
+     "jaccard": 0.667,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Off-hours logon from new device/IP (aditya.rao on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 15,
+     "malicious_events": 15,
+     "precision": 1.0
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 10,
+     "malicious_events": 10,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 9,
+     "flagged_events": 9,
+     "malicious_events": 3,
+     "precision": 0.333
+    },
+    "R5": {
+     "alerts": 18,
+     "flagged_events": 18,
+     "malicious_events": 6,
+     "precision": 0.333
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1817,
+      0
+     ],
+     [
+      1,
+      39
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 0.975,
+    "event_f1": 0.987
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 2.8629,
+    "correlation_s": 0.024,
+    "severity_s": 0.0004,
+    "evidence_s": 0.2167,
+    "analysis_total_s": 3.104,
+    "ingest_s": 0.9694
+   }
+  },
+  {
+   "dataset": "stress_seed1004",
+   "events": 1607,
+   "gt_incidents": 5,
+   "gt_benign": 7,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.933,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0001",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (isha.gupta on WS-HR-02)",
+     "level": "Critical",
+     "score": 100,
+     "events": 13,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Password spraying -> Logon after failures (9 accounts on DC01)",
+     "level": "High",
+     "score": 75,
+     "events": 15,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Privilege change (pooja.iyer on DC01)",
+     "level": "High",
+     "score": 60,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 0.667,
+     "jaccard": 0.667,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Off-hours logon from new device/IP (vikram.rao on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 9,
+     "malicious_events": 9,
+     "precision": 1.0
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 14,
+     "malicious_events": 14,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 10,
+     "flagged_events": 10,
+     "malicious_events": 3,
+     "precision": 0.3
+    },
+    "R5": {
+     "alerts": 18,
+     "flagged_events": 18,
+     "malicious_events": 6,
+     "precision": 0.333
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1569,
+      0
+     ],
+     [
+      1,
+      37
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 0.974,
+    "event_f1": 0.987
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 2.6232,
+    "correlation_s": 0.0234,
+    "severity_s": 0.0004,
+    "evidence_s": 0.2444,
+    "analysis_total_s": 2.8914,
+    "ingest_s": 0.8906
+   }
+  },
+  {
+   "dataset": "stress_seed1005",
+   "events": 1936,
+   "gt_incidents": 5,
+   "gt_benign": 7,
+   "detected_incidents": 5,
+   "incident_precision": 0.8,
+   "incident_recall": 0.8,
+   "f1": 0.8,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [
+    {
+     "incident_id": "INC-0004",
+     "title": "Privilege change -> Suspicious execution (karthik.bose on WS-OPS-10)",
+     "level": "Critical",
+     "score": 95,
+     "events": 4,
+     "benign_overlap": [],
+     "matched": null
+    }
+   ],
+   "missed_incidents": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "best_coverage": 0.308
+    }
+   ],
+   "correlation_jaccard_mean": 0.889,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0004",
+     "title": "Privilege change -> Suspicious execution (karthik.bose on WS-OPS-10)",
+     "level": "Critical",
+     "score": 95,
+     "events": 4,
+     "benign_overlap": [],
+     "matched": null
+    },
+    {
+     "incident_id": "INC-0001",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 85,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Password spraying -> Logon after failures (8 accounts on DC01)",
+     "level": "High",
+     "score": 75,
+     "events": 18,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 0.889,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Privilege change (manoj.verma on DC01)",
+     "level": "High",
+     "score": 65,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 0.667,
+     "jaccard": 0.667,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Off-hours logon from new device/IP (varun.joshi on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 15,
+     "malicious_events": 15,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 9,
+     "flagged_events": 9,
+     "malicious_events": 3,
+     "precision": 0.333
+    },
+    "R5": {
+     "alerts": 21,
+     "flagged_events": 21,
+     "malicious_events": 6,
+     "precision": 0.286
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1895,
+      2
+     ],
+     [
+      10,
+      29
+     ]
+    ],
+    "event_precision": 0.935,
+    "event_recall": 0.744,
+    "event_f1": 0.829
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 2.9594,
+    "correlation_s": 0.0223,
+    "severity_s": 0.0004,
+    "evidence_s": 0.1954,
+    "analysis_total_s": 3.1775,
+    "ingest_s": 1.0358
+   }
+  },
+  {
+   "dataset": "stress_seed1006",
+   "events": 1849,
+   "gt_incidents": 5,
+   "gt_benign": 7,
+   "detected_incidents": 6,
+   "incident_precision": 0.833,
+   "incident_recall": 1.0,
+   "f1": 0.909,
+   "false_positive_rate": 0.143,
+   "flagged_benign": [
+    "B1"
+   ],
+   "false_positive_incidents": [
+    {
+     "incident_id": "INC-0006",
+     "title": "Off-hours logon from new device/IP (admin01 on SQL01)",
+     "level": "Low",
+     "score": 15,
+     "events": 3,
+     "benign_overlap": [
+      "B1"
+     ],
+     "matched": null
+    }
+   ],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.933,
+   "severity_agreement": 0.8,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "High",
+     "Medium"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0002",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (rohan.iyer on WS-SALES-04)",
+     "level": "Critical",
+     "score": 100,
+     "events": 21,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Privilege change (neha.sharma on DC01)",
+     "level": "High",
+     "score": 60,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 0.667,
+     "jaccard": 0.667,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0001",
+     "title": "Password spraying (7 accounts on DC01)",
+     "level": "Medium",
+     "score": 50,
+     "events": 9,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Off-hours logon from new device/IP (kavya.iyer on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    },
+    {
+     "incident_id": "INC-0006",
+     "title": "Off-hours logon from new device/IP (admin01 on SQL01)",
+     "level": "Low",
+     "score": 15,
+     "events": 3,
+     "benign_overlap": [
+      "B1"
+     ],
+     "matched": null
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 17,
+     "malicious_events": 17,
+     "precision": 1.0
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 8,
+     "malicious_events": 8,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 11,
+     "flagged_events": 11,
+     "malicious_events": 4,
+     "precision": 0.364
+    },
+    "R5": {
+     "alerts": 17,
+     "flagged_events": 17,
+     "malicious_events": 6,
+     "precision": 0.353
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1806,
+      3
+     ],
+     [
+      1,
+      39
+     ]
+    ],
+    "event_precision": 0.929,
+    "event_recall": 0.975,
+    "event_f1": 0.951
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 2.8928,
+    "correlation_s": 0.026,
+    "severity_s": 0.0005,
+    "evidence_s": 0.2657,
+    "analysis_total_s": 3.185,
+    "ingest_s": 0.9635
+   }
+  },
+  {
+   "dataset": "stress_seed1007",
+   "events": 1434,
+   "gt_incidents": 5,
+   "gt_benign": 7,
+   "detected_incidents": 4,
+   "incident_precision": 0.75,
+   "incident_recall": 0.6,
+   "f1": 0.667,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [
+    {
+     "incident_id": "INC-0004",
+     "title": "Privilege change -> Suspicious execution (isha.mehta on WS-HR-02)",
+     "level": "High",
+     "score": 75,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": null
+    }
+   ],
+   "missed_incidents": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "best_coverage": 0.333
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "best_coverage": 0.0
+    }
+   ],
+   "correlation_jaccard_mean": 0.889,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0001",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 85,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Privilege change -> Suspicious execution (isha.mehta on WS-HR-02)",
+     "level": "High",
+     "score": 75,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": null
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Privilege change (priya.shetty on DC01)",
+     "level": "High",
+     "score": 60,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 0.667,
+     "jaccard": 0.667,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Off-hours logon from new device/IP (manoj.joshi on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R2": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R3": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R4": {
+     "alerts": 11,
+     "flagged_events": 11,
+     "malicious_events": 2,
+     "precision": 0.182
+    },
+    "R5": {
+     "alerts": 20,
+     "flagged_events": 20,
+     "malicious_events": 6,
+     "precision": 0.3
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1410,
+      0
+     ],
+     [
+      12,
+      12
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 0.5,
+    "event_f1": 0.667
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 2.2859,
+    "correlation_s": 0.0176,
+    "severity_s": 0.0003,
+    "evidence_s": 0.1247,
+    "analysis_total_s": 2.4286,
+    "ingest_s": 0.7882
+   }
+  },
+  {
+   "dataset": "stress_seed1008",
+   "events": 1649,
+   "gt_incidents": 5,
+   "gt_benign": 7,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.908,
+   "severity_agreement": 0.8,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "High",
+     "Medium"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0002",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (rohan.pillai on WS-SALES-09)",
+     "level": "Critical",
+     "score": 100,
+     "events": 21,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0001",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 85,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Privilege change (sanjay.verma on DC01)",
+     "level": "High",
+     "score": 65,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 0.667,
+     "jaccard": 0.667,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Password spraying (5 accounts on DC01)",
+     "level": "Medium",
+     "score": 55,
+     "events": 8,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 0.875,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Off-hours logon from new device/IP (tara.nair on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 17,
+     "malicious_events": 17,
+     "precision": 1.0
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 6,
+     "malicious_events": 6,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 8,
+     "flagged_events": 8,
+     "malicious_events": 2,
+     "precision": 0.25
+    },
+    "R5": {
+     "alerts": 18,
+     "flagged_events": 18,
+     "malicious_events": 6,
+     "precision": 0.333
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1610,
+      1
+     ],
+     [
+      1,
+      37
+     ]
+    ],
+    "event_precision": 0.974,
+    "event_recall": 0.974,
+    "event_f1": 0.974
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 2.6683,
+    "correlation_s": 0.0237,
+    "severity_s": 0.0004,
+    "evidence_s": 0.1963,
+    "analysis_total_s": 2.8887,
+    "ingest_s": 0.8877
+   }
+  },
+  {
+   "dataset": "stress_seed1009",
+   "events": 1561,
+   "gt_incidents": 5,
+   "gt_benign": 7,
+   "detected_incidents": 6,
+   "incident_precision": 0.833,
+   "incident_recall": 1.0,
+   "f1": 0.909,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [
+    {
+     "incident_id": "INC-0003",
+     "title": "Off-hours logon from new device/IP (admin02 on SQL01)",
+     "level": "Medium",
+     "score": 35,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": null
+    }
+   ],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.853,
+   "severity_agreement": 0.8,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "High"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0006",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (rahul.iyer on WS-HR-07)",
+     "level": "Critical",
+     "score": 100,
+     "events": 16,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0001",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "High",
+     "score": 75,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 0.6,
+     "jaccard": 0.6,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Password spraying -> Logon after failures (10 accounts on DC01)",
+     "level": "High",
+     "score": 60,
+     "events": 18,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Privilege change (isha.kulkarni on DC01)",
+     "level": "High",
+     "score": 60,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 0.667,
+     "jaccard": 0.667,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Off-hours logon from new device/IP (admin02 on SQL01)",
+     "level": "Medium",
+     "score": 35,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": null
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Off-hours logon from new device/IP (ananya.sharma on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 12,
+     "malicious_events": 12,
+     "precision": 1.0
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 17,
+     "malicious_events": 17,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 12,
+     "flagged_events": 12,
+     "malicious_events": 2,
+     "precision": 0.167
+    },
+    "R5": {
+     "alerts": 20,
+     "flagged_events": 20,
+     "malicious_events": 6,
+     "precision": 0.3
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1515,
+      2
+     ],
+     [
+      3,
+      41
+     ]
+    ],
+    "event_precision": 0.953,
+    "event_recall": 0.932,
+    "event_f1": 0.943
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 2.488,
+    "correlation_s": 0.0259,
+    "severity_s": 0.0004,
+    "evidence_s": 0.2491,
+    "analysis_total_s": 2.7634,
+    "ingest_s": 0.7919
+   }
+  },
+  {
+   "dataset": "stress_seed1010",
+   "events": 1592,
+   "gt_incidents": 5,
+   "gt_benign": 7,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.933,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Medium",
+     "Medium"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0004",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (neha.pillai on WS-ENG-08)",
+     "level": "Critical",
+     "score": 100,
+     "events": 26,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0001",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 85,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Privilege change (isha.rao on DC01)",
+     "level": "High",
+     "score": 60,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 0.667,
+     "jaccard": 0.667,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Password spraying (9 accounts on DC01)",
+     "level": "Medium",
+     "score": 35,
+     "events": 15,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Medium"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Off-hours logon from new device/IP (swati.iyer on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 22,
+     "malicious_events": 22,
+     "precision": 1.0
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 15,
+     "malicious_events": 15,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 9,
+     "flagged_events": 9,
+     "malicious_events": 3,
+     "precision": 0.333
+    },
+    "R5": {
+     "alerts": 14,
+     "flagged_events": 14,
+     "malicious_events": 5,
+     "precision": 0.357
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1541,
+      0
+     ],
+     [
+      1,
+      50
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 0.98,
+    "event_f1": 0.99
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 2.5115,
+    "correlation_s": 0.0118,
+    "severity_s": 0.0003,
+    "evidence_s": 0.1935,
+    "analysis_total_s": 2.7171,
+    "ingest_s": 0.8446
+   }
+  }
+ ],
+ "stress_aggregate": {
+  "datasets": [
+   "stress_seed1001",
+   "stress_seed1002",
+   "stress_seed1003",
+   "stress_seed1004",
+   "stress_seed1005",
+   "stress_seed1006",
+   "stress_seed1007",
+   "stress_seed1008",
+   "stress_seed1009",
+   "stress_seed1010"
+  ],
+  "detected_incidents": 51,
+  "matched_detected": 47,
+  "gt_incidents": 50,
+  "gt_detected": 47,
+  "benign_lookalikes": 70,
+  "benign_flagged": 1,
+  "incident_precision": 0.922,
+  "incident_recall": 0.94,
+  "f1": 0.931,
+  "false_positive_rate": 0.014,
+  "correlation_jaccard_mean": 0.911,
+  "severity_agreement": 0.936,
+  "severity_pairs": [
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Medium",
+    "Medium"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "High",
+    "Medium"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "High",
+    "Medium"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "High"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Medium",
+    "Medium"
+   ],
+   [
+    "Low",
+    "Low"
+   ]
+  ]
+ }
+}

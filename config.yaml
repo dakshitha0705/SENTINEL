@@ -1,0 +1,108 @@
+# SENTINEL configuration. All detection thresholds live here.
+# Thresholds were tuned on the development seed (7) only; reported metrics use test seeds.
+
+detection:
+  brute_force:            # R1
+    min_failures: 8
+    window_minutes: 10
+  password_spray:         # R2
+    min_distinct_users: 5
+    window_minutes: 15
+    max_attempts_per_user: 3
+  failure_then_success:   # R3
+    max_minutes_after_burst: 15
+  baseline:               # R4 / R5
+    min_logins: 10        # below this the baseline is "low confidence"
+    min_days: 3
+    min_logins_for_new_context: 3   # R5 is not evaluated with less history than this
+    hour_tolerance: 1     # a login hour within +-1h of any prior login hour is "usual"
+  privileged_groups:      # R6
+    - administrators
+    - domain admins
+    - enterprise admins
+    - schema admins
+    - backup operators
+    - account operators
+  suspicious_processes:   # R7 (regex on lowercase "process | parent | command line")
+    - id: encoded_powershell
+      name: Encoded PowerShell command
+      field: command_line
+      pattern: 'powershell(\.exe)?\b.*\s-(e|en|enc|enco|encod|encode|encoded|encodedcommand)\s'
+      mitre: [T1059.001, T1027]
+    - id: download_cradle
+      name: PowerShell download cradle
+      field: command_line
+      pattern: '(iex|invoke-expression).*(downloadstring|invoke-webrequest|iwr )|downloadstring\(.http'
+      mitre: [T1059.001, T1105]
+    - id: mimikatz
+      name: Credential dumping tool (Mimikatz)
+      field: any
+      pattern: 'mimikatz|sekurlsa::|lsadump::'
+      mitre: [T1003]
+    - id: lsass_dump
+      name: LSASS memory dump
+      field: command_line
+      pattern: '(procdump.*lsass)|(comsvcs(\.dll)?.*minidump)'
+      mitre: [T1003.001]
+    - id: certutil_download
+      name: Certutil used as downloader
+      field: command_line
+      pattern: 'certutil(\.exe)?\b.*-urlcache'
+      mitre: [T1105]
+    - id: office_shell
+      name: Office application spawned a shell
+      field: parent_child
+      parents: [winword.exe, excel.exe, powerpnt.exe, outlook.exe]
+      children: [cmd.exe, powershell.exe, pwsh.exe, wscript.exe, cscript.exe, mshta.exe, rundll32.exe]
+      mitre: [T1204.002, T1059]
+    - id: log_clear_command
+      name: Event log cleared from command line
+      field: command_line
+      pattern: 'wevtutil(\.exe)?\s+(cl|clear-log)\b|clear-eventlog'
+      mitre: [T1070.001]
+    - id: shadow_delete
+      name: Volume shadow copies deleted
+      field: command_line
+      pattern: 'vssadmin(\.exe)?\s+delete\s+shadows'
+      mitre: [T1490]
+
+allowlists:
+  authorized_admins: [admin01, admin02, administrator]
+  privileged_accounts: [admin01, admin02, administrator]
+  service_accounts: [svc_backup, svc_sql, svc_monitor]   # excluded from R4 (scheduled by design)
+  # Approved maintenance windows (UTC). weekday: 0=Mon .. 6=Sun. A window may cross midnight.
+  change_windows:
+    - {weekday: 5, start: "18:00", end: "23:59"}
+    - {weekday: 6, start: "00:00", end: "06:00"}
+
+assets:
+  critical: [DC01, FIN-SRV01, SQL01]
+
+correlation:
+  max_gap_minutes: 30      # max time between consecutive linked alerts
+  max_span_hours: 4        # max total incident span
+
+severity:
+  rule_weights: {high: 25, medium: 15, low: 5}
+  privileged_account: 15
+  tier0_group: 10          # member added to a domain-wide admin group
+  tier0_groups: [domain admins, enterprise admins, schema admins]
+  critical_asset: 10
+  chain_two_stages: 10
+  chain_full: 20
+  log_clear_after_activity: 10
+  low_confidence_baseline: -10
+  benign_context_each: -10
+  benign_context_max: -20
+  levels: {critical: 80, high: 60, medium: 35}
+
+slm:
+  enabled: true
+  host: "http://127.0.0.1:11434"
+  model: "qwen2.5:3b"
+  timeout_seconds: 90
+  temperature: 0.1
+  num_ctx: 4096
+  num_predict: 1000
+  auto_explain_top_n: 3
+  cache_dir: ".cache/slm"

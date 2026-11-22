@@ -1,0 +1,183 @@
+{
+ "summary": {
+  "dataset": "dev_seed7",
+  "model": "qwen2.5:3b",
+  "incidents": 5,
+  "slm_answers": 5,
+  "fallbacks": 0,
+  "factual_claims": 20,
+  "verified": 14,
+  "verification_rate": 0.7,
+  "mean_wall_s": 6.1,
+  "mean_tokens_per_s": 94.6,
+  "ollama": {
+   "host": "http://127.0.0.1:11434",
+   "model": "qwen2.5:3b",
+   "reachable": true,
+   "model_installed": true,
+   "models": [
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.68,
+     "quant": "Q4_K_M",
+     "params": "7.6B"
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 1.93,
+     "quant": "Q4_K_M",
+     "params": "3.1B"
+    }
+   ],
+   "loaded": [
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 2.16,
+     "vram_gb": 2.16,
+     "gpu_share": 1.0
+    }
+   ],
+   "error": null,
+   "version": "0.40.16"
+  }
+ },
+ "incidents": [
+  {
+   "incident_id": "INC-0001",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 8.06,
+   "tokens_per_s": 93.8,
+   "output_tokens": 731,
+   "prompt_tokens": 2406,
+   "load_s": 0.01,
+   "factual_claims": 10,
+   "verified": 7,
+   "unverified": [
+    {
+     "text": "The low-confidence baseline for this user's behavior does not contradict these findings.",
+     "problems": [
+      "statement content not supported by cited facts (overlap 0%)"
+     ]
+    },
+    {
+     "text": "The low-confidence baseline for deepak.joshi's behavior does not contradict these findings.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    },
+    {
+     "text": "Suspicious process execution was also observed.",
+     "problems": [
+      "statement content not supported by cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.7,
+   "hypotheses": 2,
+   "grounded_hypotheses": 2,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0003",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 6.91,
+   "tokens_per_s": 94.3,
+   "output_tokens": 638,
+   "prompt_tokens": 2179,
+   "load_s": 0.01,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 3,
+   "grounded_hypotheses": 3,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0002",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 5.18,
+   "tokens_per_s": 96.2,
+   "output_tokens": 489,
+   "prompt_tokens": 1290,
+   "load_s": 0.01,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "On November 4, 2026, at approximately 12:11 UTC, nisha.shetty logged onto host DC01 from source IP address 10.0.2.21 for the first time in a week; this was followed by an unauthorised addition of nisha.shetty to the 'Domain Admins' group on the same host at 12",
+     "problems": [
+      "number 2026 not found in cited facts",
+      "number 4 not found in cited facts",
+      "number 12 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0005",
+   "level": "Medium",
+   "source": "slm",
+   "error": null,
+   "wall_s": 4.74,
+   "tokens_per_s": 94.6,
+   "output_tokens": 441,
+   "prompt_tokens": 1126,
+   "load_s": 0.01,
+   "factual_claims": 3,
+   "verified": 2,
+   "unverified": [
+    {
+     "text": "No successful log-",
+     "problems": [
+      "statement content not supported by cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.6666666666666666,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  },
+  {
+   "incident_id": "INC-0004",
+   "level": "Low",
+   "source": "slm",
+   "error": null,
+   "wall_s": 5.6,
+   "tokens_per_s": 94.1,
+   "output_tokens": 499,
+   "prompt_tokens": 1669,
+   "load_s": 0.02,
+   "factual_claims": 3,
+   "verified": 2,
+   "unverified": [
+    {
+     "text": "The account was also logged on from this IP for the 26",
+     "problems": [
+      "number 26 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.6666666666666666,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0
+  }
+ ]
+}

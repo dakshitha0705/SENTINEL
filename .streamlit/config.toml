@@ -1,0 +1,22 @@
+[browser]
+# Offline requirement: never send usage statistics.
+gatherUsageStats = false
+
+[server]
+headless = true
+address = "127.0.0.1"
+port = 8501
+maxUploadSize = 200
+fileWatcherType = "none"
+
+[client]
+toolbarMode = "minimal"
+showErrorDetails = true
+
+[theme]
+base = "dark"
+primaryColor = "#5B8DB8"
+backgroundColor = "#0F141A"
+secondaryBackgroundColor = "#17202A"
+textColor = "#D5DCE4"
+font = "sans serif"

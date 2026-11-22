@@ -1,0 +1,34 @@
+# Python / environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.env.*
+!.env.example
+
+# Local caches, temp, offline wheels, models
+.cache/
+wheels/
+models/
+*.gguf
+*.safetensors
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Private / downloaded data and generated reports
+data/private/
+data/public/
+reports/
+
+# Organiser reference material (not ours to publish)
+docs/*.pdf
+docs/SENTINEL Stage 1 Details.txt
+
+# Local analyst workspace (dispositions / audit database)
+workspace/
+
+# Regenerable stress datasets (scripts/evaluate.py recreates them)
+data/samples/stress_seed*/
