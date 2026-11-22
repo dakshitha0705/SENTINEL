@@ -63,8 +63,12 @@ _SYNONYMS = {
                  "source", "type"],
 }
 
+_FALLBACK = {"user": ["subjectusername"], "process": ["image"], "parent_process": ["parentimage"],
+             "src_ip": ["sourceaddress", "ipaddress"], "host": ["hostname", "computer"]}
+
 _IP_RE = re.compile(r"^(\d{1,3}\.){3}\d{1,3}$|^[0-9a-f:]{3,39}$", re.I)
-_TS_HINT_RE = re.compile(r"\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{2,4}")
+_TS_HINT_RE = re.compile(r"\d{4}-\d{2}-\d{2}|\d{1,2}[/-]\d{1,2}[/-]\d{2,4}")
+_DMY_RE = re.compile(r"^\s*(\d{1,2})[/-](\d{1,2})[/-]\d{2,4}")
 
 
 def _norm_col(name: str) -> str:
@@ -310,7 +314,13 @@ def parse_timestamps(series: pd.Series) -> pd.Series:
             nums[~unit_ms], unit="s", utc=True)
     rest = ~numeric
     if rest.any():
-        out.loc[rest] = pd.to_datetime(s[rest], utc=True, errors="coerce", format="mixed")
+        # Column-level day/month order: decided from values that can only be read one way.
+        parts = s[rest].str.extract(_DMY_RE)
+        dayfirst = False
+        if parts.notna().all(axis=1).any():
+            a_, b_ = parts[0].dropna().astype(int), parts[1].dropna().astype(int)
+            dayfirst = bool((a_ > 12).any()) and not bool((b_ > 12).any())
+        out.loc[rest] = pd.to_datetime(s[rest], utc=True, errors="coerce", format="mixed", dayfirst=dayfirst)
     return out
 
 
@@ -354,6 +364,19 @@ def normalize(load: FileLoad, mapping: dict) -> tuple[pd.DataFrame, list]:
     out["parent_process"] = col("parent_process").map(norm_proc)
     out["command_line"] = col("command_line").str.strip().replace({"-": ""})
 
+    # Per-row fallback: mixed-source files (e.g. Sysmon + Security in one export) carry the same
+    # information under different columns. Fill empty values from other recognised columns.
+    normed = {c: _norm_col(c.split(".")[-1]) for c in f.columns if c != "__row"}
+    for fld, fn in (("user", norm_user), ("actor", norm_user), ("host", norm_host), ("src_ip", norm_ip),
+                    ("process", norm_proc), ("parent_process", norm_proc), ("command_line", str.strip)):
+        alts = [c for syn in _SYNONYMS[fld] + _FALLBACK.get(fld, []) for c, n in normed.items()
+                if n == syn and c != mapping.get(fld)]
+        for c in dict.fromkeys(alts):
+            empty = out[fld] == ""
+            if not empty.any():
+                break
+            out.loc[empty, fld] = f.loc[empty, c].astype(str).map(fn).replace({"-": ""})
+
     oc = col("outcome").map(outcome_from_text)
     by_action = out["action"].map({"login_failure": "failure", "login_success": "success"})
     out["outcome"] = by_action.fillna(oc.where(oc != "", None)).fillna("success")
@@ -368,6 +391,7 @@ def normalize(load: FileLoad, mapping: dict) -> tuple[pd.DataFrame, list]:
     mapped_user_raw = col("user").str.strip()
     out.loc[grp & (out["group"] == ""), "group"] = mapped_user_raw[grp & (out["group"] == "")]
     out.loc[grp & (out["actor"] != ""), "user"] = out.loc[grp & (out["actor"] != ""), "actor"]
+    out["group"] = out["group"].str.split("\\").str[-1].str.strip()   # "CORP\Domain Admins" -> "Domain Admins"
     # Process / log-clear events carry the account in SubjectUserName.
     subj_events = out["action"].isin(["process_start", "log_cleared", "privilege_logon"])
     fill = subj_events & (out["user"] == "") & (out["actor"] != "")
@@ -395,9 +419,9 @@ def _dedupe_key(df: pd.DataFrame) -> pd.Series:
     rec = df["record_id"].fillna("")
     with_id = rec != ""
     k_id = df["host"] + "|" + df["event_code"] + "|" + rec
-    k_full = (df["timestamp"].astype(str) + "|" + df["event_code"] + "|" + df["action"] + "|" + df["user"]
-              + "|" + df["host"] + "|" + df["src_ip"] + "|" + df["process"] + "|" + df["command_line"]
-              + "|" + df["target_user"] + "|" + df["group"])
+    # Without a record ID only an exact repeat of the original record content is a duplicate
+    # (normalised fields alone are too coarse: distinct Sysmon events often share them).
+    k_full = df["timestamp"].astype(str) + "|" + df["raw"]
     return k_id.where(with_id, k_full)
 
 

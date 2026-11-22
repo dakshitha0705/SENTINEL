@@ -185,6 +185,12 @@ def page_upload():
             st.dataframe(show, hide_index=True, use_container_width=True)
             if rej:
                 st.caption(f"{len(rej)} record(s) would be rejected in this file (see validation after running).")
+            if (norm["action"] == "group_add").any() and not (new.get("actor") and new.get("target_user")):
+                st.warning("Group-membership events found but the **actor** and/or **target_user** column is not mapped. "
+                           "R6 cannot check who made the change or who was added; approved changes may be flagged. "
+                           "Map them above if the file contains them.")
+            if not new.get("timestamp"):
+                st.error("No timestamp column mapped: every record in this file would be rejected.")
     cc = st.columns([1, 1, 3])
     auto = cc[1].checkbox("Explain top incidents with local SLM", value=True)
     if cc[0].button("Run analysis", type="primary", use_container_width=True):

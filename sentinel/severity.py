@@ -56,6 +56,12 @@ def score_incident(inc: dict, alerts_by_id: dict, cfg: dict) -> dict:
         lines.append({"factor": "Log cleared after suspicious activity", "points": s["log_clear_after_activity"],
                       "detail": "R8 preceded by other alerts on the same host/user"})
 
+    # 2b. High-impact technique: credential dumping exposes credentials beyond this host
+    dump = [a for a in scored if a["rule"] == "R7" and any(t.startswith("T1003") for t in a["mitre"])]
+    if dump:
+        lines.append({"factor": "Credential dumping observed", "points": s.get("credential_dumping", 20),
+                      "detail": "credential theft affects accounts beyond this host"})
+
     # 3. Privileged account involvement
     priv_accounts = set(cfg["allowlists"]["privileged_accounts"])
     priv_groups = {g.lower() for g in cfg["detection"]["privileged_groups"]}

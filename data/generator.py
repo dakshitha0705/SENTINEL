@@ -522,9 +522,46 @@ class Generator:
         return gt
 
 
+DEMO = GenParams(seed=2024, name="demo_unseen", start="2026-11-16", n_regular=22, n_workstations=13,
+                 bf_failures=(14, 22), bf_duration_min=(2, 4), spray_users=(8, 11), spray_success_prob=1.0,
+                 description="Demo dataset in an unseen SIEM-export format (IST timestamps, different column names).")
+
+
+def write_alt_format(g: "Generator", out_dir: Path) -> None:
+    """Re-export the same events in a different, 'unseen' format (for the column-mapper demo)."""
+    ist = timedelta(hours=5, minutes=30)
+    recs = sorted(g.records, key=lambda x: x["EventRecordID"])
+    auth = [x for x in recs if x["log"] == "auth"]
+    endp = [x for x in recs if x["log"] == "endpoint"]
+    with open(out_dir / "siem_auth_export.csv", "w", newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh)
+        w.writerow(["Event Time (IST)", "Event ID", "Record", "Device", "Account", "Initiated By", "Member Added",
+                     "Source Address", "Logon Type", "Result"])
+        for x in auth:
+            res = "Failure" if x["EventID"] == "4625" else "Success"
+            w.writerow([(x["ts"] + ist).strftime("%d-%m-%Y %H:%M:%S") + " +05:30", x["EventID"], x["EventRecordID"],
+                        x["Computer"], "CORP\\" + x["TargetUserName"],
+                        x["SubjectUserName"] if x["EventID"] in ("4728", "4732", "4756") else "",
+                        x["MemberName"].split(",")[0].replace("CN=", "") if x["MemberName"] else "",
+                        x["IpAddress"], x["LogonType"], res])
+    with open(out_dir / "edr_process_events.jsonl", "w", encoding="utf-8") as fh:
+        for x in endp:
+            doc = {"time": (x["ts"] + ist).strftime("%Y-%m-%dT%H:%M:%S+05:30"), "event_id": int(x["EventID"]),
+                   "record": x["EventRecordID"], "endpoint": x["Computer"], "account": "CORP\\" + x["user"]}
+            if x["EventID"] == "4688":
+                doc.update({"image": f"C:\\Windows\\System32\\{x['process']}", "parent_image": x["parent"],
+                            "cmdline": x["cmd"]})
+            fh.write(json.dumps(doc) + "\n")
+
+
 def generate(p: GenParams, out_root: Path = OUT_DIR) -> dict:
     g = Generator(p).run()
-    return g.write(out_root / p.name)
+    gt = g.write(out_root / p.name)
+    if p.name == "demo_unseen":
+        write_alt_format(g, out_root / p.name)
+        for f in ("auth_logs.csv", "auth_logs.json", "endpoint_logs.json", "endpoint_logs.csv"):
+            (out_root / p.name / f).unlink()   # demo folder holds only the unseen format + ground truth
+    return gt
 
 
 def main():
@@ -538,7 +575,7 @@ def main():
         gt = generate(GenParams(seed=a.seed, name=a.name or f"seed{a.seed}"), out)
         print(gt["dataset"], gt["events"], "events")
         return
-    for p in [DEV, *TEST]:
+    for p in [DEV, *TEST, DEMO]:
         gt = generate(p, out)
         print(f"{gt['dataset']}: {gt['events']} events ({gt['auth_events']} auth, {gt['endpoint_events']} "
               f"endpoint), {gt['accounts']} accounts, {gt['hosts']} hosts, {len(gt['incidents'])} attacks, "

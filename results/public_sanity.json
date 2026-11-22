@@ -1,0 +1,118 @@
+[
+ {
+  "file": "empire_mimikatz_logonpasswords_2020-08-07103224.json",
+  "source": "OTRF Security-Datasets (MIT), atomic/windows/credential_access/host",
+  "summary": {
+   "files": 1,
+   "records_read": 6026,
+   "accepted": 6026,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 5994,
+   "by_action": {
+    "other": 5994,
+    "privilege_logon": 10,
+    "login_success": 10,
+    "logout": 10,
+    "process_start": 2
+   },
+   "time_range": [
+    "2020-08-07 14:32:25.358000+00:00",
+    "2020-08-07 14:35:26.113000+00:00"
+   ]
+  },
+  "top_event_codes": {
+   "800": 2940,
+   "4103": 1695,
+   "10": 272,
+   "5156": 211,
+   "5158": 195,
+   "12": 154,
+   "3": 90,
+   "4658": 86,
+   "7": 81,
+   "4656": 49
+  },
+  "alerts": {
+   "CTX": 10
+  },
+  "incidents": [],
+  "alert_reasons": [],
+  "timings_s": {
+   "detection_s": 0.11,
+   "correlation_s": 0.001,
+   "severity_s": 0.0,
+   "evidence_s": 0.0,
+   "analysis_total_s": 0.111
+  }
+ },
+ {
+  "file": "psh_lsass_memory_dump_comsvcs_2020-10-18T19500924.json",
+  "source": "OTRF Security-Datasets (MIT), atomic/windows/credential_access/host",
+  "summary": {
+   "files": 1,
+   "records_read": 184,
+   "accepted": 175,
+   "rejected": 0,
+   "duplicates": 9,
+   "unevaluable": 172,
+   "by_action": {
+    "other": 172,
+    "process_start": 2,
+    "log_cleared": 1
+   },
+   "time_range": [
+    "2020-10-18 07:49:39.776000+00:00",
+    "2020-10-18 07:50:09.089000+00:00"
+   ]
+  },
+  "top_event_codes": {
+   "10": 62,
+   "7": 30,
+   "12": 26,
+   "13": 15,
+   "4658": 10,
+   "4656": 5,
+   "4663": 5,
+   "4690": 5,
+   "5156": 3,
+   "5": 3
+  },
+  "alerts": {
+   "R8": 1,
+   "R7": 2
+  },
+  "incidents": [
+   {
+    "id": "INC-0002",
+    "level": "Medium",
+    "score": 45,
+    "title": "Suspicious execution (wardog on WORKSTATION5)",
+    "rules": [
+     "R7"
+    ]
+   },
+   {
+    "id": "INC-0001",
+    "level": "Low",
+    "score": 25,
+    "title": "Log clearing (unknown on WORKSTATION5)",
+    "rules": [
+     "R8"
+    ]
+   }
+  ],
+  "alert_reasons": [
+   "R8: Audit log cleared on WORKSTATION5 by unknown; no preceding suspicious activity found",
+   "R7: rundll32.exe (parent powershell.exe) by wardog on WORKSTATION5 matched: LSASS memory dump. Command: \"C:\\Windows\\System32\\rundll32.exe\" C:\\windows\\System32\\comsvcs.dll MiniDump 756 C:\\Users\\wardog\\AppData\\Local\\Temp\\lsass-comsvcs.dmp full",
+   "R7: rundll32.exe (parent powershell.exe) by wardog on WORKSTATION5 matched: LSASS memory dump. Command: \"C:\\Windows\\System32\\rundll32.exe\" C:\\windows\\System32\\comsvcs.dll MiniDump 756 C:\\Users\\wardog\\AppData\\Local\\Temp\\lsass-comsvcs.dmp full"
+  ],
+  "timings_s": {
+   "detection_s": 0.042,
+   "correlation_s": 0.002,
+   "severity_s": 0.0,
+   "evidence_s": 0.028,
+   "analysis_total_s": 0.073
+  }
+ }
+]

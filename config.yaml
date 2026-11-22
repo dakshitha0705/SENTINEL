@@ -91,6 +91,7 @@ severity:
   chain_two_stages: 10
   chain_full: 20
   log_clear_after_activity: 10
+  credential_dumping: 20   # added after the public-data sanity run (lone LSASS dump scored Low)
   low_confidence_baseline: -10
   benign_context_each: -10
   benign_context_max: -20
