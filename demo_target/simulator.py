@@ -75,6 +75,7 @@ class ScenarioRunner:
         self.pause_ev = threading.Event()
         self.pause_ev.set()
         self.stop_ev = threading.Event()
+        self.speed = 1.0          # delay multiplier (tests use < 1)
         self.status = {"scenario": None, "name": None, "state": "idle", "step": 0, "steps": 0, "emitted": 0,
                        "started_at": None, "finished_at": None, "error": None, "log": []}
 
@@ -126,7 +127,7 @@ class ScenarioRunner:
                 self.status["step"] = i
                 self.status["emitted"] = self.stream.seq - seq0
                 self.status["log"] = (self.status["log"] + [f"{time.strftime('%H:%M:%S')}  {label}"])[-40:]
-                if self.stop_ev.wait(delay):
+                if self.stop_ev.wait(delay * self.speed):
                     self.status["state"] = "stopped"
                     break
             else:

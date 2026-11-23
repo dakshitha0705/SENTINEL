@@ -186,7 +186,7 @@ def read_file(name: str, data: bytes) -> FileLoad:
                              "content": ",".join(map(str, b))[:300]})
         frame.insert(0, "__row", range(2, len(frame) + 2))  # +1 header, 1-based
         fmt = "csv"
-    frame = frame.fillna("")
+    frame = frame.astype(object).where(frame.notna(), "")
     for c in frame.columns:
         if c != "__row":
             frame[c] = frame[c].map(lambda v: json.dumps(v) if isinstance(v, (list, dict)) else str(v))
