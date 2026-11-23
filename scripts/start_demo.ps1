@@ -11,6 +11,16 @@ $PidFile = Join-Path $DemoDir "pids.json"
 $LogDir = Join-Path $DemoDir "logs"
 New-Item -ItemType Directory -Force $LogDir | Out-Null
 
+function Start-Detached($cmdline, $log) {
+    # Win32_Process.Create does not inherit this shell's handles, so the script returns even when its own
+    # output is captured; the service writes to its own log file. Returns the PID of the cmd.exe wrapper
+    # (stop_demo.ps1 stops that process tree).
+    $full = "cmd.exe /c `"$cmdline > `"$log`" 2>&1`""
+    $r = Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{ CommandLine = $full; CurrentDirectory = $Root }
+    if ($r.ReturnValue -ne 0) { throw "could not start: $cmdline (code $($r.ReturnValue))" }
+    return [int]$r.ProcessId
+}
+
 function Test-Url($url) {
     try { $r = Invoke-WebRequest -UseBasicParsing -TimeoutSec 2 $url; return $r.StatusCode -eq 200 } catch { return $false }
 }
@@ -36,9 +46,9 @@ function Running($name) {
 Write-Host "3/6 NEXUS demo portal" -ForegroundColor DarkYellow
 if ((Running "nexus") -or (Test-Url "http://127.0.0.1:8502/api/health")) { Write-Host "    already running" }
 else {
-    $p = Start-Process -FilePath $Py -ArgumentList "-m", "demo_target.app" -WorkingDirectory $Root -WindowStyle Hidden -PassThru `
-        -RedirectStandardOutput (Join-Path $LogDir "nexus.out.log") -RedirectStandardError (Join-Path $LogDir "nexus.err.log")
-    $pids["nexus"] = $p.Id
+    $id = Start-Detached "`"$Py`" -m demo_target.app" (Join-Path $LogDir "nexus.log")
+    $p = @{ Id = $id }
+    $pids["nexus"] = $id
     $pids | ConvertTo-Json | Out-File -Encoding utf8 $PidFile
     Write-Host "    started (PID $($p.Id))"
 }
@@ -54,9 +64,9 @@ if (Test-Path $hb) {
 }
 if ((Running "live_worker") -or $fresh) { Write-Host "    already running" }
 else {
-    $p = Start-Process -FilePath $Py -ArgumentList "-m", "sentinel.live" -WorkingDirectory $Root -WindowStyle Hidden -PassThru `
-        -RedirectStandardOutput (Join-Path $LogDir "live.out.log") -RedirectStandardError (Join-Path $LogDir "live.err.log")
-    $pids["live_worker"] = $p.Id
+    $id = Start-Detached "`"$Py`" -m sentinel.live" (Join-Path $LogDir "live.log")
+    $p = @{ Id = $id }
+    $pids["live_worker"] = $id
     $pids | ConvertTo-Json | Out-File -Encoding utf8 $PidFile
     Write-Host "    started (PID $($p.Id))"
 }
@@ -64,9 +74,9 @@ else {
 Write-Host "4/6 SENTINEL dashboard" -ForegroundColor DarkYellow
 if ((Running "sentinel") -or (Test-Url "http://127.0.0.1:8501/_stcore/health")) { Write-Host "    already running" }
 else {
-    $p = Start-Process -FilePath $St -ArgumentList "run", "app.py", "--server.port", "8501" -WorkingDirectory $Root -WindowStyle Hidden -PassThru `
-        -RedirectStandardOutput (Join-Path $LogDir "sentinel.out.log") -RedirectStandardError (Join-Path $LogDir "sentinel.err.log")
-    $pids["sentinel"] = $p.Id
+    $id = Start-Detached "`"$St`" run app.py --server.port 8501" (Join-Path $LogDir "sentinel.log")
+    $p = @{ Id = $id }
+    $pids["sentinel"] = $id
     Write-Host "    started (PID $($p.Id))"
 }
 $pids | ConvertTo-Json | Out-File -Encoding utf8 $PidFile
@@ -79,7 +89,7 @@ for ($i = 0; $i -lt 40 -and -not ($ok1 -and $ok2); $i++) {
     if (-not $ok2) { $ok2 = Test-Url "http://127.0.0.1:8501/_stcore/health" }
 }
 Write-Host ("    NEXUS    " + ($(if ($ok1) { "healthy" } else { "NOT responding - see demo_data\logs\nexus.err.log" })))
-Write-Host ("    SENTINEL " + ($(if ($ok2) { "healthy" } else { "NOT responding - see demo_data\logs\sentinel.err.log" })))
+Write-Host ("    SENTINEL " + ($(if ($ok2) { "healthy" } else { "NOT responding - see demo_data\logs\sentinel.log" })))
 
 Write-Host "6/6 Event pipeline" -ForegroundColor DarkYellow
 if ($ok1) {

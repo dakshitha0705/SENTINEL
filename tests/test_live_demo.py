@@ -213,3 +213,39 @@ def test_reset_isolation(demo):
     assert eng.session_id == stream.session_id and not scenario_incidents(eng.analysis, "B", eng)
     assert samples.stat().st_mtime == before
     assert root.resolve() != (ROOT / "data").resolve()
+
+
+def test_runner_control_pause_resume_stop_and_conflicts(demo):
+    r, c = demo["nx"]["runner"], demo["client"]
+    r.speed = 1.0                                         # real pacing so control actions land mid-run
+    assert c.post("/api/demo/run/G").status_code == 200
+    assert c.post("/api/demo/run/B").status_code == 409   # one scenario at a time
+    time.sleep(1.0)
+    c.post("/api/demo/pause")
+    time.sleep(0.6)
+    step = r.status["step"]
+    time.sleep(1.2)
+    assert r.status["state"] == "paused" and r.status["step"] == step
+    c.post("/api/demo/resume")
+    time.sleep(1.0)
+    assert r.status["step"] > step
+    c.post("/api/demo/stop")
+    r.wait(10)
+    assert r.status["state"] == "stopped" and r.status["step"] < r.status["steps"]
+    st = c.get("/api/demo/status").get_json()
+    assert st["runner"]["state"] == "stopped" and st["events_emitted"] == demo["nx"]["stream"].seq
+    assert c.post("/api/demo/run/Z").status_code == 409
+
+
+def test_nexus_restart_continues_the_session_stream(demo):
+    from demo_target.app import create_app
+    stream = demo["nx"]["stream"]
+    sid, seq = stream.session_id, stream.seq
+    app2 = create_app(root=demo["root"])                 # simulates a NEXUS process restart
+    s2 = app2.extensions["nexus"]["stream"]
+    assert s2.session_id == sid and s2.seq == seq
+    app2.test_client().post("/login", data={"username": "arjun.rao", "password": "bad"})
+    evs = s2.read_all()
+    assert evs[-1]["EventRecordID"] == seq + 1 and len({e["event_uid"] for e in evs}) == len(evs)
+    demo["eng"].poll()
+    assert evs[-1]["event_uid"] in demo["eng"].records

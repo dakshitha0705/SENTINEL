@@ -258,8 +258,9 @@ class ScenarioRunner:
 def backfill_history(stream: EventStream, identities, days: int = 7):
     """Synthetic prior history (labelled origin=baseline-backfill) so per-user baselines exist.
 
-    Each account logs on twice per working day from its usual workstation, between 03:00 and 13:00 UTC
-    (08:30-18:30 IST); the service account logs on at night. Times are in the past, so they never mix with
+    Each account logs on twice per day from its usual workstation, between 02:00 and 17:00 UTC
+    (07:30-22:30 IST, so daytime and evening demo runs both fall within usual hours); the service account
+    logs on around the clock. Times are in the past, so they never mix with
     live activity."""
     now = time.time()
     rnd = random.Random(7)
@@ -268,8 +269,8 @@ def backfill_history(stream: EventStream, identities, days: int = 7):
     plan = []
     for d in range(days):
         for u, info in identities.users.items():
-            for _ in range(2 if info["role"] != "service" else 3):
-                hour = rnd.uniform(0, 24) if info["role"] == "service" else rnd.uniform(3, 13)
+            for _ in range(3):
+                hour = rnd.uniform(0, 24) if info["role"] == "service" else rnd.uniform(2, 17)
                 ts = start + d * 86400 + hour * 3600
                 if ts < now - 3600:
                     plan.append((ts, u, info))
