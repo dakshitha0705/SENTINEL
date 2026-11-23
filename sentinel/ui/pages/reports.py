@@ -47,7 +47,7 @@ def render():
         with st.spinner("Local Qwen explaining..."):
             state.explanation_for(iid, use_slm=True, force=True)
         st.rerun()
-    res, ver = S.explanations[iid] if have else state.explanation_for(iid, use_slm=False)
+    res, ver = S.explanations[iid][:2] if have else state.explanation_for(iid, use_slm=False)
     inc = a.incident(iid)
     pack = a.packs[iid]
     wf = _workflow(con, a, inc)
@@ -95,7 +95,7 @@ def render():
         buf = io.BytesIO()
         with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
             for i in chosen:
-                r, v = S.explanations.get(i["incident_id"]) or state.explanation_for(i["incident_id"], use_slm=False)
+                r, v = (S.explanations.get(i["incident_id"]) or state.explanation_for(i["incident_id"], use_slm=False))[:2]
                 z.writestr(f"SENTINEL_{i['incident_id']}.html", render_report(a, i["incident_id"], r, v))
             z.writestr("incidents.json", exports.incidents_json(a, chosen, vers, wfs))
             z.writestr("incidents.csv", exports.incidents_csv(a, chosen, wfs))

@@ -37,7 +37,12 @@ def _external_now() -> int:
 # --------------------------------------------------------------------------- URL shortcuts (demo / screenshots)
 # ?sample=<dataset>&page=<n>&incident=<rank>&explain=1  loads a dataset, runs the analysis and opens a page.
 _qp = st.query_params
-if _qp.get("sample") and S.get("_qp_done") != _qp.get("sample"):
+if _qp.get("live") == "1" and not S.get("_qp_live"):
+    S._qp_live = True
+    state.select_live()
+    if _qp.get("page", "").isdigit():
+        S.nav = PAGES[int(_qp["page"]) % len(PAGES)]
+elif _qp.get("sample") and S.get("_qp_done") != _qp.get("sample"):
     if _qp["sample"] in state.list_datasets():
         with st.spinner("Loading dataset and running analysis..."):
             state.load_dataset(_qp["sample"], run=False)
@@ -52,6 +57,9 @@ elif S.analysis is None and S.dataset is None:
     names = state.list_datasets()
     if names:
         state.load_dataset("demo_unseen" if "demo_unseen" in names else names[0])
+
+if state.is_live():
+    state.refresh_live()
 
 # --------------------------------------------------------------------------- sidebar navigation
 with st.sidebar:
@@ -103,6 +111,8 @@ with tb[4]:
              f'<span class="sn-chip {"ok" if qwen_ok else "warn"}"><i></i>{esc(S.cfg["slm"]["model"])} '
              f'{"ready" if qwen_ok else "unavailable"}</span>',
              f'<span class="sn-chip"><i></i>{mode}</span>']
+    if state.is_live():
+        chips.insert(0, '<span class="sn-chip live"><i></i>LIVE MONITORING</span>')
     st.markdown('<div class="sn-top" style="justify-content:flex-end">' + "".join(chips) + "</div>", unsafe_allow_html=True)
 if S.profile_note and page in ("Command Center", "Log Intelligence"):
     st.caption(S.profile_note)
@@ -127,6 +137,26 @@ if q and q.strip():
                 st.dataframe(show, hide_index=True, use_container_width=True)
         if not (res["incidents"] or res["alerts"] or len(res["events"])):
             st.caption("No matches in the current analysis.")
+
+# --------------------------------------------------------------------------- live banner on analysis pages
+
+
+@st.fragment(run_every=3)
+def _live_banner():
+    snap = state.live_engine().snapshot()
+    new = snap["events"] - S.get("_live_seen", snap["events"])
+    if new > 0:
+        c1, c2 = st.columns([5, 1], vertical_alignment="center")
+        c1.markdown(f'<div class="sn-mode incident"><span class="sn-chip live"><i></i>LIVE</span><b>{new} new event(s)</b> '
+                    f'arrived from NEXUS since this view was loaded &middot; '
+                    f'{len(snap["analysis"].incidents) if snap["analysis"] else 0} incidents now</div>', unsafe_allow_html=True)
+        if c2.button("Refresh view", key="live_refresh", use_container_width=True):
+            st.rerun(scope="app")
+
+
+if state.is_live() and page != "Command Center":
+    S._live_seen = state.live_engine().snapshot()["events"]     # this full run shows the engine's current state
+    _live_banner()
 
 # --------------------------------------------------------------------------- router
 {"Command Center": command_center.render, "Log Intelligence": log_intelligence.render,

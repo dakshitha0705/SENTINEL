@@ -27,6 +27,8 @@ ICONS = {"Command Center": "public", "Log Intelligence": "database", "Incident I
          "Evaluation & Benchmarks": "monitoring", "Report Studio": "description", "System & Settings": "tune"}
 TIME_RANGES = {"All data": None, "Last 24 h": 24, "Last 72 h": 72, "Last 7 days": 168}
 UPLOADED = "Uploaded files"
+LIVE = "LIVE · NEXUS demo stream"
+NEXUS_URL = "http://127.0.0.1:8502"
 
 S = st.session_state
 
@@ -69,7 +71,60 @@ def list_datasets() -> list[str]:
         names.append(label)
     if S.get("dataset") == UPLOADED:
         names.insert(0, UPLOADED)
+    names.insert(0, LIVE)
     return names
+
+
+# --------------------------------------------------------------------------- live monitoring
+
+@st.cache_resource(show_spinner=False)
+def _inprocess_engine():
+    from ..live import LiveEngine
+    eng = LiveEngine(load_config(local=True))
+    eng.start(interval=1.0)
+    return eng
+
+
+@st.cache_resource(show_spinner=False)
+def _reader():
+    from ..live import LiveReader
+    return LiveReader()
+
+
+def live_engine():
+    """The live worker process (scripts/start_demo.ps1 starts `python -m sentinel.live`) when it is running;
+    otherwise an in-process engine (same code, shares the dashboard's Python interpreter)."""
+    from ..live import LiveReader
+    if LiveReader.worker_alive():
+        return _reader()
+    return _inprocess_engine()
+
+
+def is_live() -> bool:
+    return S.get("dataset") == LIVE
+
+
+def refresh_live() -> dict:
+    """Point the session at the live engine's latest analysis (no re-analysis here; the engine does it)."""
+    snap = live_engine().snapshot()
+    a = snap["analysis"]
+    if a is not None and a is not S.get("analysis"):
+        old = {iid: v for iid, v in S.get("explanations", {}).items()}
+        S.analysis = a
+        S.known_entities = known_entities(a.events)
+        # keep explanations only where the incident's evidence pack is unchanged
+        S.explanations = {iid: v for iid, v in old.items() if iid in a.packs and v[2:3] == (a.packs[iid]["hash"],)}
+        if S.selected not in [i["incident_id"] for i in a.incidents]:
+            S.selected = a.incidents[0]["incident_id"] if a.incidents else None
+    return snap
+
+
+def select_live():
+    S.dataset = LIVE
+    S.files, S.mappings, S.profile_note = {}, {}, ""
+    S.analysis = None
+    S.explanations, S.chat = {}, {}
+    refresh_live()
 
 
 def external_datasets() -> dict:
@@ -108,6 +163,9 @@ def mapping_profile(name: str) -> dict:
 
 def load_dataset(name: str, run: bool = True):
     from ..ingest import guess_mapping, read_file
+    if name == LIVE:
+        select_live()
+        return
     S.files = dataset_files(name)
     S.dataset = name
     prof = mapping_profile(name)
@@ -179,7 +237,7 @@ def visible_incidents(a=None):
 def explanation_for(iid, use_slm=True, on_token=None, force=False):
     a = S.analysis
     if iid in S.explanations and not force:
-        return S.explanations[iid]
+        return S.explanations[iid][:2]
     pack = a.packs[iid]
     if use_slm:
         res = explain(pack, S.cfg, use_cache=not force, on_token=on_token, known=S.known_entities)
@@ -187,10 +245,10 @@ def explanation_for(iid, use_slm=True, on_token=None, force=False):
         res = {"source": "template", "output": template_explanation(pack), "stats": {},
                "error": "template selected by analyst"}
     ver = verify_output(res["output"], pack, S.known_entities)
-    S.explanations[iid] = (res, ver)
+    S.explanations[iid] = (res, ver, pack["hash"])
     if res.get("stats"):
         S.last_slm_stats = {**res["stats"], "incident": iid, "source": res["source"], "model": res.get("model")}
-    return S.explanations[iid]
+    return S.explanations[iid][:2]
 
 
 def goto(page: str, incident: str | None = None):

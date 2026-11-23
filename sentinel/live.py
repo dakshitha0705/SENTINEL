@@ -16,6 +16,7 @@ from __future__ import annotations
 import copy
 import json
 import os
+import pickle
 import threading
 import time
 from pathlib import Path
@@ -42,6 +43,7 @@ class LiveEngine:
         self.lock = threading.RLock()
         self.thread = None
         self.stop_ev = threading.Event()
+        self.publish = False          # True in the worker process: publish snapshots for the dashboard
         self._reset(None)
 
     # ----------------------------------------------------------------- state
@@ -220,6 +222,8 @@ class LiveEngine:
                     self._analyze()
                 if new or not (self.sdir() / "sentinel_status.json").exists():
                     self._write_status()
+                    if self.publish:
+                        self._publish()
                 self.error = None
                 return new
             except Exception as exc:  # noqa: BLE001  (never kill the loop; report instead)
@@ -241,6 +245,17 @@ class LiveEngine:
     def stop(self):
         self.stop_ev.set()
 
+    def _publish(self):
+        """Atomically write the latest snapshot for the dashboard process (trusted local file, same user)."""
+        snap = self.snapshot()
+        snap["recent"] = self.recent_events(40)
+        snap["track_by_incident"] = {i["incident_id"]: self._track_of(i) for i in (self.analysis.incidents if self.analysis else [])}
+        p = self.root / "live_snapshot.pkl"
+        tmp = p.with_suffix(".tmp")
+        with open(tmp, "wb") as fh:
+            pickle.dump(snap, fh, protocol=pickle.HIGHEST_PROTOCOL)
+        os.replace(tmp, p)
+
     def recent_events(self, n=40) -> list[dict]:
         with self.lock:
             return list(self.records.values())[-n:][::-1]
@@ -251,3 +266,70 @@ class LiveEngine:
                     "last_poll": self.last_poll, "last_batch": self.last_batch, "analysis_s": self.analysis_s,
                     "tracked": copy.deepcopy(self.tracked), "notifications": list(self.notifications),
                     "error": self.error, "duplicates": self.duplicates, "running": bool(self.thread and self.thread.is_alive())}
+
+
+# --------------------------------------------------------------------------- worker process + dashboard reader
+
+HEARTBEAT = "live_worker.json"
+
+
+def run_worker(interval: float = 0.5, root: Path | None = None):
+    """Run the live engine in its own process (started by scripts/start_demo.ps1), so detection latency is
+    not affected by dashboard rendering. Writes a heartbeat every loop."""
+    from .config import load_config
+    eng = LiveEngine(load_config(local=True), root=root)
+    eng.publish = True
+    hb = eng.root / HEARTBEAT
+    eng.root.mkdir(parents=True, exist_ok=True)
+    while True:
+        eng.poll()
+        if eng.session_id and not (eng.root / "live_snapshot.pkl").exists():
+            eng._publish()
+        hb.write_text(json.dumps({"pid": os.getpid(), "t": time.time(), "session_id": eng.session_id}), encoding="utf-8")
+        time.sleep(interval)
+
+
+class LiveReader:
+    """Dashboard-side view of the worker's latest snapshot (reloaded only when the file changes)."""
+
+    def __init__(self, root: Path | None = None):
+        self.root = Path(root or DEMO_ROOT)
+        self._mtime = None
+        self._snap = {"session_id": None, "analysis": None, "events": 0, "last_poll": None, "last_batch": 0,
+                      "analysis_s": None, "tracked": {}, "notifications": [], "error": None, "duplicates": 0,
+                      "running": False, "recent": [], "track_by_incident": {}}
+
+    @staticmethod
+    def worker_alive(root: Path | None = None, max_age: float = 5.0) -> bool:
+        p = Path(root or DEMO_ROOT) / HEARTBEAT
+        try:
+            return time.time() - json.loads(p.read_text(encoding="utf-8"))["t"] < max_age
+        except (OSError, ValueError, KeyError):
+            return False
+
+    def snapshot(self) -> dict:
+        p = self.root / "live_snapshot.pkl"
+        try:
+            m = p.stat().st_mtime
+            if m != self._mtime:
+                with open(p, "rb") as fh:
+                    self._snap = pickle.load(fh)
+                self._mtime = m
+        except (OSError, EOFError, pickle.UnpicklingError):
+            pass
+        snap = dict(self._snap)
+        snap["running"] = self.worker_alive(self.root)
+        return snap
+
+    def recent_events(self, n=40):
+        return self.snapshot().get("recent", [])[:n]
+
+    def _track_of(self, inc):
+        return self.snapshot().get("track_by_incident", {}).get(inc["incident_id"], {})
+
+    def poll(self):
+        return 0
+
+
+if __name__ == "__main__":
+    run_worker()

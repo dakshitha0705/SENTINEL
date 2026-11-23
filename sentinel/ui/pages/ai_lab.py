@@ -70,7 +70,7 @@ def render():
         if iid not in S.explanations:
             st.info("No explanation yet for this incident.")
         else:
-            res, ver = S.explanations[iid]
+            res, ver = S.explanations[iid][:2]
             stt = ver["stats"]
             src = {"slm": "Local Qwen (live)", "cache": "Local Qwen (cached)", "template": "Deterministic template"}[res["source"]]
             meta = f"{src} · {res.get('model') or ''}"

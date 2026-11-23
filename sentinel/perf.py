@@ -26,7 +26,8 @@ def related_pids() -> dict:
         pids[c.pid] = c.name()
     for p in psutil.process_iter(["pid", "name"]):
         n = (p.info["name"] or "").lower()
-        if n.startswith("ollama") or n.startswith("llama-server"):   # llama-server = Ollama model runner
+        if (n.startswith("ollama") or n.startswith("llama-server")) and "setup" not in n and "update" not in n:
+            # llama-server = Ollama model runner; the Ollama installer/updater is not part of SENTINEL
             pids[p.info["pid"]] = p.info["name"]
     return pids
 

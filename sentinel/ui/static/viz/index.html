@@ -13,7 +13,7 @@
   html, body { margin: 0; padding: 0; background: transparent; color: var(--cream); overflow: hidden;
     font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; }
   #wrap { position: relative; width: 100%; border-radius: 22px; overflow: hidden;
-    background: radial-gradient(ellipse at 50% 45%, #1A2A27 0%, #111D1B 55%, #0D1716 100%); }
+    background: radial-gradient(ellipse at 50% 46%, #15221e 0%, #0b1411 52%, #060b09 100%); }
   #stage { width: 100%; }
   .bar { position: absolute; left: 14px; bottom: 14px; display: flex; gap: 8px; z-index: 5; flex-wrap: wrap; }
   .btn { background: rgba(28,43,41,.78); border: 1px solid var(--line); color: var(--cream); font-size: 12px;
@@ -53,7 +53,7 @@
   function setValue(v) { send("streamlit:setComponentValue", { value: v, dataType: "json" }); }
   function setHeight(h) { send("streamlit:setFrameHeight", { height: h }); }
 
-  var SEV = { Critical: "#D4968C", High: "#D6B88A", Medium: "#A7BFAF", Low: "#8FA3A8", none: "#C9BFAE" };
+  var SEV = { Critical: "#D06B5E", High: "#D9A35B", Medium: "#9FC2AE", Low: "#8A9A94", none: "#D8CDB6" };
   var state = { mode: null, globe: null, net: null, countries: null, arcsOn: true, args: null, key: null };
   var wrap = document.getElementById("wrap"), stage = document.getElementById("stage");
 
@@ -87,8 +87,9 @@
     var h = args.height || 560;
     stage.style.height = h + "px";
     var overlay = [];
-    var markers = args.markers || [];
-    var arcs = args.arcs || [];
+    var markers = (args.markers || []).slice();
+    var arcs = (args.arcs || []).slice();
+    var lowq = args.quality === "low";
     var chip = el("div", "chip", args.mode === "intel"
       ? "<b>Geographic intelligence</b> &middot; " + (args.markers || []).length + " log-provided locations"
       : "<b>Exploration mode</b> &middot; " + esc(args.provenance || "no location data in these logs"));
@@ -108,18 +109,18 @@
     overlay.push(bar);
     overlay.forEach(function (o) { wrap.appendChild(o); });
 
-    var POV = args.pov || { lat: 16, lng: 96, altitude: 1.8 };
+    var POV = args.pov || { lat: 18, lng: 92, altitude: 1.75 };
     var selected = args.selected || null, hoverPoly = null, selPoly = null;
     var W = stage.clientWidth || wrap.clientWidth || 900;
     var g = Globe({ animateIn: false })(stage)
       .width(W).height(h)
       .backgroundColor("rgba(0,0,0,0)")
-      .showAtmosphere(true).atmosphereColor("#A7BFAF").atmosphereAltitude(0.13)
+      .showAtmosphere(!lowq).atmosphereColor("#B5D3C0").atmosphereAltitude(0.2)
       .showGraticules(true)
       .polygonsData(state.countries ? state.countries.features : [])
-      .polygonAltitude(function (d) { return d === hoverPoly || d === selPoly ? 0.012 : 0.006; })
-      .polygonCapColor(function (d) { return d === selPoly ? "rgba(200,170,124,.92)" : d === hoverPoly ? "rgba(240,231,214,.96)" : "rgba(232,221,201,.88)"; })
-      .polygonSideColor(function () { return "rgba(129,155,141,.25)"; })
+      .polygonAltitude(function (d) { return d === hoverPoly || d === selPoly ? 0.02 : (lowq ? 0.004 : 0.01); })
+      .polygonCapColor(function (d) { return d === selPoly ? "rgba(217,163,91,.92)" : d === hoverPoly ? "rgba(245,237,220,.97)" : "rgba(226,214,190,.9)"; })
+      .polygonSideColor(function () { return lowq ? "rgba(0,0,0,0)" : "rgba(92,112,101,.85)"; })
       .polygonStrokeColor(function () { return "rgba(13,23,22,.38)"; })
       .polygonLabel(function (d) { return "<div class='tip'><b>" + esc(d.properties.name) + "</b><br><span class='k'>" + esc(d.properties.subregion || "") + "</span></div>"; })
       .onPolygonHover(function (d) { hoverPoly = d; g.polygonAltitude(g.polygonAltitude()); g.polygonCapColor(g.polygonCapColor()); stage.style.cursor = d ? "pointer" : "grab"; })
@@ -146,16 +147,23 @@
       .ringColor(function () { return function (t) { return "rgba(200,170,124," + (1 - t) * 0.8 + ")"; }; })
       .ringMaxRadius(3.2).ringPropagationSpeed(1.4).ringRepeatPeriod(1400)
       .arcsData(arcs)
-      .arcColor(function () { return ["rgba(200,170,124,.15)", "rgba(214,190,150,.85)"]; })
+      .arcColor(function (d) { return d.level === "Critical" ? ["rgba(208,107,94,.15)", "rgba(226,140,120,.9)"] : ["rgba(217,163,91,.15)", "rgba(226,186,120,.9)"]; })
       .arcStroke(0.45).arcAltitudeAutoScale(0.42)
       .arcDashLength(0.5).arcDashGap(0.25).arcDashAnimateTime(4200)
       .arcLabel(function (d) { return "<div class='tip'>" + esc(d.label) + "</div>"; })
       .onArcClick(function (d) { if (d.incident) setValue({ type: "arc", incident: d.incident, t: Date.now() }); })
       .pointOfView(POV, 0);
     var mat = g.globeMaterial();
-    if (mat && mat.color) { mat.color.set("#5E7A6F"); }
-    if (mat && mat.emissive) { mat.emissive.set("#1E302B"); mat.emissiveIntensity = 0.35; }
-    if (mat && "shininess" in mat) { mat.shininess = 6; }
+    if (mat && mat.color) { mat.color.set("#4F6B61"); }
+    if (mat && mat.emissive) { mat.emissive.set("#0E1A17"); mat.emissiveIntensity = 0.5; }
+    if (mat && "shininess" in mat) { mat.shininess = 22; if (mat.specular) mat.specular.set("#3B4F48"); }
+    // Real 3D shading: a key light offset from the camera gives a visible terminator and specular highlight.
+    try {
+      (g.lights() || []).forEach(function (l) {
+        if (l.isAmbientLight) { l.intensity = lowq ? 1.4 : 0.9; }
+        if (l.isDirectionalLight) { l.intensity = lowq ? 1.2 : 2.6; l.position.set(-260, 190, 230); }
+      });
+    } catch (e) {}
     var c = g.controls();
     c.autoRotate = true; c.autoRotateSpeed = 0.28; c.enableDamping = true; c.dampingFactor = 0.08;
     c.minDistance = 130; c.maxDistance = 720; c.zoomSpeed = 0.8; c.rotateSpeed = 0.6;
@@ -172,6 +180,14 @@
     }
     window.addEventListener("resize", function () { g.width(stage.clientWidth || W); });
     state.globe = g;
+    state.globeData = { markers: markers, arcs: arcs };
+    state.globeUpdate = function (a2) {
+      // live refresh: swap data in place, keep the camera and the selection
+      markers.length = 0; (a2.markers || []).forEach(function (m) { markers.push(m); });
+      arcs.length = 0; (a2.arcs || []).forEach(function (m) { arcs.push(m); });
+      g.pointsData(markers.slice()); g.arcsData(state.arcsOn ? arcs.slice() : []);
+      if (window.__sentinelGlobe) { window.__sentinelGlobe.markers = markers.length; window.__sentinelGlobe.arcs = arcs.length; }
+    };
     // Expose a tiny hook for automated UI tests (camera distance / point of view).
     window.__sentinelGlobe = { pov: function () { return g.pointOfView(); }, zoom: function (alt) { g.pointOfView({ altitude: alt }, 0); },
       reset: function () { bReset.onclick(); }, markers: markers.length, arcs: arcs.length,
@@ -229,7 +245,11 @@
   function render(args) {
     var key = JSON.stringify([args.kind, args.data_key || ""]);
     if (key === state.key) { setHeight(args.height || 560); return; }   // same data: keep camera / layout
-    state.key = key;
+    var layoutKey = JSON.stringify([args.kind, args.mode, args.quality, args.selected || null]);
+    if (args.kind === "globe" && state.globe && state.layoutKey === layoutKey && state.globeUpdate) {
+      state.key = key; state.globeUpdate(args); setHeight(args.height || 560); return;
+    }
+    state.key = key; state.layoutKey = layoutKey;
     clearOverlay();
     if (state.globe && state.globe._destructor) { try { state.globe._destructor(); } catch (e) {} }
     state.globe = null; state.net = null;

@@ -120,9 +120,9 @@ def main():
             fr.evaluate("window.__sentinelGlobe.reset()")
             time.sleep(1.6)
             p4 = fr.evaluate("window.__sentinelGlobe.pov()")
-            # reset returns to the default Asia-Pacific view (16N, 96E, altitude 1.8)
-            checks["globe_reset_restores_view"] = abs(p4["lat"] - 16) < 1 and abs(p4["lng"] - 96) < 1 \
-                and abs(p4["altitude"] - 1.8) < 0.05
+            # reset returns to the default Asia-Pacific view (18N, 92E, altitude 1.75)
+            checks["globe_reset_restores_view"] = abs(p4["lat"] - 18) < 1 and abs(p4["lng"] - 92) < 1 \
+                and abs(p4["altitude"] - 1.75) < 0.05
             checks["globe_reset_pov"] = {k: round(v, 2) for k, v in p4.items()}
             if a.shots:
                 pg.screenshot(path=str(SHOTS / "01_command_center.png"))

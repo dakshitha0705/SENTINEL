@@ -18,10 +18,10 @@ def _key(obj) -> str:
     return hashlib.sha1(json.dumps(obj, sort_keys=True, default=str).encode()).hexdigest()[:16]
 
 
-def globe(geo: dict, height: int = 560, selected: str | None = None, key: str = "globe"):
+def globe(geo: dict, height: int = 560, selected: str | None = None, key: str = "globe", quality: str = "high"):
     """Render the globe. Returns the last interaction: {'type': 'marker'|'region'|'arc'|'clear', ...} or None."""
     args = {"kind": "globe", "mode": geo["mode"], "markers": geo["markers"], "arcs": geo["arcs"],
-            "provenance": geo.get("provenance", ""), "height": height, "selected": selected}
+            "provenance": geo.get("provenance", ""), "height": height, "selected": selected, "quality": quality}
     args["data_key"] = _key([geo["mode"], geo["markers"], geo["arcs"], selected])
     return _VIZ(**args, key=key, default=None)
 
