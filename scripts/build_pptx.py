@@ -3,7 +3,7 @@
     python scripts/build_pptx.py
 
 All metrics are read from results/*.json at build time (nothing is typed in by hand), and all images
-are real screenshots from docs/screenshots/v2/. Re-run after re-evaluating to refresh the numbers.
+are real screenshots from docs/screenshots/v4/ (scripts/final_screenshots.py). Re-run after re-evaluating to refresh the numbers.
 """
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ from pptx.util import Inches, Pt
 
 ROOT = Path(__file__).resolve().parent.parent
 RES = ROOT / "results"
-SHOTS = ROOT / "docs" / "screenshots" / "v2"
+SHOTS = ROOT / "docs" / "screenshots" / "v4"
 OUT = ROOT / "presentation" / "SENTINEL_Tinyverse_PS02.pptx"
 
 # pastel-dark palette (matches the dashboard)
@@ -56,6 +56,7 @@ UI = load("offline_ui_check.json")
 CHAT = load("chat_benchmark.json")
 EXT = load("external_eval.json")
 SCALE = load("scale_benchmark.json")
+LIVE = load("live_demo_check.json")
 
 
 def bench(tag, model):
@@ -281,30 +282,56 @@ y2 = Inches(3.9)
 row2 = [("Evidence pack", "facts F1..Fn\nsupporting / contradicting", Inches(0.6)),
         ("Local Qwen", "Ollama · qwen2.5:3b\ntyped JSON + self-repair", Inches(3.4)),
         ("Verifier", "per claim & typed field\nVerified / Unverified", Inches(6.2)),
-        ("Outputs", "9-page dashboard · globe · graph\nreports · exports · audit", Inches(9.0))]
+        ("Outputs", "6-destination dashboard · globe\ngraph · reports · exports · audit", Inches(9.0))]
 for t1, t2, x in row2:
     box(s, x, y2, Inches(2.5) if t1 != "Outputs" else Inches(3.7), bh, t1, t2, line=GOLD if t1 == "Local Qwen" else SAGE)
 arrow(s, Inches(0.6) + 4 * Inches(2.48) + bw / 2, y1 + bh, Inches(1.85), y2, kind=MSO_CONNECTOR.ELBOW)
 for xa in (3.1, 5.9, 8.7):
     arrow(s, Inches(xa), y2 + bh / 2, Inches(xa + 0.3), y2 + bh / 2)
 panel(s, Inches(0.6), Inches(5.55), Inches(12.1), Inches(1.15), fill=BG)
-text(s, ["Fallbacks: model unavailable, slow or invalid → deterministic template; chat with nothing verifiable → deterministic "
-         "evidence answer. Detection, correlation, severity, verification and reporting never depend on the model.",
+text(s, ["Live path: NEXUS portal → append-only event stream → live worker (incremental, de-duplicated) → the same detection, "
+         "correlation, severity, local Qwen, verification and report code as upload mode. Fallbacks: model unavailable → deterministic template.",
          "Stack: Python 3.13 · Streamlit · pandas · scikit-learn · evtx · Jinja2 · psutil · SQLite · Ollama · bundled globe.gl/three.js, "
          "vis-network, Natural Earth. No cloud, no CDN."],
      Inches(0.8), Inches(5.65), Inches(11.8), Inches(1), 12, MUTED)
 
 # --------------------------------------------------------------------------- 6 Command Center
-s = slide("Command Center: an interactive globe that never invents a location", "Dashboard")
+s = slide("Command Center: the headline incident as a story, next to a real 3D globe", "Dashboard")
 image(s, "01_command_center.png", Inches(0.6), Inches(1.5), w=Inches(8.1))
 chk = (UI or {}).get("summary", {}).get("checks", {})
-bullets(s, ["Real 3D globe (bundled globe.gl + three.js): drag, zoom, reset, click markers or countries",
-            "Plots only coordinates present in the logs (here a SIEM export's geo columns); no IP geolocation, no online API",
-            "Arcs = logged events of one incident whose source and device sites differ",
-            "No location fields → exploration mode, clearly labelled",
+bullets(s, ["One story card for the top incident: plain-language headline, severity, Investigate",
+            "Four real counters, live activity, a small detection overview, four working quick actions",
+            "Real 3D globe (bundled globe.gl + three.js): drag, zoom, reset; plots only coordinates present in the logs",
+            "No location fields → a neutral globe and a small note; never IP geolocation",
             f"Browser check: rotate {('✓' if chk.get('globe_drag_rotates') else '✗')} · zoom {('✓' if chk.get('globe_wheel_zooms_in') else '✗')} · "
             f"reset {('✓' if chk.get('globe_reset_restores_view') else '✗')} · marker → records {('✓' if chk.get('globe_marker_click_opens_records') else '✗')}"],
         Inches(8.95), Inches(1.6), Inches(3.9), Inches(5.2), 13, gap=8)
+
+
+# --------------------------------------------------------------------------- Live demo
+s = slide("Live attack demonstration: watch a real event stream become one incident", "Live demonstration")
+image(s, "03_live_demo.png", Inches(0.6), Inches(1.5), w=Inches(7.9))
+lv = LIVE or {}
+lat = (lv.get("engine_latency_s") or [None])[0]
+kpi(s, Inches(8.8), Inches(1.55), Inches(1.95), f"{lv.get('events_ingested', '–')}/{lv.get('events_emitted', '–')}", "events ingested / emitted", TEXT)
+kpi(s, Inches(10.85), Inches(1.55), Inches(1.95), f"{lat:.1f} s" if lat is not None else "–", "event → incident (engine)", OK)
+kpi(s, Inches(8.8), Inches(2.85), Inches(1.95), f"{lv.get('qwen_explanation_s', '–')} s", "local Qwen explanation", TEXT)
+kpi(s, Inches(10.85), Inches(2.85), Inches(1.95), str(lv.get("external_requests_blocked", "–")), "external requests", OK)
+bullets(s, ["NEXUS, a fictional company portal on 127.0.0.1, writes every sign-in, page access and group change as an event",
+            "Attacker addresses are simulated documentation addresses; endpoint process / log-clearing events are synthetic and labelled",
+            "Scenario G: brute force → success → sensitive pages → self-add to Administrators → encoded PowerShell → log clearing",
+            "SENTINEL reads the stream incrementally and raises one Critical incident that escalates Low → Medium → Critical",
+            f"Recorded {lv.get('recorded_at', '–')} ({lv.get('test_type', '–')}); Presentation Mode ticks steps only from real state"],
+        Inches(8.8), Inches(4.2), Inches(4.0), Inches(2.8), 11, gap=4)
+
+s = slide("Real notifications: new incident, then each genuine escalation", "Live detection")
+image(s, "06_notifications.png", Inches(0.6), Inches(1.5), w=Inches(7.9))
+bullets(s, ["Raised only by the live engine's real new / escalated events: never a sample or a timer",
+            "Plain-language summary, affected account, severity path (Low → Medium → Critical)",
+            "Shown once per update as a toast; kept in the bell until dismissed; Investigate opens that incident",
+            "Live mode is explicit: the URL keeps the live stream selected, and a stopped worker is reported as stopped",
+            "Same detection, correlation, severity and verification code as upload mode"],
+        Inches(8.8), Inches(1.6), Inches(4.0), Inches(5.2), 13, gap=8)
 
 # --------------------------------------------------------------------------- 7 Detection
 s = slide("Fourteen deterministic rules, tuned against benign look-alikes", "Detection")
@@ -330,7 +357,7 @@ if M and BEFORE:
 
 # --------------------------------------------------------------------------- 8 Storyline
 s = slide("Attack Storyline Engine: related alerts become one explained incident", "Event correlation")
-image(s, "p03_incident.png", Inches(0.6), Inches(1.5), w=Inches(7.8))
+image(s, "08_attack_storyline.png", Inches(0.6), Inches(1.5), w=Inches(7.8))
 bullets(s, ["Alerts in time order; join within a 30-min gap and a 4-h span",
             "Strong link: ≥ 2 shared keys (account, host, source IP)",
             "Weak link: shared account only; shown dashed, never scored",
@@ -369,13 +396,13 @@ if CHAT:
             "\"cannot answer from the evidence\"", Inches(8.45), Inches(6.0), Inches(4.2), Inches(0.6), 11, MUTED)
 
 # --------------------------------------------------------------------------- 10 AI Lab
-s = slide("AI Investigation Lab: what the logs prove, and what they don't", "Analyst view")
-image(s, "p05_ai.png", Inches(0.6), Inches(1.5), w=Inches(8.3))
-bullets(s, ["Verified facts (code) vs model conclusions (checked)",
-            "Hypotheses with supporting and contradicting fact IDs, plus how to confirm",
-            "Self-repair outcome and the exact verifier feedback",
-            "Ask SENTINEL: grounded answers or an explicit \"cannot answer\"",
-            "Shift-handoff note with verified findings, open questions, next actions"],
+s = slide("Investigation Studio: what the logs prove, and what they don't", "Analyst view")
+image(s, "10_ai_investigation.png", Inches(0.6), Inches(1.5), w=Inches(8.3))
+bullets(s, ["What we know: code-derived facts, plus model statements only if verified",
+            "What might have happened: hypotheses with supporting / contradicting facts",
+            "What needs checking: unverified statements, counter-evidence, open questions",
+            "Recommended next steps from offline playbooks; Verification details panel",
+            "Ask SENTINEL chat and the shift-handoff note, both verified"],
         Inches(9.2), Inches(1.6), Inches(3.6), Inches(5), 13, gap=8)
 
 # --------------------------------------------------------------------------- 11 Accuracy
@@ -464,7 +491,7 @@ table(s, rows, Inches(0.6), Inches(1.6), Inches(8.3), col_w=[1.9, 1.7, 1.5, 1.2,
 if UI:
     u = UI["summary"]
     kpi(s, Inches(9.3), Inches(1.6), Inches(3.4), str(u["external_requests_blocked"]), "external requests (browser check)", OK)
-    text(s, f"{u['local_requests']} local requests; {sum(v == 'ok' for v in u['pages'].values())}/9 pages without exceptions; "
+    text(s, f"{u['local_requests']} local requests; {sum(v == 'ok' for v in u['pages'].values())}/{len(u['pages'])} pages without exceptions; "
             f"{sum(1 for k, v in u['checks'].items() if v is True)} interaction checks passed (recorded {u['recorded_at']}).",
          Inches(9.3), Inches(2.9), Inches(3.4), Inches(1.2), 11, MUTED)
 bullets(s, ["offline_check.py runs ingestion, detection, live Qwen with self-repair, chat, handoff, reports, exports, EVTX and the evaluation",
@@ -473,11 +500,12 @@ bullets(s, ["offline_check.py runs ingestion, detection, live Qwen with self-rep
         Inches(0.6), Inches(4.6), Inches(12.1), Inches(2.2), 13, gap=6)
 
 # --------------------------------------------------------------------------- 16 Dashboard tour
-s = slide("Nine pages, every control backed by tested code", "Dashboard")
-for i, (name, x, y) in enumerate((("p02_log.png", 0.6, 1.5), ("p04_attack.png", 4.75, 1.5), ("p07_evaluation.png", 8.9, 1.5),
-                                  ("p06_threat.png", 0.6, 4.15), ("p08_report.png", 4.75, 4.15), ("p09_system.png", 8.9, 4.15))):
+s = slide("Six destinations, every control backed by tested code", "Dashboard")
+for i, (name, x, y) in enumerate((("07_investigation_studio.png", 0.6, 1.5), ("09_attack_graph.png", 4.75, 1.5),
+                                  ("12_evaluation.png", 8.9, 1.5), ("11_threat_hunting.png", 0.6, 4.15),
+                                  ("13_report.png", 4.75, 4.15), ("04_nexus_login.png", 8.9, 4.15))):
     image(s, name, Inches(x), Inches(y), w=Inches(3.85))
-text(s, "Log Intelligence · Attack Graph · Evaluation · Threat Intelligence · Report Studio · System & Settings. "
+text(s, "Investigation Studio (evidence) · Attack graph · Evaluation · Threat Hunting · Report · NEXUS sign-in. "
         "Feature-by-feature backend, data and test mapping: docs/feature_traceability.md",
      Inches(0.6), Inches(6.55), Inches(12.1), Inches(0.45), 11, MUTED)
 
@@ -508,8 +536,8 @@ bullets(s, ["Ingests CSV, JSON and EVTX, including unseen formats via the column
         Inches(0.6), Inches(1.7), Inches(7.2), Inches(4.2), 15, gap=8)
 panel(s, Inches(8.2), Inches(1.7), Inches(4.5), Inches(4.4))
 text(s, "Live demo (offline, 5 min)", Inches(8.4), Inches(1.85), Inches(4.2), Inches(0.4), 14, GOLD, bold=True)
-bullets(s, ["Command Center: rotate, zoom, click a marker", "Log Intelligence: unseen format, EVTX", "Incident storyline and severity",
-            "Qwen explanation, self-repair, chat", "Evaluation: fresh seeds, ablation, real logs", "CPU / scale / offline record → report"],
+bullets(s, ["Command Center and globe, offline status", "NEXUS: a real sign-in", "Live attack (scenario G) → notification",
+            "Investigation Studio: story, evidence, local Qwen", "Evaluation: fresh seeds, real recordings", "Verified report"],
         Inches(8.4), Inches(2.3), Inches(4.1), Inches(3.6), 13, gap=4)
 text(s, "github.com/dakshitha0705/SENTINEL  ·  README · docs/evaluation.md · docs/feature_traceability.md · docs/demo_script.md",
      Inches(0.6), Inches(6.3), Inches(12), Inches(0.4), 12, MINT)

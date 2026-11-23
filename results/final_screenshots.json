@@ -1,5 +1,5 @@
 {
- "recorded_at": "2026-11-24 00:35:58",
+ "recorded_at": "2026-11-24 00:41:58",
  "shots": [
   "04_nexus_login",
   "05_nexus_controller",
@@ -15,7 +15,7 @@
   "12_evaluation",
   "09_attack_graph"
  ],
- "session": "20261124-003559-4be8",
- "qwen_s": 11.8,
+ "session": "20261124-004159-dd73",
+ "qwen_s": 11.5,
  "external_requests_blocked": 0
 }

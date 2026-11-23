@@ -49,6 +49,21 @@ def nav(pg, k):
     time.sleep(2)
 
 
+def globe_ready(pg, timeout=40):
+    """Wait until the WebGL globe has initialised (and painted a few frames)."""
+    t0 = time.time()
+    while time.time() - t0 < timeout:
+        for f in pg.frames:
+            try:
+                if f.evaluate("!!window.__sentinelGlobe"):
+                    time.sleep(4)
+                    return True
+            except Exception:  # noqa: BLE001
+                pass
+        time.sleep(0.5)
+    return False
+
+
 def seg(pg, label):
     pg.locator("[data-testid='stButtonGroup'] button").filter(has_text=label).first.click()
     idle(pg)
@@ -123,7 +138,7 @@ def main():
             time.sleep(0.5)
         # Command Center: notification toast + bell
         nav(sen, 0)
-        time.sleep(3)
+        globe_ready(sen)
         shot(sen, "01_command_center")
         sen.locator("[data-testid='stPopover'] button").first.click()
         time.sleep(1.5)
