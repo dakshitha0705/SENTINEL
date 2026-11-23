@@ -50,7 +50,11 @@ def main():
     ap.add_argument("--scenario", default="G")
     a = ap.parse_args()
     SHOTS.mkdir(parents=True, exist_ok=True)
-    blocked, out = [], {"recorded_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "scenario": a.scenario}
+    from sentinel.perf import internet_reachable
+    online = internet_reachable()
+    blocked, out = [], {"recorded_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "scenario": a.scenario,
+                        "internet_reachable": online, "test_type": "online rehearsal" if online else "offline test"}
+    print(f"Internet reachable at start: {online} -> {out['test_type']}")
 
     def route(r):
         host = urlparse(r.request.url).hostname or ""
@@ -176,7 +180,11 @@ def main():
     out["external_requests_blocked"] = len(blocked)
     out["blocked_urls"] = blocked
     (ROOT / "results").mkdir(exist_ok=True)
+    out["internet_reachable_after"] = internet_reachable()
     (ROOT / "results" / "live_demo_check.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
+    runs = ROOT / "results" / "live_demo_runs"
+    runs.mkdir(exist_ok=True)
+    (runs / f"{datetime.now():%Y%m%d_%H%M%S}.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
     print(json.dumps({k: v for k, v in out.items() if k != "blocked_urls"}, indent=1))
 
 
