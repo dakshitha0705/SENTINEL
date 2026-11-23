@@ -25,6 +25,16 @@ SENTINEL claims offline operation only for runs that were actually recorded. Eve
 
 The result is written to `results/offline_ui_check.json`.
 
+**Live version, disconnected (23 Nov 18:45, `results/offline_runs/20261123_184532.json`).** Run by the participant with Wi-Fi off; the internet was unreachable before and after.
+- An in-process NEXUS ran scenario G: 250/250 events ingested; one Critical 100 incident (R1, R3, R5, R6, R7, R8), detected 1.02 s after its triggering event.
+- The engine raised three real notifications: new (Low), then escalated to Medium, then to Critical.
+- Three live Qwen explanations completed (2/2, 1/2 and 2/2 statements verified), at 94–95 tokens/s.
+- The chat had 0 silent replies; a question the logs cannot answer got an explicit "cannot answer".
+- The held-out evaluation reproduced P = R = F1 = 1.0 on seeds 101/202/303.
+- 0 external connections.
+
+This run used the backend at commit `4f7b333`. The redesigned dashboard (24 Nov) still needs its own disconnected browser check: see "Outstanding" in `docs/progress.md`.
+
 ## Static offline safeguards
 
 | Safeguard | Implementation |
@@ -44,8 +54,9 @@ The result is written to `results/offline_ui_check.json`.
 | 2026-11-23 06:04 | **offline test (Wi-Fi disconnected)** | **no** (before and after) | **0** | 6 | 25.9 s | 181 MB / 342 MB | 91.9–94.0 |
 | 2026-11-23 07:21 | online rehearsal, v2 feature set (self-repair, chat fallback, handoff, exports, EVTX) | yes | **0** | 10 | 33.4 s | 185 MB / 103 MB | 90.5–92.3 |
 | 2026-11-23 08:24 | **offline test of the v2 feature set (Wi-Fi disconnected)** | **no** (before and after) | **0** | 18 | 35.9 s | 183 MB / 103 MB | 88.6–93.1 |
+| 2026-11-23 18:45 | **offline test of the live version (Wi-Fi disconnected)**: full workflow + live NEXUS → SENTINEL step | **no** (before and after) | **0** | 29 | 51.1 s | 217 MB / 89 MB | 94.4–95.3 |
 
-**UI check (online, 23 Nov 07:16):** 0 external requests out of 191 (every non-local request would have been aborted). All 9 pages rendered without exceptions, and all globe and graph interaction checks passed. 
+**UI check (online, 23 Nov 07:16):** 0 external requests out of 191 (every non-local request would have been aborted). All 9 pages (the pre-redesign UI) rendered without exceptions, and all globe and graph interaction checks passed. 
 
 **UI check, disconnected (23 Nov 08:25, `results/offline_ui_check_20261123_0825_offline.json`).** Internet was unreachable. 0 external requests were made, out of 188 local requests. All 9 pages rendered without exceptions.
 

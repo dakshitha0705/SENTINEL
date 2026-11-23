@@ -33,7 +33,7 @@ SENTINEL is a single local Python application. **Code produces the facts; the SL
                  │
                  ▼
  report.py (HTML/PDF) · exports.py (JSON/CSV) · handoff.py (shift notes) · workspace.py (SQLite audit)
- app.py + sentinel/ui/ (9 pages) · geospatial.py (globe, log coordinates only) · graph.py · search.py
+ app.py + sentinel/ui/ (6 destinations + live notifications) · geospatial.py (globe, log coordinates only) · graph.py · search.py
 ```
 
 ## Modules
@@ -58,7 +58,7 @@ SENTINEL is a single local Python application. **Code produces the facts; the SL
 | `sentinel/exports.py` | Incident JSON (storyline, facts, verification, workflow) and CSV exports. |
 | `sentinel/geospatial.py` | Globe markers/arcs from coordinate columns present in the logs; exploration mode otherwise. |
 | `sentinel/graph.py`, `sentinel/search.py` | Attack-graph nodes/edges from correlation output; global search. |
-| `app.py`, `sentinel/ui/` | Streamlit shell (top bar, navigation, search) and nine pages; `ui/static/viz` is a local bidirectional component (globe.gl + three.js, vis-network, Natural Earth outlines). |
+| `app.py`, `sentinel/ui/` | Streamlit shell (top bar with search, data source, live status, notification bell and System status; navigation) and six destinations (Command Center, Live Demo, Log Intelligence, Investigation Studio, Threat Hunting, Reports & Evaluation); `ui/static/viz` is a local bidirectional component (globe.gl + three.js, vis-network, Natural Earth outlines). |
 
 ## Normalised event schema
 

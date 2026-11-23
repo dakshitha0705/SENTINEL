@@ -132,3 +132,52 @@ The "Ask SENTINEL" tab is a two-column layout: the conversation on the left; on 
 - **Mode strip text overflow:** the Command Center live mode strip wraps on 1680 px; consider shortening it, for example by dropping the session ID.
 - **Live notifications:** the engine produces notifications with `kind` "new" or "escalated" (snapshot key `notifications`); the UI currently toasts them.
 - **Live engine choice:** `state.live_engine()` uses the worker process (`python -m sentinel.live`, started by `scripts/start_demo.ps1`) when its heartbeat is fresh, and otherwise an in-process engine.
+
+## Frontend redesign (24 Nov 00:00–01:15 IST), on the participant's explicit request
+
+The participant's final directive superseded the frontend handover above and asked for a complete redesign. The uncommitted edits described in sections 1–3 were folded into it: the storyline view moved out of the Command Center, and the Log Intelligence and chat changes were rewritten.
+
+**Navigation.** Six destinations replace the nine pages:
+- Command Center;
+- Live Demo;
+- Log Intelligence;
+- Investigation Studio (incident investigation, attack graph and AI investigation combined);
+- Threat Hunting;
+- Reports & Evaluation.
+
+System & Settings is now a **System status** popover with an advanced dialog. Older page names still work as deep links (`state.ALIASES`).
+
+**Live mode.** `?live=1` is the source of truth: refreshing or navigating keeps the live stream, and an explicit dataset switch removes it from the URL. The top bar says *LIVE · monitoring* or *LIVE · detection stopped*, based on the worker heartbeat or the in-process engine.
+
+**Notifications.** These come from the engine's real `new` and `escalated` events, now with:
+- a plain-language summary;
+- the affected users and hosts;
+- the previous level;
+- a stable tracking key, so Investigate opens the right incident after re-ranking.
+
+Each one is shown once as a toast and kept in the bell until dismissed. Only one auto-refresh fragment runs per page; two competing fragments had starved the notification watcher.
+
+**Visual system.** Coastal-dark theme: deep petrol shell, ivory story cards, peach/terracotta actions, powder-blue selection, Sitka/Cambria headlines. It uses system fonts only, and the globe and graph were recoloured to match.
+
+**NEXUS.**
+- Redesigned sign-in page with show/hide password and accessible states.
+- Controller credentials now sit in a collapsed *Demo accounts & credentials* panel with copy buttons.
+- The fictional passwords were rotated, because two earlier v3 screenshots had shown them.
+
+**Backend fixes found during the redesign.**
+- *Synthetic baseline:* it now sits within ±5 h of the current time of day. Benign scenario H had been flagged as an unusual-hour logon when the demo ran at night.
+- *Windows file race:* the atomic replace of status, snapshot and cursor files is retried. NEXUS `/api/demo/status` returned HTTP 500 when it read the file during a replace.
+- *Presentation Mode step 2:* it compared a text "False" from the normalised raw column as truthy. It now compares as text.
+
+**Verification.**
+- 113 tests pass.
+- `scripts/ui_check.py` drives all six destinations and every studio and report view in Edge. Globe rotate, zoom, reset and marker click pass; the graph zooms and opens its inspector; hunt cards, the report and the offline evidence work; 0 external requests; no JS errors.
+- `scripts/live_demo_check.py` (online rehearsal, 00:28): 250/250 events, Critical 100, 1.58 s engine latency, local Qwen 18.0 s, chat answered, report rendered, 0 external requests.
+- Final screenshots: `scripts/final_screenshots.py` → `docs/screenshots/v4/`, from a real session with a genuine NEXUS sign-in.
+
+**Headless-capture note.** vis-network's canvas does not paint in headless Edge when Playwright request interception is on, or before the frame is in view. The screenshot script therefore takes the graph in a separate browser without interception, in a taller viewport. In the app and in the browser check, the graph renders and responds to clicks.
+
+### Outstanding
+
+- **Disconnected re-test of the redesigned live version.** The participant turns Wi-Fi off, runs `scripts/offline_check.py`, `scripts/live_demo_check.py` and `scripts/ui_check.py`, reconnects, and the results go into `docs/offline_validation.md`.
+- **Git history.** Commits before 24 Nov 00:45 contain two controller screenshots showing the *old* fictional passwords. Those passwords are no longer valid, and the files were removed from the tree. Rewriting history was not done, because it needs the participant's explicit permission.

@@ -4,7 +4,38 @@ Every visible control in the dashboard is listed with the code that implements i
 
 Status values: **Implemented and tested** · **Implemented with limitations** · **Not implemented**.
 
-## Command Center
+## Redesigned UI (24 Nov): six destinations
+
+The nine pages were reorganised into six destinations; no backend feature was removed. Where each former page lives now:
+
+| Former page | Now |
+|---|---|
+| Command Center | **Command Center** (story card, globe, counters, activity, detection overview, quick actions) |
+| Log Intelligence | **Log Intelligence** (Upload → Review → Analyze; mapping editor opens when unsure; technical details in an expander) |
+| Incident Investigation, Attack Graph, AI Investigation Lab | **Investigation Studio** views: Story, Evidence, Severity, Attack graph, AI investigation, Next steps, Notes, Export |
+| Threat Intelligence | **Threat Hunting** (hunt cards + advanced hunting: regex, prepared hunts, MITRE explorer, rules) |
+| Evaluation & Benchmarks, Report Studio | **Reports & Evaluation** views: Report, Evaluation, Offline evidence |
+| System & Settings | **System status** popover (top right) → advanced dialog with the same tabs |
+| — | **Live Demo** (new) |
+
+| Feature | Frontend | Backend | Data source | Test | Status |
+|---|---|---|---|---|---|
+| Six-destination navigation; old names as deep links | `app.py`, `ui/state.py` (`PAGES`, `ALIASES`, `goto`) | – | session state | `test_page_renders[*]`, `test_old_page_names_map_to_new_destinations`, `ui_check.py` (all destinations and views) | Implemented and tested |
+| Live mode selected by `?live=1`, kept on refresh/navigation, left on explicit switch | `app.py`, `state.select_live()` / `load_dataset()` | `live.LiveReader` / `LiveEngine` | NEXUS stream | `test_live_mode_pages_render` (navigation keeps LIVE; switch removes `live` from the URL) | Implemented and tested |
+| Honest live status chip (monitoring / detection stopped) | `app.py` | `state.live_status()` (worker heartbeat or in-process engine) | `demo_data/live_worker.json` | `test_live_mode_pages_render`; browser check | Implemented and tested |
+| Notifications: toast once per update, bell history, Investigate, Dismiss | `app.py` (`_notif_popover`, `_toast`), `state.sync_notifications()` / `notify_tick()` / `resolve_incident()` | `live.LiveEngine._notify()` (real `new` / `escalated`, plain-language summary, tracking key) | live analysis | `test_live_mode_pages_render` (real R1 notification, no duplicate on rerun), `test_full_storyline_uses_generated_event_ids_and_escalates`; `live_demo_check.py` (bell count 3) | Implemented and tested |
+| Command Center story card and counters | `ui/pages/command_center.py` (`headline`, `_hero`) | `live.plain_summary()`; analysis | analysis | `test_command_center_counters_match_backend` | Implemented and tested |
+| Live Demo page: NEXUS target, scenario cards, pause/resume/stop/new session, generated vs ingested, severity path | `ui/pages/live_demo.py` | NEXUS controller API (`/api/demo/*`), `LiveEngine` tracking | NEXUS + live snapshot | `test_runner_control_pause_resume_stop_and_conflicts`; browser check; `final_screenshots.py` (scenario G started from this page) | Implemented and tested |
+| Presentation Mode (steps tick only from real state) | `live_demo.py` (`progress_flags`, `mark`) | live analysis events, session flags set by the studio/report pages | live analysis | `final_screenshots.py` (genuine sign-in ticks step 2; steps 3–4 after the attack) | Implemented and tested in the browser |
+| Investigation Studio case queue + story playback | `ui/pages/studio.py` | `correlate.storyline()` | alerts, events | `test_investigation_studio_views_render[*]` | Implemented and tested |
+| AI investigation cards (What we know / might have happened / needs checking / next steps) + Verification details | `ui/pages/ai_lab.py` (`render_for`) | `slm.explain`, `verifier.verify_output` | evidence packs | `test_investigation_studio_views_render[AI investigation]`; `live_demo_check.py` (Qwen + verification shown) | Implemented and tested |
+| Threat Hunting cards (real queries) | `ui/pages/hunting.py` | `sentinel/hunting.py` (`category`, `summarise`) | normalised events + rule alert events | `test_threat_hunting_cards_run_real_queries`; `ui_check.py` (`hunt_card_runs_query`) | Implemented and tested |
+| Event explorer with selectable rows and detail panel | `log_intelligence.py` (`_analysis_panels`) | pandas | normalised events | `test_page_renders[Log Intelligence]` | Implemented and tested |
+| Reports & Evaluation views incl. offline evidence | `ui/pages/reports_eval.py` | `report.py`, results files, `system_settings.offline_validation()` | `results/*.json` | `test_reports_evaluation_views_render[*]` | Implemented and tested |
+| NEXUS sign-in redesign (show/hide password, accessible states) | `demo_target/templates/login.html`, `static/nexus.css` | `IdentityStore.authenticate()` (unchanged) | – | `test_nexus_login_page_and_credentials_panel` | Implemented and tested |
+| Demo accounts & credentials panel (collapsed, copy buttons, local only) | `demo_target/templates/demo.html` | `IdentityStore.passwords` (local file, git-ignored) | `demo_data/nexus_credentials.json` | `test_nexus_login_page_and_credentials_panel` (passwords only inside the collapsed panel, never on the login page) | Implemented and tested |
+
+## Command Center (details)
 
 | Feature | Frontend | Backend | Data source | Test | Status |
 |---|---|---|---|---|---|
@@ -47,7 +78,7 @@ Status values: **Implemented and tested** · **Implemented with limitations** ·
 
 | Feature | Frontend | Backend | Data source | Test | Status |
 |---|---|---|---|---|---|
-| Queue with severity / status / text filters and sorting | `ui/pages/incidents.py` | `workspace.current_status()` | analysis + `workspace/analyst.db` | `test_page_renders` | Implemented and tested |
+| Queue with severity / status / text filters and sorting | `ui/pages/studio.py` | `workspace.current_status()` | analysis + `workspace/analyst.db` | `test_page_renders` | Implemented and tested |
 | Attack Storyline Engine with link reasons | same | `correlate.correlate()`, `storyline()` | alerts | `tests/test_correlate_severity.py`, `test_r3_delayed_success_links_with_reduced_weight` | Implemented and tested |
 | Evidence pack, events behind each fact, original records, contradicting evidence | same | `evidence.build_evidence_pack()` | events | `tests/test_evidence_verifier.py` | Implemented and tested |
 | Severity breakdown | same | `severity.score_incident()` | alerts | `tests/test_correlate_severity.py` | Implemented and tested |

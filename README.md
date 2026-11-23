@@ -12,7 +12,7 @@ A **locally running small language model** (Qwen2.5-3B via Ollama) then explains
 
 > Code produces the facts; the local model interprets them; the verifier checks every factual claim. Detection, correlation, severity, verification and reporting never depend on the model.
 
-![Command Center](docs/screenshots/v2/01_command_center.png)
+![Command Center](docs/screenshots/v4/01_command_center.png)
 
 ---
 
@@ -64,19 +64,39 @@ A **locally running small language model** (Qwen2.5-3B via Ollama) then explains
 - The external recordings carry only technique labels, so they measure scenario detection, not precision.
 - The verifier is lexical and structural, not semantic.
 
-## The dashboard (nine pages)
+## Live attack demonstration (NEXUS → SENTINEL)
 
-| Page | What it does |
+SENTINEL can watch a running application and detect an attack while it happens. **NEXUS** is a fictional corporate portal that runs on this laptop (127.0.0.1 only). Its sign-ins, page access and group changes are real HTTP requests handled by its own code, and each one is written as a security event that SENTINEL ingests incrementally.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\start_demo.ps1   # NEXUS, the live detection worker, SENTINEL (hidden, logged)
+# SENTINEL live:  http://127.0.0.1:8501/?live=1      NEXUS: http://127.0.0.1:8502/login
+powershell -ExecutionPolicy Bypass -File scripts\stop_demo.ps1    # stops only the processes it started
+```
+
+Open **Live Demo**, press **Start the full attack** (scenario G), and watch one incident escalate from Low to Medium to Critical, with a notification at each real step. Attacker addresses are simulated documentation addresses. The endpoint process and log-clearing events are synthetic and labelled: nothing is executed and no log is cleared.
+
+Measured (browser-driven check, `results/live_demo_check.json`, 2026-11-24 00:28:42, online rehearsal):
+- 250/250 events ingested;
+- Critical incident detected 1.6 s after its triggering event (engine);
+- local Qwen explanation in 18.0 s;
+- chat answered and report rendered;
+- 0 external requests.
+
+Step-by-step guide for presenters: [docs/user_guide.md](docs/user_guide.md). Details: [docs/live_demo.md](docs/live_demo.md).
+
+## The dashboard (six destinations)
+
+| Destination | What it does |
 |---|---|
-| **Command Center** | KPIs, the **interactive 3D globe** (drag, zoom, reset, click markers or countries), severity, top detections, urgent incidents, the four main actions |
-| **Log Intelligence** | Upload CSV/JSON/JSONL/EVTX, EVTX conversion diagnostics, column mapping, validation, event explorer, rejected/duplicate records, SHA-256, exports |
-| **Incident Investigation** | Filterable queue; storyline, evidence, severity, MITRE and playbooks; status, disposition, notes, audit trail; exports |
-| **Attack Graph** | Interactive graph of incidents, detections, accounts, hosts and IPs. Every edge comes from the correlation engine |
-| **AI Investigation Lab** | Local Qwen explanation with typed-claim verification and the self-repair outcome; verified chat; analyst handoff note |
-| **Threat Intelligence** | Threat hunting (prepared hunts and regex, pivots), MITRE ATT&CK explorer, the rule catalogue |
-| **Evaluation & Benchmarks** | Every number above, read from `results/*.json`; buttons to re-run the deterministic evaluations |
-| **Report Studio** | Report preview, HTML/PDF, JSON/CSV/ZIP bulk export |
-| **System & Settings** | Offline monitor, model selector, CPU-only mode, self-repair toggle, validated detection settings, suppressions, audit, offline-run history, credits |
+| **Command Center** | The top incident as a plain-language story card with **Investigate**; the **interactive 3D globe** (drag, zoom, reset, click a marker); total events, incidents, affected users and devices; recent activity; a small detection overview; four quick actions |
+| **Live Demo** | NEXUS status, the eight scenario cards with pause/resume/stop/new session, live counters (generated vs ingested), the incident with its severity path, and an optional **Presentation Mode** that ticks each step only when the application state shows it happened |
+| **Log Intelligence** | Upload → Review → Analyze: drop CSV/JSON/JSONL/EVTX, automatic mapping (an **Advanced field mapping** editor opens when it is unsure), a readable event explorer with a detail panel; SHA-256, rule coverage, rejected records and exports under *Technical details* |
+| **Investigation Studio** | Case queue plus one incident workspace: **Story** (expandable stages, playback of the stored events), **Evidence** (facts and original records), **Severity**, **Attack graph**, **AI investigation** (What we know / What might have happened / What needs checking / Recommended next steps, verification details, Ask SENTINEL, handoff note), **Next steps** (MITRE, playbooks), **Notes**, **Export** |
+| **Threat Hunting** | Five hunt cards (credential attacks, suspicious execution, privilege activity, evidence tampering, unusual access) that run real queries, with pivots and exports; advanced hunting (regex, prepared hunts, MITRE ATT&CK explorer, rule browser) |
+| **Reports & Evaluation** | Verified report preview with HTML/PDF/JSON/CSV/ZIP; the evaluation lab (every number read from `results/*.json`); the recorded offline evidence |
+
+**Notifications.** In live mode, the bell and a toast show the live engine's real *new incident* and *escalated* events: once per update, with the affected account and severity, and an **Investigate** button that opens that incident. The **System status** button (top right) holds the offline monitor, model placement, detection configuration, audit, offline validation and credits.
 
 **About the globe.** It only plots coordinates that the logs themselves contain (for example a SIEM export's source and device geo columns). SENTINEL never guesses a location from an IP and calls no geolocation service. Without location columns the globe stays in **exploration mode** and says so. The bundled demo export carries *synthetic* geo columns; its external addresses are RFC 5737 documentation ranges.
 
@@ -137,18 +157,21 @@ Then disconnect; everything works offline.
 
 ```powershell
 .\scripts\run.ps1           # http://127.0.0.1:8501 (opens the bundled demo dataset)
+powershell -ExecutionPolicy Bypass -File scripts\start_demo.ps1   # live demo: NEXUS + worker + SENTINEL
 ```
 
 ## How to test
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest -q                       # 90 tests
+.\.venv\Scripts\python.exe -m pytest -q                       # 113 tests
 .\.venv\Scripts\python.exe scripts\evaluate.py                # synthetic accuracy, comparison, ablation
 .\.venv\Scripts\python.exe scripts\external_eval.py           # public attack recordings (after download)
 .\.venv\Scripts\python.exe scripts\slm_benchmark.py [--cpu]   # local model, verification, self-repair
 .\.venv\Scripts\python.exe scripts\scale_benchmark.py         # 126,919 events
 .\.venv\Scripts\python.exe scripts\offline_check.py           # full workflow + connection log (Wi-Fi off)
-.\.venv\Scripts\python.exe scripts\ui_check.py                # browser check, external requests blocked
+.\.venv\Scripts\python.exe scripts\ui_check.py                # browser check of all six destinations, external requests blocked
+.\.venv\Scripts\python.exe scripts\live_demo_check.py         # live NEXUS attack end to end (services running)
+.\.venv\Scripts\python.exe scripts\final_screenshots.py       # docs/screenshots/v4 from a real live session
 ```
 
 ## Limitations
@@ -159,6 +182,7 @@ Then disconnect; everything works offline.
 - **Lexical and structural verification.** It catches wrong numbers, names, times, IDs and typed values, but not every subtly unsupported qualifier.
 - **Globe.** Only log-provided coordinates are shown. There is no IP geolocation database (by design).
 - **Small models.** qwen2.5:1.5b is faster but verified only 16–32% of its claims, so it is not the default.
+- **Live demo.** NEXUS events are Windows-*style* records written by NEXUS, not by Windows; attacker addresses are simulated and the endpoint events are synthetic (labelled). Detection latency rises to a few seconds when the laptop is also rendering a headless browser.
 - **Other.** R10/R11 are unit-tested only. Timestamps without a timezone are treated as UTC.
 
 ## Documentation
@@ -169,6 +193,8 @@ Then disconnect; everything works offline.
 | [feature_traceability.md](docs/feature_traceability.md) | Frontend → backend → data → test for every feature |
 | [architecture.md](docs/architecture.md) | Modules, schema, rules, linking, severity, Evidence Contract |
 | [offline_validation.md](docs/offline_validation.md) | Recorded online rehearsals and disconnected runs |
+| [user_guide.md](docs/user_guide.md) | Where to click for the five-minute live demo |
+| [live_demo.md](docs/live_demo.md) | NEXUS, scenarios, event schema, provenance, measured latency, reliability |
 | [demo_script.md](docs/demo_script.md) | Five-minute offline demo with answers to likely questions |
 | [requirements_traceability.md](docs/requirements_traceability.md) | PS 02 requirements → implementation → tests; recorded conflicts |
 | [credits.md](docs/credits.md) | Third-party components, datasets, model licences, AI assistance |
