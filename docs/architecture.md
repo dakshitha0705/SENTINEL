@@ -3,7 +3,8 @@
 SENTINEL is a single local Python application. **Code produces the facts; the SLM only interprets them.** Detection, correlation, severity, evidence verification and reporting all work without the model. If the model is off, slow or wrong, the deterministic template explanation takes over.
 
 ```
- CSV / JSON / JSON-lines files  (originals never modified, SHA-256 recorded)
+ CSV / JSON / JSON-lines / EVTX files  (originals never modified, SHA-256 of the original recorded)
+        │   evtx_converter.py: offline EVTX → flat JSON records (System + EventData, record IDs kept)
         │
         ▼
  ingest.py ── column mapper (guess + analyst correction) ── normalised event schema
@@ -12,7 +13,7 @@ SENTINEL is a single local Python application. **Code produces the facts; the SL
  baselines.py ── per-user history strictly before each logon (4 h learning lag)
         │
         ▼
- rules.py ── R1–R8 (+ R9–R11, 4672 context) ── alerts with event IDs, reason, MITRE, confidence
+ rules.py ── R1–R8 (+ R9–R14, 4672 context) ── alerts with event IDs, reason, MITRE, confidence
         │
         ▼
  correlate.py ── Attack Storyline Engine: time-ordered linking, strong/weak links with reasons
@@ -23,13 +24,16 @@ SENTINEL is a single local Python application. **Code produces the facts; the SL
         ▼
  evidence.py ── evidence pack: numbered facts F1..Fn + supporting / contradicting evidence
         │
-        ├──► slm.py ── Ollama on 127.0.0.1 (qwen2.5:3b) ── schema-constrained JSON citing fact IDs
+        ├──► slm.py ── Ollama on 127.0.0.1 (qwen2.5:3b) ── typed, schema-constrained JSON citing fact IDs
+        │        │        one bounded self-repair round with the verifier's specific errors
         │        │        (timeout / invalid output / unavailable → template explanation)
+        │        │        chat: SLM answer → verifier → deterministic evidence answer (never silent)
         │        ▼
         └──► verifier.py ── per-sentence checks → Verified / Unverified, verification rate
                  │
                  ▼
- report.py (self-contained HTML, optional PDF)   app.py (Streamlit)   workspace.py (SQLite audit)
+ report.py (HTML/PDF) · exports.py (JSON/CSV) · handoff.py (shift notes) · workspace.py (SQLite audit)
+ app.py + sentinel/ui/ (9 pages) · geospatial.py (globe, log coordinates only) · graph.py · search.py
 ```
 
 ## Modules
@@ -48,16 +52,24 @@ SENTINEL is a single local Python application. **Code produces the facts; the SL
 | `sentinel/metrics.py` | Incident-level matching and metrics (see `evaluation.md`). |
 | `sentinel/perf.py` | psutil peak-RAM sampler, connection log (loopback vs external), local `nvidia-smi` query. |
 | `sentinel/workspace.py` | Dispositions, notes, audit trail, reviewable suppressions (SQLite, `workspace/analyst.db`). |
-| `app.py` | Streamlit UI: queue, upload & mapping, investigation, accuracy, offline monitor, analyst workspace. |
+| `sentinel/evtx_converter.py` | Offline EVTX parsing (`evtx` package): System fields, EventData/UserData flattened, original record IDs, diagnostics for unreadable files. |
+| `sentinel/naive.py`, `sentinel/comparison.py` | Naive baseline detector; strict/lenient matching; ablation switches (`cfg["features"]`); alert compression; per-scenario Jaccard. |
+| `sentinel/handoff.py` | Deterministic chat answers by intent, and shift-handoff notes, built only from pack facts (so they pass the verifier). |
+| `sentinel/exports.py` | Incident JSON (storyline, facts, verification, workflow) and CSV exports. |
+| `sentinel/geospatial.py` | Globe markers/arcs from coordinate columns present in the logs; exploration mode otherwise. |
+| `sentinel/graph.py`, `sentinel/search.py` | Attack-graph nodes/edges from correlation output; global search. |
+| `app.py`, `sentinel/ui/` | Streamlit shell (top bar, navigation, search) and nine pages; `ui/static/viz` is a local bidirectional component (globe.gl + three.js, vis-network, Natural Earth outlines). |
 
 ## Normalised event schema
 
-`event_id, source_file, source_row, record_id, timestamp (UTC), log_type (auth/endpoint), event_code, action, user, target_user, actor, host, src_ip, group, process, parent_process, command_line, outcome, raw`
+`event_id, source_file, source_row, record_id, timestamp (UTC), log_type (auth/endpoint), event_code, action, user, target_user, actor, host, src_ip, group, process, parent_process, command_line, outcome, src_lat, src_lon, src_geo, dst_lat, dst_lon, dst_geo, raw`
+
+The six geo fields are optional and are filled only from columns the log itself provides (for example a SIEM's geo-enrichment).
 
 `raw` is the original record, verbatim. `event_id` (EVT-nnnnnn) is assigned after time-sorting and is used in every citation. `source_file:source_row` points to the original line.
 
 Action normalisation:
-- **Windows event IDs:** 4624 login_success, 4625 login_failure, 4634/4647 logout, 4672 privilege_logon, 4728/4732/4756 group_add, 4688 process_start, 1102 log_cleared, 6416 device_connected.
+- **Windows event IDs:** 4624 login_success; 4625 and 4771 login_failure; 4768 login_failure when Status ≠ 0x0; 4634/4647 logout; 4672 privilege_logon; 4728/4732/4756 group_add; 4799 group_enum; 4688 process_start; 1102 (and 104 from the Eventlog provider) log_cleared; 6416 device_connected.
 - **Other sources:** Sysmon 1 → process_start; free-text actions such as "Logon Failed" are mapped by keywords.
 
 ## Detection rules
@@ -66,7 +78,7 @@ Action normalisation:
 |---|---|---|---|
 | R1 Brute force | ≥ 8 failures for one account from one source within a 10-min sliding window | T1110.001 | Medium |
 | R2 Password spraying | One source IP fails against ≥ 5 distinct accounts within 15 min, median ≤ 3 attempts each | T1110.003 | High |
-| R3 Logon after failures | Success for the same account and same source ≤ 15 min *after* the last failure of an R1/R2 burst | T1078 | High |
+| R3 Logon after failures | Success for the same account and same source ≤ 60 min *after* the last failure of an R1/R2/R12/R13 burst. Full weight up to 15 min, then linearly down to 0.4× at 60 min; a late success is labelled "not confirmed compromise". It always joins its burst's incident (derived link). | T1078 | High (decayed) |
 | R4 Unusual time | No prior logon within ±1 h of this hour; only with a confident baseline; service accounts excluded | T1078 | Low, context |
 | R5 New device / IP | Host or source IP never seen for this account (needs ≥ 3 prior logons; low-confidence label) | T1078 | Low, context |
 | R6 Privileged group change | 4728/4732/4756 into a privileged group where the actor is not an authorised admin **or** the change is outside an approved change window | T1098 | High |
@@ -75,6 +87,9 @@ Action normalisation:
 | R9 Lateral movement | ≥ 3 hosts new to the account within 30 min | T1021 | Context |
 | R10 Bulk copy / staging | Recursive copy or archive tool writing to a removable drive or UNC path | T1039, T1074 | Medium |
 | R11 USB storage | Event 6416 for a disk/USB device | T1052.001 | Context |
+| R12 Sustained brute force | Failures R1 did not cover: ≥ 8 in 60 min or ≥ 20 in 24 h for one account from one source that had **never** logged on successfully as that account before | T1110.001 | Medium |
+| R13 Small password spray | One source fails against ≥ 3 accounts (below R2) within 30 min, ≥ 80% of its logon attempts in the window fail, and most targets never logged on from it | T1110.003 | Medium |
+| R14 Privileged group discovery | `net group "Domain Admins"`, `net localgroup administrators`, Get-ADGroupMember, dsquery, or a 4799 enumeration by net/PowerShell/cmd; low confidence for authorised admins | T1069.001/.002 | Context |
 | 4672 | Special privileges at logon: supporting context only, **never** proof of escalation | – | Context |
 
 False-positive controls:
@@ -129,7 +144,9 @@ Severity measures *how bad it would be*. **Confidence** is reported separately a
    - lexical grounding: the content overlaps with the cited facts;
    - no overclaiming phrases such as "definitely", "confirms the attack" or "attacker".
 5. Failing sentences are labelled **Unverified** and kept out of the executive summary. Hypotheses are labelled grounded or ungrounded. Playbook IDs outside the incident's candidate list are rejected.
-6. The verification rate is shown per incident and benchmarked (`evaluation.md` §4).
+6. **Typed claims (prompt v7).** Each summary/conclusion item also carries `claim_type` and, when the sentence states them, `count`, `start_time`, `end_time`, `user`, `host`, `source_ip`, `event_ids`. Each typed value must be supported by the cited facts: counts by their numbers, times by their times, entities by their entities, event IDs by their events.
+7. **Self-repair.** When claims fail, the specific failures (e.g. "number 987 not found in cited facts (F3 says ...)") are sent back once. The repaired JSON is verified again. It is kept only if it verifies at least as many claims, and any claim that still fails stays Unverified. The model cannot override the verifier.
+8. The verification rate, before and after repair, is shown per incident and benchmarked (`evaluation.md`).
 
 ## Offline design
 
@@ -141,4 +158,13 @@ Severity measures *how bad it would be*. **Confidence** is reported separately a
 - **Checks:**
   - a static test (`tests/test_slm_report_offline.py`) asserts that the runtime code contains no external URLs;
   - another test runs the full pipeline under a connection monitor and asserts there are no external connections;
-  - `scripts/offline_check.py` records a full run, including the live SLM, with the network state and connection log.
+  - `scripts/offline_check.py` records a full run, including the live SLM, with the network state and connection log;
+  - `scripts/ui_check.py` drives the dashboard in Edge with **every non-local request aborted and counted**, and checks the globe and graph interactions.
+- **Bundled front-end assets:** globe.gl 2.46.2 (with three.js), vis-network 9.1.9 and Natural Earth outlines live in `sentinel/ui/static/viz/`. Material Symbols and Altair/Vega ship inside Streamlit. No texture or map tile is downloaded.
+
+## Ablation switches
+
+`cfg["features"]` (all on by default) turns design elements off for the ablation study:
+- `baselines`: R4/R5/R9 and the known-source checks of R12/R13;
+- `context`: context-only alerts become ordinary detections, and the benign-context discount is off;
+- `allowlists`: authorised admins, service accounts and change windows are emptied.

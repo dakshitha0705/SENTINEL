@@ -1,8 +1,9 @@
 {
  "summary": {
-  "recorded_at": "2026-11-23 07:16:15",
+  "recorded_at": "2026-11-23 07:43:38",
+  "internet_reachable_after": true,
   "external_requests_blocked": 0,
-  "local_requests": 191,
+  "local_requests": 194,
   "pages": {
    "Command Center": "ok",
    "Log Intelligence": "ok",
@@ -31,7 +32,9 @@
    "globe_marker_clicked": "Chennai office (IN)",
    "graph_rendered": true,
    "graph_wheel_zooms": true,
-   "graph_node_click_opens_inspector": true
+   "graph_node_click_opens_inspector": true,
+   "ai_explanation_rendered": true,
+   "chat_answer_rendered": true
   },
   "javascript_errors": []
  },

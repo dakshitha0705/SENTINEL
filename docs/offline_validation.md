@@ -7,14 +7,23 @@ SENTINEL claims offline operation only for runs that were actually recorded. Eve
 - `monitor.connections`: every remote endpoint opened by the SENTINEL Python process or Ollama processes during the run (sampled every 0.2 s with psutil), classified `loopback` or `EXTERNAL`.
 - **Measured** timings, SLM tokens/s, peak RAM and GPU state.
 
-## What the run does
+## What the run does (v2, 23 Nov)
 
 1. Checks the Ollama server and model on 127.0.0.1.
 2. Ingests the unseen-format demo logs: a CSV auth export and a JSON-lines EDR export, with the analyst's two mapping corrections.
 3. Detects, correlates and scores the incidents, and builds the evidence packs.
-4. Runs the **live** local SLM, with no cache, on the top 3 incidents and verifies every sentence.
-5. Exports the HTML report of the top incident to `reports/`.
-6. Re-runs the accuracy evaluation on the three held-out test seeds.
+4. Runs the **live** local SLM, with no cache and with the self-repair round, on the top 3 incidents, and verifies every sentence.
+5. Asks the incident chat three questions, one of them unanswerable, and counts silent replies (the target is 0). Generates a handoff note and verifies it.
+6. Exports the HTML report of the top incident plus JSON/CSV of all incidents.
+7. Converts and analyses a public EVTX recording (Kerberos spraying), if it was downloaded.
+8. Re-runs the accuracy evaluation on the three held-out test seeds.
+
+`scripts/ui_check.py` complements this. With the dashboard running, it drives it in the local Edge and **aborts and counts every request to a host other than 127.0.0.1/localhost**. It also checks:
+- the globe: drag rotates, the wheel zooms in and out, reset restores the default view, and clicking a marker opens its records;
+- the attack graph: the wheel zooms, and clicking a node opens the inspector;
+- all nine pages, for Streamlit exceptions.
+
+The result is written to `results/offline_ui_check.json`.
 
 ## Static offline safeguards
 
@@ -33,6 +42,10 @@ SENTINEL claims offline operation only for runs that were actually recorded. Eve
 |---|---|---|---|---|---|---|---|
 | 2026-11-22 22:3x | online rehearsal | yes | **0** | 5 | 40.2 s | 179 MB / 97 MB | 91.6–93.1 |
 | 2026-11-23 06:04 | **offline test (Wi-Fi disconnected)** | **no** (before and after) | **0** | 6 | 25.9 s | 181 MB / 342 MB | 91.9–94.0 |
+| 2026-11-23 07:21 | online rehearsal, v2 feature set (self-repair, chat fallback, handoff, exports, EVTX) | yes | **0** | 10 | 33.4 s | 185 MB / 103 MB | 90.5–92.3 |
+| *(pending)* | **offline test of the v2 feature set (Wi-Fi disconnected)** | – | – | – | – | – | – |
+
+**UI check (online, 23 Nov 07:16):** 0 external requests out of 191 (every non-local request would have been aborted). All 9 pages rendered without exceptions, and all globe and graph interaction checks passed. The disconnected UI check is recorded with the pending offline run.
 
 > The Ollama server process stays small because the model weights live in GPU memory: `ollama ps` / the monitor page report 100% of qwen2.5:3b in VRAM (about 2.2 GB).
 

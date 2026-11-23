@@ -1,8 +1,9 @@
 """End-to-end offline verification run.
 
 Disconnect Wi-Fi / Ethernet first, then:   python scripts/offline_check.py
-Runs the complete workflow (CSV + JSON ingestion, detection, correlation, severity, live local SLM,
-verification, HTML report export, accuracy evaluation) while sampling the network connections of
+Runs the complete workflow (CSV + JSON + EVTX ingestion, detection, correlation, severity, live local SLM
+with verification and self-repair, analyst chat with deterministic fallback, handoff note, HTML report,
+JSON/CSV exports, accuracy evaluation) while sampling the network connections of
 SENTINEL and Ollama. Writes results/offline_run.json (latest) and results/offline_runs/<stamp>.json.
 
 The record states whether the internet was reachable during the run, so an online rehearsal can
@@ -28,7 +29,9 @@ from sentinel.metrics import evaluate, load_ground_truth  # noqa: E402
 from sentinel.perf import Monitor, internet_reachable, system_info  # noqa: E402
 from sentinel.pipeline import analyze_dataset, analyze_paths  # noqa: E402
 from sentinel.report import render_report  # noqa: E402
-from sentinel.slm import explain, status  # noqa: E402
+from sentinel import exports  # noqa: E402
+from sentinel.handoff import handoff_claims, handoff_note  # noqa: E402
+from sentinel.slm import answer, explain, status  # noqa: E402
 from sentinel.verifier import verify_output  # noqa: E402
 
 
@@ -58,11 +61,14 @@ def main():
         slm_runs = []
         for inc in a.incidents[:3]:
             p = a.packs[inc["incident_id"]]
-            r = explain(p, cfg, use_cache=False)
+            r = explain(p, cfg, use_cache=False, known=ke)
             v = verify_output(r["output"], p, ke)
+            rep = r.get("repair") or {}
             slm_runs.append({"incident": inc["incident_id"], "source": r["source"], "error": r.get("error"),
                              **{k: r.get("stats", {}).get(k) for k in ("wall_s", "tokens_per_s", "output_tokens", "load_s")},
-                             "verified": v["stats"]["verified"], "claims": v["stats"]["factual_claims"]})
+                             "verified": v["stats"]["verified"], "claims": v["stats"]["factual_claims"],
+                             "repair": {k: rep.get(k) for k in ("attempted", "initial_verified", "initial_claims",
+                                                                "final_verified", "final_claims", "latency_s")}})
             if inc is a.incidents[0]:
                 html = render_report(a, inc["incident_id"], r, v)
                 out = ROOT / "reports" / f"offline_{inc['incident_id']}.html"
@@ -71,6 +77,32 @@ def main():
                 steps["report"] = {"file": str(out.relative_to(ROOT)), "bytes": len(html.encode()),
                                    "external_refs": html.count("http://") + html.count("https://")}
         steps["slm"] = slm_runs
+        # analyst chat (SLM answer or deterministic fallback; never silent)
+        t = time.perf_counter()
+        p0 = a.packs[a.incidents[0]["incident_id"]]
+        chat = []
+        for q in ("Why is the severity high?", "Which devices were involved?", "What is the attacker's home country?"):
+            r = answer(p0, q, cfg, ke)
+            chat.append({"question": q, "source": r["source"], "verified": r["verification"]["stats"]["verified"],
+                         "sentences": r["verification"]["stats"]["factual_claims"],
+                         "cannot_answer": bool((r["output"].get("cannot_answer") or "").strip())})
+        steps["chat"] = {"seconds": round(time.perf_counter() - t, 2), "answers": chat,
+                         "silent": sum(1 for c in chat if not c["sentences"] and not c["cannot_answer"])}
+        inc0 = a.incidents[0]
+        note = handoff_note(p0, inc0, "In progress", None, [])
+        hv = verify_output({"summary": handoff_claims(note)}, p0, ke)["stats"]
+        steps["handoff"] = {"verified": hv["verified"], "claims": hv["factual_claims"]}
+        js, cs = exports.incidents_json(a, a.incidents), exports.incidents_csv(a, a.incidents)
+        steps["exports"] = {"json_incidents": len(json.loads(js)["incidents"]), "csv_bytes": len(cs)}
+        # EVTX conversion + detection on a public attack recording (if downloaded)
+        evtx = ROOT / "data" / "public" / "evtx_attack_samples" / "kerberos_pwd_spray_4771.evtx"
+        if evtx.exists():
+            t = time.perf_counter()
+            ax = analyze_paths([evtx], cfg)
+            steps["evtx"] = {"file": evtx.name, "seconds": round(time.perf_counter() - t, 3),
+                             "records": ax.dataset.files[0].get("evtx", {}).get("records"),
+                             "rules_fired": sorted({x["rule"] for x in ax.alerts if x["rule"] != "CTX"}),
+                             "incidents": len(ax.incidents)}
         t = time.perf_counter()
         ev = []
         for name in ("test_seed101", "test_seed202", "test_seed303"):
@@ -95,6 +127,8 @@ def main():
         print("   EXTERNAL:", c)
     for s in slm_runs:
         print(f"   SLM {s['incident']}: {s['source']} {s['wall_s']} s, {s['tokens_per_s']} tok/s, verified {s['verified']}/{s['claims']}")
+    print(f"   chat: {steps['chat']['silent']} silent replies; handoff verified {steps['handoff']['verified']}/"
+          f"{steps['handoff']['claims']}; EVTX: {steps.get('evtx', {}).get('rules_fired')}")
     print("wrote results/offline_run.json")
 
 

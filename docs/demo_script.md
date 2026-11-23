@@ -4,84 +4,67 @@
 - Laptop charged; Wi-Fi **off**; Ollama running in the tray.
 - `.\scripts\run.ps1` started.
 - Browser open at `http://127.0.0.1:8501`.
-- Run `.\.venv\Scripts\python.exe scripts\offline_check.py` once to warm the model.
+- Warm the model once: run `.\.venv\Scripts\python.exe scripts\offline_check.py`, or press *Run Analysis* in the Command Center.
 
-**Reset shortcut:** `http://127.0.0.1:8501/?sample=demo_unseen&corrected=1&page=0` loads the demo straight into the queue with the mapping already corrected.
+**Reset shortcut:** `http://127.0.0.1:8501/?sample=demo_unseen&page=0` reloads the demo dataset (its saved mapping profile is applied) and opens the Command Center.
 
 | # | Time | Action on screen | What to say |
 |---|---|---|---|
-| 1 | 0:00 | Show the Wi-Fi icon (disconnected). Open **Offline system monitor**: model loaded, 100% in VRAM, external connections 0. | "Everything you see runs on this laptop. The model is a 3-billion-parameter Qwen running locally through Ollama; the only connections are to 127.0.0.1." |
-| 2 | 0:30 | **Log upload & mapping** → sample `demo_unseen` → *Load sample*. The two files are a SIEM CSV with IST timestamps and an EDR JSON-lines export. | "These are logs in a format SENTINEL has never seen: different column names, Indian Standard Time, one CSV and one JSON-lines." |
-| 3 | 0:50 | Open the expander for `siem_auth_export.csv`. Point at the yellow warning; set **actor = Initiated By** and **target_user = Member Added**. | "The mapper guessed most fields from names and value patterns. It warns that group changes have no actor mapped. Without this, an approved change would be flagged. We measured it: precision 0.57 without the correction, 1.0 with it." |
-| 4 | 1:15 | *Run analysis* (with "Explain top incidents with local SLM" ticked). Show the validation summary: 1,716 accepted, 0 rejected. | "Every record keeps its file and row. Rejected or duplicate records are listed, never silently dropped." |
-| 5 | 1:35 | **Incident queue**: 5 incidents ranked; the severity chart. | "Eight deterministic rules found alerts; the storyline engine grouped them into five incidents, ranked by an explainable score." |
-| 6 | 1:50 | Open the top **Critical** incident → **Attack storyline**. Expand one step's evidence rows. | "Each step says why it was linked: same account plus same host, 1.4 minutes later. Weak links on only a shared account are dashed and never raise severity. Here are the original log rows behind this step." |
-| 7 | 2:30 | **Severity breakdown** tab. | "100 is not a black box: each factor is listed. Severity is impact; confidence that it is malicious is shown separately." |
-| 8 | 2:50 | **Evidence vs. hypothesis** tab. | "The SLM only saw these numbered facts. It must cite a fact ID for every sentence. Our verifier checks each sentence's numbers, times, names, IPs and citations. Here's a sentence it rejected and why. Hypotheses are separate from facts, contradicting evidence is computed by code, and next steps come only from our playbook library." |
-| 9 | 3:40 | **Report export** → *Download HTML report* (optionally *Export PDF*). Scroll the preview. | "A self-contained report: verified summary, breakdown, storyline, original log rows, MITRE, actions, verification rate, limitations and file hashes. It opens offline." |
-| 10 | 4:10 | **Accuracy & evaluation**. | "Held-out test seeds: 15 of 15 attacks found, 0 of 21 benign look-alikes flagged. Those seeds come from our own generator, so we also ran stress seeds outside the tuned envelope: F1 0.93, with the misses listed here. And about three-quarters of the model's sentences pass verification; the rest are labelled Unverified and kept out of the summary." |
-| 11 | 4:40 | **Offline system monitor**: measured latency, tokens/s, the connection table and the recorded offline test. | "Analysis takes under a second; the model explains an incident in about 6 seconds at around 90 tokens per second on this GPU. The recorded offline run shows zero external connections." |
+| 1 | 0:00 | **Command Center.** Point at the chips: *Offline-safe*, *qwen2.5:3b ready*. Drag the globe, scroll to zoom, press *Reset view*. Click the Tokyo marker. The records panel opens; click *Investigate INC-…*. | "Everything here runs on this laptop with Wi-Fi off. The globe only shows locations the logs themselves contain: this SIEM export has geo-enrichment columns. When logs have no coordinates, the globe switches to exploration mode and places nothing. We never guess a location from an IP." |
+| 2 | 0:30 | **Log Intelligence.** Show the two unfamiliar files (SIEM CSV in IST, EDR JSON-lines). Open the mapping: *Initiated By → actor*, *Member Added → target_user* (saved profile). Optionally upload `kerberos_pwd_spray_4771.evtx` → *Use uploaded files* → *Run analysis*: EVTX converted offline, spraying detected. | "SENTINEL maps unseen schemas: it guesses from names and value patterns and warns when a field rules need is missing. Without these two mappings precision was 0.57; with them, 1.0. EVTX is converted locally too." |
+| 3 | 1:15 | **Incident Investigation.** Top Critical incident → *Attack storyline*, then *Severity breakdown*, then *Evidence* (events behind a fact, original record). | "Each step says *why* it joined: same account plus same host, minutes later. A host or IP alone never links. A success 40 minutes after failures still links, with less weight, and is labelled 'not confirmed compromise'. The score is a list of factors, not a black box." |
+| 4 | 2:00 | **Attack Graph** (optional, 15 s): click the incident node, then *Open investigation*. | "Every edge here comes from the correlation engine." |
+| 5 | 2:15 | **AI Investigation Lab.** *Explain with local Qwen* (streams). Show the self-repair card and the verified / unverified labels. Then *Ask SENTINEL*: "Why is the severity high?", and "What is the attacker's home country?" | "The model sees only numbered facts and must return typed claims: counts, times, users, hosts. The verifier checks each one. Failing claims go back to the model once with the exact errors, and whatever still fails stays Unverified. On held-out incidents that lifted verified claims from 73% to 83%. Chat never goes silent: if the model can't give a verifiable answer, SENTINEL answers from the facts, or says what is missing." |
+| 6 | 3:00 | **Evaluation & Benchmarks.** *Accuracy* → before/after table; *Naive & ablation*; *External recordings*. | "On ten fresh held-out seeds generated after the freeze: F1 0.96, false-positive rate 3%. The upgrade raised fresh F1 from 0.88. A naive detector finds the attacks but hands the analyst 1,651 alerts; SENTINEL gives 67 incidents, 88% fewer. On 14 real public attack recordings, 8 are detected. The 6 misses are telemetry we don't analyse, such as PowerShell script-block logs, and we list them." |
+| 7 | 3:45 | *Local SLM* tab, then *Scale & performance*; then **System & Settings → Offline validation**. | "Limited compute: the same 3B model runs CPU-only at about 46 s per incident, against about 6 s on this GPU. The deterministic pipeline processed 127,000 events in 17 seconds with 529 MB of RAM. Here is the recorded disconnected run: zero external connections." |
+| 8 | 4:30 | **Report Studio.** *Download HTML report* (or *Export PDF*); scroll the preview to the handoff note. | "A self-contained report with only verified statements, the storyline, original log rows, MITRE, actions, a shift-handoff note and file hashes. JSON and CSV exports are here too. That's an analyst's triage done offline, with every claim traceable to a log line." |
 
 ## Likely questions
 
+**Is the globe real data?**
+Only coordinates present in the logs are plotted: here, the SIEM export's source and device geo columns. The demo dataset is synthetic, and its external addresses are documentation IP ranges with illustrative locations. Arcs are individual logged events of an incident whose source and device locations differ. Without location columns the globe shows nothing, and it says so.
+
 **Why do you need an SLM if the rules find the attacks?**
-The rules produce facts; analysts still have to turn twenty facts into a story, weigh alternatives and decide what to do next. The SLM:
-- writes that narrative;
+The rules produce facts. The SLM:
+- turns those facts into a narrative;
 - proposes hypotheses with supporting *and* contradicting facts;
 - tailors playbooks to the incident;
-- answers follow-up questions.
+- answers questions.
 
 Because of the Evidence Contract, it can only do this from verified facts.
 
-**Why not a cloud model?**
-PS 02 requires offline operation, and real SOCs often cannot send security logs to a third party. A 3B model in 2 GB of VRAM answers in about 6 s on a laptop GPU. We measured a 7B model as well (see the evaluation docs).
-
 **How do you prevent hallucinations?**
-1. The model never sees raw logs, only numbered facts.
-2. The output is schema-constrained JSON with fact citations.
-3. The verifier checks every sentence; anything failing is labelled Unverified and removed from the summary.
-4. If the model fails, a deterministic template is used.
+- The model never sees raw logs.
+- Its claims are typed, and every typed value and sentence is verified.
+- One bounded repair round runs with the exact errors.
+- Anything still failing is labelled Unverified and kept out of the summary.
+- If the model fails, a deterministic template or answer is used instead.
 
-Limitation: the verifier is lexical, so it cannot catch every subtly unsupported qualifier.
+Limitation: the verifier is lexical and structural, so it cannot understand meaning.
 
-**How do you correlate events?**
-Alerts are processed in time order. They join an incident within a 30-minute gap and 4-hour span when they share 2+ keys (account, host, source IP) — a strong link — or only the account — a weak link. A host or IP alone never links alerts. Every link stores its reason.
+**Does self-repair always help?**
+No, so we measured it: 73% → 83% in the saved run, and 77% → 87% in an earlier run. The repaired output is kept only if it verifies at least as many claims.
 
-**How do you reduce false positives?**
-- Per-user baselines with explicit confidence.
-- A 4-hour learning lag, so an attack can't become its own baseline.
-- Context-only rules: unusual time, new device, 4672, lateral movement.
-- Allowlists and approved change windows.
-- Seven kinds of benign look-alikes in every dataset to measure it.
-
-**How is severity calculated?**
-Rule weights counted once per rule, plus:
-- privileged account, critical asset, credential dumping;
-- attack-chain completeness;
-- log clearing after activity;
-
-minus benign context and low-confidence baselines. Capped at 0–100. Every line is shown.
+**Can it run without a GPU?**
+Yes. CPU-only is measured, with placement confirmed by Ollama (0 bytes in VRAM). The 1.5B model is faster but verified far fewer claims, so 3B stays the default.
 
 **How do you know it's accurate?**
-Thresholds were tuned on one development seed only. Reported numbers come from three held-out seeds evaluated after the freeze, plus ten stress seeds never tuned on. Incident matching requires at least 50% of the attack's events. We also ran it on public OTRF Windows logs. The honest caveat: the synthetic data is ours, which is why we show the stress failures.
+- Tuning used the development seed only.
+- The test seeds were held out at the first freeze.
+- Ten fresh seeds were generated after the upgrade freeze; their failures are listed in the docs.
+- We also ran 15 public attack recordings. They only carry technique labels, so we report scenario detection, not precision.
+
+**What did the ablation show?**
+Every design element helped on this data. Context handling matters most: without it, there are 316 items and half the look-alikes are flagged. Baselines drive recall, and allowlists cut false positives.
 
 **How is offline operation verified?**
-`scripts/offline_check.py` runs the whole workflow, including live SLM inference, with the network disconnected. It logs every remote connection of SENTINEL and Ollama, and records whether the internet was reachable, so a rehearsal can't be passed off as a test. Tests also assert there are no external URLs or connections.
+- `offline_check.py` runs the whole workflow with the network disconnected and logs every remote connection.
+- `ui_check.py` drives the dashboard in a browser that aborts every non-local request and counts them: 0.
 
-**What happens if the model fails?**
-Timeouts, invalid JSON, or an unreachable server fall back to the template explanation, which is fully verified. The pipeline never depends on the model (tested with fake slow and garbage servers).
-
-**What are the limitations?**
-- Synthetic evaluation data.
-- Slow brute force below the density threshold is missed.
-- Lexical verification.
-- No PowerShell script-block (4103/4104) analysis.
-- R10/R11 are unit-tested only.
-- Timestamps without a timezone are assumed to be UTC.
-
-**How is this different from a simple rule-based SIEM?**
-- A storyline with reasons instead of an alert list.
-- An explainable score with confidence kept separate.
-- An evidence-checked natural-language explanation with hypotheses *and* counter-evidence.
-- Measured accuracy and verification rate.
-- Fully offline on a laptop.
+**Limitations?**
+- Synthetic labelled data.
+- External recordings give scenario detection only.
+- No PowerShell script-block or Sysmon process-access analysis.
+- The verifier is lexical.
+- No IP geolocation database (by design).
+- Timestamps without a timezone are treated as UTC.

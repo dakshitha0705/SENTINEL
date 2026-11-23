@@ -60,9 +60,29 @@ Times are IST. Build window: 22 Nov 16:30 to 24 Nov 06:00.
 - **Extras:** wheels for an offline reinstall downloaded to `wheels/` (132 MB, git-ignored). A clean clone of the repository passes the tests.
 - **Encoding:** PowerShell `Set-Content` corrupted UTF-8 in 4 files (mojibake); repaired with Python.
 
+### 23 Nov (upgrade)
+- **06:04** Disconnected offline test recorded by the participant: internet unreachable, 0 external connections (`results/offline_runs/20261123_060435.json`). Checkpoint commit + tag `checkpoint-pre-upgrade`; work continued on branch `upgrade`.
+- **Detection:** R12 sustained brute force, R13 small spray, R3 up to 60 min with decaying weight and a derived causal link, R14 group discovery (T1069; context). Tuned on dev seed 7 (+ B8–B10) and the stress seeds, which are now labelled diagnostic.
+- **Fresh held-out seeds 5001–5010** generated after the freeze: P 0.942, R 0.980, F1 0.961, FPR 0.030. The v1 detector on the same files scored F1 0.879. Failures are listed in `evaluation.md`.
+- **EVTX converter** (offline, `evtx` package) and the **external evaluation** (13 EVTX-ATTACK-SAMPLES + 2 OTRF recordings): 8/14 detected, misses explained.
+- **Comparison:**
+  - naive detector: 1,651 items, strict F1 0.058;
+  - ablation: no baselines 0.797, no allowlists 0.889, no context 0.341, full 0.970;
+  - alert compression 88.3%.
+- **Evidence Contract v7:** typed claims and one bounded self-repair round (73% → 83% verified). Chat gets a deterministic evidence fallback (0 silent replies in 35 questions). Handoff notes added.
+- **Verifier bug** found by a new test: tokens like "LOW-CONFIDENCE" that appear in the cited fact were rejected as unknown host names. Fixed.
+- **Benchmarks:**
+  - qwen2.5:3b CPU-only, about 46 s per incident vs about 6 s on GPU; placement confirmed by `/api/ps`;
+  - qwen2.5:1.5b pulled (986 MB, to E:): fast but low verification;
+  - 126,919-event scale test: 17.5 s, 529 MB.
+- **Benchmark harness issues found and fixed:**
+  - Ollama reused a CPU-loaded runner for a "GPU" run; caught by the placement check, fixed by unloading models first.
+  - The CPU sampler missed `llama-server.exe` (the model runner) and used fresh process objects each tick.
+- **New UI:** 9 pages; interactive offline globe (globe.gl/three.js, bundled) and attack graph (vis-network, bundled); global search, dataset and time filters; analyst status/notes/dispositions; Report Studio; System & Settings. Browser check: 0 external requests; globe and graph interactions pass.
+
 ## Outstanding
 
-- **Real disconnected offline run.** The user must turn Wi-Fi off; then run `scripts/offline_check.py` and update `docs/offline_validation.md`.
+- **Disconnected re-test of the v2 feature set.** The participant turns Wi-Fi off; then run `scripts/offline_check.py` and `scripts/ui_check.py`, and update `docs/offline_validation.md`. The v1 disconnected test is done (06:04).
 - **Push to GitHub** and check the public link (needs the user's authorisation).
 - **Official PPT format and submission form** have not been released yet.
 

@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 import time
 from datetime import datetime
 from pathlib import Path
@@ -21,6 +22,7 @@ from urllib.parse import urlparse
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 SHOTS = ROOT / "docs" / "screenshots" / "v2"
 PAGES = ["Command Center", "Log Intelligence", "Incident Investigation", "Attack Graph", "AI Investigation Lab",
          "Threat Intelligence", "Evaluation & Benchmarks", "Report Studio", "System & Settings"]
@@ -61,6 +63,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--base", default="http://127.0.0.1:8501")
     ap.add_argument("--shots", action="store_true", help="also save screenshots to docs/screenshots/v2")
+    ap.add_argument("--explain", action="store_true", help="also run a live local-Qwen explanation and one chat question")
     a = ap.parse_args()
     blocked, local = [], 0
     checks, pages = {}, {}
@@ -163,10 +166,33 @@ def main():
                     pg.mouse.click(gb["x"] + pos["x"], gb["y"] + pos["y"])
                     wait_idle(pg, 30)
                     checks["graph_node_click_opens_inspector"] = pg.get_by_role("button", name="Open investigation").count() > 0
+            if name == "AI Investigation Lab" and a.explain:
+                pg.get_by_role("button", name="Explain with local Qwen").click()
+                pg.wait_for_selector("text=Model summary", timeout=240000)
+                wait_idle(pg, 120)
+                checks["ai_explanation_rendered"] = pg.get_by_text("Self-repair").count() > 0 or pg.get_by_text("VERIFIED").count() > 0
+            if name == "Threat Intelligence" and a.shots:
+                pg.get_by_role("combobox", name="Prepared hunt").click()
+                pg.get_by_role("option", name="Encoded or hidden PowerShell").click()
+                wait_idle(pg)
+            if name == "Report Studio":
+                time.sleep(4)          # let the report preview iframe render
             if a.shots:
                 pg.screenshot(path=str(SHOTS / f"p{PAGES.index(name) + 1:02d}_{name.split()[0].lower()}.png"))
+            if name == "AI Investigation Lab" and a.explain:
+                pg.get_by_role("tab", name="Ask SENTINEL").click()
+                wait_idle(pg)
+                pg.get_by_placeholder("Ask about this incident").fill("Why is the severity high?")
+                pg.get_by_role("button", name="Ask", exact=True).click()
+                pg.wait_for_selector("text=You:", timeout=180000)
+                wait_idle(pg, 60)
+                checks["chat_answer_rendered"] = pg.get_by_text("SENTINEL ·").count() > 0
+                if a.shots:
+                    pg.screenshot(path=str(SHOTS / "p05_ai_chat.png"))
         b.close()
-    summary = {"recorded_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "external_requests_blocked": len(blocked),
+    from sentinel.perf import internet_reachable
+    summary = {"recorded_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+               "internet_reachable_after": internet_reachable(), "external_requests_blocked": len(blocked),
                "local_requests": local, "pages": pages, "checks": checks, "javascript_errors": errors[:10]}
     out = {"summary": summary, "blocked_urls": blocked}
     (ROOT / "results").mkdir(exist_ok=True)

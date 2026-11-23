@@ -26,7 +26,7 @@ def related_pids() -> dict:
         pids[c.pid] = c.name()
     for p in psutil.process_iter(["pid", "name"]):
         n = (p.info["name"] or "").lower()
-        if n.startswith("ollama"):
+        if n.startswith("ollama") or n.startswith("llama-server"):   # llama-server = Ollama model runner
             pids[p.info["pid"]] = p.info["name"]
     return pids
 

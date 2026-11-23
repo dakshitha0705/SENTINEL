@@ -314,3 +314,28 @@ def test_local_settings_override_and_validation(tmp_path, monkeypatch):
     assert config.load_config()["slm"]["model"] == "qwen2.5:3b"          # scripts/tests unaffected
     with pytest.raises(config.ConfigError):
         config.save_local_settings({"correlation": {"max_gap_minutes": -5}})
+
+
+def test_workspace_status_notes_dispositions_and_suppressions(dev, tmp_path):
+    from sentinel import workspace as ws
+    a, _ = dev
+    con = ws.connect(tmp_path / "analyst.db")
+    inc = a.incidents[0]
+    key = ws.incident_key(a, inc)
+    assert ws.current_status(con, key) == "New"
+    ws.set_status(con, key, inc["incident_id"], "In progress")
+    ws.add_note(con, key, inc["incident_id"], "called the user")
+    ws.set_disposition(con, key, inc["incident_id"], "Confirmed", "owner did not log on")
+    assert ws.current_status(con, key) == "In progress" and ws.current_disposition(con, key) == "Confirmed"
+    assert [n["note"] for n in ws.notes(con, key)] == ["called the user"]
+    assert {h["action"] for h in ws.history(con, key)} >= {"status", "note", "disposition"}
+    with pytest.raises(ValueError):
+        ws.set_status(con, key, inc["incident_id"], "Deleted")
+    rule, user = inc["rules"][0], inc["users"][0]
+    alert_rule = next(a.alerts_by_id[x]["rule"] for x in inc["alert_ids"] if user in a.alerts_by_id[x]["users"])
+    sid = ws.propose_suppression(con, alert_rule, {"user": user}, "test")
+    assert ws.matching_suppressions(con, inc, a.alerts_by_id) == []          # proposals have no effect
+    ws.decide_suppression(con, sid, "approved")
+    assert ws.matching_suppressions(con, inc, a.alerts_by_id) == [f"SUP-{sid}"]   # tagged, never hidden
+    ws.decide_suppression(con, sid, "revoked")
+    assert ws.matching_suppressions(con, inc, a.alerts_by_id) == []

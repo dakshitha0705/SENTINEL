@@ -99,7 +99,7 @@ with tb[3]:
                  help="Filters incidents and globe markers to the last part of the dataset's own time span.")
 with tb[4]:
     offline_cls = "ok" if ext == 0 else "bad"
-    chips = [f'<span class="sn-chip {offline_cls}"><i></i>{"Offline-safe" if ext == 0 else f"{ext} external conn."}</span>',
+    chips = [f'<span class="sn-chip {offline_cls}"><i></i>{"0 external connections" if ext == 0 else f"{ext} external connections"}</span>',
              f'<span class="sn-chip {"ok" if qwen_ok else "warn"}"><i></i>{esc(S.cfg["slm"]["model"])} '
              f'{"ready" if qwen_ok else "unavailable"}</span>',
              f'<span class="sn-chip"><i></i>{mode}</span>']

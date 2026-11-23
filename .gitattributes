@@ -2,3 +2,5 @@
 *.png binary
 *.pptx binary
 *.pdf binary
+*.min.js -text
+sentinel/ui/static/viz/countries.json -text

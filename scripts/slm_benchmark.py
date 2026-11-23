@@ -37,35 +37,44 @@ class Sampler(threading.Thread):
     def __init__(self):
         super().__init__(daemon=True)
         self.stop = threading.Event()
-        self.cpu, self.rss = [], []
+        self.cpu, self.rss, self.priv = [], [], []
         self.ncpu = psutil.cpu_count() or 1
 
     def procs(self):
-        return [p for p in psutil.process_iter(["name"]) if "ollama" in (p.info["name"] or "").lower()]
+        """Ollama processes (server + model runner), kept across samples so cpu_percent has a baseline."""
+        for p in psutil.process_iter(["name"]):
+            n = (p.info["name"] or "").lower()
+            if ("ollama" in n or n.startswith("llama-server")) and p.pid not in self.cache:
+                try:
+                    p.cpu_percent(None)
+                    self.cache[p.pid] = p
+                except psutil.Error:
+                    pass
+        return list(self.cache.values())
 
     def run(self):
-        ps = self.procs()
-        for p in ps:
-            try:
-                p.cpu_percent(None)
-            except psutil.Error:
-                pass
+        self.cache = {}
+        self.procs()
         while not self.stop.wait(0.5):
-            tot_cpu, tot_rss = 0.0, 0
+            tot_cpu, tot_rss, tot_priv = 0.0, 0, 0
             for p in self.procs():
                 try:
                     tot_cpu += p.cpu_percent(None)
-                    tot_rss += p.memory_info().rss
+                    mi = p.memory_info()
+                    tot_rss += mi.rss
+                    tot_priv += getattr(mi, "private", 0)
                 except psutil.Error:
-                    pass
+                    self.cache.pop(p.pid, None)
             self.cpu.append(tot_cpu / self.ncpu)      # % of the whole machine
             self.rss.append(tot_rss / 2**20)
+            self.priv.append(tot_priv / 2**20)
 
     def summary(self):
         busy = [c for c in self.cpu if c > 1] or [0]
         return {"ollama_cpu_pct_of_machine_mean_busy": round(sum(busy) / len(busy), 1),
                 "ollama_cpu_pct_of_machine_peak": round(max(self.cpu or [0]), 1),
-                "ollama_rss_peak_mb": round(max(self.rss or [0]), 1), "samples": len(self.cpu)}
+                "ollama_rss_peak_mb": round(max(self.rss or [0]), 1),
+                "ollama_private_peak_mb": round(max(self.priv or [0]), 1), "samples": len(self.cpu)}
 
 
 def placement(cfg) -> dict:
