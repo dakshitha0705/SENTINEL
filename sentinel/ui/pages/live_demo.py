@@ -21,7 +21,7 @@ CARDS = [  # id, title, what happens, what SENTINEL may report
      "synthetic encoded PowerShell and log clearing.", "One critical incident that escalates as evidence arrives"),
     ("A", "Normal activity", "Employees and the administrator sign in, browse and sign out from their usual devices.",
      "No incident: normal work is not flagged"),
-    ("B", "Brute force", "12 failed sign-ins against one account from one simulated outside address.", "Brute-force detection"),
+    ("B", "Brute force", "3 failed sign-ins against one account from one simulated outside address (demo detection profile).", "Brute-force detection (Low: attempts only)"),
     ("C", "Password spraying", "One address tries a password against 6 different accounts.", "Password-spray detection"),
     ("D", "Suspicious login after failures", "10 failures, then a successful sign-in from the same address, then sensitive pages.",
      "Login-after-failures, severity rises"),
@@ -158,7 +158,7 @@ def _detection(st_, snap):
             (str(len(a.incidents) if a else 0), "incidents"),
             (f"{r.get('step', 0)}/{r.get('steps', 0)}" if r.get("steps") else "-", f"scenario steps · {r.get('state', 'idle')}")]
     for col, (v, l) in zip(k, vals):
-        col.markdown(f'<div class="sn-stat"><div class="v">{esc(v)}</div><div class="l">{esc(l)}</div></div>', unsafe_allow_html=True)
+        col.markdown(f'<div class="sn-stat" style="margin-bottom:14px"><div class="v">{esc(v)}</div><div class="l">{esc(l)}</div></div>', unsafe_allow_html=True)
     if r.get("steps"):
         st.progress(min(1.0, r.get("step", 0) / max(1, r["steps"])),
                     text=f"{r.get('name') or ''} · {r.get('state')}" + (f" · {r['elapsed_s']} s" if r.get("elapsed_s") else ""))

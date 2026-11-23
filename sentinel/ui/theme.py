@@ -254,3 +254,30 @@ div[class*="st-key-card_search"] { max-height: 360px; overflow: auto; }
 .sn-act .ic.sim { background: rgba(120,166,183,.22); }
 [data-testid="stToast"] { border-left: 4px solid #b9805d !important; }
 </style>"""
+CSS += """<style>
+.sn-hero { margin-bottom: 14px; }
+.sn-stats { margin: 6px 0 16px; }
+.sn-card { margin-bottom: 14px; }
+.sn-notif { margin-bottom: 10px; }
+.sn-scn { min-height: 220px; display: flex; flex-direction: column; margin-bottom: 10px; box-sizing: border-box; }
+.sn-scn .e { margin-top: auto; padding-top: 8px; }
+@media (max-width: 1500px) { .sn-scn { min-height: 250px; } }
+div[class*="st-key-qa"] { margin-bottom: 4px; }
+div[class*="st-key-qa"] .stButton > button { height: 64px; }
+div[class*="st-key-hunt"] .stButton > button { min-height: 150px; }
+.sn-stats { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+.sn-mode { margin-bottom: 10px; }
+[data-testid="stHorizontalBlock"] { gap: 1rem; }
+.sn-card h4, .sn-eyebrow { color: #a9c7d2; }
+.sn-hero .eyebrow { color: #b9805d; }
+.sn-pill { border-color: color-mix(in srgb, var(--c) 35%, transparent); }
+.sn-tag.gold { color: #e9d9c9; border-color: rgba(233,217,201,.30); }
+.stButton > button:not([kind="primary"]) { background: rgba(120,166,183,.10); border-color: rgba(120,166,183,.30); }
+.stButton > button:not([kind="primary"]):hover { border-color: #e1ad9d; }
+[data-testid="stExpander"] { background: rgba(9,45,55,.45); }
+</style>"""
+
+# one <style> element without blank lines (Streamlit's markdown ends an HTML block at a blank line)
+import re as _re  # noqa: E402
+
+CSS = "<style>" + _re.sub(r"\n\s*\n", "\n", CSS.replace("<style>", "").replace("</style>", "")).strip() + "</style>"
