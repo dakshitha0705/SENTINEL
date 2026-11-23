@@ -1,0 +1,21 @@
+{
+ "recorded_at": "2026-11-24 00:35:58",
+ "shots": [
+  "04_nexus_login",
+  "05_nexus_controller",
+  "03_live_demo",
+  "01_command_center",
+  "06_notifications",
+  "02_globe",
+  "08_attack_storyline",
+  "07_investigation_studio",
+  "10_ai_investigation",
+  "11_threat_hunting",
+  "13_report",
+  "12_evaluation",
+  "09_attack_graph"
+ ],
+ "session": "20261124-003559-4be8",
+ "qwen_s": 11.8,
+ "external_requests_blocked": 0
+}

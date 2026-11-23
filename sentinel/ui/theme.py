@@ -199,6 +199,11 @@ div[class*="st-key-card"] { padding: 14px 16px; }
 .stButton > button[kind="primary"] p, .stDownloadButton > button[kind="primary"] p { color: #1f1712 !important; font-weight: 650; }
 .stButton > button[kind="primary"]:hover { filter: brightness(1.05); transform: translateY(-1px); }
 .stButton > button:disabled { opacity: .45; }
+[data-testid="stLinkButton"] a { border-radius: 12px; border: 1px solid var(--line2); background: rgba(243,235,221,.05); color: var(--ivory) !important; }
+[data-testid="stLinkButton"] a:hover { border-color: rgba(227,165,135,.6); }
+[data-testid="stLinkButton"] a[kind="primary"], [data-testid="stLinkButton"] a[data-testid="stBaseLinkButton-primary"] {
+  background: linear-gradient(180deg, #eab092, #cf7f5c); border: 0; color: #1f1712 !important; }
+[data-testid="stLinkButton"] a[kind="primary"] p, [data-testid="stLinkButton"] a[data-testid="stBaseLinkButton-primary"] p { color: #1f1712 !important; font-weight: 650; }
 [data-testid="stTextInput"] input, [data-baseweb="select"] > div, [data-testid="stNumberInput"] input, textarea {
   border-radius: 12px !important; background: rgba(7,26,30,.75) !important; border-color: var(--line2) !important; }
 [data-baseweb="tab-list"] { gap: 4px; border-bottom: 1px solid var(--line); }

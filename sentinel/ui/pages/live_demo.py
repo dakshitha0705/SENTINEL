@@ -203,7 +203,8 @@ def _normal_login_seen(a) -> bool:
             r = json.loads(raw)
         except ValueError:
             continue
-        if r.get("origin") == "nexus-app" and not r.get("source_address_simulated"):
+        # the normalised raw column keeps values as text ("False"), so compare as text
+        if r.get("origin") == "nexus-app" and str(r.get("source_address_simulated")).strip().lower() in ("false", "0", ""):
             return True
     return False
 
