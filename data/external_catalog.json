@@ -1,0 +1,24 @@
+{
+ "note": "Public attack recordings used for the external evaluation. Raw files are NOT redistributed in this repository (EVTX-ATTACK-SAMPLES is GPL-3.0; files stay in git-ignored data/public/). Labels are per-recording ATT&CK techniques from the dataset authors, not event-level ground truth, so only scenario detection (did the expected behaviour get detected?) is measured.",
+ "sources": {
+  "evtx_attack_samples": {"name": "EVTX-ATTACK-SAMPLES", "author": "Samir Bousseaden (sbousseaden)", "url": "https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES", "license": "GPL-3.0", "base": "https://raw.githubusercontent.com/sbousseaden/EVTX-ATTACK-SAMPLES/master/"},
+  "otrf": {"name": "OTRF Security-Datasets", "author": "Open Threat Research Forge", "url": "https://github.com/OTRF/Security-Datasets", "license": "MIT", "base": "https://raw.githubusercontent.com/OTRF/Security-Datasets/master/datasets/atomic/windows/"}
+ },
+ "recordings": [
+  {"id": "X01", "source": "evtx_attack_samples", "path": "Credential Access/kerberos_pwd_spray_4771.evtx", "technique": "T1110.003", "behaviour": "Kerberos password spraying (4768/4771 failures)", "expected_rules": ["R2", "R13"]},
+  {"id": "X02", "source": "evtx_attack_samples", "path": "Defense Evasion/DE_1102_security_log_cleared.evtx", "technique": "T1070.001", "behaviour": "Security log cleared (1102)", "expected_rules": ["R8"]},
+  {"id": "X03", "source": "evtx_attack_samples", "path": "Defense Evasion/DE_104_system_log_cleared.evtx", "technique": "T1070.001", "behaviour": "System log cleared (104)", "expected_rules": ["R8"]},
+  {"id": "X04", "source": "evtx_attack_samples", "path": "Persistence/Network_Service_Guest_added_to_admins_4732.evtx", "technique": "T1098", "behaviour": "Account added to local Administrators (4732)", "expected_rules": ["R6"]},
+  {"id": "X05", "source": "evtx_attack_samples", "path": "Credential Access/sysmon_10_1_memdump_comsvcs_minidump.evtx", "technique": "T1003.001", "behaviour": "LSASS dump via comsvcs.dll MiniDump (Sysmon 1/10)", "expected_rules": ["R7"]},
+  {"id": "X06", "source": "evtx_attack_samples", "path": "Credential Access/CA_sysmon_hashdump_cmd_meterpreter.evtx", "technique": "T1003.002", "behaviour": "SAM hash dump from a Meterpreter shell (Sysmon)", "expected_rules": ["R7"]},
+  {"id": "X07", "source": "evtx_attack_samples", "path": "Discovery/discovery_local_user_or_group_windows_security_4799_4798.evtx", "technique": "T1069.001", "behaviour": "Local group membership enumeration (4799/4798)", "expected_rules": ["R14"]},
+  {"id": "X08", "source": "evtx_attack_samples", "path": "Discovery/dicovery_4661_net_group_domain_admins_target.evtx", "technique": "T1069.002", "behaviour": "net group \"Domain Admins\" seen on the target DC (4661 object access)", "expected_rules": ["R14"]},
+  {"id": "X09", "source": "evtx_attack_samples", "path": "Execution/revshell_cmd_svchost_sysmon_1.evtx", "technique": "T1059.003", "behaviour": "Reverse shell: cmd.exe spawned by svchost (Sysmon 1)", "expected_rules": ["R7"]},
+  {"id": "X10", "source": "evtx_attack_samples", "path": "Lateral Movement/LM_4624_mimikatz_sekurlsa_pth_source_machine.evtx", "technique": "T1550.002", "behaviour": "Pass-the-hash with Mimikatz sekurlsa::pth (source machine)", "expected_rules": ["R7"]},
+  {"id": "X11", "source": "evtx_attack_samples", "path": "Credential Access/babyshark_mimikatz_powershell.evtx", "technique": "T1003.001", "behaviour": "Mimikatz via PowerShell (script-block logging)", "expected_rules": ["R7"]},
+  {"id": "X12", "source": "evtx_attack_samples", "path": "Lateral Movement/LM_WMI_4624_4688_TargetHost.evtx", "technique": "T1047", "behaviour": "WMI remote execution on the target host (4624/4688)", "expected_rules": []},
+  {"id": "X13", "source": "evtx_attack_samples", "path": "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx", "technique": "multiple", "behaviour": "Atomic Red Team test run captured by Sysmon (many techniques)", "expected_rules": ["R7"]},
+  {"id": "X14", "source": "otrf", "path": "credential_access/host/psh_lsass_memory_dump_comsvcs.zip", "technique": "T1003.001", "behaviour": "LSASS dump via comsvcs.dll from PowerShell", "expected_rules": ["R7"]},
+  {"id": "X15", "source": "otrf", "path": "credential_access/host/empire_mimikatz_logonpasswords.zip", "technique": "T1003.001", "behaviour": "Empire Invoke-Mimikatz logonpasswords (in-memory PowerShell)", "expected_rules": ["R7"]}
+ ]
+}

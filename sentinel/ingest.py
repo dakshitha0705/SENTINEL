@@ -24,18 +24,24 @@ SCHEMA_FIELDS = [
 MAPPABLE_FIELDS = [
     "timestamp", "event_code", "record_id", "action", "user", "actor", "target_user", "host",
     "src_ip", "group", "process", "parent_process", "command_line", "outcome", "log_type",
+    "src_lat", "src_lon", "src_geo",
 ]
 
 ACTIONS = [
     "login_success", "login_failure", "logout", "privilege_logon", "group_add",
-    "process_start", "log_cleared", "device_connected", "other",
+    "process_start", "log_cleared", "device_connected", "group_enum", "other",
 ]
 
 EVENT_CODE_ACTIONS = {
     "4624": "login_success", "4625": "login_failure", "4634": "logout", "4647": "logout",
     "4672": "privilege_logon", "4728": "group_add", "4732": "group_add", "4756": "group_add",
     "4688": "process_start", "1102": "log_cleared", "6416": "device_connected",
+    "4771": "login_failure",      # Kerberos pre-authentication failed (password spraying over Kerberos)
+    "4799": "group_enum",         # security-enabled local group membership enumerated
 }
+# Codes whose meaning depends on the provider/status (resolved in normalize()).
+#   4768 (Kerberos TGT requested): failure when Status != 0x0
+#   104  (System log cleared) from Microsoft-Windows-Eventlog
 GROUP_ADD_CODES = {"4728", "4732", "4756"}
 AUTH_ACTIONS = {"login_success", "login_failure", "logout", "privilege_logon", "group_add"}
 
@@ -61,9 +67,18 @@ _SYNONYMS = {
     "outcome": ["outcome", "eventoutcome", "status", "result"],
     "log_type": ["logtype", "channel", "logsource", "eventdataset", "eventcategory", "category",
                  "source", "type"],
+    # Optional geographic enrichment supplied by the log source (e.g. a SIEM export). SENTINEL never
+    # derives coordinates itself; without these columns the globe stays in exploration mode.
+    "src_lat": ["srclat", "sourcelat", "sourcelatitude", "geolat", "latitude", "lat", "srcgeolat",
+                "sourcegeolocationlat", "clientlat"],
+    "src_lon": ["srclon", "sourcelon", "srclng", "sourcelongitude", "geolon", "geolng", "longitude", "lon",
+                "lng", "srcgeolon", "sourcegeolocationlon", "clientlon"],
+    "src_geo": ["srclocation", "sourcelocation", "geolocation", "srccountry", "sourcecountry", "geocountry",
+                "country", "srccity", "geocity", "location"],
 }
 
-_FALLBACK = {"user": ["subjectusername"], "process": ["image"], "parent_process": ["parentimage"],
+_FALLBACK = {"user": ["subjectusername"], "process": ["image", "callerprocessname"],
+             "parent_process": ["parentimage"],
              "src_ip": ["sourceaddress", "ipaddress"], "host": ["hostname", "computer"]}
 
 _IP_RE = re.compile(r"^(\d{1,3}\.){3}\d{1,3}$|^[0-9a-f:]{3,39}$", re.I)
@@ -351,6 +366,12 @@ def normalize(load: FileLoad, mapping: dict) -> tuple[pd.DataFrame, list]:
     act_code = out["event_code"].map(EVENT_CODE_ACTIONS)
     sysmon_proc = channel.str.contains("sysmon") & (out["event_code"] == "1")
     act_code = act_code.where(~sysmon_proc, "process_start")
+    status = col("outcome").str.strip().str.lower()
+    krb_fail = (out["event_code"] == "4768") & ~status.isin(["0x0", "0", "", "success"])
+    act_code = act_code.where(~krb_fail, "login_failure")
+    provider = f[mapping["_provider"]].astype(str).str.lower() if mapping.get("_provider") in f.columns else channel
+    sys_clear = (out["event_code"] == "104") & (provider.str.contains("eventlog") | channel.eq("system"))
+    act_code = act_code.where(~sys_clear, "log_cleared")
     out["action"] = act_code.fillna(act_text).fillna("other")
     has_code_or_action = (out["event_code"] != "") | col("action").str.strip().ne("")
 
@@ -363,6 +384,11 @@ def normalize(load: FileLoad, mapping: dict) -> tuple[pd.DataFrame, list]:
     out["process"] = col("process").map(norm_proc)
     out["parent_process"] = col("parent_process").map(norm_proc)
     out["command_line"] = col("command_line").str.strip().replace({"-": ""})
+    out["src_lat"] = pd.to_numeric(col("src_lat").str.strip(), errors="coerce")
+    out["src_lon"] = pd.to_numeric(col("src_lon").str.strip(), errors="coerce")
+    bad_geo = ~(out["src_lat"].between(-90, 90) & out["src_lon"].between(-180, 180))
+    out.loc[bad_geo, ["src_lat", "src_lon"]] = float("nan")
+    out["src_geo"] = col("src_geo").str.strip().replace({"-": ""})
 
     # Per-row fallback: mixed-source files (e.g. Sysmon + Security in one export) carry the same
     # information under different columns. Fill empty values from other recognised columns.
@@ -386,14 +412,14 @@ def normalize(load: FileLoad, mapping: dict) -> tuple[pd.DataFrame, list]:
     out.loc[fail_login, "outcome"] = "failure"
 
     # Windows-native field semantics ------------------------------------------------
-    grp = out["action"] == "group_add"
+    grp = out["action"].isin(["group_add", "group_enum"])
     # In 4728/4732/4756, TargetUserName is the *group* and SubjectUserName the actor.
     mapped_user_raw = col("user").str.strip()
     out.loc[grp & (out["group"] == ""), "group"] = mapped_user_raw[grp & (out["group"] == "")]
     out.loc[grp & (out["actor"] != ""), "user"] = out.loc[grp & (out["actor"] != ""), "actor"]
     out["group"] = out["group"].str.split("\\").str[-1].str.strip()   # "CORP\Domain Admins" -> "Domain Admins"
     # Process / log-clear events carry the account in SubjectUserName.
-    subj_events = out["action"].isin(["process_start", "log_cleared", "privilege_logon"])
+    subj_events = out["action"].isin(["process_start", "log_cleared", "privilege_logon", "group_enum"])
     fill = subj_events & (out["user"] == "") & (out["actor"] != "")
     out.loc[fill, "user"] = out.loc[fill, "actor"]
 
@@ -430,15 +456,32 @@ def ingest(files: list[tuple[str, bytes]], mappings: dict | None = None) -> Data
     mappings = dict(mappings or {})
     frames, rejected, infos = [], [], []
     for name, data in files:
-        load = read_file(name, data)
+        evtx_diag = None
+        if name.lower().endswith(".evtx"):
+            from .evtx_converter import EvtxError, convert_evtx
+            try:
+                res = convert_evtx(data, name)
+            except EvtxError as exc:
+                rejected.append({"source_file": name, "source_row": None, "reason": str(exc), "content": ""})
+                infos.append({"name": name, "sha256": sha256_bytes(data), "format": "evtx (unreadable)",
+                              "rows": 0, "accepted": 0, "rejected": 1, "evtx_error": str(exc)})
+                continue
+            evtx_diag = res.diagnostics
+            load = read_file(name, res.to_jsonl())
+            load.sha256, load.fmt = sha256_bytes(data), "evtx"     # hash of the ORIGINAL file
+        else:
+            load = read_file(name, data)
         mp = mappings.get(name) or guess_mapping(load.frame)
+        if "Provider" in load.frame.columns:
+            mp = {**mp, "_provider": "Provider"}
         mappings[name] = mp
         ev, rej = normalize(load, mp)
         frames.append(ev)
         rejected.extend(rej)
         infos.append({"name": name, "sha256": load.sha256, "format": load.fmt,
                       "rows": int(len(load.frame)) + len(load.rejected),
-                      "accepted": int(len(ev)), "rejected": len(rej)})
+                      "accepted": int(len(ev)), "rejected": len(rej),
+                      **({"evtx": evtx_diag} if evtx_diag else {})})
     frames = [f for f in frames if len(f)]
     events = (pd.concat(frames, ignore_index=True) if frames
               else pd.DataFrame(columns=[c for c in SCHEMA_FIELDS if c != "event_id"]))

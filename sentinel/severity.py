@@ -46,6 +46,14 @@ def score_incident(inc: dict, alerts_by_id: dict, cfg: dict) -> dict:
             lines.append({"factor": label + " (low-confidence baseline)", "points": 0,
                           "detail": "baseline history too short; shown but not scored"})
             continue
+        if a["rule"] == "R3":
+            decay = max(x["details"].get("decay", 1.0) for x in same)
+            if decay < 1.0:
+                pts = round(w.get(a["weight"], 0) * decay)
+                mins = min(x["details"].get("minutes_after", 0) for x in same)
+                lines.append({"factor": label + " (delayed success)", "points": pts,
+                              "detail": f"success {mins} min after the failures; weight x{decay:.2f}"})
+                continue
         lines.append({"factor": label, "points": w.get(a["weight"], 0), "detail": f"{a['weight']} weight rule"})
     for r in sorted({a["rule"] for a in weak} - seen - {"CTX"}):
         lines.append({"factor": f"{r} (weak link only)", "points": 0,
@@ -110,13 +118,14 @@ def score_incident(inc: dict, alerts_by_id: dict, cfg: dict) -> dict:
     # 6. Low-confidence baseline
     # Penalty only when the incident's evidence rests on behavioural baselines (no primary detection).
     low = [a for a in scored if a["rule"] in ("R4", "R5") and a["confidence"] != "high"]
-    baseline_driven = not any(a["rule"] not in CONTEXT_RULES for a in scored)
+    baseline_driven = not any(not a["context"] for a in scored)
     if low and baseline_driven:
         lines.append({"factor": "Low-confidence baseline", "points": s["low_confidence_baseline"],
                       "detail": f"limited history for {', '.join(sorted({u for a in low for u in a['users']}))}"})
 
-    # 7. Benign context (capped)
+    # 7. Benign context (capped). Switched off in the "no context handling" ablation.
     benign = []
+    use_ctx = (cfg.get("features") or {}).get("context", True)
     for a in members:
         if a["rule"] == "R6" and a["details"].get("in_change_window"):
             benign.append("privileged change made inside an approved change window")
@@ -126,6 +135,8 @@ def score_incident(inc: dict, alerts_by_id: dict, cfg: dict) -> dict:
     all_users = {u for a in scored for u in a["users"]}
     if all_users and all_users <= admins and not any(a["rule"] == "R5" for a in members):
         benign.append("activity by authorised administrator(s) from known devices")
+    if not use_ctx:
+        benign = []
     if benign:
         pts = max(s["benign_context_max"], s["benign_context_each"] * len(benign))
         lines.append({"factor": "Benign context", "points": pts, "detail": "; ".join(sorted(set(benign)))})
@@ -139,7 +150,7 @@ def score_incident(inc: dict, alerts_by_id: dict, cfg: dict) -> dict:
 
 def confidence_for(scored: list, benign: list) -> dict:
     """Confidence that the activity is malicious - separate from severity."""
-    primary = [a for a in scored if a["rule"] not in CONTEXT_RULES]
+    primary = [a for a in scored if not a["context"]]
     strong_signals = {"R3", "R6", "R7", "R8"} & {a["rule"] for a in primary}
     if len(strong_signals) >= 2:
         lvl, why = "High", "multiple independent high-signal detections"

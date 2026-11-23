@@ -1,0 +1,775 @@
+{
+ "generated_at": "2026-11-23T01:16:48+00:00",
+ "method": "scenario detection on technique-labelled recordings; no event-level ground truth, so no precision/recall",
+ "sources": {
+  "evtx_attack_samples": {
+   "name": "EVTX-ATTACK-SAMPLES",
+   "author": "Samir Bousseaden (sbousseaden)",
+   "url": "https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES",
+   "license": "GPL-3.0",
+   "base": "https://raw.githubusercontent.com/sbousseaden/EVTX-ATTACK-SAMPLES/master/"
+  },
+  "otrf": {
+   "name": "OTRF Security-Datasets",
+   "author": "Open Threat Research Forge",
+   "url": "https://github.com/OTRF/Security-Datasets",
+   "license": "MIT",
+   "base": "https://raw.githubusercontent.com/OTRF/Security-Datasets/master/datasets/atomic/windows/"
+  }
+ },
+ "summary": {
+  "recordings": 15,
+  "with_expected_rule": 14,
+  "detected": 8,
+  "missed": 6,
+  "controls": 1,
+  "techniques_detected": [
+   "T1003.001",
+   "T1069.001",
+   "T1070.001",
+   "T1098",
+   "T1110.003",
+   "multiple"
+  ],
+  "techniques_missed": [
+   "T1003.001",
+   "T1003.002",
+   "T1059.003",
+   "T1069.002",
+   "T1550.002"
+  ]
+ },
+ "recordings": [
+  {
+   "id": "X01",
+   "source": "evtx_attack_samples",
+   "path": "Credential Access/kerberos_pwd_spray_4771.evtx",
+   "technique": "T1110.003",
+   "behaviour": "Kerberos password spraying (4768/4771 failures)",
+   "expected_rules": [
+    "R2",
+    "R13"
+   ],
+   "files": [
+    "kerberos_pwd_spray_4771.evtx"
+   ],
+   "events": 12,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 2,
+   "by_action": {
+    "login_failure": 9,
+    "other": 2,
+    "log_cleared": 1
+   },
+   "evtx": [
+    {
+     "records": 12,
+     "unreadable_records": 0,
+     "recovered_records": 0,
+     "event_codes": {
+      "4768": 9,
+      "4771": 2,
+      "1102": 1
+     },
+     "channels": [
+      "Security"
+     ],
+     "computers": [
+      "01566s-win16-ir.threebeesco.com"
+     ]
+    }
+   ],
+   "rules_fired": {
+    "R8": 1,
+    "R2": 1
+   },
+   "incidents": [
+    {
+     "id": "INC-0002",
+     "level": "Medium",
+     "score": 40,
+     "title": "Password spraying (9 accounts on 01566S-WIN16-IR)"
+    },
+    {
+     "id": "INC-0001",
+     "level": "Low",
+     "score": 25,
+     "title": "Log clearing (a-jbrown on 01566S-WIN16-IR)"
+    }
+   ],
+   "seconds": 0.071,
+   "status": "detected"
+  },
+  {
+   "id": "X02",
+   "source": "evtx_attack_samples",
+   "path": "Defense Evasion/DE_1102_security_log_cleared.evtx",
+   "technique": "T1070.001",
+   "behaviour": "Security log cleared (1102)",
+   "expected_rules": [
+    "R8"
+   ],
+   "files": [
+    "DE_1102_security_log_cleared.evtx"
+   ],
+   "events": 112,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 111,
+   "by_action": {
+    "other": 111,
+    "log_cleared": 1
+   },
+   "evtx": [
+    {
+     "records": 112,
+     "unreadable_records": 0,
+     "recovered_records": 0,
+     "event_codes": {
+      "4663": 110,
+      "1102": 1,
+      "5156": 1
+     },
+     "channels": [
+      "Security"
+     ],
+     "computers": [
+      "PC01.example.corp"
+     ]
+    }
+   ],
+   "rules_fired": {
+    "R8": 1
+   },
+   "incidents": [
+    {
+     "id": "INC-0001",
+     "level": "Low",
+     "score": 25,
+     "title": "Log clearing (user01 on PC01)"
+    }
+   ],
+   "seconds": 0.056,
+   "status": "detected"
+  },
+  {
+   "id": "X03",
+   "source": "evtx_attack_samples",
+   "path": "Defense Evasion/DE_104_system_log_cleared.evtx",
+   "technique": "T1070.001",
+   "behaviour": "System log cleared (104)",
+   "expected_rules": [
+    "R8"
+   ],
+   "files": [
+    "DE_104_system_log_cleared.evtx"
+   ],
+   "events": 1,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 0,
+   "by_action": {
+    "log_cleared": 1
+   },
+   "evtx": [
+    {
+     "records": 1,
+     "unreadable_records": 0,
+     "recovered_records": 0,
+     "event_codes": {
+      "104": 1
+     },
+     "channels": [
+      "System"
+     ],
+     "computers": [
+      "PC01.example.corp"
+     ]
+    }
+   ],
+   "rules_fired": {
+    "R8": 1
+   },
+   "incidents": [
+    {
+     "id": "INC-0001",
+     "level": "Low",
+     "score": 25,
+     "title": "Log clearing (user01 on PC01)"
+    }
+   ],
+   "seconds": 0.033,
+   "status": "detected"
+  },
+  {
+   "id": "X04",
+   "source": "evtx_attack_samples",
+   "path": "Persistence/Network_Service_Guest_added_to_admins_4732.evtx",
+   "technique": "T1098",
+   "behaviour": "Account added to local Administrators (4732)",
+   "expected_rules": [
+    "R6"
+   ],
+   "files": [
+    "Network_Service_Guest_added_to_admins_4732.evtx"
+   ],
+   "events": 2,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 0,
+   "by_action": {
+    "group_add": 2
+   },
+   "evtx": [
+    {
+     "records": 2,
+     "unreadable_records": 0,
+     "recovered_records": 0,
+     "event_codes": {
+      "4732": 2
+     },
+     "channels": [
+      "Security"
+     ],
+     "computers": [
+      "MSEDGEWIN10"
+     ]
+    }
+   ],
+   "rules_fired": {
+    "R6": 2
+   },
+   "incidents": [
+    {
+     "id": "INC-0001",
+     "level": "Medium",
+     "score": 40,
+     "title": "Privilege change (ieuser on MSEDGEWIN10)"
+    }
+   ],
+   "seconds": 0.037,
+   "status": "detected"
+  },
+  {
+   "id": "X05",
+   "source": "evtx_attack_samples",
+   "path": "Credential Access/sysmon_10_1_memdump_comsvcs_minidump.evtx",
+   "technique": "T1003.001",
+   "behaviour": "LSASS dump via comsvcs.dll MiniDump (Sysmon 1/10)",
+   "expected_rules": [
+    "R7"
+   ],
+   "files": [
+    "sysmon_10_1_memdump_comsvcs_minidump.evtx"
+   ],
+   "events": 6,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 4,
+   "by_action": {
+    "other": 4,
+    "process_start": 2
+   },
+   "evtx": [
+    {
+     "records": 6,
+     "unreadable_records": 0,
+     "recovered_records": 0,
+     "event_codes": {
+      "1": 2,
+      "7": 2,
+      "11": 1,
+      "10": 1
+     },
+     "channels": [
+      "Microsoft-Windows-Sysmon/Operational"
+     ],
+     "computers": [
+      "MSEDGEWIN10"
+     ]
+    }
+   ],
+   "rules_fired": {
+    "R7": 1
+   },
+   "incidents": [
+    {
+     "id": "INC-0001",
+     "level": "Medium",
+     "score": 45,
+     "title": "Suspicious execution (ieuser on MSEDGEWIN10)"
+    }
+   ],
+   "seconds": 0.049,
+   "status": "detected"
+  },
+  {
+   "id": "X06",
+   "source": "evtx_attack_samples",
+   "path": "Credential Access/CA_sysmon_hashdump_cmd_meterpreter.evtx",
+   "technique": "T1003.002",
+   "behaviour": "SAM hash dump from a Meterpreter shell (Sysmon)",
+   "expected_rules": [
+    "R7"
+   ],
+   "files": [
+    "CA_sysmon_hashdump_cmd_meterpreter.evtx"
+   ],
+   "events": 9,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 9,
+   "by_action": {
+    "other": 9
+   },
+   "evtx": [
+    {
+     "records": 9,
+     "unreadable_records": 0,
+     "recovered_records": 0,
+     "event_codes": {
+      "10": 7,
+      "8": 2
+     },
+     "channels": [
+      "Microsoft-Windows-Sysmon/Operational"
+     ],
+     "computers": [
+      "IEWIN7"
+     ]
+    }
+   ],
+   "rules_fired": {},
+   "incidents": [],
+   "seconds": 0.033,
+   "status": "missed",
+   "why_missed": "no event types SENTINEL analyses (top codes: 10x7, 8x2); the behaviour is only visible in telemetry outside the supported schema"
+  },
+  {
+   "id": "X07",
+   "source": "evtx_attack_samples",
+   "path": "Discovery/discovery_local_user_or_group_windows_security_4799_4798.evtx",
+   "technique": "T1069.001",
+   "behaviour": "Local group membership enumeration (4799/4798)",
+   "expected_rules": [
+    "R14"
+   ],
+   "files": [
+    "discovery_local_user_or_group_windows_security_4799_4798.evtx"
+   ],
+   "events": 3,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 2,
+   "by_action": {
+    "other": 2,
+    "group_enum": 1
+   },
+   "evtx": [
+    {
+     "records": 3,
+     "unreadable_records": 0,
+     "recovered_records": 0,
+     "event_codes": {
+      "4798": 2,
+      "4799": 1
+     },
+     "channels": [
+      "Security"
+     ],
+     "computers": [
+      "MSEDGEWIN10"
+     ]
+    }
+   ],
+   "rules_fired": {
+    "R14": 1
+   },
+   "incidents": [],
+   "seconds": 0.035,
+   "status": "detected"
+  },
+  {
+   "id": "X08",
+   "source": "evtx_attack_samples",
+   "path": "Discovery/dicovery_4661_net_group_domain_admins_target.evtx",
+   "technique": "T1069.002",
+   "behaviour": "net group \"Domain Admins\" seen on the target DC (4661 object access)",
+   "expected_rules": [
+    "R14"
+   ],
+   "files": [
+    "dicovery_4661_net_group_domain_admins_target.evtx"
+   ],
+   "events": 63,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 55,
+   "by_action": {
+    "other": 55,
+    "login_success": 4,
+    "privilege_logon": 3,
+    "log_cleared": 1
+   },
+   "evtx": [
+    {
+     "records": 63,
+     "unreadable_records": 0,
+     "recovered_records": 0,
+     "event_codes": {
+      "5156": 28,
+      "4661": 16,
+      "5158": 5,
+      "4624": 4,
+      "4672": 3,
+      "5145": 3,
+      "5140": 2,
+      "1102": 1,
+      "4776": 1
+     },
+     "channels": [
+      "Security"
+     ],
+     "computers": [
+      "WIN-77LTAPHIQ1R.example.corp"
+     ]
+    }
+   ],
+   "rules_fired": {
+    "R8": 1
+   },
+   "incidents": [
+    {
+     "id": "INC-0001",
+     "level": "Low",
+     "score": 30,
+     "title": "Log clearing (administrator on WIN-77LTAPHIQ1R)"
+    }
+   ],
+   "seconds": 0.073,
+   "status": "missed",
+   "why_missed": "supported events present (login_success=4, privilege_logon=3, log_cleared=1) but no expected rule matched: the technique is outside the rule patterns"
+  },
+  {
+   "id": "X09",
+   "source": "evtx_attack_samples",
+   "path": "Execution/revshell_cmd_svchost_sysmon_1.evtx",
+   "technique": "T1059.003",
+   "behaviour": "Reverse shell: cmd.exe spawned by svchost (Sysmon 1)",
+   "expected_rules": [
+    "R7"
+   ],
+   "files": [
+    "revshell_cmd_svchost_sysmon_1.evtx"
+   ],
+   "events": 4,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 0,
+   "by_action": {
+    "process_start": 4
+   },
+   "evtx": [
+    {
+     "records": 4,
+     "unreadable_records": 0,
+     "recovered_records": 0,
+     "event_codes": {
+      "1": 4
+     },
+     "channels": [
+      "Microsoft-Windows-Sysmon/Operational"
+     ],
+     "computers": [
+      "MSEDGEWIN10"
+     ]
+    }
+   ],
+   "rules_fired": {},
+   "incidents": [],
+   "seconds": 0.037,
+   "status": "missed",
+   "why_missed": "supported events present (process_start=4) but no expected rule matched: the technique is outside the rule patterns"
+  },
+  {
+   "id": "X10",
+   "source": "evtx_attack_samples",
+   "path": "Lateral Movement/LM_4624_mimikatz_sekurlsa_pth_source_machine.evtx",
+   "technique": "T1550.002",
+   "behaviour": "Pass-the-hash with Mimikatz sekurlsa::pth (source machine)",
+   "expected_rules": [
+    "R7"
+   ],
+   "files": [
+    "LM_4624_mimikatz_sekurlsa_pth_source_machine.evtx"
+   ],
+   "events": 6,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 0,
+   "by_action": {
+    "process_start": 3,
+    "log_cleared": 1,
+    "login_success": 1,
+    "privilege_logon": 1
+   },
+   "evtx": [
+    {
+     "records": 6,
+     "unreadable_records": 0,
+     "recovered_records": 0,
+     "event_codes": {
+      "4688": 3,
+      "1102": 1,
+      "4624": 1,
+      "4672": 1
+     },
+     "channels": [
+      "Security"
+     ],
+     "computers": [
+      "PC01.example.corp"
+     ]
+    }
+   ],
+   "rules_fired": {
+    "R8": 1
+   },
+   "incidents": [
+    {
+     "id": "INC-0001",
+     "level": "Medium",
+     "score": 40,
+     "title": "Log clearing (user01 on PC01)"
+    }
+   ],
+   "seconds": 0.044,
+   "status": "missed",
+   "why_missed": "supported events present (process_start=3, log_cleared=1, login_success=1, privilege_logon=1) but no expected rule matched: the technique is outside the rule patterns"
+  },
+  {
+   "id": "X11",
+   "source": "evtx_attack_samples",
+   "path": "Credential Access/babyshark_mimikatz_powershell.evtx",
+   "technique": "T1003.001",
+   "behaviour": "Mimikatz via PowerShell (script-block logging)",
+   "expected_rules": [
+    "R7"
+   ],
+   "files": [
+    "babyshark_mimikatz_powershell.evtx"
+   ],
+   "events": 33,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 26,
+   "by_action": {
+    "other": 26,
+    "process_start": 7
+   },
+   "evtx": [
+    {
+     "records": 33,
+     "unreadable_records": 0,
+     "recovered_records": 0,
+     "event_codes": {
+      "7": 11,
+      "1": 7,
+      "12": 4,
+      "11": 3,
+      "16": 2,
+      "5": 2,
+      "10": 2,
+      "4": 1,
+      "3": 1
+     },
+     "channels": [
+      "Microsoft-Windows-Sysmon/Operational"
+     ],
+     "computers": [
+      "IEWIN7"
+     ]
+    }
+   ],
+   "rules_fired": {},
+   "incidents": [],
+   "seconds": 0.053,
+   "status": "missed",
+   "why_missed": "supported events present (process_start=7) but no expected rule matched: the technique is outside the rule patterns"
+  },
+  {
+   "id": "X12",
+   "source": "evtx_attack_samples",
+   "path": "Lateral Movement/LM_WMI_4624_4688_TargetHost.evtx",
+   "technique": "T1047",
+   "behaviour": "WMI remote execution on the target host (4624/4688)",
+   "expected_rules": [],
+   "files": [
+    "LM_WMI_4624_4688_TargetHost.evtx"
+   ],
+   "events": 8,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 0,
+   "by_action": {
+    "login_success": 6,
+    "process_start": 2
+   },
+   "evtx": [
+    {
+     "records": 8,
+     "unreadable_records": 0,
+     "recovered_records": 0,
+     "event_codes": {
+      "4624": 6,
+      "4688": 2
+     },
+     "channels": [
+      "Security"
+     ],
+     "computers": [
+      "WIN-77LTAPHIQ1R.example.corp"
+     ]
+    }
+   ],
+   "rules_fired": {},
+   "incidents": [],
+   "seconds": 0.042,
+   "status": "control (no rule expected)"
+  },
+  {
+   "id": "X13",
+   "source": "evtx_attack_samples",
+   "path": "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx",
+   "technique": "multiple",
+   "behaviour": "Atomic Red Team test run captured by Sysmon (many techniques)",
+   "expected_rules": [
+    "R7"
+   ],
+   "files": [
+    "PanacheSysmon_vs_AtomicRedTeam01.evtx"
+   ],
+   "events": 565,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 54,
+   "by_action": {
+    "process_start": 511,
+    "other": 54
+   },
+   "evtx": [
+    {
+     "records": 565,
+     "unreadable_records": 0,
+     "recovered_records": 0,
+     "event_codes": {
+      "1": 511,
+      "13": 30,
+      "7": 5,
+      "11": 4,
+      "3": 4,
+      "12": 3,
+      "19": 2,
+      "20": 2,
+      "21": 2,
+      "5": 1,
+      "10": 1
+     },
+     "channels": [
+      "Microsoft-Windows-Sysmon/Operational"
+     ],
+     "computers": [
+      "MSEDGEWIN10"
+     ]
+    }
+   ],
+   "rules_fired": {
+    "R7": 3
+   },
+   "incidents": [
+    {
+     "id": "INC-0001",
+     "level": "Medium",
+     "score": 45,
+     "title": "Suspicious execution (ieuser on MSEDGEWIN10)"
+    }
+   ],
+   "seconds": 0.239,
+   "status": "detected"
+  },
+  {
+   "id": "X14",
+   "source": "otrf",
+   "path": "credential_access/host/psh_lsass_memory_dump_comsvcs.zip",
+   "technique": "T1003.001",
+   "behaviour": "LSASS dump via comsvcs.dll from PowerShell",
+   "expected_rules": [
+    "R7"
+   ],
+   "files": [
+    "psh_lsass_memory_dump_comsvcs_2020-10-18T19500924.json"
+   ],
+   "events": 175,
+   "rejected": 0,
+   "duplicates": 9,
+   "unevaluable": 172,
+   "by_action": {
+    "other": 172,
+    "process_start": 2,
+    "log_cleared": 1
+   },
+   "evtx": [],
+   "rules_fired": {
+    "R8": 1,
+    "R7": 2
+   },
+   "incidents": [
+    {
+     "id": "INC-0002",
+     "level": "Medium",
+     "score": 45,
+     "title": "Suspicious execution (wardog on WORKSTATION5)"
+    },
+    {
+     "id": "INC-0001",
+     "level": "Low",
+     "score": 25,
+     "title": "Log clearing (unknown on WORKSTATION5)"
+    }
+   ],
+   "seconds": 0.167,
+   "status": "detected"
+  },
+  {
+   "id": "X15",
+   "source": "otrf",
+   "path": "credential_access/host/empire_mimikatz_logonpasswords.zip",
+   "technique": "T1003.001",
+   "behaviour": "Empire Invoke-Mimikatz logonpasswords (in-memory PowerShell)",
+   "expected_rules": [
+    "R7"
+   ],
+   "files": [
+    "empire_mimikatz_logonpasswords_2020-08-07103224.json"
+   ],
+   "events": 6026,
+   "rejected": 0,
+   "duplicates": 0,
+   "unevaluable": 5994,
+   "by_action": {
+    "other": 5994,
+    "privilege_logon": 10,
+    "login_success": 10,
+    "logout": 10,
+    "process_start": 2
+   },
+   "evtx": [],
+   "rules_fired": {},
+   "incidents": [],
+   "seconds": 3.284,
+   "status": "missed",
+   "why_missed": "supported events present (privilege_logon=10, login_success=10, process_start=2) but no expected rule matched: the technique is outside the rule patterns"
+  }
+ ]
+}

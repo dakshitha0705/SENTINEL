@@ -36,6 +36,8 @@
    0,
    5
   ],
+  "extended": false,
+  "geo": false,
   "description": "Held-out test seed: different users, faster/slower attacks, spray with one success."
  },
  "week_start": "2026-10-12",

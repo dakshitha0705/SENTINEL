@@ -65,6 +65,8 @@ class GenParams:
     success_delay_min: tuple = (1, 8)
     step_gap_min: tuple = (3, 15)
     s5_hour: tuple = (1, 4)
+    extended: bool = False           # add the upgrade's extra benign look-alikes (B8-B10); separate RNG
+    geo: bool = False                # demo only: SIEM-style geo enrichment columns in the export
     description: str = ""
 
 
@@ -108,6 +110,31 @@ def stress_params(n: int = 10, base_seed: int = 1000) -> list[GenParams]:
 
 
 STRESS = stress_params()
+
+
+def fresh_params(n: int = 10, base_seed: int = 5000) -> list[GenParams]:
+    """Fresh held-out seeds generated AFTER the upgrade's detector freeze (never used for tuning).
+
+    Attack parameters span the widened envelope (slower brute force, small sprays, later successes,
+    longer gaps) and the extra benign look-alikes B8-B10 are included.
+    """
+    rr = random.Random(base_seed)
+    out = []
+    for i in range(n):
+        lo_bf = rr.randint(6, 12)
+        out.append(GenParams(
+            seed=base_seed + i + 1, name=f"fresh_seed{base_seed + i + 1}",
+            start=(datetime(2026, 6, 1) + timedelta(weeks=i)).strftime("%Y-%m-%d"),
+            n_regular=rr.randint(18, 28), n_workstations=rr.randint(10, 16),
+            bf_failures=(lo_bf, lo_bf + rr.randint(4, 25)), bf_duration_min=(1, rr.randint(5, 50)),
+            spray_users=(rr.randint(3, 5), rr.randint(6, 14)), spray_duration_min=(2, rr.randint(5, 25)),
+            spray_success_prob=rr.random(), success_delay_min=(1, rr.randint(5, 50)),
+            step_gap_min=(1, rr.randint(10, 40)), s5_hour=(0, 5), extended=True,
+            description="Fresh held-out seed (post-upgrade freeze): widened attack envelope + B8-B10."))
+    return out
+
+
+FRESH = fresh_params()
 
 
 @dataclass
@@ -446,7 +473,36 @@ class Generator:
         self.s5_offhours(s5_victim, 4)
         others = [a for a in day_users[2:] if a is not s5_victim]
         self.benign(3, 2, others)
+        if self.p.extended:
+            self.benign_extended(others[6:] or others)
         return self
+
+    def benign_extended(self, users):
+        """B8-B10: look-alikes for the upgrade's new rules. Uses its own RNG so that the original
+        seeds' event streams are unchanged."""
+        r = random.Random(self.p.seed * 7919 + 13)
+        # B8 administrator enumerates privileged groups during business hours (R14 look-alike)
+        sid = self.scenario("B8", "Administrator reviews privileged group membership (admin01)", "benign")
+        a1 = self.accounts["admin01"]
+        t = self.at(1, a1.start_h + r.uniform(1, 4))
+        self.logon(t, "admin01", "DC01", a1.ip, sid, logon_type="10", priv=True)
+        self.proc(t + timedelta(minutes=2), "admin01", "DC01", "net.exe", "cmd.exe",
+                  'net group "Domain Admins" /domain', sid)
+        self.proc(t + timedelta(minutes=3), "admin01", "DC01", "net.exe", "cmd.exe",
+                  "net localgroup administrators", sid)
+        # B9 stale saved password on the user's own workstation: failures to FS01 all day (R12 look-alike)
+        u = users[0]
+        sid = self.scenario("B9", f"Stale saved credential retrying all day ({u.name})", "benign")
+        t = self.at(4, u.start_h + 0.5)
+        for i in range(r.randint(20, 30)):
+            self.fail(t + timedelta(minutes=20 * i + r.uniform(0, 5)), u.name, "FS01", u.ip, sid)
+        # B10 shared meeting-room PC: three people mistype once each, then log on (R13 look-alike)
+        sid = self.scenario("B10", "Shared meeting-room PC: three users mistype, then log on", "benign")
+        t = self.at(2, 11 + r.uniform(0, 3))
+        for k, u in enumerate(users[1:4]):
+            ts = t + timedelta(minutes=4 * k)
+            self.fail(ts, u.name, "WS-MEET-01", "10.0.5.50", sid)
+            self.logon(ts + timedelta(seconds=40), u.name, "WS-MEET-01", "10.0.5.50", sid)
 
     def write(self, out_dir: Path):
         out_dir.mkdir(parents=True, exist_ok=True)

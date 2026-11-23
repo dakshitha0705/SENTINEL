@@ -89,8 +89,15 @@ def evaluate(analysis, gt: dict) -> dict:
     in_inc = {e for i in detected for e in i["event_ids"]}
     y_pred = [1 if e in in_inc else 0 for e in ev["event_id"]]
     cm = confusion_matrix(y_true, y_pred, labels=[0, 1]).tolist()
+    per_scenario = []
+    for g in gt_inc:
+        b = max(matched_gt.get(g["scenario_id"], []), key=lambda r: r["coverage"], default=None)
+        per_scenario.append({"scenario_id": g["scenario_id"], "name": g["name"], "events": len(g["eids"]),
+                             "incident_id": b["incident_id"] if b else None,
+                             "jaccard": b["jaccard"] if b else None, "coverage": b["coverage"] if b else None})
     return {
         "dataset": gt["dataset"],
+        "per_scenario": per_scenario,
         "events": int(len(ev)),
         "gt_incidents": len(gt_inc), "gt_benign": len(gt_ben), "detected_incidents": n_det,
         "incident_precision": round(precision, 3), "incident_recall": round(recall, 3), "f1": round(f1, 3),

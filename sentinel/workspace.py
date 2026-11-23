@@ -15,6 +15,7 @@ from .config import ROOT
 
 DB = ROOT / "workspace" / "analyst.db"
 DISPOSITIONS = ["Needs investigation", "Confirmed", "Benign"]
+STATUSES = ["New", "In progress", "Escalated", "Closed"]
 
 
 def _now():
@@ -29,6 +30,10 @@ def connect(path: Path | None = None) -> sqlite3.Connection:
                    disposition TEXT, note TEXT, analyst TEXT, ts TEXT)""")
     con.execute("""CREATE TABLE IF NOT EXISTS audit (id INTEGER PRIMARY KEY, ts TEXT, incident_key TEXT, action TEXT,
                    detail TEXT, analyst TEXT)""")
+    con.execute("""CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, incident_key TEXT, incident_id TEXT,
+                   note TEXT, analyst TEXT, ts TEXT)""")
+    con.execute("""CREATE TABLE IF NOT EXISTS status (id INTEGER PRIMARY KEY, incident_key TEXT, incident_id TEXT,
+                   status TEXT, analyst TEXT, ts TEXT)""")
     con.execute("""CREATE TABLE IF NOT EXISTS suppressions (id INTEGER PRIMARY KEY, rule TEXT, match_json TEXT, reason TEXT,
                    status TEXT, created TEXT, decided TEXT, analyst TEXT)""")
     return con
@@ -60,6 +65,36 @@ def set_disposition(con, key, incident_id, disposition, note="", analyst="analys
 def current_disposition(con, key):
     r = con.execute("SELECT disposition FROM dispositions WHERE incident_key=? ORDER BY id DESC LIMIT 1", (key,)).fetchone()
     return r[0] if r else None
+
+
+def add_note(con, key, incident_id, note, analyst="analyst"):
+    note = str(note).strip()
+    if not note:
+        raise ValueError("empty note")
+    con.execute("INSERT INTO notes (incident_key, incident_id, note, analyst, ts) VALUES (?,?,?,?,?)",
+                (key, incident_id, note[:4000], analyst, _now()))
+    con.commit()
+    audit(con, key, "note", note[:200], analyst)
+
+
+def notes(con, key):
+    rows = con.execute("SELECT ts, note, analyst FROM notes WHERE incident_key=? ORDER BY id", (key,)).fetchall()
+    return [{"ts": r[0], "note": r[1], "analyst": r[2]} for r in rows]
+
+
+def set_status(con, key, incident_id, status, analyst="analyst"):
+    if status not in STATUSES:
+        raise ValueError(f"unknown status {status}")
+    prev = current_status(con, key)
+    con.execute("INSERT INTO status (incident_key, incident_id, status, analyst, ts) VALUES (?,?,?,?,?)",
+                (key, incident_id, status, analyst, _now()))
+    con.commit()
+    audit(con, key, "status", f"{prev} -> {status}", analyst)
+
+
+def current_status(con, key):
+    r = con.execute("SELECT status FROM status WHERE incident_key=? ORDER BY id DESC LIMIT 1", (key,)).fetchone()
+    return r[0] if r else "New"
 
 
 def history(con, key=None):

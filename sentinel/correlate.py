@@ -24,7 +24,8 @@ from .rules import CONTEXT_RULES
 
 STAGE_LABEL = {"R1": "Brute force", "R2": "Password spraying", "R3": "Logon after failures",
                "R6": "Privilege change", "R7": "Suspicious execution", "R8": "Log clearing",
-               "R9": "Lateral movement", "R10": "Data staging",
+               "R9": "Lateral movement", "R10": "Data staging", "R12": "Sustained brute force",
+               "R13": "Small password spray", "R14": "Group discovery",
                "ANOM": "Off-hours logon from new device/IP"}
 
 
@@ -69,6 +70,12 @@ def _best_link(alert, inc, alerts_by_id):
             "reason": _describe(alert, other, m)}
 
 
+def _anchor(a, gap):
+    """Start time used for the span limit. A long-running alert (e.g. a brute force spread over hours)
+    counts from shortly before its last event, so it can still be followed by the next attack stage."""
+    return max(a["start"], a["end"] - gap)
+
+
 def _fits(alert, inc, cfg, slack_before=False):
     gap = timedelta(minutes=cfg["correlation"]["max_gap_minutes"])
     span = timedelta(hours=cfg["correlation"]["max_span_hours"])
@@ -77,16 +84,18 @@ def _fits(alert, inc, cfg, slack_before=False):
         return False
     if slack_before and alert["end"] < start - gap:
         return False
-    return max(end, alert["end"]) - min(start, alert["start"]) <= span
+    return max(end, alert["end"]) - min(inc.get("anchor", start), _anchor(alert, gap)) <= span
 
 
-def _new_incident(alert, kind="primary"):
+def _new_incident(alert, kind="primary", gap=timedelta(minutes=30)):
     return {"alert_ids": [alert["alert_id"]], "start": alert["start"], "end": alert["end"],
-            "links": [], "membership": {alert["alert_id"]: "seed"}, "seed_kind": kind}
+            "anchor": _anchor(alert, gap), "links": [], "membership": {alert["alert_id"]: "seed"},
+            "seed_kind": kind}
 
 
-def _add(inc, alert, link):
+def _add(inc, alert, link, gap=timedelta(minutes=30)):
     inc["alert_ids"].append(alert["alert_id"])
+    inc["anchor"] = min(inc.get("anchor", inc["start"]), _anchor(alert, gap))
     inc["start"] = min(inc["start"], alert["start"])
     inc["end"] = max(inc["end"], alert["end"])
     inc["links"].append(link)
@@ -112,14 +121,28 @@ def _attach(alert, incidents, alerts_by_id, cfg, slack_before):
 
 def correlate(alerts: list[dict], events: pd.DataFrame, cfg: dict) -> list[dict]:
     by_id = {a["alert_id"]: a for a in alerts}
-    primary = [a for a in alerts if a["rule"] not in CONTEXT_RULES]
-    context = [a for a in alerts if a["rule"] in CONTEXT_RULES]
+    gap = timedelta(minutes=cfg["correlation"]["max_gap_minutes"])
+    primary = [a for a in alerts if not a["context"]]
+    context = [a for a in alerts if a["context"]]
     incidents: list[dict] = []
+    home: dict = {}
 
-    # Pass 1: primary alerts form incidents.
+    # Pass 1: primary alerts form incidents. A logon-after-failures alert (R3) always joins the incident
+    # of the burst it was derived from (causal link), even when the success came later than max_gap.
     for a in sorted(primary, key=lambda x: x["start"]):
+        prior = a["details"].get("prior_alert_id")
+        if prior and prior in home:
+            p = by_id[prior]
+            link = {"from": prior, "to": a["alert_id"], "strength": "strong", "keys": _match(a, p) or ["user"],
+                    "reason": f"successful logon by the targeted account from the same source "
+                              f"{a['details'].get('minutes_after')} min after the {p['rule']} failures "
+                              f"({prior}); derived link"}
+            _add(home[prior], a, link, gap)
+            home[a["alert_id"]] = home[prior]
+            continue
         if not _attach(a, incidents, by_id, cfg, slack_before=False):
-            incidents.append(_new_incident(a))
+            incidents.append(_new_incident(a, gap=gap))
+        home[a["alert_id"]] = next(i for i in incidents if a["alert_id"] in i["alert_ids"])
 
     # Pass 2: context alerts attach to existing incidents (may precede them by up to max_gap).
     leftover = []
@@ -141,7 +164,7 @@ def correlate(alerts: list[dict], events: pd.DataFrame, cfg: dict) -> list[dict]
     for a in sorted(leftover, key=lambda x: x["start"]):
         if a["alert_id"] in seeds:
             if not _attach(a, anom_incidents, by_id, cfg, slack_before=True):
-                anom_incidents.append(_new_incident(a, kind="anomalous_logon"))
+                anom_incidents.append(_new_incident(a, kind="anomalous_logon", gap=gap))
         elif anom_incidents:
             _attach(a, anom_incidents, by_id, cfg, slack_before=True)
     # second sweep: context that occurred *before* a later anomalous seed
@@ -168,8 +191,8 @@ def correlate(alerts: list[dict], events: pd.DataFrame, cfg: dict) -> list[dict]
         users = sorted({u for m in members for u in m["users"]})
         hosts = sorted({h for m in members for h in m["hosts"]})
         ips = sorted({i for m in members for i in m["ips"]})
-        prim_users = [u for m in scored if m["rule"] not in CONTEXT_RULES for u in m["users"]] or users
-        prim_hosts = [h for m in scored if m["rule"] not in CONTEXT_RULES for h in m["hosts"]] or hosts
+        prim_users = [u for m in scored if not m["context"] for u in m["users"]] or users
+        prim_hosts = [h for m in scored if not m["context"] for h in m["hosts"]] or hosts
         focus_u = max(set(prim_users), key=prim_users.count) if prim_users else "unknown"
         focus_h = max(set(prim_hosts), key=prim_hosts.count) if prim_hosts else "unknown"
         if len(set(prim_users)) > 3:

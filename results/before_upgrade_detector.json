@@ -1,0 +1,357 @@
+{
+ "detector": "checkpoint-pre-upgrade (commit 4a35eec)",
+ "test": {
+  "aggregate": {
+   "datasets": [
+    "test_seed101",
+    "test_seed202",
+    "test_seed303"
+   ],
+   "detected_incidents": 15,
+   "matched_detected": 15,
+   "gt_incidents": 15,
+   "gt_detected": 15,
+   "benign_lookalikes": 21,
+   "benign_flagged": 0,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "correlation_jaccard_mean": 0.933,
+   "severity_agreement": 1.0
+  },
+  "per_dataset": [
+   {
+    "dataset": "test_seed101",
+    "incident_precision": 1.0,
+    "incident_recall": 1.0,
+    "f1": 1.0,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.933,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": []
+   },
+   {
+    "dataset": "test_seed202",
+    "incident_precision": 1.0,
+    "incident_recall": 1.0,
+    "f1": 1.0,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.933,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": []
+   },
+   {
+    "dataset": "test_seed303",
+    "incident_precision": 1.0,
+    "incident_recall": 1.0,
+    "f1": 1.0,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.933,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": []
+   }
+  ]
+ },
+ "stress": {
+  "aggregate": {
+   "datasets": [
+    "stress_seed1001",
+    "stress_seed1002",
+    "stress_seed1003",
+    "stress_seed1004",
+    "stress_seed1005",
+    "stress_seed1006",
+    "stress_seed1007",
+    "stress_seed1008",
+    "stress_seed1009",
+    "stress_seed1010"
+   ],
+   "detected_incidents": 51,
+   "matched_detected": 47,
+   "gt_incidents": 50,
+   "gt_detected": 47,
+   "benign_lookalikes": 70,
+   "benign_flagged": 1,
+   "incident_precision": 0.922,
+   "incident_recall": 0.94,
+   "f1": 0.931,
+   "false_positive_rate": 0.014,
+   "correlation_jaccard_mean": 0.911,
+   "severity_agreement": 0.957
+  },
+  "per_dataset": [
+   {
+    "dataset": "stress_seed1001",
+    "incident_precision": 1.0,
+    "incident_recall": 1.0,
+    "f1": 1.0,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.933,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": []
+   },
+   {
+    "dataset": "stress_seed1002",
+    "incident_precision": 1.0,
+    "incident_recall": 1.0,
+    "f1": 1.0,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.905,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": []
+   },
+   {
+    "dataset": "stress_seed1003",
+    "incident_precision": 1.0,
+    "incident_recall": 1.0,
+    "f1": 1.0,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.933,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": []
+   },
+   {
+    "dataset": "stress_seed1004",
+    "incident_precision": 1.0,
+    "incident_recall": 1.0,
+    "f1": 1.0,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.933,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": []
+   },
+   {
+    "dataset": "stress_seed1005",
+    "incident_precision": 0.8,
+    "incident_recall": 0.8,
+    "f1": 0.8,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.889,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": [
+     "S1"
+    ]
+   },
+   {
+    "dataset": "stress_seed1006",
+    "incident_precision": 0.833,
+    "incident_recall": 1.0,
+    "f1": 0.909,
+    "false_positive_rate": 0.143,
+    "correlation_jaccard_mean": 0.933,
+    "severity_agreement": 0.8,
+    "flagged_benign": [
+     "B1"
+    ],
+    "missed": []
+   },
+   {
+    "dataset": "stress_seed1007",
+    "incident_precision": 0.75,
+    "incident_recall": 0.6,
+    "f1": 0.667,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.889,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": [
+     "S1",
+     "S2"
+    ]
+   },
+   {
+    "dataset": "stress_seed1008",
+    "incident_precision": 1.0,
+    "incident_recall": 1.0,
+    "f1": 1.0,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.908,
+    "severity_agreement": 0.8,
+    "flagged_benign": [],
+    "missed": []
+   },
+   {
+    "dataset": "stress_seed1009",
+    "incident_precision": 0.833,
+    "incident_recall": 1.0,
+    "f1": 0.909,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.853,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": []
+   },
+   {
+    "dataset": "stress_seed1010",
+    "incident_precision": 1.0,
+    "incident_recall": 1.0,
+    "f1": 1.0,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.933,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": []
+   }
+  ]
+ },
+ "fresh": {
+  "aggregate": {
+   "datasets": [
+    "fresh_seed5001",
+    "fresh_seed5002",
+    "fresh_seed5003",
+    "fresh_seed5004",
+    "fresh_seed5005",
+    "fresh_seed5006",
+    "fresh_seed5007",
+    "fresh_seed5008",
+    "fresh_seed5009",
+    "fresh_seed5010"
+   ],
+   "detected_incidents": 57,
+   "matched_detected": 47,
+   "gt_incidents": 50,
+   "gt_detected": 47,
+   "benign_lookalikes": 100,
+   "benign_flagged": 3,
+   "incident_precision": 0.825,
+   "incident_recall": 0.94,
+   "f1": 0.879,
+   "false_positive_rate": 0.03,
+   "correlation_jaccard_mean": 0.883,
+   "severity_agreement": 0.809
+  },
+  "per_dataset": [
+   {
+    "dataset": "fresh_seed5001",
+    "incident_precision": 0.833,
+    "incident_recall": 1.0,
+    "f1": 0.909,
+    "false_positive_rate": 0.1,
+    "correlation_jaccard_mean": 0.882,
+    "severity_agreement": 0.6,
+    "flagged_benign": [
+     "B3"
+    ],
+    "missed": []
+   },
+   {
+    "dataset": "fresh_seed5002",
+    "incident_precision": 1.0,
+    "incident_recall": 1.0,
+    "f1": 1.0,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.933,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": []
+   },
+   {
+    "dataset": "fresh_seed5003",
+    "incident_precision": 0.714,
+    "incident_recall": 1.0,
+    "f1": 0.833,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.798,
+    "severity_agreement": 0.8,
+    "flagged_benign": [],
+    "missed": []
+   },
+   {
+    "dataset": "fresh_seed5004",
+    "incident_precision": 0.714,
+    "incident_recall": 1.0,
+    "f1": 0.833,
+    "false_positive_rate": 0.2,
+    "correlation_jaccard_mean": 0.911,
+    "severity_agreement": 0.8,
+    "flagged_benign": [
+     "B1",
+     "B4"
+    ],
+    "missed": []
+   },
+   {
+    "dataset": "fresh_seed5005",
+    "incident_precision": 0.8,
+    "incident_recall": 0.8,
+    "f1": 0.8,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.917,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": [
+     "S1"
+    ]
+   },
+   {
+    "dataset": "fresh_seed5006",
+    "incident_precision": 0.833,
+    "incident_recall": 1.0,
+    "f1": 0.909,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.88,
+    "severity_agreement": 0.8,
+    "flagged_benign": [],
+    "missed": []
+   },
+   {
+    "dataset": "fresh_seed5007",
+    "incident_precision": 0.667,
+    "incident_recall": 0.8,
+    "f1": 0.727,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.817,
+    "severity_agreement": 1.0,
+    "flagged_benign": [],
+    "missed": [
+     "S1"
+    ]
+   },
+   {
+    "dataset": "fresh_seed5008",
+    "incident_precision": 1.0,
+    "incident_recall": 1.0,
+    "f1": 1.0,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.933,
+    "severity_agreement": 0.8,
+    "flagged_benign": [],
+    "missed": []
+   },
+   {
+    "dataset": "fresh_seed5009",
+    "incident_precision": 0.8,
+    "incident_recall": 0.8,
+    "f1": 0.8,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.823,
+    "severity_agreement": 0.5,
+    "flagged_benign": [],
+    "missed": [
+     "S5"
+    ]
+   },
+   {
+    "dataset": "fresh_seed5010",
+    "incident_precision": 1.0,
+    "incident_recall": 1.0,
+    "f1": 1.0,
+    "false_positive_rate": 0.0,
+    "correlation_jaccard_mean": 0.933,
+    "severity_agreement": 0.8,
+    "flagged_benign": [],
+    "missed": []
+   }
+  ]
+ }
+}

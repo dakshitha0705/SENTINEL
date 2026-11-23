@@ -1,8 +1,56 @@
 {
- "generated_at": "2026-11-22T17:16:05+00:00",
+ "generated_at": "2026-11-23T01:12:10+00:00",
  "matching_rule": ">=50% of ground-truth event IDs; benign flagged on any overlap",
+ "dataset_roles": {
+  "dev": "tuning",
+  "test": "held out since the first freeze",
+  "stress": "diagnostic since the upgrade (motivated R12/R13/R3 decay)",
+  "fresh": "held out since the upgrade freeze"
+ },
  "dev": {
   "dataset": "dev_seed7",
+  "per_scenario": [
+   {
+    "scenario_id": "S1",
+    "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+    "events": 19,
+    "incident_id": "INC-0001",
+    "jaccard": 1.0,
+    "coverage": 1.0
+   },
+   {
+    "scenario_id": "S2",
+    "name": "Password spraying",
+    "events": 17,
+    "incident_id": "INC-0005",
+    "jaccard": 1.0,
+    "coverage": 1.0
+   },
+   {
+    "scenario_id": "S3",
+    "name": "Unauthorised privileged group membership change (insider)",
+    "events": 3,
+    "incident_id": "INC-0002",
+    "jaccard": 1.0,
+    "coverage": 1.0
+   },
+   {
+    "scenario_id": "S4",
+    "name": "Credential dumping followed by audit-log clearing",
+    "events": 5,
+    "incident_id": "INC-0003",
+    "jaccard": 1.0,
+    "coverage": 1.0
+   },
+   {
+    "scenario_id": "S5",
+    "name": "Off-hours logon from an unfamiliar device",
+    "events": 2,
+    "incident_id": "INC-0004",
+    "jaccard": 1.0,
+    "coverage": 1.0
+   }
+  ],
   "events": 1590,
   "gt_incidents": 5,
   "gt_benign": 7,
@@ -14,7 +62,7 @@
   "flagged_benign": [],
   "false_positive_incidents": [],
   "missed_incidents": [],
-  "correlation_jaccard_mean": 0.933,
+  "correlation_jaccard_mean": 1.0,
   "severity_agreement": 1.0,
   "severity_pairs": [
    [
@@ -65,14 +113,14 @@
    },
    {
     "incident_id": "INC-0002",
-    "title": "Privilege change (nisha.shetty on DC01)",
+    "title": "Privilege change -> Group discovery (nisha.shetty on DC01)",
     "level": "High",
-    "score": 60,
-    "events": 2,
+    "score": 65,
+    "events": 3,
     "benign_overlap": [],
     "matched": "S3",
-    "coverage": 0.667,
-    "jaccard": 0.667,
+    "coverage": 1.0,
+    "jaccard": 1.0,
     "expected_level": "High"
    },
    {
@@ -89,7 +137,7 @@
    },
    {
     "incident_id": "INC-0004",
-    "title": "Off-hours logon from new device/IP (deepak.bose on FS01)",
+    "title": "Off-hours logon from new device/IP (deepak.bose on FIN-SRV01)",
     "level": "Low",
     "score": 20,
     "events": 2,
@@ -108,6 +156,18 @@
     "precision": 1.0
    },
    "R10": {
+    "alerts": 0,
+    "flagged_events": 0,
+    "malicious_events": 0,
+    "precision": null
+   },
+   "R12": {
+    "alerts": 0,
+    "flagged_events": 0,
+    "malicious_events": 0,
+    "precision": null
+   },
+   "R13": {
     "alerts": 0,
     "flagged_events": 0,
     "malicious_events": 0,
@@ -167,30 +227,325 @@
      0
     ],
     [
-     1,
-     45
+     0,
+     46
     ]
    ],
    "event_precision": 1.0,
-   "event_recall": 0.978,
-   "event_f1": 0.989
+   "event_recall": 1.0,
+   "event_f1": 1.0
   },
   "input_files": [
    "auth_logs.csv",
    "endpoint_logs.json"
   ],
   "timings_s": {
-   "detection_s": 0.182,
-   "correlation_s": 0.0033,
+   "detection_s": 0.2587,
+   "correlation_s": 0.0038,
    "severity_s": 0.0001,
-   "evidence_s": 0.0449,
-   "analysis_total_s": 0.2303,
-   "ingest_s": 0.2066
+   "evidence_s": 0.0459,
+   "analysis_total_s": 0.3085
+  },
+  "compression": {
+   "alerts": 35,
+   "primary_alerts": 10,
+   "incidents": 5,
+   "alerts_in_incidents": 19,
+   "compression_pct": 85.7
+  }
+ },
+ "dev_ext": {
+  "dataset": "dev_ext_seed7",
+  "per_scenario": [
+   {
+    "scenario_id": "S1",
+    "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+    "events": 19,
+    "incident_id": "INC-0001",
+    "jaccard": 1.0,
+    "coverage": 1.0
+   },
+   {
+    "scenario_id": "S2",
+    "name": "Password spraying",
+    "events": 17,
+    "incident_id": "INC-0005",
+    "jaccard": 1.0,
+    "coverage": 1.0
+   },
+   {
+    "scenario_id": "S3",
+    "name": "Unauthorised privileged group membership change (insider)",
+    "events": 3,
+    "incident_id": "INC-0002",
+    "jaccard": 1.0,
+    "coverage": 1.0
+   },
+   {
+    "scenario_id": "S4",
+    "name": "Credential dumping followed by audit-log clearing",
+    "events": 5,
+    "incident_id": "INC-0003",
+    "jaccard": 1.0,
+    "coverage": 1.0
+   },
+   {
+    "scenario_id": "S5",
+    "name": "Off-hours logon from an unfamiliar device",
+    "events": 2,
+    "incident_id": "INC-0004",
+    "jaccard": 1.0,
+    "coverage": 1.0
+   }
+  ],
+  "events": 1626,
+  "gt_incidents": 5,
+  "gt_benign": 10,
+  "detected_incidents": 5,
+  "incident_precision": 1.0,
+  "incident_recall": 1.0,
+  "f1": 1.0,
+  "false_positive_rate": 0.0,
+  "flagged_benign": [],
+  "false_positive_incidents": [],
+  "missed_incidents": [],
+  "correlation_jaccard_mean": 1.0,
+  "severity_agreement": 1.0,
+  "severity_pairs": [
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Medium",
+    "Medium"
+   ],
+   [
+    "Low",
+    "Low"
+   ]
+  ],
+  "incidents": [
+   {
+    "incident_id": "INC-0001",
+    "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (deepak.joshi on WS-HR-07)",
+    "level": "Critical",
+    "score": 100,
+    "events": 19,
+    "benign_overlap": [],
+    "matched": "S1",
+    "coverage": 1.0,
+    "jaccard": 1.0,
+    "expected_level": "Critical"
+   },
+   {
+    "incident_id": "INC-0003",
+    "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+    "level": "Critical",
+    "score": 100,
+    "events": 5,
+    "benign_overlap": [],
+    "matched": "S4",
+    "coverage": 1.0,
+    "jaccard": 1.0,
+    "expected_level": "Critical"
+   },
+   {
+    "incident_id": "INC-0002",
+    "title": "Privilege change -> Group discovery (nisha.shetty on DC01)",
+    "level": "High",
+    "score": 65,
+    "events": 3,
+    "benign_overlap": [],
+    "matched": "S3",
+    "coverage": 1.0,
+    "jaccard": 1.0,
+    "expected_level": "High"
+   },
+   {
+    "incident_id": "INC-0005",
+    "title": "Password spraying (11 accounts on DC01)",
+    "level": "Medium",
+    "score": 50,
+    "events": 17,
+    "benign_overlap": [],
+    "matched": "S2",
+    "coverage": 1.0,
+    "jaccard": 1.0,
+    "expected_level": "Medium"
+   },
+   {
+    "incident_id": "INC-0004",
+    "title": "Off-hours logon from new device/IP (deepak.bose on FIN-SRV01)",
+    "level": "Low",
+    "score": 20,
+    "events": 2,
+    "benign_overlap": [],
+    "matched": "S5",
+    "coverage": 1.0,
+    "jaccard": 1.0,
+    "expected_level": "Low"
+   }
+  ],
+  "per_rule": {
+   "R1": {
+    "alerts": 1,
+    "flagged_events": 15,
+    "malicious_events": 15,
+    "precision": 1.0
+   },
+   "R10": {
+    "alerts": 0,
+    "flagged_events": 0,
+    "malicious_events": 0,
+    "precision": null
+   },
+   "R12": {
+    "alerts": 0,
+    "flagged_events": 0,
+    "malicious_events": 0,
+    "precision": null
+   },
+   "R13": {
+    "alerts": 0,
+    "flagged_events": 0,
+    "malicious_events": 0,
+    "precision": null
+   },
+   "R2": {
+    "alerts": 1,
+    "flagged_events": 17,
+    "malicious_events": 17,
+    "precision": 1.0
+   },
+   "R3": {
+    "alerts": 1,
+    "flagged_events": 1,
+    "malicious_events": 1,
+    "precision": 1.0
+   },
+   "R4": {
+    "alerts": 7,
+    "flagged_events": 7,
+    "malicious_events": 3,
+    "precision": 0.429
+   },
+   "R5": {
+    "alerts": 20,
+    "flagged_events": 20,
+    "malicious_events": 5,
+    "precision": 0.25
+   },
+   "R6": {
+    "alerts": 2,
+    "flagged_events": 2,
+    "malicious_events": 2,
+    "precision": 1.0
+   },
+   "R7": {
+    "alerts": 4,
+    "flagged_events": 4,
+    "malicious_events": 4,
+    "precision": 1.0
+   },
+   "R8": {
+    "alerts": 1,
+    "flagged_events": 1,
+    "malicious_events": 1,
+    "precision": 1.0
+   }
+  },
+  "event_confusion": {
+   "labels": [
+    "benign",
+    "malicious"
+   ],
+   "matrix": [
+    [
+     1580,
+     0
+    ],
+    [
+     0,
+     46
+    ]
+   ],
+   "event_precision": 1.0,
+   "event_recall": 1.0,
+   "event_f1": 1.0
+  },
+  "input_files": [
+   "auth_logs.csv",
+   "endpoint_logs.json"
+  ],
+  "timings_s": {
+   "detection_s": 0.2908,
+   "correlation_s": 0.0042,
+   "severity_s": 0.0001,
+   "evidence_s": 0.0461,
+   "analysis_total_s": 0.3412
+  },
+  "compression": {
+   "alerts": 40,
+   "primary_alerts": 10,
+   "incidents": 5,
+   "alerts_in_incidents": 19,
+   "compression_pct": 87.5
   }
  },
  "test": [
   {
    "dataset": "test_seed101",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 25,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 8,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
    "events": 1657,
    "gt_incidents": 5,
    "gt_benign": 7,
@@ -202,7 +557,7 @@
    "flagged_benign": [],
    "false_positive_incidents": [],
    "missed_incidents": [],
-   "correlation_jaccard_mean": 0.933,
+   "correlation_jaccard_mean": 1.0,
    "severity_agreement": 1.0,
    "severity_pairs": [
     [
@@ -265,19 +620,19 @@
     },
     {
      "incident_id": "INC-0003",
-     "title": "Privilege change (tara.menon on DC01)",
+     "title": "Privilege change -> Group discovery (tara.menon on DC01)",
      "level": "High",
-     "score": 65,
-     "events": 2,
+     "score": 70,
+     "events": 3,
      "benign_overlap": [],
      "matched": "S3",
-     "coverage": 0.667,
-     "jaccard": 0.667,
+     "coverage": 1.0,
+     "jaccard": 1.0,
      "expected_level": "High"
     },
     {
      "incident_id": "INC-0005",
-     "title": "Off-hours logon from new device/IP (rahul.verma on FS01)",
+     "title": "Off-hours logon from new device/IP (rahul.verma on FIN-SRV01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -296,6 +651,18 @@
      "precision": 1.0
     },
     "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
      "alerts": 0,
      "flagged_events": 0,
      "malicious_events": 0,
@@ -355,29 +722,77 @@
       0
      ],
      [
-      1,
-      42
+      0,
+      43
      ]
     ],
     "event_precision": 1.0,
-    "event_recall": 0.977,
-    "event_f1": 0.988
+    "event_recall": 1.0,
+    "event_f1": 1.0
    },
    "input_files": [
     "auth_logs.csv",
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.1693,
-    "correlation_s": 0.0037,
+    "detection_s": 0.2496,
+    "correlation_s": 0.004,
     "severity_s": 0.0001,
-    "evidence_s": 0.0385,
-    "analysis_total_s": 0.2117,
-    "ingest_s": 0.1867
+    "evidence_s": 0.042,
+    "analysis_total_s": 0.2958
+   },
+   "compression": {
+    "alerts": 39,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 22,
+    "compression_pct": 87.2
    }
   },
   {
    "dataset": "test_seed202",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 27,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying",
+     "events": 13,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
    "events": 1437,
    "gt_incidents": 5,
    "gt_benign": 7,
@@ -389,7 +804,7 @@
    "flagged_benign": [],
    "false_positive_incidents": [],
    "missed_incidents": [],
-   "correlation_jaccard_mean": 0.933,
+   "correlation_jaccard_mean": 1.0,
    "severity_agreement": 1.0,
    "severity_pairs": [
     [
@@ -440,14 +855,14 @@
     },
     {
      "incident_id": "INC-0002",
-     "title": "Privilege change (naveen.bose on DC01)",
+     "title": "Privilege change -> Group discovery (naveen.bose on DC01)",
      "level": "High",
-     "score": 60,
-     "events": 2,
+     "score": 65,
+     "events": 3,
      "benign_overlap": [],
      "matched": "S3",
-     "coverage": 0.667,
-     "jaccard": 0.667,
+     "coverage": 1.0,
+     "jaccard": 1.0,
      "expected_level": "High"
     },
     {
@@ -464,7 +879,7 @@
     },
     {
      "incident_id": "INC-0003",
-     "title": "Off-hours logon from new device/IP (shalini.bose on FS01)",
+     "title": "Off-hours logon from new device/IP (shalini.bose on FIN-SRV01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -483,6 +898,18 @@
      "precision": 1.0
     },
     "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
      "alerts": 0,
      "flagged_events": 0,
      "malicious_events": 0,
@@ -542,29 +969,77 @@
       0
      ],
      [
-      1,
-      49
+      0,
+      50
      ]
     ],
     "event_precision": 1.0,
-    "event_recall": 0.98,
-    "event_f1": 0.99
+    "event_recall": 1.0,
+    "event_f1": 1.0
    },
    "input_files": [
     "auth_logs.csv",
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.6082,
-    "correlation_s": 0.022,
-    "severity_s": 0.0004,
-    "evidence_s": 0.2083,
-    "analysis_total_s": 0.8389,
-    "ingest_s": 0.1564
+    "detection_s": 0.2168,
+    "correlation_s": 0.0041,
+    "severity_s": 0.0001,
+    "evidence_s": 0.041,
+    "analysis_total_s": 0.262
+   },
+   "compression": {
+    "alerts": 34,
+    "primary_alerts": 10,
+    "incidents": 5,
+    "alerts_in_incidents": 20,
+    "compression_pct": 85.3
    }
   },
   {
    "dataset": "test_seed303",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 23,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying",
+     "events": 16,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
    "events": 1865,
    "gt_incidents": 5,
    "gt_benign": 7,
@@ -576,7 +1051,7 @@
    "flagged_benign": [],
    "false_positive_incidents": [],
    "missed_incidents": [],
-   "correlation_jaccard_mean": 0.933,
+   "correlation_jaccard_mean": 1.0,
    "severity_agreement": 1.0,
    "severity_pairs": [
     [
@@ -627,14 +1102,14 @@
     },
     {
      "incident_id": "INC-0001",
-     "title": "Privilege change (varun.das on DC01)",
+     "title": "Privilege change -> Group discovery (varun.das on DC01)",
      "level": "High",
-     "score": 65,
-     "events": 2,
+     "score": 70,
+     "events": 3,
      "benign_overlap": [],
      "matched": "S3",
-     "coverage": 0.667,
-     "jaccard": 0.667,
+     "coverage": 1.0,
+     "jaccard": 1.0,
      "expected_level": "High"
     },
     {
@@ -651,7 +1126,7 @@
     },
     {
      "incident_id": "INC-0003",
-     "title": "Off-hours logon from new device/IP (gaurav.bose on FS01)",
+     "title": "Off-hours logon from new device/IP (gaurav.bose on FIN-SRV01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -670,6 +1145,18 @@
      "precision": 1.0
     },
     "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
      "alerts": 0,
      "flagged_events": 0,
      "malicious_events": 0,
@@ -729,25 +1216,31 @@
       0
      ],
      [
-      1,
-      48
+      0,
+      49
      ]
     ],
     "event_precision": 1.0,
-    "event_recall": 0.98,
-    "event_f1": 0.99
+    "event_recall": 1.0,
+    "event_f1": 1.0
    },
    "input_files": [
     "auth_logs.csv",
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 1.3023,
-    "correlation_s": 0.0242,
-    "severity_s": 0.0004,
-    "evidence_s": 0.2437,
-    "analysis_total_s": 1.5707,
-    "ingest_s": 0.9616
+    "detection_s": 0.2899,
+    "correlation_s": 0.0046,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0493,
+    "analysis_total_s": 0.344
+   },
+   "compression": {
+    "alerts": 43,
+    "primary_alerts": 10,
+    "incidents": 5,
+    "alerts_in_incidents": 19,
+    "compression_pct": 88.4
    }
   }
  ],
@@ -767,7 +1260,7 @@
   "incident_recall": 1.0,
   "f1": 1.0,
   "false_positive_rate": 0.0,
-  "correlation_jaccard_mean": 0.933,
+  "correlation_jaccard_mean": 1.0,
   "severity_agreement": 1.0,
   "severity_pairs": [
    [
@@ -849,6 +1342,48 @@
  "stress": [
   {
    "dataset": "stress_seed1001",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 22,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 13,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
    "events": 1520,
    "gt_incidents": 5,
    "gt_benign": 7,
@@ -860,7 +1395,7 @@
    "flagged_benign": [],
    "false_positive_incidents": [],
    "missed_incidents": [],
-   "correlation_jaccard_mean": 0.933,
+   "correlation_jaccard_mean": 1.0,
    "severity_agreement": 1.0,
    "severity_pairs": [
     [
@@ -899,15 +1434,27 @@
     },
     {
      "incident_id": "INC-0004",
-     "title": "Brute force -> Privilege change -> Suspicious execution (nisha.menon on WS-FIN-01)",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (nisha.menon on WS-FIN-01)",
      "level": "Critical",
-     "score": 95,
+     "score": 100,
      "events": 22,
      "benign_overlap": [],
      "matched": "S1",
      "coverage": 1.0,
      "jaccard": 1.0,
      "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0001",
+     "title": "Privilege change -> Group discovery (shalini.reddy on DC01)",
+     "level": "High",
+     "score": 70,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
     },
     {
      "incident_id": "INC-0005",
@@ -922,20 +1469,8 @@
      "expected_level": "High"
     },
     {
-     "incident_id": "INC-0001",
-     "title": "Privilege change (shalini.reddy on DC01)",
-     "level": "High",
-     "score": 65,
-     "events": 2,
-     "benign_overlap": [],
-     "matched": "S3",
-     "coverage": 0.667,
-     "jaccard": 0.667,
-     "expected_level": "High"
-    },
-    {
      "incident_id": "INC-0003",
-     "title": "Off-hours logon from new device/IP (neha.rao on FS01)",
+     "title": "Off-hours logon from new device/IP (neha.rao on FIN-SRV01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -959,6 +1494,18 @@
      "malicious_events": 0,
      "precision": null
     },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
     "R2": {
      "alerts": 1,
      "flagged_events": 12,
@@ -966,9 +1513,9 @@
      "precision": 1.0
     },
     "R3": {
-     "alerts": 1,
-     "flagged_events": 1,
-     "malicious_events": 1,
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
      "precision": 1.0
     },
     "R4": {
@@ -1013,29 +1560,77 @@
       0
      ],
      [
-      1,
-      44
+      0,
+      45
      ]
     ],
     "event_precision": 1.0,
-    "event_recall": 0.978,
-    "event_f1": 0.989
+    "event_recall": 1.0,
+    "event_f1": 1.0
    },
    "input_files": [
     "auth_logs.csv",
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 1.0565,
-    "correlation_s": 0.0238,
-    "severity_s": 0.0004,
-    "evidence_s": 0.2059,
-    "analysis_total_s": 1.2866,
-    "ingest_s": 0.8834
+    "detection_s": 0.2448,
+    "correlation_s": 0.0049,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0448,
+    "analysis_total_s": 0.2946
+   },
+   "compression": {
+    "alerts": 42,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 22,
+    "compression_pct": 88.1
    }
   },
   {
    "dataset": "stress_seed1002",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 18,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying",
+     "events": 6,
+     "incident_id": "INC-0004",
+     "jaccard": 0.75,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0003",
+     "jaccard": 0.667,
+     "coverage": 0.667
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
    "events": 1655,
    "gt_incidents": 5,
    "gt_benign": 7,
@@ -1047,7 +1642,7 @@
    "flagged_benign": [],
    "false_positive_incidents": [],
    "missed_incidents": [],
-   "correlation_jaccard_mean": 0.905,
+   "correlation_jaccard_mean": 0.883,
    "severity_agreement": 1.0,
    "severity_pairs": [
     [
@@ -1110,19 +1705,19 @@
     },
     {
      "incident_id": "INC-0004",
-     "title": "Password spraying (5 accounts on DC01)",
+     "title": "Group discovery -> Password spraying (5 accounts on DC01)",
      "level": "Medium",
-     "score": 50,
-     "events": 7,
+     "score": 55,
+     "events": 8,
      "benign_overlap": [],
      "matched": "S2",
      "coverage": 1.0,
-     "jaccard": 0.857,
+     "jaccard": 0.75,
      "expected_level": "Medium"
     },
     {
      "incident_id": "INC-0002",
-     "title": "Off-hours logon from new device/IP (meera.pillai on FS01)",
+     "title": "Off-hours logon from new device/IP (meera.pillai on FIN-SRV01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -1141,6 +1736,18 @@
      "precision": 1.0
     },
     "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
      "alerts": 0,
      "flagged_events": 0,
      "malicious_events": 0,
@@ -1200,29 +1807,77 @@
       1
      ],
      [
-      1,
-      33
+      0,
+      34
      ]
     ],
     "event_precision": 0.971,
-    "event_recall": 0.971,
-    "event_f1": 0.971
+    "event_recall": 1.0,
+    "event_f1": 0.986
    },
    "input_files": [
     "auth_logs.csv",
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 1.0559,
-    "correlation_s": 0.021,
-    "severity_s": 0.0004,
-    "evidence_s": 0.1932,
-    "analysis_total_s": 1.2705,
-    "ingest_s": 0.936
+    "detection_s": 0.2531,
+    "correlation_s": 0.0049,
+    "severity_s": 0.0002,
+    "evidence_s": 0.0415,
+    "analysis_total_s": 0.2997
+   },
+   "compression": {
+    "alerts": 32,
+    "primary_alerts": 10,
+    "incidents": 5,
+    "alerts_in_incidents": 19,
+    "compression_pct": 84.4
    }
   },
   {
    "dataset": "stress_seed1003",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 19,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 11,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
    "events": 1857,
    "gt_incidents": 5,
    "gt_benign": 7,
@@ -1234,7 +1889,7 @@
    "flagged_benign": [],
    "false_positive_incidents": [],
    "missed_incidents": [],
-   "correlation_jaccard_mean": 0.933,
+   "correlation_jaccard_mean": 1.0,
    "severity_agreement": 1.0,
    "severity_pairs": [
     [
@@ -1284,6 +1939,18 @@
      "expected_level": "Critical"
     },
     {
+     "incident_id": "INC-0001",
+     "title": "Privilege change -> Group discovery (shalini.kumar on DC01)",
+     "level": "High",
+     "score": 65,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
      "incident_id": "INC-0003",
      "title": "Password spraying -> Logon after failures (7 accounts on DC01)",
      "level": "High",
@@ -1296,20 +1963,8 @@
      "expected_level": "High"
     },
     {
-     "incident_id": "INC-0001",
-     "title": "Privilege change (shalini.kumar on DC01)",
-     "level": "High",
-     "score": 60,
-     "events": 2,
-     "benign_overlap": [],
-     "matched": "S3",
-     "coverage": 0.667,
-     "jaccard": 0.667,
-     "expected_level": "High"
-    },
-    {
      "incident_id": "INC-0005",
-     "title": "Off-hours logon from new device/IP (aditya.rao on FS01)",
+     "title": "Off-hours logon from new device/IP (aditya.rao on FIN-SRV01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -1328,6 +1983,18 @@
      "precision": 1.0
     },
     "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
      "alerts": 0,
      "flagged_events": 0,
      "malicious_events": 0,
@@ -1387,29 +2054,77 @@
       0
      ],
      [
-      1,
-      39
+      0,
+      40
      ]
     ],
     "event_precision": 1.0,
-    "event_recall": 0.975,
-    "event_f1": 0.987
+    "event_recall": 1.0,
+    "event_f1": 1.0
    },
    "input_files": [
     "auth_logs.csv",
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 1.1794,
-    "correlation_s": 0.0235,
-    "severity_s": 0.0004,
-    "evidence_s": 0.211,
-    "analysis_total_s": 1.4143,
-    "ingest_s": 0.9855
+    "detection_s": 0.2718,
+    "correlation_s": 0.004,
+    "severity_s": 0.0003,
+    "evidence_s": 0.0436,
+    "analysis_total_s": 0.3197
+   },
+   "compression": {
+    "alerts": 39,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 21,
+    "compression_pct": 87.2
    }
   },
   {
    "dataset": "stress_seed1004",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 13,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 15,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
    "events": 1607,
    "gt_incidents": 5,
    "gt_benign": 7,
@@ -1421,7 +2136,7 @@
    "flagged_benign": [],
    "false_positive_incidents": [],
    "missed_incidents": [],
-   "correlation_jaccard_mean": 0.933,
+   "correlation_jaccard_mean": 1.0,
    "severity_agreement": 1.0,
    "severity_pairs": [
     [
@@ -1484,19 +2199,19 @@
     },
     {
      "incident_id": "INC-0003",
-     "title": "Privilege change (pooja.iyer on DC01)",
+     "title": "Privilege change -> Group discovery (pooja.iyer on DC01)",
      "level": "High",
-     "score": 60,
-     "events": 2,
+     "score": 65,
+     "events": 3,
      "benign_overlap": [],
      "matched": "S3",
-     "coverage": 0.667,
-     "jaccard": 0.667,
+     "coverage": 1.0,
+     "jaccard": 1.0,
      "expected_level": "High"
     },
     {
      "incident_id": "INC-0005",
-     "title": "Off-hours logon from new device/IP (vikram.rao on FS01)",
+     "title": "Off-hours logon from new device/IP (vikram.rao on FIN-SRV01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -1515,6 +2230,18 @@
      "precision": 1.0
     },
     "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
      "alerts": 0,
      "flagged_events": 0,
      "malicious_events": 0,
@@ -1574,59 +2301,95 @@
       0
      ],
      [
-      1,
-      37
+      0,
+      38
      ]
     ],
     "event_precision": 1.0,
-    "event_recall": 0.974,
-    "event_f1": 0.987
+    "event_recall": 1.0,
+    "event_f1": 1.0
    },
    "input_files": [
     "auth_logs.csv",
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 1.1279,
-    "correlation_s": 0.0212,
-    "severity_s": 0.0004,
-    "evidence_s": 0.2199,
-    "analysis_total_s": 1.3695,
-    "ingest_s": 0.8788
+    "detection_s": 0.2519,
+    "correlation_s": 0.0042,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0488,
+    "analysis_total_s": 0.3049
+   },
+   "compression": {
+    "alerts": 40,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 21,
+    "compression_pct": 87.5
    }
   },
   {
    "dataset": "stress_seed1005",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 13,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 16,
+     "incident_id": "INC-0002",
+     "jaccard": 0.889,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
    "events": 1936,
    "gt_incidents": 5,
    "gt_benign": 7,
    "detected_incidents": 5,
-   "incident_precision": 0.8,
-   "incident_recall": 0.8,
-   "f1": 0.8,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
    "false_positive_rate": 0.0,
    "flagged_benign": [],
-   "false_positive_incidents": [
-    {
-     "incident_id": "INC-0004",
-     "title": "Privilege change -> Suspicious execution (karthik.bose on WS-OPS-10)",
-     "level": "Critical",
-     "score": 95,
-     "events": 4,
-     "benign_overlap": [],
-     "matched": null
-    }
-   ],
-   "missed_incidents": [
-    {
-     "scenario_id": "S1",
-     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
-     "best_coverage": 0.308
-    }
-   ],
-   "correlation_jaccard_mean": 0.889,
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.978,
    "severity_agreement": 1.0,
    "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
     [
      "Critical",
      "Critical"
@@ -1659,12 +2422,15 @@
     },
     {
      "incident_id": "INC-0004",
-     "title": "Privilege change -> Suspicious execution (karthik.bose on WS-OPS-10)",
+     "title": "Sustained brute force -> Logon after failures -> Privilege change -> Suspicious execution (karthik.bose on WS-OPS-10)",
      "level": "Critical",
-     "score": 95,
-     "events": 4,
+     "score": 100,
+     "events": 13,
      "benign_overlap": [],
-     "matched": null
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
     },
     {
      "incident_id": "INC-0002",
@@ -1680,19 +2446,19 @@
     },
     {
      "incident_id": "INC-0005",
-     "title": "Privilege change (manoj.verma on DC01)",
+     "title": "Privilege change -> Group discovery (manoj.verma on DC01)",
      "level": "High",
-     "score": 65,
-     "events": 2,
+     "score": 70,
+     "events": 3,
      "benign_overlap": [],
      "matched": "S3",
-     "coverage": 0.667,
-     "jaccard": 0.667,
+     "coverage": 1.0,
+     "jaccard": 1.0,
      "expected_level": "High"
     },
     {
      "incident_id": "INC-0003",
-     "title": "Off-hours logon from new device/IP (varun.joshi on FS01)",
+     "title": "Off-hours logon from new device/IP (varun.joshi on FIN-SRV01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -1716,6 +2482,18 @@
      "malicious_events": 0,
      "precision": null
     },
+    "R12": {
+     "alerts": 1,
+     "flagged_events": 9,
+     "malicious_events": 9,
+     "precision": 1.0
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
     "R2": {
      "alerts": 1,
      "flagged_events": 15,
@@ -1723,9 +2501,9 @@
      "precision": 1.0
     },
     "R3": {
-     "alerts": 1,
-     "flagged_events": 1,
-     "malicious_events": 1,
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
      "precision": 1.0
     },
     "R4": {
@@ -1770,29 +2548,77 @@
       2
      ],
      [
-      10,
-      29
+      0,
+      39
      ]
     ],
-    "event_precision": 0.935,
-    "event_recall": 0.744,
-    "event_f1": 0.829
+    "event_precision": 0.951,
+    "event_recall": 1.0,
+    "event_f1": 0.975
    },
    "input_files": [
     "auth_logs.csv",
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 1.1869,
-    "correlation_s": 0.0217,
-    "severity_s": 0.0004,
-    "evidence_s": 0.2104,
-    "analysis_total_s": 1.4193,
-    "ingest_s": 1.0635
+    "detection_s": 0.2762,
+    "correlation_s": 0.0037,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0443,
+    "analysis_total_s": 0.3244
+   },
+   "compression": {
+    "alerts": 42,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 22,
+    "compression_pct": 88.1
    }
   },
   {
    "dataset": "stress_seed1006",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 21,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 9,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
    "events": 1849,
    "gt_incidents": 5,
    "gt_benign": 7,
@@ -1818,8 +2644,8 @@
     }
    ],
    "missed_incidents": [],
-   "correlation_jaccard_mean": 0.933,
-   "severity_agreement": 0.8,
+   "correlation_jaccard_mean": 1.0,
+   "severity_agreement": 1.0,
    "severity_pairs": [
     [
      "Critical",
@@ -1835,7 +2661,7 @@
     ],
     [
      "High",
-     "Medium"
+     "High"
     ],
     [
      "Low",
@@ -1868,22 +2694,10 @@
      "expected_level": "Critical"
     },
     {
-     "incident_id": "INC-0003",
-     "title": "Privilege change (neha.sharma on DC01)",
-     "level": "High",
-     "score": 60,
-     "events": 2,
-     "benign_overlap": [],
-     "matched": "S3",
-     "coverage": 0.667,
-     "jaccard": 0.667,
-     "expected_level": "High"
-    },
-    {
      "incident_id": "INC-0001",
-     "title": "Password spraying (7 accounts on DC01)",
-     "level": "Medium",
-     "score": 50,
+     "title": "Password spraying -> Logon after failures (7 accounts on DC01)",
+     "level": "High",
+     "score": 72,
      "events": 9,
      "benign_overlap": [],
      "matched": "S2",
@@ -1892,8 +2706,20 @@
      "expected_level": "High"
     },
     {
+     "incident_id": "INC-0003",
+     "title": "Privilege change -> Group discovery (neha.sharma on DC01)",
+     "level": "High",
+     "score": 65,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
      "incident_id": "INC-0004",
-     "title": "Off-hours logon from new device/IP (kavya.iyer on FS01)",
+     "title": "Off-hours logon from new device/IP (kavya.iyer on FIN-SRV01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -1928,6 +2754,18 @@
      "malicious_events": 0,
      "precision": null
     },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
     "R2": {
      "alerts": 1,
      "flagged_events": 8,
@@ -1935,9 +2773,9 @@
      "precision": 1.0
     },
     "R3": {
-     "alerts": 1,
-     "flagged_events": 1,
-     "malicious_events": 1,
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
      "precision": 1.0
     },
     "R4": {
@@ -1982,36 +2820,84 @@
       3
      ],
      [
-      1,
-      39
+      0,
+      40
      ]
     ],
-    "event_precision": 0.929,
-    "event_recall": 0.975,
-    "event_f1": 0.951
+    "event_precision": 0.93,
+    "event_recall": 1.0,
+    "event_f1": 0.964
    },
    "input_files": [
     "auth_logs.csv",
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 1.1701,
-    "correlation_s": 0.0267,
-    "severity_s": 0.0006,
-    "evidence_s": 0.2513,
-    "analysis_total_s": 1.4488,
-    "ingest_s": 1.0082
+    "detection_s": 0.2729,
+    "correlation_s": 0.0045,
+    "severity_s": 0.0001,
+    "evidence_s": 0.051,
+    "analysis_total_s": 0.3285
+   },
+   "compression": {
+    "alerts": 40,
+    "primary_alerts": 11,
+    "incidents": 6,
+    "alerts_in_incidents": 25,
+    "compression_pct": 85.0
    }
   },
   {
    "dataset": "stress_seed1007",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 9,
+     "incident_id": null,
+     "jaccard": null,
+     "coverage": null
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 5,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
    "events": 1434,
    "gt_incidents": 5,
    "gt_benign": 7,
-   "detected_incidents": 4,
-   "incident_precision": 0.75,
-   "incident_recall": 0.6,
-   "f1": 0.667,
+   "detected_incidents": 5,
+   "incident_precision": 0.8,
+   "incident_recall": 0.8,
+   "f1": 0.8,
    "false_positive_rate": 0.0,
    "flagged_benign": [],
    "false_positive_incidents": [
@@ -2030,15 +2916,10 @@
      "scenario_id": "S1",
      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
      "best_coverage": 0.333
-    },
-    {
-     "scenario_id": "S2",
-     "name": "Password spraying with one successful logon",
-     "best_coverage": 0.0
     }
    ],
-   "correlation_jaccard_mean": 0.889,
-   "severity_agreement": 1.0,
+   "correlation_jaccard_mean": 1.0,
+   "severity_agreement": 0.75,
    "severity_pairs": [
     [
      "Critical",
@@ -2047,6 +2928,10 @@
     [
      "High",
      "High"
+    ],
+    [
+     "High",
+     "Medium"
     ],
     [
      "Low",
@@ -2077,19 +2962,31 @@
     },
     {
      "incident_id": "INC-0002",
-     "title": "Privilege change (priya.shetty on DC01)",
+     "title": "Privilege change -> Group discovery (priya.shetty on DC01)",
      "level": "High",
-     "score": 60,
-     "events": 2,
+     "score": 65,
+     "events": 3,
      "benign_overlap": [],
      "matched": "S3",
-     "coverage": 0.667,
-     "jaccard": 0.667,
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Small password spray -> Logon after failures (priya.shetty on DC01)",
+     "level": "Medium",
+     "score": 55,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
      "expected_level": "High"
     },
     {
      "incident_id": "INC-0003",
-     "title": "Off-hours logon from new device/IP (manoj.joshi on FS01)",
+     "title": "Off-hours logon from new device/IP (manoj.joshi on FIN-SRV01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -2113,6 +3010,18 @@
      "malicious_events": 0,
      "precision": null
     },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
+     "alerts": 1,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
     "R2": {
      "alerts": 0,
      "flagged_events": 0,
@@ -2120,10 +3029,10 @@
      "precision": null
     },
     "R3": {
-     "alerts": 0,
-     "flagged_events": 0,
-     "malicious_events": 0,
-     "precision": null
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
     },
     "R4": {
      "alerts": 11,
@@ -2167,29 +3076,77 @@
       0
      ],
      [
-      12,
-      12
+      6,
+      18
      ]
     ],
     "event_precision": 1.0,
-    "event_recall": 0.5,
-    "event_f1": 0.667
+    "event_recall": 0.75,
+    "event_f1": 0.857
    },
    "input_files": [
     "auth_logs.csv",
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.9772,
-    "correlation_s": 0.0178,
-    "severity_s": 0.0003,
-    "evidence_s": 0.1288,
-    "analysis_total_s": 1.1241,
-    "ingest_s": 0.8453
+    "detection_s": 0.2398,
+    "correlation_s": 0.004,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0353,
+    "analysis_total_s": 0.2791
+   },
+   "compression": {
+    "alerts": 41,
+    "primary_alerts": 9,
+    "incidents": 5,
+    "alerts_in_incidents": 17,
+    "compression_pct": 87.8
    }
   },
   {
    "dataset": "stress_seed1008",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 21,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 7,
+     "incident_id": "INC-0003",
+     "jaccard": 0.875,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
    "events": 1649,
    "gt_incidents": 5,
    "gt_benign": 7,
@@ -2201,8 +3158,8 @@
    "flagged_benign": [],
    "false_positive_incidents": [],
    "missed_incidents": [],
-   "correlation_jaccard_mean": 0.908,
-   "severity_agreement": 0.8,
+   "correlation_jaccard_mean": 0.975,
+   "severity_agreement": 1.0,
    "severity_pairs": [
     [
      "Critical",
@@ -2218,7 +3175,7 @@
     ],
     [
      "High",
-     "Medium"
+     "High"
     ],
     [
      "Low",
@@ -2251,22 +3208,10 @@
      "expected_level": "Critical"
     },
     {
-     "incident_id": "INC-0005",
-     "title": "Privilege change (sanjay.verma on DC01)",
-     "level": "High",
-     "score": 65,
-     "events": 2,
-     "benign_overlap": [],
-     "matched": "S3",
-     "coverage": 0.667,
-     "jaccard": 0.667,
-     "expected_level": "High"
-    },
-    {
      "incident_id": "INC-0003",
-     "title": "Password spraying (5 accounts on DC01)",
-     "level": "Medium",
-     "score": 55,
+     "title": "Password spraying -> Logon after failures (5 accounts on DC01)",
+     "level": "High",
+     "score": 76,
      "events": 8,
      "benign_overlap": [],
      "matched": "S2",
@@ -2275,8 +3220,20 @@
      "expected_level": "High"
     },
     {
+     "incident_id": "INC-0005",
+     "title": "Privilege change -> Group discovery (sanjay.verma on DC01)",
+     "level": "High",
+     "score": 70,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
      "incident_id": "INC-0004",
-     "title": "Off-hours logon from new device/IP (tara.nair on FS01)",
+     "title": "Off-hours logon from new device/IP (tara.nair on FIN-SRV01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -2300,6 +3257,18 @@
      "malicious_events": 0,
      "precision": null
     },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
     "R2": {
      "alerts": 1,
      "flagged_events": 6,
@@ -2307,9 +3276,9 @@
      "precision": 1.0
     },
     "R3": {
-     "alerts": 1,
-     "flagged_events": 1,
-     "malicious_events": 1,
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
      "precision": 1.0
     },
     "R4": {
@@ -2354,29 +3323,77 @@
       1
      ],
      [
-      1,
-      37
+      0,
+      38
      ]
     ],
     "event_precision": 0.974,
-    "event_recall": 0.974,
-    "event_f1": 0.974
+    "event_recall": 1.0,
+    "event_f1": 0.987
    },
    "input_files": [
     "auth_logs.csv",
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 1.118,
-    "correlation_s": 0.0221,
-    "severity_s": 0.0004,
-    "evidence_s": 0.1973,
-    "analysis_total_s": 1.3378,
-    "ingest_s": 0.8991
+    "detection_s": 0.2471,
+    "correlation_s": 0.0037,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0434,
+    "analysis_total_s": 0.2943
+   },
+   "compression": {
+    "alerts": 38,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 20,
+    "compression_pct": 86.8
    }
   },
   {
    "dataset": "stress_seed1009",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 16,
+     "incident_id": "INC-0006",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 18,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0001",
+     "jaccard": 0.6,
+     "coverage": 0.6
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
    "events": 1561,
    "gt_incidents": 5,
    "gt_benign": 7,
@@ -2398,7 +3415,7 @@
     }
    ],
    "missed_incidents": [],
-   "correlation_jaccard_mean": 0.853,
+   "correlation_jaccard_mean": 0.92,
    "severity_agreement": 1.0,
    "severity_pairs": [
     [
@@ -2448,6 +3465,18 @@
      "expected_level": "Critical"
     },
     {
+     "incident_id": "INC-0004",
+     "title": "Privilege change -> Group discovery (isha.kulkarni on DC01)",
+     "level": "High",
+     "score": 65,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
      "incident_id": "INC-0002",
      "title": "Password spraying -> Logon after failures (10 accounts on DC01)",
      "level": "High",
@@ -2457,18 +3486,6 @@
      "matched": "S2",
      "coverage": 1.0,
      "jaccard": 1.0,
-     "expected_level": "High"
-    },
-    {
-     "incident_id": "INC-0004",
-     "title": "Privilege change (isha.kulkarni on DC01)",
-     "level": "High",
-     "score": 60,
-     "events": 2,
-     "benign_overlap": [],
-     "matched": "S3",
-     "coverage": 0.667,
-     "jaccard": 0.667,
      "expected_level": "High"
     },
     {
@@ -2482,7 +3499,7 @@
     },
     {
      "incident_id": "INC-0005",
-     "title": "Off-hours logon from new device/IP (ananya.sharma on FS01)",
+     "title": "Off-hours logon from new device/IP (ananya.sharma on FIN-SRV01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -2501,6 +3518,18 @@
      "precision": 1.0
     },
     "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
      "alerts": 0,
      "flagged_events": 0,
      "malicious_events": 0,
@@ -2560,29 +3589,77 @@
       2
      ],
      [
-      3,
-      41
+      2,
+      42
      ]
     ],
-    "event_precision": 0.953,
-    "event_recall": 0.932,
-    "event_f1": 0.943
+    "event_precision": 0.955,
+    "event_recall": 0.955,
+    "event_f1": 0.955
    },
    "input_files": [
     "auth_logs.csv",
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 1.1524,
-    "correlation_s": 0.0264,
-    "severity_s": 0.0004,
-    "evidence_s": 0.2509,
-    "analysis_total_s": 1.4301,
-    "ingest_s": 0.9004
+    "detection_s": 0.2475,
+    "correlation_s": 0.005,
+    "severity_s": 0.0001,
+    "evidence_s": 0.05,
+    "analysis_total_s": 0.3026
+   },
+   "compression": {
+    "alerts": 44,
+    "primary_alerts": 11,
+    "incidents": 6,
+    "alerts_in_incidents": 21,
+    "compression_pct": 86.4
    }
   },
   {
    "dataset": "stress_seed1010",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 26,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying",
+     "events": 15,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
    "events": 1592,
    "gt_incidents": 5,
    "gt_benign": 7,
@@ -2594,7 +3671,7 @@
    "flagged_benign": [],
    "false_positive_incidents": [],
    "missed_incidents": [],
-   "correlation_jaccard_mean": 0.933,
+   "correlation_jaccard_mean": 1.0,
    "severity_agreement": 1.0,
    "severity_pairs": [
     [
@@ -2645,14 +3722,14 @@
     },
     {
      "incident_id": "INC-0003",
-     "title": "Privilege change (isha.rao on DC01)",
+     "title": "Privilege change -> Group discovery (isha.rao on DC01)",
      "level": "High",
-     "score": 60,
-     "events": 2,
+     "score": 65,
+     "events": 3,
      "benign_overlap": [],
      "matched": "S3",
-     "coverage": 0.667,
-     "jaccard": 0.667,
+     "coverage": 1.0,
+     "jaccard": 1.0,
      "expected_level": "High"
     },
     {
@@ -2669,7 +3746,7 @@
     },
     {
      "incident_id": "INC-0005",
-     "title": "Off-hours logon from new device/IP (swati.iyer on FS01)",
+     "title": "Off-hours logon from new device/IP (swati.iyer on FIN-SRV01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -2688,6 +3765,18 @@
      "precision": 1.0
     },
     "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
      "alerts": 0,
      "flagged_events": 0,
      "malicious_events": 0,
@@ -2747,25 +3836,31 @@
       0
      ],
      [
-      1,
-      50
+      0,
+      51
      ]
     ],
     "event_precision": 1.0,
-    "event_recall": 0.98,
-    "event_f1": 0.99
+    "event_recall": 1.0,
+    "event_f1": 1.0
    },
    "input_files": [
     "auth_logs.csv",
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 1.0424,
-    "correlation_s": 0.0217,
-    "severity_s": 0.0004,
-    "evidence_s": 0.2215,
-    "analysis_total_s": 1.286,
-    "ingest_s": 0.9202
+    "detection_s": 0.266,
+    "correlation_s": 0.006,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0423,
+    "analysis_total_s": 0.3144
+   },
+   "compression": {
+    "alerts": 34,
+    "primary_alerts": 10,
+    "incidents": 5,
+    "alerts_in_incidents": 19,
+    "compression_pct": 85.3
    }
   }
  ],
@@ -2782,18 +3877,18 @@
    "stress_seed1009",
    "stress_seed1010"
   ],
-  "detected_incidents": 51,
-  "matched_detected": 47,
+  "detected_incidents": 52,
+  "matched_detected": 49,
   "gt_incidents": 50,
-  "gt_detected": 47,
+  "gt_detected": 49,
   "benign_lookalikes": 70,
   "benign_flagged": 1,
-  "incident_precision": 0.922,
-  "incident_recall": 0.94,
-  "f1": 0.931,
+  "incident_precision": 0.942,
+  "incident_recall": 0.98,
+  "f1": 0.961,
   "false_positive_rate": 0.014,
-  "correlation_jaccard_mean": 0.911,
-  "severity_agreement": 0.957,
+  "correlation_jaccard_mean": 0.976,
+  "severity_agreement": 0.98,
   "severity_pairs": [
    [
     "Critical",
@@ -2880,6 +3975,10 @@
     "Critical"
    ],
    [
+    "Critical",
+    "Critical"
+   ],
+   [
     "High",
     "High"
    ],
@@ -2894,6 +3993,22 @@
    [
     "Critical",
     "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
    ],
    [
     "Critical",
@@ -2916,18 +4031,6 @@
     "Critical"
    ],
    [
-    "High",
-    "High"
-   ],
-   [
-    "Low",
-    "Low"
-   ],
-   [
-    "Critical",
-    "Critical"
-   ],
-   [
     "Critical",
     "Critical"
    ],
@@ -2937,7 +4040,7 @@
    ],
    [
     "High",
-    "Medium"
+    "High"
    ],
    [
     "Low",
@@ -2984,5 +4087,3866 @@
     "Low"
    ]
   ]
+ },
+ "fresh": [
+  {
+   "dataset": "fresh_seed5001",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 19,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 18,
+     "incident_id": "INC-0002",
+     "jaccard": 0.9,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
+   "events": 1877,
+   "gt_incidents": 5,
+   "gt_benign": 10,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.1,
+   "flagged_benign": [
+    "B3"
+   ],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.98,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0001",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (manoj.verma on WS-ENG-13)",
+     "level": "Critical",
+     "score": 100,
+     "events": 19,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Password spraying -> Logon after failures (12 accounts on DC01)",
+     "level": "High",
+     "score": 68,
+     "events": 20,
+     "benign_overlap": [
+      "B3"
+     ],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 0.9,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Privilege change -> Group discovery (lakshmi.bose on DC01)",
+     "level": "High",
+     "score": 65,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Off-hours logon from new device/IP (rahul.das on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 15,
+     "malicious_events": 15,
+     "precision": 1.0
+    },
+    "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 17,
+     "malicious_events": 17,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 14,
+     "flagged_events": 14,
+     "malicious_events": 3,
+     "precision": 0.214
+    },
+    "R5": {
+     "alerts": 21,
+     "flagged_events": 21,
+     "malicious_events": 6,
+     "precision": 0.286
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1828,
+      2
+     ],
+     [
+      0,
+      47
+     ]
+    ],
+    "event_precision": 0.959,
+    "event_recall": 1.0,
+    "event_f1": 0.979
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 0.319,
+    "correlation_s": 0.0042,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0649,
+    "analysis_total_s": 0.3881
+   },
+   "compression": {
+    "alerts": 49,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 22,
+    "compression_pct": 89.8
+   }
+  },
+  {
+   "dataset": "fresh_seed5002",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 25,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 9,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
+   "events": 1937,
+   "gt_incidents": 5,
+   "gt_benign": 10,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 1.0,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0001",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (kavya.joshi on WS-FIN-01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 25,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Password spraying -> Logon after failures (5 accounts on DC01)",
+     "level": "High",
+     "score": 70,
+     "events": 9,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Privilege change -> Group discovery (tara.shetty on DC01)",
+     "level": "High",
+     "score": 65,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Off-hours logon from new device/IP (manoj.mehta on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 21,
+     "malicious_events": 21,
+     "precision": 1.0
+    },
+    "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 8,
+     "malicious_events": 8,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 13,
+     "flagged_events": 13,
+     "malicious_events": 3,
+     "precision": 0.231
+    },
+    "R5": {
+     "alerts": 22,
+     "flagged_events": 22,
+     "malicious_events": 6,
+     "precision": 0.273
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1893,
+      0
+     ],
+     [
+      0,
+      44
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 1.0,
+    "event_f1": 1.0
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 0.3029,
+    "correlation_s": 0.0043,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0406,
+    "analysis_total_s": 0.3479
+   },
+   "compression": {
+    "alerts": 49,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 21,
+    "compression_pct": 89.8
+   }
+  },
+  {
+   "dataset": "fresh_seed5003",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 33,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 14,
+     "incident_id": "INC-0005",
+     "jaccard": 0.875,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0004",
+     "jaccard": 0.6,
+     "coverage": 0.6
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
+   "events": 1676,
+   "gt_incidents": 5,
+   "gt_benign": 10,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.895,
+   "severity_agreement": 0.8,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0001",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (meera.menon on WS-SALES-04)",
+     "level": "Critical",
+     "score": 100,
+     "events": 33,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Suspicious execution -> Log clearing -> Logon after failures (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 16,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 0.875,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Suspicious execution (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 90,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 0.6,
+     "jaccard": 0.6,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Privilege change -> Group discovery (ananya.bose on DC01)",
+     "level": "High",
+     "score": 70,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Off-hours logon from new device/IP (isha.joshi on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 29,
+     "malicious_events": 29,
+     "precision": 1.0
+    },
+    "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 13,
+     "malicious_events": 13,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 9,
+     "flagged_events": 9,
+     "malicious_events": 4,
+     "precision": 0.444
+    },
+    "R5": {
+     "alerts": 21,
+     "flagged_events": 21,
+     "malicious_events": 6,
+     "precision": 0.286
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1619,
+      0
+     ],
+     [
+      0,
+      57
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 1.0,
+    "event_f1": 1.0
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 0.2978,
+    "correlation_s": 0.0041,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0465,
+    "analysis_total_s": 0.3486
+   },
+   "compression": {
+    "alerts": 44,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 22,
+    "compression_pct": 88.6
+   }
+  },
+  {
+   "dataset": "fresh_seed5004",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 16,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 8,
+     "incident_id": "INC-0005",
+     "jaccard": 0.889,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
+   "events": 1617,
+   "gt_incidents": 5,
+   "gt_benign": 10,
+   "detected_incidents": 7,
+   "incident_precision": 0.714,
+   "incident_recall": 1.0,
+   "f1": 0.833,
+   "false_positive_rate": 0.2,
+   "flagged_benign": [
+    "B1",
+    "B4"
+   ],
+   "false_positive_incidents": [
+    {
+     "incident_id": "INC-0007",
+     "title": "Off-hours logon from new device/IP (admin02 on DC01)",
+     "level": "Low",
+     "score": 25,
+     "events": 2,
+     "benign_overlap": [
+      "B4"
+     ],
+     "matched": null
+    },
+    {
+     "incident_id": "INC-0006",
+     "title": "Off-hours logon from new device/IP (admin01 on SQL01)",
+     "level": "Low",
+     "score": 15,
+     "events": 3,
+     "benign_overlap": [
+      "B1"
+     ],
+     "matched": null
+    }
+   ],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.978,
+   "severity_agreement": 0.8,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0001",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (gaurav.das on WS-OPS-15)",
+     "level": "Critical",
+     "score": 100,
+     "events": 16,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Password spraying -> Logon after failures (5 accounts on DC01)",
+     "level": "Critical",
+     "score": 80,
+     "events": 9,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 0.889,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Privilege change -> Group discovery (ajay.iyer on DC01)",
+     "level": "High",
+     "score": 70,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0007",
+     "title": "Off-hours logon from new device/IP (admin02 on DC01)",
+     "level": "Low",
+     "score": 25,
+     "events": 2,
+     "benign_overlap": [
+      "B4"
+     ],
+     "matched": null
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Off-hours logon from new device/IP (ananya.reddy on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    },
+    {
+     "incident_id": "INC-0006",
+     "title": "Off-hours logon from new device/IP (admin01 on SQL01)",
+     "level": "Low",
+     "score": 15,
+     "events": 3,
+     "benign_overlap": [
+      "B1"
+     ],
+     "matched": null
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 12,
+     "malicious_events": 12,
+     "precision": 1.0
+    },
+    "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 7,
+     "malicious_events": 7,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 12,
+     "flagged_events": 12,
+     "malicious_events": 3,
+     "precision": 0.25
+    },
+    "R5": {
+     "alerts": 23,
+     "flagged_events": 23,
+     "malicious_events": 6,
+     "precision": 0.261
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1577,
+      6
+     ],
+     [
+      0,
+      34
+     ]
+    ],
+    "event_precision": 0.85,
+    "event_recall": 1.0,
+    "event_f1": 0.919
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 0.2856,
+    "correlation_s": 0.0062,
+    "severity_s": 0.0001,
+    "evidence_s": 0.055,
+    "analysis_total_s": 0.3469
+   },
+   "compression": {
+    "alerts": 49,
+    "primary_alerts": 11,
+    "incidents": 7,
+    "alerts_in_incidents": 26,
+    "compression_pct": 85.7
+   }
+  },
+  {
+   "dataset": "fresh_seed5005",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 21,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying",
+     "events": 8,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
+   "events": 1491,
+   "gt_incidents": 5,
+   "gt_benign": 10,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 1.0,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Medium",
+     "Medium"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0004",
+     "title": "Sustained brute force -> Logon after failures -> Privilege change -> Suspicious execution (kavya.mehta on WS-HR-07)",
+     "level": "Critical",
+     "score": 100,
+     "events": 21,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0001",
+     "title": "Privilege change -> Group discovery (deepak.iyer on DC01)",
+     "level": "High",
+     "score": 70,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Password spraying (5 accounts on DC01)",
+     "level": "Medium",
+     "score": 35,
+     "events": 8,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Medium"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Off-hours logon from new device/IP (ananya.reddy on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 1,
+     "flagged_events": 17,
+     "malicious_events": 17,
+     "precision": 1.0
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 8,
+     "malicious_events": 8,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 11,
+     "flagged_events": 11,
+     "malicious_events": 4,
+     "precision": 0.364
+    },
+    "R5": {
+     "alerts": 21,
+     "flagged_events": 21,
+     "malicious_events": 5,
+     "precision": 0.238
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1452,
+      0
+     ],
+     [
+      0,
+      39
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 1.0,
+    "event_f1": 1.0
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 0.2687,
+    "correlation_s": 0.0048,
+    "severity_s": 0.0002,
+    "evidence_s": 0.0373,
+    "analysis_total_s": 0.311
+   },
+   "compression": {
+    "alerts": 45,
+    "primary_alerts": 10,
+    "incidents": 5,
+    "alerts_in_incidents": 20,
+    "compression_pct": 88.9
+   }
+  },
+  {
+   "dataset": "fresh_seed5006",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 15,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying",
+     "events": 9,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
+   "events": 1961,
+   "gt_incidents": 5,
+   "gt_benign": 10,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 1.0,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Medium",
+     "Medium"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0001",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (deepak.reddy on WS-OPS-05)",
+     "level": "Critical",
+     "score": 100,
+     "events": 15,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Privilege change -> Group discovery (pooja.bose on DC01)",
+     "level": "High",
+     "score": 70,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Password spraying (6 accounts on DC01)",
+     "level": "Medium",
+     "score": 35,
+     "events": 9,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Medium"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Off-hours logon from new device/IP (arjun.kumar on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 11,
+     "malicious_events": 11,
+     "precision": 1.0
+    },
+    "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 9,
+     "malicious_events": 9,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 9,
+     "flagged_events": 9,
+     "malicious_events": 3,
+     "precision": 0.333
+    },
+    "R5": {
+     "alerts": 18,
+     "flagged_events": 18,
+     "malicious_events": 5,
+     "precision": 0.278
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1927,
+      0
+     ],
+     [
+      0,
+      34
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 1.0,
+    "event_f1": 1.0
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 0.3113,
+    "correlation_s": 0.0042,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0417,
+    "analysis_total_s": 0.3572
+   },
+   "compression": {
+    "alerts": 40,
+    "primary_alerts": 10,
+    "incidents": 5,
+    "alerts_in_incidents": 19,
+    "compression_pct": 87.5
+   }
+  },
+  {
+   "dataset": "fresh_seed5007",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 19,
+     "incident_id": "INC-0002",
+     "jaccard": 0.895,
+     "coverage": 0.895
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 26,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0001",
+     "jaccard": 0.6,
+     "coverage": 0.6
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0006",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
+   "events": 1563,
+   "gt_incidents": 5,
+   "gt_benign": 10,
+   "detected_incidents": 6,
+   "incident_precision": 0.833,
+   "incident_recall": 1.0,
+   "f1": 0.909,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [
+    {
+     "incident_id": "INC-0003",
+     "title": "Suspicious execution (karthik.shetty on WS-HR-02)",
+     "level": "Low",
+     "score": 25,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": null
+    }
+   ],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 0.899,
+   "severity_agreement": 0.8,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0001",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 95,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 0.6,
+     "jaccard": 0.6,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Sustained brute force -> Logon after failures -> Privilege change (karthik.shetty on WS-HR-02)",
+     "level": "Critical",
+     "score": 90,
+     "events": 17,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 0.895,
+     "jaccard": 0.895,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Password spraying -> Logon after failures (14 accounts on DC01)",
+     "level": "Critical",
+     "score": 82,
+     "events": 26,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Privilege change -> Group discovery (aditya.nair on DC01)",
+     "level": "High",
+     "score": 70,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Suspicious execution (karthik.shetty on WS-HR-02)",
+     "level": "Low",
+     "score": 25,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": null
+    },
+    {
+     "incident_id": "INC-0006",
+     "title": "Off-hours logon from new device/IP (kavya.das on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 1,
+     "flagged_events": 15,
+     "malicious_events": 15,
+     "precision": 1.0
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 25,
+     "malicious_events": 25,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 8,
+     "flagged_events": 8,
+     "malicious_events": 3,
+     "precision": 0.375
+    },
+    "R5": {
+     "alerts": 22,
+     "flagged_events": 22,
+     "malicious_events": 6,
+     "precision": 0.273
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1508,
+      0
+     ],
+     [
+      2,
+      53
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 0.964,
+    "event_f1": 0.981
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 0.2845,
+    "correlation_s": 0.0047,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0598,
+    "analysis_total_s": 0.3491
+   },
+   "compression": {
+    "alerts": 44,
+    "primary_alerts": 11,
+    "incidents": 6,
+    "alerts_in_incidents": 20,
+    "compression_pct": 86.4
+   }
+  },
+  {
+   "dataset": "fresh_seed5008",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 24,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying",
+     "events": 11,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
+   "events": 1764,
+   "gt_incidents": 5,
+   "gt_benign": 10,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 1.0,
+   "severity_agreement": 0.8,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "Critical"
+    ],
+    [
+     "Medium",
+     "Medium"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0002",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (rahul.sharma on WS-ENG-13)",
+     "level": "Critical",
+     "score": 100,
+     "events": 24,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Privilege change -> Group discovery (meera.kumar on DC01)",
+     "level": "Critical",
+     "score": 85,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0001",
+     "title": "Password spraying (7 accounts on DC01)",
+     "level": "Medium",
+     "score": 50,
+     "events": 11,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Medium"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Off-hours logon from new device/IP (sneha.pillai on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 20,
+     "malicious_events": 20,
+     "precision": 1.0
+    },
+    "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 11,
+     "malicious_events": 11,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 17,
+     "flagged_events": 17,
+     "malicious_events": 5,
+     "precision": 0.294
+    },
+    "R5": {
+     "alerts": 16,
+     "flagged_events": 16,
+     "malicious_events": 5,
+     "precision": 0.312
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1719,
+      0
+     ],
+     [
+      0,
+      45
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 1.0,
+    "event_f1": 1.0
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 0.2934,
+    "correlation_s": 0.0042,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0457,
+    "analysis_total_s": 0.3433
+   },
+   "compression": {
+    "alerts": 46,
+    "primary_alerts": 10,
+    "incidents": 5,
+    "alerts_in_incidents": 21,
+    "compression_pct": 89.1
+   }
+  },
+  {
+   "dataset": "fresh_seed5009",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 15,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 14,
+     "incident_id": "INC-0003",
+     "jaccard": 0.824,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": null,
+     "jaccard": null,
+     "coverage": null
+    }
+   ],
+   "events": 1752,
+   "gt_incidents": 5,
+   "gt_benign": 10,
+   "detected_incidents": 4,
+   "incident_precision": 1.0,
+   "incident_recall": 0.8,
+   "f1": 0.889,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "best_coverage": 0.0
+    }
+   ],
+   "correlation_jaccard_mean": 0.956,
+   "severity_agreement": 1.0,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "High",
+     "High"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0001",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (kavya.nair on WS-HR-02)",
+     "level": "Critical",
+     "score": 100,
+     "events": 15,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0003",
+     "title": "Password spraying -> Logon after failures (10 accounts on DC01)",
+     "level": "High",
+     "score": 76,
+     "events": 17,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 0.824,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Privilege change -> Group discovery (ananya.nair on DC01)",
+     "level": "High",
+     "score": 70,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 11,
+     "malicious_events": 11,
+     "precision": 1.0
+    },
+    "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 13,
+     "malicious_events": 13,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 11,
+     "flagged_events": 11,
+     "malicious_events": 0,
+     "precision": 0.0
+    },
+    "R5": {
+     "alerts": 22,
+     "flagged_events": 22,
+     "malicious_events": 6,
+     "precision": 0.273
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      1710,
+      3
+     ],
+     [
+      2,
+      37
+     ]
+    ],
+    "event_precision": 0.925,
+    "event_recall": 0.949,
+    "event_f1": 0.937
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 0.3156,
+    "correlation_s": 0.0034,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0424,
+    "analysis_total_s": 0.3615
+   },
+   "compression": {
+    "alerts": 47,
+    "primary_alerts": 11,
+    "incidents": 4,
+    "alerts_in_incidents": 17,
+    "compression_pct": 91.5
+   }
+  },
+  {
+   "dataset": "fresh_seed5010",
+   "per_scenario": [
+    {
+     "scenario_id": "S1",
+     "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+     "events": 33,
+     "incident_id": "INC-0004",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S2",
+     "name": "Password spraying with one successful logon",
+     "events": 7,
+     "incident_id": "INC-0002",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S3",
+     "name": "Unauthorised privileged group membership change (insider)",
+     "events": 3,
+     "incident_id": "INC-0001",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S4",
+     "name": "Credential dumping followed by audit-log clearing",
+     "events": 5,
+     "incident_id": "INC-0003",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    },
+    {
+     "scenario_id": "S5",
+     "name": "Off-hours logon from an unfamiliar device",
+     "events": 2,
+     "incident_id": "INC-0005",
+     "jaccard": 1.0,
+     "coverage": 1.0
+    }
+   ],
+   "events": 2085,
+   "gt_incidents": 5,
+   "gt_benign": 10,
+   "detected_incidents": 5,
+   "incident_precision": 1.0,
+   "incident_recall": 1.0,
+   "f1": 1.0,
+   "false_positive_rate": 0.0,
+   "flagged_benign": [],
+   "false_positive_incidents": [],
+   "missed_incidents": [],
+   "correlation_jaccard_mean": 1.0,
+   "severity_agreement": 0.8,
+   "severity_pairs": [
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "Critical",
+     "Critical"
+    ],
+    [
+     "High",
+     "Critical"
+    ],
+    [
+     "High",
+     "High"
+    ],
+    [
+     "Low",
+     "Low"
+    ]
+   ],
+   "incidents": [
+    {
+     "incident_id": "INC-0003",
+     "title": "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)",
+     "level": "Critical",
+     "score": 100,
+     "events": 5,
+     "benign_overlap": [],
+     "matched": "S4",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0004",
+     "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (harish.das on WS-ENG-08)",
+     "level": "Critical",
+     "score": 100,
+     "events": 33,
+     "benign_overlap": [],
+     "matched": "S1",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Critical"
+    },
+    {
+     "incident_id": "INC-0002",
+     "title": "Password spraying -> Logon after failures (5 accounts on DC01)",
+     "level": "Critical",
+     "score": 85,
+     "events": 7,
+     "benign_overlap": [],
+     "matched": "S2",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0001",
+     "title": "Privilege change -> Group discovery (meera.kumar on DC01)",
+     "level": "High",
+     "score": 65,
+     "events": 3,
+     "benign_overlap": [],
+     "matched": "S3",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "High"
+    },
+    {
+     "incident_id": "INC-0005",
+     "title": "Off-hours logon from new device/IP (varun.kumar on FIN-SRV01)",
+     "level": "Low",
+     "score": 20,
+     "events": 2,
+     "benign_overlap": [],
+     "matched": "S5",
+     "coverage": 1.0,
+     "jaccard": 1.0,
+     "expected_level": "Low"
+    }
+   ],
+   "per_rule": {
+    "R1": {
+     "alerts": 1,
+     "flagged_events": 29,
+     "malicious_events": 29,
+     "precision": 1.0
+    },
+    "R10": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R12": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R13": {
+     "alerts": 0,
+     "flagged_events": 0,
+     "malicious_events": 0,
+     "precision": null
+    },
+    "R2": {
+     "alerts": 1,
+     "flagged_events": 6,
+     "malicious_events": 6,
+     "precision": 1.0
+    },
+    "R3": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R4": {
+     "alerts": 12,
+     "flagged_events": 12,
+     "malicious_events": 4,
+     "precision": 0.333
+    },
+    "R5": {
+     "alerts": 16,
+     "flagged_events": 16,
+     "malicious_events": 6,
+     "precision": 0.375
+    },
+    "R6": {
+     "alerts": 2,
+     "flagged_events": 2,
+     "malicious_events": 2,
+     "precision": 1.0
+    },
+    "R7": {
+     "alerts": 4,
+     "flagged_events": 4,
+     "malicious_events": 4,
+     "precision": 1.0
+    },
+    "R8": {
+     "alerts": 1,
+     "flagged_events": 1,
+     "malicious_events": 1,
+     "precision": 1.0
+    }
+   },
+   "event_confusion": {
+    "labels": [
+     "benign",
+     "malicious"
+    ],
+    "matrix": [
+     [
+      2035,
+      0
+     ],
+     [
+      0,
+      50
+     ]
+    ],
+    "event_precision": 1.0,
+    "event_recall": 1.0,
+    "event_f1": 1.0
+   },
+   "input_files": [
+    "auth_logs.csv",
+    "endpoint_logs.json"
+   ],
+   "timings_s": {
+    "detection_s": 0.2968,
+    "correlation_s": 0.0039,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0421,
+    "analysis_total_s": 0.3428
+   },
+   "compression": {
+    "alerts": 42,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 22,
+    "compression_pct": 88.1
+   }
+  }
+ ],
+ "fresh_aggregate": {
+  "datasets": [
+   "fresh_seed5001",
+   "fresh_seed5002",
+   "fresh_seed5003",
+   "fresh_seed5004",
+   "fresh_seed5005",
+   "fresh_seed5006",
+   "fresh_seed5007",
+   "fresh_seed5008",
+   "fresh_seed5009",
+   "fresh_seed5010"
+  ],
+  "detected_incidents": 52,
+  "matched_detected": 49,
+  "gt_incidents": 50,
+  "gt_detected": 49,
+  "benign_lookalikes": 100,
+  "benign_flagged": 3,
+  "incident_precision": 0.942,
+  "incident_recall": 0.98,
+  "f1": 0.961,
+  "false_positive_rate": 0.03,
+  "correlation_jaccard_mean": 0.971,
+  "severity_agreement": 0.898,
+  "severity_pairs": [
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Medium",
+    "Medium"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Medium",
+    "Medium"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "Critical"
+   ],
+   [
+    "Medium",
+    "Medium"
+   ],
+   [
+    "Low",
+    "Low"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "Critical",
+    "Critical"
+   ],
+   [
+    "High",
+    "Critical"
+   ],
+   [
+    "High",
+    "High"
+   ],
+   [
+    "Low",
+    "Low"
+   ]
+  ]
+ },
+ "comparison": {
+  "datasets": [
+   "test_seed101",
+   "test_seed202",
+   "test_seed303",
+   "fresh_seed5001",
+   "fresh_seed5002",
+   "fresh_seed5003",
+   "fresh_seed5004",
+   "fresh_seed5005",
+   "fresh_seed5006",
+   "fresh_seed5007",
+   "fresh_seed5008",
+   "fresh_seed5009",
+   "fresh_seed5010"
+  ],
+  "full": {
+   "description": "Complete SENTINEL",
+   "items_to_review": 67,
+   "strict": {
+    "items": 67,
+    "true_positive_items": 64,
+    "false_positive_items": 3,
+    "attacks": 65,
+    "attacks_detected": 64,
+    "precision": 0.955,
+    "recall": 0.985,
+    "f1": 0.97
+   },
+   "lenient": {
+    "items": 67,
+    "true_positive_items": 65,
+    "false_positive_items": 2,
+    "attacks": 65,
+    "attacks_detected": 64,
+    "precision": 0.97,
+    "recall": 0.985,
+    "f1": 0.977
+   },
+   "false_positive_rate": 0.025,
+   "correlation_jaccard_mean": 0.978,
+   "severity_agreement": 0.922,
+   "alerts": 571
+  },
+  "no_baselines": {
+   "description": "R4/R5/R9 off; R12/R13 no known-source check; no R4+R5 composite",
+   "items_to_review": 63,
+   "strict": {
+    "items": 63,
+    "true_positive_items": 51,
+    "false_positive_items": 12,
+    "attacks": 65,
+    "attacks_detected": 51,
+    "precision": 0.81,
+    "recall": 0.785,
+    "f1": 0.797
+   },
+   "lenient": {
+    "items": 63,
+    "true_positive_items": 53,
+    "false_positive_items": 10,
+    "attacks": 65,
+    "attacks_detected": 52,
+    "precision": 0.841,
+    "recall": 0.8,
+    "f1": 0.82
+   },
+   "false_positive_rate": 0.083,
+   "correlation_jaccard_mean": 0.854,
+   "severity_agreement": 0.98,
+   "alerts": 182
+  },
+  "no_context": {
+   "description": "context-only alerts may start incidents; benign-context discount off",
+   "items_to_review": 316,
+   "strict": {
+    "items": 316,
+    "true_positive_items": 65,
+    "false_positive_items": 251,
+    "attacks": 65,
+    "attacks_detected": 65,
+    "precision": 0.206,
+    "recall": 1.0,
+    "f1": 0.341
+   },
+   "lenient": {
+    "items": 316,
+    "true_positive_items": 67,
+    "false_positive_items": 249,
+    "attacks": 65,
+    "attacks_detected": 65,
+    "precision": 0.212,
+    "recall": 1.0,
+    "f1": 0.35
+   },
+   "false_positive_rate": 0.496,
+   "correlation_jaccard_mean": 0.981,
+   "severity_agreement": 0.923,
+   "alerts": 571
+  },
+  "no_allowlists": {
+   "description": "no authorised admins, service accounts or change windows",
+   "items_to_review": 79,
+   "strict": {
+    "items": 79,
+    "true_positive_items": 64,
+    "false_positive_items": 15,
+    "attacks": 65,
+    "attacks_detected": 64,
+    "precision": 0.81,
+    "recall": 0.985,
+    "f1": 0.889
+   },
+   "lenient": {
+    "items": 79,
+    "true_positive_items": 65,
+    "false_positive_items": 14,
+    "attacks": 65,
+    "attacks_detected": 64,
+    "precision": 0.823,
+    "recall": 0.985,
+    "f1": 0.896
+   },
+   "false_positive_rate": 0.124,
+   "correlation_jaccard_mean": 0.978,
+   "severity_agreement": 0.922,
+   "alerts": 584
+  },
+  "naive": {
+   "description": "fixed thresholds, fixed business hours, no baselines/allowlists/context, no correlation (each alert reviewed separately)",
+   "items_to_review": 1651,
+   "strict": {
+    "items": 1651,
+    "true_positive_items": 50,
+    "false_positive_items": 1601,
+    "attacks": 65,
+    "attacks_detected": 37,
+    "precision": 0.03,
+    "recall": 0.569,
+    "f1": 0.058
+   },
+   "lenient": {
+    "items": 1651,
+    "true_positive_items": 179,
+    "false_positive_items": 1472,
+    "attacks": 65,
+    "attacks_detected": 65,
+    "precision": 0.108,
+    "recall": 1.0,
+    "f1": 0.196
+   },
+   "false_positive_rate": 0.628,
+   "correlation_jaccard_mean": null,
+   "severity_agreement": null,
+   "alerts": 1651
+  }
+ },
+ "compression": {
+  "datasets": [
+   "test_seed101",
+   "test_seed202",
+   "test_seed303",
+   "fresh_seed5001",
+   "fresh_seed5002",
+   "fresh_seed5003",
+   "fresh_seed5004",
+   "fresh_seed5005",
+   "fresh_seed5006",
+   "fresh_seed5007",
+   "fresh_seed5008",
+   "fresh_seed5009",
+   "fresh_seed5010"
+  ],
+  "per_dataset": [
+   {
+    "alerts": 39,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 22,
+    "compression_pct": 87.2
+   },
+   {
+    "alerts": 34,
+    "primary_alerts": 10,
+    "incidents": 5,
+    "alerts_in_incidents": 20,
+    "compression_pct": 85.3
+   },
+   {
+    "alerts": 43,
+    "primary_alerts": 10,
+    "incidents": 5,
+    "alerts_in_incidents": 19,
+    "compression_pct": 88.4
+   },
+   {
+    "alerts": 49,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 22,
+    "compression_pct": 89.8
+   },
+   {
+    "alerts": 49,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 21,
+    "compression_pct": 89.8
+   },
+   {
+    "alerts": 44,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 22,
+    "compression_pct": 88.6
+   },
+   {
+    "alerts": 49,
+    "primary_alerts": 11,
+    "incidents": 7,
+    "alerts_in_incidents": 26,
+    "compression_pct": 85.7
+   },
+   {
+    "alerts": 45,
+    "primary_alerts": 10,
+    "incidents": 5,
+    "alerts_in_incidents": 20,
+    "compression_pct": 88.9
+   },
+   {
+    "alerts": 40,
+    "primary_alerts": 10,
+    "incidents": 5,
+    "alerts_in_incidents": 19,
+    "compression_pct": 87.5
+   },
+   {
+    "alerts": 44,
+    "primary_alerts": 11,
+    "incidents": 6,
+    "alerts_in_incidents": 20,
+    "compression_pct": 86.4
+   },
+   {
+    "alerts": 46,
+    "primary_alerts": 10,
+    "incidents": 5,
+    "alerts_in_incidents": 21,
+    "compression_pct": 89.1
+   },
+   {
+    "alerts": 47,
+    "primary_alerts": 11,
+    "incidents": 4,
+    "alerts_in_incidents": 17,
+    "compression_pct": 91.5
+   },
+   {
+    "alerts": 42,
+    "primary_alerts": 11,
+    "incidents": 5,
+    "alerts_in_incidents": 22,
+    "compression_pct": 88.1
+   }
+  ],
+  "alerts": 571,
+  "incidents": 67,
+  "compression_pct": 88.3,
+  "note": "workload reduction (alerts an analyst would otherwise triage one by one), not accuracy"
+ },
+ "per_scenario_jaccard": {
+  "test": {
+   "S1": {
+    "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+    "runs": [
+     {
+      "dataset": "test_seed101",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "test_seed202",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "test_seed303",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     }
+    ],
+    "matched": 3,
+    "missed": 0,
+    "mean_jaccard": 1.0,
+    "min_jaccard": 1.0
+   },
+   "S2": {
+    "name": "Password spraying",
+    "runs": [
+     {
+      "dataset": "test_seed101",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "test_seed202",
+      "name": "Password spraying",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "test_seed303",
+      "name": "Password spraying",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     }
+    ],
+    "matched": 3,
+    "missed": 0,
+    "mean_jaccard": 1.0,
+    "min_jaccard": 1.0
+   },
+   "S3": {
+    "name": "Unauthorised privileged group membership change (insider)",
+    "runs": [
+     {
+      "dataset": "test_seed101",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "test_seed202",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "test_seed303",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     }
+    ],
+    "matched": 3,
+    "missed": 0,
+    "mean_jaccard": 1.0,
+    "min_jaccard": 1.0
+   },
+   "S4": {
+    "name": "Credential dumping followed by audit-log clearing",
+    "runs": [
+     {
+      "dataset": "test_seed101",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "test_seed202",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "test_seed303",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     }
+    ],
+    "matched": 3,
+    "missed": 0,
+    "mean_jaccard": 1.0,
+    "min_jaccard": 1.0
+   },
+   "S5": {
+    "name": "Off-hours logon from an unfamiliar device",
+    "runs": [
+     {
+      "dataset": "test_seed101",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "test_seed202",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "test_seed303",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     }
+    ],
+    "matched": 3,
+    "missed": 0,
+    "mean_jaccard": 1.0,
+    "min_jaccard": 1.0
+   }
+  },
+  "fresh": {
+   "S1": {
+    "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+    "runs": [
+     {
+      "dataset": "fresh_seed5001",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "fresh_seed5002",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "fresh_seed5003",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "fresh_seed5004",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "fresh_seed5005",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "fresh_seed5006",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "fresh_seed5007",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 0.895,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "fresh_seed5008",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "fresh_seed5009",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "fresh_seed5010",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     }
+    ],
+    "matched": 10,
+    "missed": 0,
+    "mean_jaccard": 0.989,
+    "min_jaccard": 0.895
+   },
+   "S2": {
+    "name": "Password spraying",
+    "runs": [
+     {
+      "dataset": "fresh_seed5001",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 0.9,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "fresh_seed5002",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "fresh_seed5003",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 0.875,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "fresh_seed5004",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 0.889,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "fresh_seed5005",
+      "name": "Password spraying",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "fresh_seed5006",
+      "name": "Password spraying",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "fresh_seed5007",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "fresh_seed5008",
+      "name": "Password spraying",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "fresh_seed5009",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 0.824,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "fresh_seed5010",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     }
+    ],
+    "matched": 10,
+    "missed": 0,
+    "mean_jaccard": 0.949,
+    "min_jaccard": 0.824
+   },
+   "S3": {
+    "name": "Unauthorised privileged group membership change (insider)",
+    "runs": [
+     {
+      "dataset": "fresh_seed5001",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "fresh_seed5002",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "fresh_seed5003",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "fresh_seed5004",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "fresh_seed5005",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "fresh_seed5006",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "fresh_seed5007",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "fresh_seed5008",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "fresh_seed5009",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "fresh_seed5010",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     }
+    ],
+    "matched": 10,
+    "missed": 0,
+    "mean_jaccard": 1.0,
+    "min_jaccard": 1.0
+   },
+   "S4": {
+    "name": "Credential dumping followed by audit-log clearing",
+    "runs": [
+     {
+      "dataset": "fresh_seed5001",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "fresh_seed5002",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "fresh_seed5003",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 0.6,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "fresh_seed5004",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "fresh_seed5005",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "fresh_seed5006",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "fresh_seed5007",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 0.6,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "fresh_seed5008",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "fresh_seed5009",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "fresh_seed5010",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     }
+    ],
+    "matched": 10,
+    "missed": 0,
+    "mean_jaccard": 0.92,
+    "min_jaccard": 0.6
+   },
+   "S5": {
+    "name": "Off-hours logon from an unfamiliar device",
+    "runs": [
+     {
+      "dataset": "fresh_seed5001",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "fresh_seed5002",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "fresh_seed5003",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "fresh_seed5004",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "fresh_seed5005",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "fresh_seed5006",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "fresh_seed5007",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0006"
+     },
+     {
+      "dataset": "fresh_seed5008",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "fresh_seed5009",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": null,
+      "incident_id": null
+     },
+     {
+      "dataset": "fresh_seed5010",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     }
+    ],
+    "matched": 9,
+    "missed": 1,
+    "mean_jaccard": 1.0,
+    "min_jaccard": 1.0
+   }
+  },
+  "stress": {
+   "S1": {
+    "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+    "runs": [
+     {
+      "dataset": "stress_seed1001",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "stress_seed1002",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "stress_seed1003",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "stress_seed1004",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "stress_seed1005",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "stress_seed1006",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "stress_seed1007",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": null,
+      "incident_id": null
+     },
+     {
+      "dataset": "stress_seed1008",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "stress_seed1009",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0006"
+     },
+     {
+      "dataset": "stress_seed1010",
+      "name": "Brute force -> compromise -> privilege change -> suspicious PowerShell",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     }
+    ],
+    "matched": 9,
+    "missed": 1,
+    "mean_jaccard": 1.0,
+    "min_jaccard": 1.0
+   },
+   "S2": {
+    "name": "Password spraying",
+    "runs": [
+     {
+      "dataset": "stress_seed1001",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "stress_seed1002",
+      "name": "Password spraying",
+      "jaccard": 0.75,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "stress_seed1003",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "stress_seed1004",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "stress_seed1005",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 0.889,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "stress_seed1006",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "stress_seed1007",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "stress_seed1008",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 0.875,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "stress_seed1009",
+      "name": "Password spraying with one successful logon",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "stress_seed1010",
+      "name": "Password spraying",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     }
+    ],
+    "matched": 10,
+    "missed": 0,
+    "mean_jaccard": 0.951,
+    "min_jaccard": 0.75
+   },
+   "S3": {
+    "name": "Unauthorised privileged group membership change (insider)",
+    "runs": [
+     {
+      "dataset": "stress_seed1001",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "stress_seed1002",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 0.667,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "stress_seed1003",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "stress_seed1004",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "stress_seed1005",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "stress_seed1006",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "stress_seed1007",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "stress_seed1008",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "stress_seed1009",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "stress_seed1010",
+      "name": "Unauthorised privileged group membership change (insider)",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     }
+    ],
+    "matched": 10,
+    "missed": 0,
+    "mean_jaccard": 0.967,
+    "min_jaccard": 0.667
+   },
+   "S4": {
+    "name": "Credential dumping followed by audit-log clearing",
+    "runs": [
+     {
+      "dataset": "stress_seed1001",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "stress_seed1002",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "stress_seed1003",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "stress_seed1004",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "stress_seed1005",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "stress_seed1006",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "stress_seed1007",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "stress_seed1008",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "stress_seed1009",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 0.6,
+      "incident_id": "INC-0001"
+     },
+     {
+      "dataset": "stress_seed1010",
+      "name": "Credential dumping followed by audit-log clearing",
+      "jaccard": 1.0,
+      "incident_id": "INC-0001"
+     }
+    ],
+    "matched": 10,
+    "missed": 0,
+    "mean_jaccard": 0.96,
+    "min_jaccard": 0.6
+   },
+   "S5": {
+    "name": "Off-hours logon from an unfamiliar device",
+    "runs": [
+     {
+      "dataset": "stress_seed1001",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "stress_seed1002",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0002"
+     },
+     {
+      "dataset": "stress_seed1003",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "stress_seed1004",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "stress_seed1005",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "stress_seed1006",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "stress_seed1007",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0003"
+     },
+     {
+      "dataset": "stress_seed1008",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0004"
+     },
+     {
+      "dataset": "stress_seed1009",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     },
+     {
+      "dataset": "stress_seed1010",
+      "name": "Off-hours logon from an unfamiliar device",
+      "jaccard": 1.0,
+      "incident_id": "INC-0005"
+     }
+    ],
+    "matched": 10,
+    "missed": 0,
+    "mean_jaccard": 1.0,
+    "min_jaccard": 1.0
+   }
+  }
  }
 }

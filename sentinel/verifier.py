@@ -213,6 +213,38 @@ def verify_claim(claim: dict, pack: dict, known_entities: set, require_grounding
     for e in claim.get("entities") or []:
         if str(e).lower() not in ents:
             problems.append(f"typed entity '{e}' not in cited facts")
+    # typed claim fields (Evidence Contract v7): each value must be supported by the cited facts
+    typed = 0
+    for key in ("user", "host", "source_ip"):
+        v = str(claim.get(key) or "").strip()
+        if v and v.lower() not in ("none", "null", "n/a", "-"):
+            typed += 1
+            if v.lower() not in ents:
+                problems.append(f"typed {key} '{v}' not in cited facts")
+    if claim.get("count") not in (None, "", 0):
+        typed += 1
+        try:
+            if float(claim["count"]) not in nums:
+                problems.append(f"typed count {claim['count']} not found in cited facts")
+        except (TypeError, ValueError):
+            problems.append(f"typed count {claim['count']!r} is not numeric")
+    for key in ("start_time", "end_time"):
+        v = str(claim.get(key) or "").strip()
+        if v:
+            typed += 1
+            tt = extract_times(v) or ({v} if re.fullmatch(r"\d{2}:\d{2}", v) else set())
+            if not tt:
+                problems.append(f"typed {key} '{v}' is not a HH:MM time")
+            for t in tt:
+                if t not in times:
+                    problems.append(f"typed {key} {t} not found in cited facts")
+    fact_events = {x.upper() for f in valid for x in f.get("event_ids", [])}
+    for e in claim.get("event_ids") or []:
+        typed += 1
+        if str(e).upper() not in fact_events:
+            problems.append(f"typed event {e} is not an event of the cited facts")
+    if typed:
+        checks.append(f"typed fields checked: {typed}")
     checks.append(f"entities checked: {len(mentioned)}")
     # grounding
     if require_grounding and valid and text:

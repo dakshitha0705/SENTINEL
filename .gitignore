@@ -32,3 +32,7 @@ workspace/
 
 # Regenerable stress datasets (scripts/evaluate.py recreates them)
 data/samples/stress_seed*/
+data/samples/fresh_seed*/
+data/samples/dev_ext_seed7/
+data/samples/scale_*/
+.cache/

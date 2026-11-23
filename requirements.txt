@@ -10,3 +10,4 @@ altair==6.3.0
 pytest==9.2.0
 # presentation build only
 python-pptx==1.0.2
+evtx==0.15.0

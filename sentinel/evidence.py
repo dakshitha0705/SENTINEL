@@ -100,7 +100,7 @@ def build_evidence_pack(inc: dict, alerts_by_id: dict, ds, cfg: dict) -> dict:
     supporting, contradicting = [], []
     # Supporting: the scored primary detections themselves
     for a in members:
-        if a["rule"] not in CONTEXT_RULES and inc["membership"][a["alert_id"]] in ("seed", "strong"):
+        if not a["context"] and inc["membership"][a["alert_id"]] in ("seed", "strong"):
             supporting.append(alert_fact[a["alert_id"]])
         if a["rule"] in ("R4", "R5") and a["confidence"] == "high" and inc["membership"][a["alert_id"]] in ("seed", "strong"):
             supporting.append(alert_fact[a["alert_id"]])

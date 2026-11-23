@@ -10,7 +10,18 @@ detection:
     window_minutes: 15
     max_attempts_per_user: 3
   failure_then_success:   # R3
-    max_minutes_after_burst: 15
+    max_minutes_after_burst: 60   # was 15; later successes still link, with reduced weight
+    full_weight_minutes: 15       # full severity contribution up to this gap
+    min_factor: 0.4               # contribution at max_minutes_after_burst (linear in between)
+  sustained_brute_force:  # R12 (failures R1 did not already cover; source never logged on as the account)
+    windows:
+      - {min_failures: 8, window_minutes: 60}
+      - {min_failures: 20, window_minutes: 1440}
+  small_spray:            # R13 (below R2's account threshold)
+    min_distinct_users: 3
+    window_minutes: 30
+    min_failure_ratio: 0.8        # failures / (failures + successes) from the source in the window
+    max_known_fraction: 0.5       # skip if most targets already logged on from this source before
   baseline:               # R4 / R5
     min_logins: 10        # below this the baseline is "low confidence"
     min_days: 3

@@ -1,37 +1,142 @@
 {
-  "_source": "Technique IDs, names and tactics transcribed from MITRE ATT&CK Enterprise (https://attack.mitre.org). Stored offline; URLs are shown as text only and never fetched.",
-  "techniques": {
-    "T1110.001": {"name": "Brute Force: Password Guessing", "tactics": ["Credential Access"],
-                   "summary": "Adversaries guess passwords for a single account using repeated logon attempts."},
-    "T1110.003": {"name": "Brute Force: Password Spraying", "tactics": ["Credential Access"],
-                   "summary": "Adversaries try one or a few common passwords against many accounts to avoid lockouts."},
-    "T1078": {"name": "Valid Accounts", "tactics": ["Initial Access", "Persistence", "Privilege Escalation", "Defense Evasion"],
-              "summary": "Adversaries use credentials of existing accounts to gain or keep access."},
-    "T1098": {"name": "Account Manipulation", "tactics": ["Persistence", "Privilege Escalation"],
-              "summary": "Adversaries modify accounts, e.g. adding them to privileged groups, to keep or raise access."},
-    "T1059": {"name": "Command and Scripting Interpreter", "tactics": ["Execution"],
-              "summary": "Adversaries abuse command and script interpreters to execute commands."},
-    "T1059.001": {"name": "Command and Scripting Interpreter: PowerShell", "tactics": ["Execution"],
-                  "summary": "Adversaries abuse PowerShell, often with encoded or downloaded script content."},
-    "T1027": {"name": "Obfuscated Files or Information", "tactics": ["Defense Evasion"],
-              "summary": "Adversaries obfuscate content, e.g. base64-encoded PowerShell commands."},
-    "T1105": {"name": "Ingress Tool Transfer", "tactics": ["Command and Control"],
-              "summary": "Adversaries transfer tools or files from an external system into the environment."},
-    "T1003": {"name": "OS Credential Dumping", "tactics": ["Credential Access"],
-              "summary": "Adversaries dump credentials from the operating system, e.g. with Mimikatz."},
-    "T1003.001": {"name": "OS Credential Dumping: LSASS Memory", "tactics": ["Credential Access"],
-                  "summary": "Adversaries access LSASS process memory to obtain credential material."},
-    "T1204.002": {"name": "User Execution: Malicious File", "tactics": ["Execution"],
-                  "summary": "A user opens a malicious file, e.g. an Office document that spawns a shell."},
-    "T1070.001": {"name": "Indicator Removal: Clear Windows Event Logs", "tactics": ["Defense Evasion"],
-                  "summary": "Adversaries clear Windows event logs to hide activity."},
-    "T1490": {"name": "Inhibit System Recovery", "tactics": ["Impact"],
-              "summary": "Adversaries delete backups or shadow copies to prevent recovery."},
-    "T1021": {"name": "Remote Services", "tactics": ["Lateral Movement"],
-              "summary": "Adversaries use valid accounts to log on to remote services across hosts."},
-    "T1039": {"name": "Data from Network Shared Drive", "tactics": ["Collection"],
-              "summary": "Adversaries collect data from network shares."},
-    "T1052.001": {"name": "Exfiltration Over Physical Medium: Exfiltration over USB", "tactics": ["Exfiltration"],
-                  "summary": "Adversaries copy data to removable USB media."}
+ "_source": "Technique IDs, names and tactics transcribed from MITRE ATT&CK Enterprise (https://attack.mitre.org). Stored offline; URLs are shown as text only and never fetched.",
+ "techniques": {
+  "T1110.001": {
+   "name": "Brute Force: Password Guessing",
+   "tactics": [
+    "Credential Access"
+   ],
+   "summary": "Adversaries guess passwords for a single account using repeated logon attempts."
+  },
+  "T1110.003": {
+   "name": "Brute Force: Password Spraying",
+   "tactics": [
+    "Credential Access"
+   ],
+   "summary": "Adversaries try one or a few common passwords against many accounts to avoid lockouts."
+  },
+  "T1078": {
+   "name": "Valid Accounts",
+   "tactics": [
+    "Initial Access",
+    "Persistence",
+    "Privilege Escalation",
+    "Defense Evasion"
+   ],
+   "summary": "Adversaries use credentials of existing accounts to gain or keep access."
+  },
+  "T1098": {
+   "name": "Account Manipulation",
+   "tactics": [
+    "Persistence",
+    "Privilege Escalation"
+   ],
+   "summary": "Adversaries modify accounts, e.g. adding them to privileged groups, to keep or raise access."
+  },
+  "T1059": {
+   "name": "Command and Scripting Interpreter",
+   "tactics": [
+    "Execution"
+   ],
+   "summary": "Adversaries abuse command and script interpreters to execute commands."
+  },
+  "T1059.001": {
+   "name": "Command and Scripting Interpreter: PowerShell",
+   "tactics": [
+    "Execution"
+   ],
+   "summary": "Adversaries abuse PowerShell, often with encoded or downloaded script content."
+  },
+  "T1027": {
+   "name": "Obfuscated Files or Information",
+   "tactics": [
+    "Defense Evasion"
+   ],
+   "summary": "Adversaries obfuscate content, e.g. base64-encoded PowerShell commands."
+  },
+  "T1105": {
+   "name": "Ingress Tool Transfer",
+   "tactics": [
+    "Command and Control"
+   ],
+   "summary": "Adversaries transfer tools or files from an external system into the environment."
+  },
+  "T1003": {
+   "name": "OS Credential Dumping",
+   "tactics": [
+    "Credential Access"
+   ],
+   "summary": "Adversaries dump credentials from the operating system, e.g. with Mimikatz."
+  },
+  "T1003.001": {
+   "name": "OS Credential Dumping: LSASS Memory",
+   "tactics": [
+    "Credential Access"
+   ],
+   "summary": "Adversaries access LSASS process memory to obtain credential material."
+  },
+  "T1204.002": {
+   "name": "User Execution: Malicious File",
+   "tactics": [
+    "Execution"
+   ],
+   "summary": "A user opens a malicious file, e.g. an Office document that spawns a shell."
+  },
+  "T1070.001": {
+   "name": "Indicator Removal: Clear Windows Event Logs",
+   "tactics": [
+    "Defense Evasion"
+   ],
+   "summary": "Adversaries clear Windows event logs to hide activity."
+  },
+  "T1490": {
+   "name": "Inhibit System Recovery",
+   "tactics": [
+    "Impact"
+   ],
+   "summary": "Adversaries delete backups or shadow copies to prevent recovery."
+  },
+  "T1021": {
+   "name": "Remote Services",
+   "tactics": [
+    "Lateral Movement"
+   ],
+   "summary": "Adversaries use valid accounts to log on to remote services across hosts."
+  },
+  "T1039": {
+   "name": "Data from Network Shared Drive",
+   "tactics": [
+    "Collection"
+   ],
+   "summary": "Adversaries collect data from network shares."
+  },
+  "T1052.001": {
+   "name": "Exfiltration Over Physical Medium: Exfiltration over USB",
+   "tactics": [
+    "Exfiltration"
+   ],
+   "summary": "Adversaries copy data to removable USB media."
+  },
+  "T1069": {
+   "name": "Permission Groups Discovery",
+   "tactics": [
+    "Discovery"
+   ],
+   "summary": "Adversaries look up group memberships (for example who is a domain admin) to find privileged accounts to target."
+  },
+  "T1069.001": {
+   "name": "Permission Groups Discovery: Local Groups",
+   "tactics": [
+    "Discovery"
+   ],
+   "summary": "Enumeration of local groups such as Administrators, e.g. 'net localgroup administrators'."
+  },
+  "T1069.002": {
+   "name": "Permission Groups Discovery: Domain Groups",
+   "tactics": [
+    "Discovery"
+   ],
+   "summary": "Enumeration of domain groups such as Domain Admins, e.g. 'net group \"Domain Admins\" /domain'."
   }
+ }
 }

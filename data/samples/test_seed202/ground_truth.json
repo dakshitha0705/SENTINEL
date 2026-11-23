@@ -36,6 +36,8 @@
    1,
    3
   ],
+  "extended": false,
+  "geo": false,
   "description": "Held-out test seed: slower brute force (some below the R1 density threshold)."
  },
  "week_start": "2026-11-09",

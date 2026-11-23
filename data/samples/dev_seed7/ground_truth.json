@@ -36,6 +36,8 @@
    1,
    4
   ],
+  "extended": false,
+  "geo": false,
   "description": "Development seed: used for threshold tuning only."
  },
  "week_start": "2026-11-02",

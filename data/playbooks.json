@@ -1,51 +1,172 @@
 {
-  "_note": "Hand-written offline playbooks. SENTINEL only recommends; every action is analyst-approved and nothing is executed automatically.",
-  "playbooks": [
-    {"id": "PB-01", "title": "Investigate suspected credential compromise", "applies_to": ["R3", "ANOM", "R5"],
-     "steps": ["Contact the account owner out-of-band and confirm whether they initiated the session",
-               "Review all logons for the account from the same source IP or device in the last 7 days",
-               "Check for MFA prompts, VPN sessions and mailbox rule changes for the account"]},
-    {"id": "PB-02", "title": "Reset credentials and revoke active sessions", "applies_to": ["R3", "R7", "ANOM"],
-     "steps": ["Reset the account password (and krbtgt-dependent tickets if a privileged account is affected)",
-               "Revoke active sessions and refresh tokens",
-               "Require re-enrolment of MFA if the factor may be compromised"]},
-    {"id": "PB-03", "title": "Review account lockout and failed-logon source", "applies_to": ["R1"],
-     "steps": ["Identify the source host/IP of the failed logons and its owner",
-               "Check whether the account was locked out and whether a success followed",
-               "Look for the same source targeting other accounts"]},
-    {"id": "PB-04", "title": "Investigate password spraying across accounts", "applies_to": ["R2"],
-     "steps": ["List every account targeted by the source and check each for a subsequent successful logon",
-               "Force password resets for targeted accounts that logged on successfully afterwards",
-               "Review password policy and lockout thresholds"]},
-    {"id": "PB-05", "title": "Block or monitor the source address", "applies_to": ["R1", "R2", "R3"],
-     "steps": ["Confirm the source address is not a legitimate shared gateway or NAT address",
-               "Request a firewall/VPN block or heightened monitoring for the address (analyst approval required)"]},
-    {"id": "PB-06", "title": "Validate privileged group change against approval records", "applies_to": ["R6"],
-     "steps": ["Look up a change ticket or approval for the membership change",
-               "Confirm the actor's role and whether they are permitted to change this group",
-               "Check what the added account did after the change"]},
-    {"id": "PB-07", "title": "Revoke unauthorised privileged membership", "applies_to": ["R6"],
-     "steps": ["If no approval exists, remove the account from the privileged group (analyst approval required)",
-               "Review other privileged groups for unexpected members",
-               "Audit actions performed with the elevated rights"]},
-    {"id": "PB-08", "title": "Investigate suspicious process execution", "applies_to": ["R7"],
-     "steps": ["Decode and review the full command line and parent process chain",
-               "Check the host for files written or network connections made by the process",
-               "Search other hosts for the same command line or hash"]},
-    {"id": "PB-09", "title": "Preserve endpoint evidence", "applies_to": ["R7", "R8"],
-     "steps": ["Collect volatile data (running processes, network connections, memory image) before reboot",
-               "Export available event logs and EDR telemetry from the host",
-               "Record hashes of collected artefacts for chain of custody"]},
-    {"id": "PB-10", "title": "Investigate audit-log clearing", "applies_to": ["R8"],
-     "steps": ["Recover the cleared events from a log forwarder or SIEM copy",
-               "Identify the account and process that cleared the log",
-               "Treat activity on the host before the clearing as potentially hidden and widen the time range"]},
-    {"id": "PB-11", "title": "Isolate the affected host", "applies_to": ["R7", "R8"],
-     "steps": ["Request network isolation of the host through EDR or switch port (analyst approval required)",
-               "Keep the host powered on to preserve memory evidence"]},
-    {"id": "PB-12", "title": "Escalate to the incident response lead", "applies_to": ["CRITICAL"],
-     "steps": ["Open an incident ticket with this report attached",
-               "Notify the incident response lead and the system owner",
-               "Agree containment actions before making changes"]}
-  ]
+ "_note": "Hand-written offline playbooks. SENTINEL only recommends; every action is analyst-approved and nothing is executed automatically.",
+ "playbooks": [
+  {
+   "id": "PB-01",
+   "title": "Investigate suspected credential compromise",
+   "applies_to": [
+    "R3",
+    "ANOM",
+    "R5"
+   ],
+   "steps": [
+    "Contact the account owner out-of-band and confirm whether they initiated the session",
+    "Review all logons for the account from the same source IP or device in the last 7 days",
+    "Check for MFA prompts, VPN sessions and mailbox rule changes for the account"
+   ]
+  },
+  {
+   "id": "PB-02",
+   "title": "Reset credentials and revoke active sessions",
+   "applies_to": [
+    "R3",
+    "R7",
+    "ANOM"
+   ],
+   "steps": [
+    "Reset the account password (and krbtgt-dependent tickets if a privileged account is affected)",
+    "Revoke active sessions and refresh tokens",
+    "Require re-enrolment of MFA if the factor may be compromised"
+   ]
+  },
+  {
+   "id": "PB-03",
+   "title": "Review account lockout and failed-logon source",
+   "applies_to": [
+    "R1",
+    "R12"
+   ],
+   "steps": [
+    "Identify the source host/IP of the failed logons and its owner",
+    "Check whether the account was locked out and whether a success followed",
+    "Look for the same source targeting other accounts"
+   ]
+  },
+  {
+   "id": "PB-04",
+   "title": "Investigate password spraying across accounts",
+   "applies_to": [
+    "R13",
+    "R2"
+   ],
+   "steps": [
+    "List every account targeted by the source and check each for a subsequent successful logon",
+    "Force password resets for targeted accounts that logged on successfully afterwards",
+    "Review password policy and lockout thresholds"
+   ]
+  },
+  {
+   "id": "PB-05",
+   "title": "Block or monitor the source address",
+   "applies_to": [
+    "R1",
+    "R12",
+    "R13",
+    "R2",
+    "R3"
+   ],
+   "steps": [
+    "Confirm the source address is not a legitimate shared gateway or NAT address",
+    "Request a firewall/VPN block or heightened monitoring for the address (analyst approval required)"
+   ]
+  },
+  {
+   "id": "PB-06",
+   "title": "Validate privileged group change against approval records",
+   "applies_to": [
+    "R6"
+   ],
+   "steps": [
+    "Look up a change ticket or approval for the membership change",
+    "Confirm the actor's role and whether they are permitted to change this group",
+    "Check what the added account did after the change"
+   ]
+  },
+  {
+   "id": "PB-07",
+   "title": "Revoke unauthorised privileged membership",
+   "applies_to": [
+    "R6"
+   ],
+   "steps": [
+    "If no approval exists, remove the account from the privileged group (analyst approval required)",
+    "Review other privileged groups for unexpected members",
+    "Audit actions performed with the elevated rights"
+   ]
+  },
+  {
+   "id": "PB-08",
+   "title": "Investigate suspicious process execution",
+   "applies_to": [
+    "R7"
+   ],
+   "steps": [
+    "Decode and review the full command line and parent process chain",
+    "Check the host for files written or network connections made by the process",
+    "Search other hosts for the same command line or hash"
+   ]
+  },
+  {
+   "id": "PB-09",
+   "title": "Preserve endpoint evidence",
+   "applies_to": [
+    "R7",
+    "R8"
+   ],
+   "steps": [
+    "Collect volatile data (running processes, network connections, memory image) before reboot",
+    "Export available event logs and EDR telemetry from the host",
+    "Record hashes of collected artefacts for chain of custody"
+   ]
+  },
+  {
+   "id": "PB-10",
+   "title": "Investigate audit-log clearing",
+   "applies_to": [
+    "R8"
+   ],
+   "steps": [
+    "Recover the cleared events from a log forwarder or SIEM copy",
+    "Identify the account and process that cleared the log",
+    "Treat activity on the host before the clearing as potentially hidden and widen the time range"
+   ]
+  },
+  {
+   "id": "PB-11",
+   "title": "Isolate the affected host",
+   "applies_to": [
+    "R7",
+    "R8"
+   ],
+   "steps": [
+    "Request network isolation of the host through EDR or switch port (analyst approval required)",
+    "Keep the host powered on to preserve memory evidence"
+   ]
+  },
+  {
+   "id": "PB-12",
+   "title": "Escalate to the incident response lead",
+   "applies_to": [
+    "CRITICAL"
+   ],
+   "steps": [
+    "Open an incident ticket with this report attached",
+    "Notify the incident response lead and the system owner",
+    "Agree containment actions before making changes"
+   ]
+  },
+  {
+   "id": "PB-13",
+   "title": "Review privileged group discovery",
+   "applies_to": [
+    "R14"
+   ],
+   "steps": [
+    "Identify who ran the enumeration command and from which session.",
+    "Check whether the account normally administers groups (helpdesk/IT) or whether this is new behaviour.",
+    "Look for follow-on activity by the same account: group membership changes, logons to domain controllers, credential access.",
+    "If unexplained, monitor the account closely and review its recent privilege changes."
+   ]
+  }
+ ]
 }
