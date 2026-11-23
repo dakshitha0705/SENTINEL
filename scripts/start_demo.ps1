@@ -39,18 +39,25 @@ else {
     $p = Start-Process -FilePath $Py -ArgumentList "-m", "demo_target.app" -WorkingDirectory $Root -WindowStyle Hidden -PassThru `
         -RedirectStandardOutput (Join-Path $LogDir "nexus.out.log") -RedirectStandardError (Join-Path $LogDir "nexus.err.log")
     $pids["nexus"] = $p.Id
+    $pids | ConvertTo-Json | Out-File -Encoding utf8 $PidFile
     Write-Host "    started (PID $($p.Id))"
 }
 
 Write-Host "    live detection worker (python -m sentinel.live)"
 $hb = Join-Path $DemoDir "live_worker.json"
 $fresh = $false
-if (Test-Path $hb) { try { $fresh = ((Get-Date) - (Get-Item $hb).LastWriteTime).TotalSeconds -lt 5 } catch {} }
+if (Test-Path $hb) {
+    try {
+        $h = Get-Content $hb -Raw | ConvertFrom-Json
+        $fresh = (((Get-Date) - (Get-Item $hb).LastWriteTime).TotalSeconds -lt 5) -and ($null -ne (Get-Process -Id $h.pid -ErrorAction SilentlyContinue))
+    } catch {}
+}
 if ((Running "live_worker") -or $fresh) { Write-Host "    already running" }
 else {
     $p = Start-Process -FilePath $Py -ArgumentList "-m", "sentinel.live" -WorkingDirectory $Root -WindowStyle Hidden -PassThru `
         -RedirectStandardOutput (Join-Path $LogDir "live.out.log") -RedirectStandardError (Join-Path $LogDir "live.err.log")
     $pids["live_worker"] = $p.Id
+    $pids | ConvertTo-Json | Out-File -Encoding utf8 $PidFile
     Write-Host "    started (PID $($p.Id))"
 }
 

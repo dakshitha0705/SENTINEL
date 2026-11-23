@@ -89,3 +89,46 @@ Times are IST. Build window: 22 Nov 16:30 to 24 Nov 06:00.
 ## Known limitations
 
 See README → Limitations and `docs/evaluation.md`.
+
+## Frontend handover (23 Nov 18:30 IST): the participant now owns all frontend files
+
+From here on Claude does not edit `app.py`, `sentinel/ui/**`, `.streamlit/` or the dashboard's CSS/HTML/JS. The notes below describe uncommitted frontend edits Claude left in the working tree. They are deliberately **not** committed; keep, change or discard them as you see fit.
+
+### 1. Storyline graph shows a blank panel (Command Center → "Attack storyline" view)
+
+**Symptom.** In the headless-Edge screenshots (`scripts/live_demo_check.py`), the vis-network panel in the Command Center's storyline view stayed empty. The same component renders fine on the Attack Graph page.
+
+**What was found.**
+- The graph IS built inside the iframe: `window.__sentinelGraph.nodes` = 11, there is a `<canvas>` with width 677, and the scale is 1.
+- Frame events: one attach and no repeated detach once auto-refresh was paused. Playwright's `page.frames` list went stale ("Frame was detached"); reading the frame through `page.locator("iframe").first.element_handle().content_frame()` works.
+- **Rendering depends on the headless launch flags.** With `--use-angle=swiftshader --enable-unsafe-swiftshader`, the vis-network 2D canvas stays blank, but the WebGL globe renders. Without the flags, the graph renders (`.cache/dbg5.png` shows it working), but the globe is blank because headless Edge then has no WebGL.
+
+**Likely cause.** A headless-rendering artefact of the screenshot tooling, not an application bug. A normal GPU-backed browser renders both. This has not yet been verified by eye in a normal browser; please check.
+
+**What was tried.**
+1. Waiting longer: 5 s, then 14 s. Neither helped.
+2. Pausing live auto-refresh while the storyline view is open. This is uncommitted in `sentinel/ui/pages/command_center.py`:
+   - `render()` chooses between `_live()` (a fragment with `run_every=2`) and `_live_paused()` (no auto-refresh, plus a "Refresh now" button);
+   - switching the view calls `st.rerun(scope="app")`.
+
+   It did not fix the headless screenshot on its own, and it may be unnecessary. Revert it if you prefer.
+3. `scripts/live_demo_check.py` (not frontend) now takes the storyline screenshot in a second browser launched without the swiftshader flags.
+
+### 2. Log Intelligence rework (uncommitted in `sentinel/ui/pages/log_intelligence.py`)
+
+These changes are done and pass the headless page tests (`tests/test_app.py`, 14/14), but have not been visually reviewed:
+
+- **Per-file summary card:** format, records, mapped fields, records that would be rejected, SHA-256, recognised actions, and a chip ("mapping confident" or "review needed (N)").
+- **Mapping:** the 18-field grid and the preview sit in an expander that is collapsed unless a mapping problem is detected (`_problems()` helper).
+- **Live mode:** `_live_source()` shows the NEXUS stream source (session file, events ingested, duplicates skipped, last poll, origins) instead of the upload workspace.
+- **Refactor:** the validation, explorer and export sections were split into `_analysis_panels(a)`, so live mode can reuse them.
+
+### 3. AI Investigation Lab split chat (uncommitted in `sentinel/ui/pages/ai_lab.py`)
+
+The "Ask SENTINEL" tab is a two-column layout: the conversation on the left; on the right, the evidence referenced by the last answer and the contradicting evidence. It works in the live check (`docs/screenshots/v3/s05_ai_chat_live.png`, not committed).
+
+### UI requests from the backend side
+
+- **Mode strip text overflow:** the Command Center live mode strip wraps on 1680 px; consider shortening it, for example by dropping the session ID.
+- **Live notifications:** the engine produces notifications with `kind` "new" or "escalated" (snapshot key `notifications`); the UI currently toasts them.
+- **Live engine choice:** `state.live_engine()` uses the worker process (`python -m sentinel.live`, started by `scripts/start_demo.ps1`) when its heartbeat is fresh, and otherwise an in-process engine.

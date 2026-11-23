@@ -75,3 +75,28 @@ def test_incident_navigation_preserves_selection(app):
         app.run()
         assert not app.exception
         assert app.session_state["selected"] == iid
+
+
+def test_live_mode_pages_render(tmp_path, monkeypatch):
+    """Every page renders while monitoring a (temporary) NEXUS demo stream."""
+    import sentinel.live as live
+    from demo_target.auth import IdentityStore
+    from demo_target.events import EventStream
+    from demo_target.simulator import backfill_history
+    monkeypatch.setattr(live, "DEMO_ROOT", tmp_path)
+    stream = EventStream(tmp_path)
+    backfill_history(stream, IdentityStore(tmp_path / "creds.json"))
+    for k in range(10):
+        stream.emit("4625", "auth.login_failure", user="arjun.rao", ip="198.51.100.23", outcome="failure",
+                    status="0xC000006A", ip_simulated=True, scenario_id="B")
+    at = AppTest.from_file(str(ROOT / "app.py"), default_timeout=180)
+    at.query_params["live"] = "1"
+    at.run()
+    assert not at.exception, [e.value for e in at.exception]
+    assert at.session_state["dataset"].startswith("LIVE")
+    a = at.session_state["analysis"]
+    assert a is not None and any("R1" in i["rules"] for i in a.incidents)
+    for page in PAGES:
+        at.session_state["nav"] = page
+        at.run()
+        assert not at.exception, (page, [e.value for e in at.exception])
