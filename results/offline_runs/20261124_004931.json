@@ -1,0 +1,872 @@
+{
+ "recorded_at": "2026-11-24 00:49:30",
+ "internet_reachable": true,
+ "internet_reachable_after": true,
+ "test_type": "online rehearsal",
+ "total_seconds": 62.36,
+ "host": "local machine",
+ "system": {
+  "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+  "logical_cpus": 20,
+  "cpu_percent": 17.4,
+  "ram_total_gb": 23.7,
+  "ram_used_percent": 87.5,
+  "process_rss_mb": 192.2,
+  "gpu": {
+   "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+   "memory_used_mb": 2185,
+   "memory_total_mb": 8188,
+   "utilization_percent": 0
+  }
+ },
+ "steps": {
+  "ollama_status": {
+   "reachable": true,
+   "model_installed": true,
+   "version": "0.40.17",
+   "models": [
+    {
+     "name": "qwen2.5:1.5b",
+     "size_gb": 0.99,
+     "quant": "Q4_K_M",
+     "params": "1.5B"
+    },
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.68,
+     "quant": "Q4_K_M",
+     "params": "7.6B"
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 1.93,
+     "quant": "Q4_K_M",
+     "params": "3.1B"
+    }
+   ]
+  },
+  "ingest": {
+   "seconds": 1.162,
+   "records_read": 1716,
+   "accepted": 1716,
+   "rejected": 0,
+   "duplicates": 0,
+   "formats": [
+    "csv",
+    "jsonl"
+   ]
+  },
+  "analysis": {
+   "seconds": 1.605,
+   "alerts": 110,
+   "incidents": [
+    [
+     "INC-0001",
+     "Critical",
+     100,
+     "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)"
+    ],
+    [
+     "INC-0005",
+     "Critical",
+     100,
+     "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (kavya.shetty on WS-SALES-09)"
+    ],
+    [
+     "INC-0004",
+     "Critical",
+     85,
+     "Password spraying -> Logon after failures (11 accounts on DC01)"
+    ],
+    [
+     "INC-0002",
+     "High",
+     70,
+     "Privilege change -> Group discovery (isha.gupta on DC01)"
+    ],
+    [
+     "INC-0003",
+     "Low",
+     20,
+     "Off-hours logon from new device/IP (kavya.gupta on FS01)"
+    ]
+   ],
+   "timings": {
+    "detection_s": 1.358,
+    "correlation_s": 0.017,
+    "severity_s": 0.0,
+    "evidence_s": 0.229,
+    "analysis_total_s": 1.605
+   }
+  },
+  "report": {
+   "file": "reports\\offline_INC-0001.html",
+   "bytes": 20110,
+   "external_refs": 3
+  },
+  "slm": [
+   {
+    "incident": "INC-0001",
+    "source": "slm",
+    "error": null,
+    "wall_s": 7.14,
+    "tokens_per_s": 78.6,
+    "output_tokens": 434,
+    "load_s": 0.01,
+    "verified": 2,
+    "claims": 2,
+    "repair": {
+     "attempted": true,
+     "initial_verified": 2,
+     "initial_claims": 3,
+     "final_verified": 2,
+     "final_claims": 2,
+     "latency_s": 5.84
+    }
+   },
+   {
+    "incident": "INC-0005",
+    "source": "slm",
+    "error": null,
+    "wall_s": 6.91,
+    "tokens_per_s": 75.6,
+    "output_tokens": 477,
+    "load_s": 0.01,
+    "verified": 1,
+    "claims": 2,
+    "repair": {
+     "attempted": true,
+     "initial_verified": 1,
+     "initial_claims": 2,
+     "final_verified": 1,
+     "final_claims": 2,
+     "latency_s": 6.67
+    }
+   },
+   {
+    "incident": "INC-0004",
+    "source": "slm",
+    "error": null,
+    "wall_s": 9.27,
+    "tokens_per_s": 76.3,
+    "output_tokens": 678,
+    "load_s": 0.01,
+    "verified": 3,
+    "claims": 3,
+    "repair": {
+     "attempted": false,
+     "initial_verified": 3,
+     "initial_claims": 3,
+     "final_verified": 3,
+     "final_claims": 3,
+     "latency_s": 0.0
+    }
+   }
+  ],
+  "chat": {
+   "seconds": 3.74,
+   "answers": [
+    {
+     "question": "Why is the severity high?",
+     "source": "slm",
+     "verified": 1,
+     "sentences": 1,
+     "cannot_answer": false
+    },
+    {
+     "question": "Which devices were involved?",
+     "source": "slm",
+     "verified": 3,
+     "sentences": 3,
+     "cannot_answer": false
+    },
+    {
+     "question": "What is the attacker's home country?",
+     "source": "deterministic",
+     "verified": 0,
+     "sentences": 0,
+     "cannot_answer": true
+    }
+   ],
+   "silent": 0
+  },
+  "handoff": {
+   "verified": 8,
+   "claims": 8
+  },
+  "exports": {
+   "json_incidents": 5,
+   "csv_bytes": 2001
+  },
+  "live": {
+   "seconds": 12.16,
+   "scenario": "G",
+   "runner_state": "completed",
+   "events_emitted": 250,
+   "events_ingested": 250,
+   "incidents": [
+    {
+     "id": "INC-0001",
+     "level": "Critical",
+     "score": 100,
+     "rules": [
+      "R1",
+      "R3",
+      "R5",
+      "R6",
+      "R7",
+      "R8"
+     ],
+     "latency_s": 0.72
+    }
+   ],
+   "notifications": [
+    "New low-severity incident detected: Brute force (maya.fernandes on NEXUS-WEB01)",
+    "INC-0001 escalated from Low to Medium: Brute force -> Logon after failures",
+    "INC-0001 escalated from Medium to Critical: Brute force -> Logon after failures -> Privilege change"
+   ]
+  },
+  "evtx": {
+   "file": "kerberos_pwd_spray_4771.evtx",
+   "seconds": 0.322,
+   "records": 12,
+   "rules_fired": [
+    "R2",
+    "R8"
+   ],
+   "incidents": 2
+  },
+  "evaluation": {
+   "seconds": 6.815,
+   "results": [
+    {
+     "dataset": "test_seed101",
+     "incident_precision": 1.0,
+     "incident_recall": 1.0,
+     "f1": 1.0,
+     "false_positive_rate": 0.0
+    },
+    {
+     "dataset": "test_seed202",
+     "incident_precision": 1.0,
+     "incident_recall": 1.0,
+     "f1": 1.0,
+     "false_positive_rate": 0.0
+    },
+    {
+     "dataset": "test_seed303",
+     "incident_precision": 1.0,
+     "incident_recall": 1.0,
+     "f1": 1.0,
+     "false_positive_rate": 0.0
+    }
+   ]
+  }
+ },
+ "monitor": {
+  "started": "2026-11-24 00:48:28",
+  "ended": "2026-11-24 00:49:30",
+  "samples": 266,
+  "peak_sentinel_rss_mb": 217.1,
+  "peak_ollama_rss_mb": 64.8,
+  "connections": [
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:53133",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:31"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:53133",
+    "remote": "127.0.0.1:63259",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:31"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:53127",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:31"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:53127",
+    "remote": "127.0.0.1:11434",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:31"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:53139",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:38"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:53134",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:38"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:51622",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:44"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:51627",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:44"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:65167",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:51"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:65162",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:51"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:65173",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:57"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:65168",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:57"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:65179",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:07"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:65174",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:07"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:59648",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:09"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:59653",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:09"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:59654",
+    "status": "FIN_WAIT2",
+    "scope": "loopback",
+    "first_seen": "00:49:10"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:59665",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:10"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:59660",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:10"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59667",
+    "remote": "127.0.0.1:59666",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:15"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59667",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:15"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59668",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:16"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59669",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:16"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59670",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:16"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59671",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:17"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59672",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:17"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59673",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:17"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59674",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:18"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59675",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:18"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59676",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:19"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59677",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:19"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59678",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:19"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59679",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:20"
+   }
+  ],
+  "external_connections": [],
+  "loopback_connections": [
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:53133",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:31"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:53133",
+    "remote": "127.0.0.1:63259",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:31"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:53127",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:31"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:53127",
+    "remote": "127.0.0.1:11434",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:31"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:53139",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:38"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:53134",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:38"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:51622",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:44"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:51627",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:44"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:65167",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:51"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:65162",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:51"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:65173",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:57"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:65168",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:48:57"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:65179",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:07"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:65174",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:07"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:59648",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:09"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:59653",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:09"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:59654",
+    "status": "FIN_WAIT2",
+    "scope": "loopback",
+    "first_seen": "00:49:10"
+   },
+   {
+    "process": "llama-server.exe",
+    "pid": 15012,
+    "local": "127.0.0.1:63259",
+    "remote": "127.0.0.1:59665",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:10"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 8316,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:59660",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:10"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59667",
+    "remote": "127.0.0.1:59666",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:15"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59667",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:15"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59668",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:16"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59669",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:16"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59670",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:16"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59671",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:17"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59672",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:17"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59673",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:17"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59674",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:18"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59675",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:18"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59676",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:19"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59677",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:19"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59678",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:19"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 2500,
+    "local": "127.0.0.1:59666",
+    "remote": "127.0.0.1:59679",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "00:49:20"
+   }
+  ]
+ }
+}

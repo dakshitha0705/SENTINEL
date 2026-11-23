@@ -24,7 +24,7 @@ from .events import EventStream
 
 SCENARIOS = {
     "A": ("Normal activity", "Employees and the administrator log in, use the portal and log out."),
-    "B": ("Brute force", "12 failed logons against one account from one simulated external source (lockout at 15)."),
+    "B": ("Brute force", "3 failed logons against one account from one simulated external source (demo detection profile: 3 within 5 min)."),
     "C": ("Password spraying", "One simulated source tries common passwords against 6 accounts (8 attempts)."),
     "D": ("Suspicious successful login", "10 failures, then a successful logon from the same source, then sensitive access."),
     "E": ("Privilege change", "An approved change by the IT administrator, then an unauthorised self-add to Administrators."),
@@ -181,7 +181,7 @@ class ScenarioRunner:
 
     def _steps_B(self):
         c = self._client("198.51.100.23", "B")
-        return self._failures(c, "arjun.rao", 12, 0.45, "brute force")
+        return self._failures(c, "arjun.rao", 3, 0.8, "brute force")
 
     def _steps_C(self):
         c = self._client("192.0.2.77", "C")

@@ -86,7 +86,7 @@ Accounts lock for 15 minutes after 15 failures. There is no bypass, and every sc
 | ID | Scenario | What SENTINEL should report |
 |---|---|---|
 | A | Normal activity: 3 employees and the admin log on, browse and log off from their usual workstations | No incident |
-| B | Brute force: 12 failures against `arjun.rao` from one simulated external source | R1, Low (attempts only, no access) |
+| B | Brute force: 3 failures against `arjun.rao` from one simulated external source (Demo Detection Profile) | R1, Low (attempts only, no access) |
 | C | Password spraying: 8 failures across 6 accounts from one source | R2, Medium |
 | D | Suspicious success: 10 failures, then a successful logon from the same source, then sensitive pages | R1 + R3 (+ R5 context): severity rises as evidence accumulates |
 | E | Privilege change: `admin01` makes an approved change inside a registered change ticket (`CHG-4471`), then `omar.khan` adds himself to Administrators | Only the unauthorised change: R6 |
@@ -174,3 +174,23 @@ If the live services cannot be started, every feature remains available on recor
 If local inference is slow, use the *Deterministic template* button (verified by construction) or a cached explanation.
 
 The detection and correlation logic is identical in both modes.
+
+## Demo Detection Profile: three failed sign-ins (24 Nov)
+
+So that a presenter can type three wrong passwords and see a detection, the **live NEXUS stream only** uses a labelled *Demo Detection Profile*: R1 brute force fires after **3 failures for one account from one source within 5 minutes** (`sentinel/live.py`, `DEMO_PROFILE`, applied in `LiveEngine.live_cfg()`).
+
+Uploaded logs, the evaluation and every benchmark keep the standard profile in `config.yaml` (8 failures in 10 minutes), so the saved results are unchanged. A test asserts this.
+
+- **Scenario B** now sends exactly 3 failures. D and G keep their longer failure bursts, which also qualify.
+- **Benign scenarios stay quiet:** A has no failures, H has two typos, and C sends at most 2 attempts per account.
+- **Severity is conservative:** attempts without access stay **Low**, and the notification says "suspicious activity, not a confirmed compromise".
+- **NEXUS sign-in page:** the first two failures show the usual "Invalid username or password". From the third failure for the same username and source within 5 minutes (counted server-side, identically for unknown names), it also shows: *"Security alert: multiple failed sign-in attempts detected. This activity has been reported for review."* Lockout is unchanged: 15 failures.
+- **SENTINEL notification:** built from the recorded events, for example *"New security incident — 3 failed sign-in attempts detected for leela.menon (Low severity: suspicious activity, not a confirmed compromise)."*
+
+**Browser test (24 Nov 05:00, online, services running).** Three wrong passwords for `leela.menon` were typed into the NEXUS page:
+- the warning appeared on the third attempt only;
+- the SENTINEL toast and bell (count 1) appeared without a manual refresh;
+- engine latency was 0.54 s;
+- Investigate opened that incident.
+
+Screenshots: `docs/screenshots/v4/14_nexus_three_failures.png`, `15_sentinel_three_failures_notification.png`. Test: `test_three_manual_failures_warn_and_trigger_demo_detection`.

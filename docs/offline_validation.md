@@ -55,6 +55,7 @@ This run used the backend at commit `4f7b333`. The redesigned dashboard (24 Nov)
 | 2026-11-23 07:21 | online rehearsal, v2 feature set (self-repair, chat fallback, handoff, exports, EVTX) | yes | **0** | 10 | 33.4 s | 185 MB / 103 MB | 90.5–92.3 |
 | 2026-11-23 08:24 | **offline test of the v2 feature set (Wi-Fi disconnected)** | **no** (before and after) | **0** | 18 | 35.9 s | 183 MB / 103 MB | 88.6–93.1 |
 | 2026-11-23 18:45 | **offline test of the live version (Wi-Fi disconnected)**: full workflow + live NEXUS → SENTINEL step | **no** (before and after) | **0** | 29 | 51.1 s | 217 MB / 89 MB | 94.4–95.3 |
+| 2026-11-24 04:32 | **offline test of the redesigned version (Wi-Fi disconnected)**: full workflow + live NEXUS step (250/250 events, Critical incident) | **no** (before and after) | **0** | 23 | 38.0 s | 211.4 MB / 91.4 MB | 94.0–97.0 |
 
 **UI check (online, 23 Nov 07:16):** 0 external requests out of 191 (every non-local request would have been aborted). All 9 pages (the pre-redesign UI) rendered without exceptions, and all globe and graph interaction checks passed. 
 

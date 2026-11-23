@@ -77,6 +77,8 @@ def create_app(root: Path | None = None, base_url: str = "http://127.0.0.1:8502"
     def index():
         return redirect(url_for("dashboard") if "user" in session else url_for("login"))
 
+    fail_log: dict = {}            # (username, source) -> recent failure times, for the sign-in warning
+
     @app.route("/login", methods=["GET", "POST"])
     def login():
         error = None
@@ -100,7 +102,13 @@ def create_app(root: Path | None = None, base_url: str = "http://127.0.0.1:8502"
                 emit("4740", "auth.account_locked", user=user, outcome="success",
                      payload={"threshold": 15, "window_minutes": 15})
             error = "This account is temporarily locked." if reason.startswith("locked") else "Invalid username or password."
-            return render_template("login.html", error=error), 401
+            # server-side count of recent failures for this username + source (same for existing and unknown names)
+            key, now = (user, client_ip()[0]), time.time()
+            recent = [t for t in fail_log.get(key, []) if now - t < 300] + [now]
+            fail_log[key] = recent
+            warning = ("Security alert: multiple failed sign-in attempts detected. This activity has been reported for review."
+                       if len(recent) >= 3 else None)
+            return render_template("login.html", error=error, warning=warning), 401
         return render_template("login.html", error=error)
 
     @app.get("/logout")

@@ -34,6 +34,9 @@ MAPPING = {"timestamp": "TimeCreated", "event_code": "EventID", "record_id": "Ev
            "src_lat": "SrcLatitude", "src_lon": "SrcLongitude", "src_geo": "SrcLocation",
            "dst_lat": "DeviceLatitude", "dst_lon": "DeviceLongitude", "dst_geo": "DeviceLocation"}
 LEVELS = ["Low", "Medium", "High", "Critical"]
+# Demo Detection Profile: applied ONLY to the live NEXUS demo stream (see LiveEngine.live_cfg)
+DEMO_PROFILE = {"name": "Demo Detection Profile (NEXUS live stream only)",
+                "brute_force": {"min_failures": 3, "window_minutes": 5}}
 
 # Plain-language phrases for notifications (what the detection means, not how it is implemented)
 RULE_PHRASE = {
@@ -90,6 +93,7 @@ class LiveEngine:
         self.analysis = None
         self.tracked: dict[str, dict] = {}       # incident key -> tracking info
         self.notifications: list[dict] = []
+        self._fail_ids: set = set()
         self.duplicates = 0
         self.malformed = 0
         self.last_batch = 0
@@ -167,7 +171,11 @@ class LiveEngine:
 
     # ----------------------------------------------------------------- analysis
     def live_cfg(self) -> dict:
+        """Configuration for the isolated NEXUS demo stream only: the standard profile plus the labelled
+        Demo Detection Profile (brute force after 3 failures for one account from one source within 5 min).
+        Uploaded logs, evaluations and benchmarks keep config.yaml's standard thresholds."""
         cfg = copy.deepcopy(self.cfg)
+        cfg["detection"]["brute_force"] = dict(cfg["detection"]["brute_force"], **DEMO_PROFILE["brute_force"])
         p = self.sdir() / "change_windows.json"
         if p.exists():
             tickets = json.loads(p.read_text(encoding="utf-8"))
@@ -179,6 +187,7 @@ class LiveEngine:
         t0 = time.perf_counter()
         ds = ingest([(STREAM_NAME, b"\n".join(self.lines) + b"\n")], {STREAM_NAME: dict(MAPPING)})
         a = analyze_dataset(ds, self.live_cfg())
+        self._fail_ids = set(a.events.loc[a.events["action"] == "login_failure", "event_id"])
         self.analysis_s = round(time.perf_counter() - t0, 3)
         self.analysis = a
         now = time.time()
@@ -211,6 +220,11 @@ class LiveEngine:
         stages = " -> ".join(inc["stages"]) or inc["title"]
         if kind == "new":
             text = f"New {sev['level'].lower()}-severity incident detected: {stages} ({inc['title'].split('(')[-1].rstrip(')')})"
+            if [r for r in inc["rules"] if r != "CTX"] == ["R1"]:
+                n = sum(1 for e in inc["event_ids"] if e in self._fail_ids)
+                who = ", ".join(list(inc["users"])[:2]) or "an account"
+                text = (f"New security incident — {n} failed sign-in attempts detected for {who} "
+                        f"({sev['level']} severity: suspicious activity, not a confirmed compromise).")
         else:
             text = f"{inc['incident_id']} escalated from {prev} to {sev['level']}: {stages}"
         self.notifications.append({"id": len(self.notifications) + 1, "t": time.time(), "kind": kind,
@@ -218,7 +232,8 @@ class LiveEngine:
                                    "incident_id": inc["incident_id"], "key": key, "session_id": self.session_id,
                                    "users": list(inc["users"])[:3], "hosts": list(inc["hosts"])[:3],
                                    "rules": [r for r in inc["rules"] if r != "CTX"],
-                                   "summary": plain_summary(inc, kind), "text": text})
+                                   "summary": text if text.startswith("New security incident") else plain_summary(inc, kind),
+                                   "text": text})
 
     def _write_status(self):
         a = self.analysis

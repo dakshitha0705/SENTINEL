@@ -268,3 +268,32 @@ def test_nexus_login_page_and_credentials_panel(demo):
         if ids.users[u]["role"] != "service":
             assert i < ctl.index(p) < j                                            # only inside the panel
     assert c.get("/login").headers["X-Frame-Options"] == "DENY"
+
+
+def test_three_manual_failures_warn_and_trigger_demo_detection(demo):
+    """Three wrong passwords typed on the NEXUS sign-in page: ordinary error twice, a security warning on the
+    third, and a real R1 incident from the live pipeline under the demo-only profile (standard profile unchanged)."""
+    from sentinel.config import load_config
+    c, eng = demo["client"], demo["eng"]
+    for k in range(3):
+        page = c.post("/login", data={"username": "vikram.shah", "password": f"wrong{k}"}).get_data(as_text=True)
+        assert "Invalid username or password" in page
+        assert ("Security alert" in page) == (k == 2)
+    fails = [e for e in demo["nx"]["stream"].read_all() if e["EventID"] == "4625" and e["TargetUserName"] == "vikram.shah"]
+    assert len(fails) == 3
+    eng.poll()
+    a = eng.analysis
+    inc = [i for i in a.incidents if "vikram.shah" in i["users"]]
+    assert len(inc) == 1 and inc[0]["rules"][:1] == ["R1"] or "R1" in inc[0]["rules"]
+    assert inc[0]["severity"]["level"] in ("Low", "Medium")          # conservative: attempts only, no access
+    n = [x for x in eng.notifications if x["kind"] == "new" and "vikram.shah" in x["users"]]
+    assert len(n) == 1 and n[0]["text"].startswith("New security incident — 3 failed sign-in attempts detected for vikram.shah")
+    eng.poll()
+    assert len([x for x in eng.notifications if "vikram.shah" in x["users"] and x["kind"] == "new"]) == 1   # no duplicate
+    # two failures for another account do not combine with these
+    for k in range(2):
+        c.post("/login", data={"username": "rahul.iyer", "password": "x"})
+    eng.poll()
+    assert not [i for i in eng.analysis.incidents if "rahul.iyer" in i["users"]]
+    # the standard profile used for uploads and evaluation is untouched
+    assert load_config()["detection"]["brute_force"]["min_failures"] == 8

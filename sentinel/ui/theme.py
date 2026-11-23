@@ -4,13 +4,13 @@ actions, powder-blue selection, restrained copper accents). Local system fonts o
 CSS = """
 <style>
 :root {
-  --deep:#071a1e; --shell:#0b2226; --shell2:#0f2b31; --midnight:#0e2433; --panel:#12323a; --panel2:#163b44;
-  --ivory:#f3ebdd; --beige:#e8dcc6; --sand:#d8c5a5; --ink:#1d2a2c; --ink2:#4a5654;
-  --peach:#e3a587; --terra:#c7714f; --powder:#a9c3d1; --copper:#c39a62; --red:#c9655a;
+  --deep:#092d37; --shell:#103943; --shell2:#14414c; --midnight:#092d37; --panel:#164652; --panel2:#1a4e5b;
+  --ivory:#f4e9db; --beige:#e9d9c9; --sand:#e9d9c9; --ink:#1d2a2c; --ink2:#4a5654;
+  --peach:#e1ad9d; --terra:#b9805d; --powder:#78a6b7; --copper:#b9805d; --red:#c9655a;
   --text-on-dark:#e7dfd0; --muted:#9db1b2; --line:rgba(243,235,221,.09); --line2:rgba(243,235,221,.17);
   --ok:#9cc7b4; --bad:#e0897d; --hyp:#dcb47e; --r:16px;
   /* legacy names used by older markup */
-  --sage:#8fb0ad; --mint:#b7d1cc; --amber:#e3a587; --obsidian:#0b2226; --graphite:#12323a; --bg:#0b2226;
+  --sage:#78a6b7; --mint:#a9c7d2; --amber:#e1ad9d; --obsidian:#103943; --graphite:#164652; --bg:#103943;
   --display:"Sitka Heading","Sitka Display","Cambria","Georgia",serif;
   --text:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,sans-serif;
   --mono:"Cascadia Mono","Cascadia Code",Consolas,"Courier New",monospace;
@@ -19,7 +19,7 @@ html, body, [class*="css"], .stApp { font-family: var(--text); }
 .stApp {
   color: var(--text-on-dark);
   background:
-    radial-gradient(1200px 700px at 70% -10%, rgba(169,195,209,.10), transparent 60%),
+    radial-gradient(1200px 700px at 70% -10%, rgba(120,166,183,.16), transparent 60%),
     radial-gradient(900px 600px at -10% 110%, rgba(199,113,79,.08), transparent 60%),
     linear-gradient(180deg, var(--shell) 0%, var(--deep) 100%);
   background-attachment: fixed;
@@ -35,7 +35,7 @@ a { color: var(--peach) !important; }
 code { color: var(--sand) !important; background: rgba(243,235,221,.06) !important; }
 
 /* ---------- sidebar ---------- */
-[data-testid="stSidebar"] { background: linear-gradient(180deg, #0a2024 0%, #061518 100%); border-right: 1px solid var(--line);
+[data-testid="stSidebar"] { background: linear-gradient(180deg, #0e3540 0%, #092d37 100%); border-right: 1px solid var(--line);
   min-width: 232px !important; max-width: 232px !important; }
 [data-testid="stSidebarContent"] { padding-top: .4rem; }
 .sn-brand { font-family: var(--display); font-weight: 700; font-size: 1.45rem; letter-spacing: 5px; color: var(--ivory); }
@@ -195,7 +195,7 @@ div[class*="st-key-card"] { padding: 14px 16px; }
 .stButton > button, .stDownloadButton > button, [data-testid="stFormSubmitButton"] > button, [data-testid="stPopover"] button {
   border-radius: 12px; border: 1px solid var(--line2); background: rgba(243,235,221,.05); color: var(--ivory); transition: all .18s ease; }
 .stButton > button:hover, .stDownloadButton > button:hover, [data-testid="stPopover"] button:hover { border-color: rgba(227,165,135,.6); color: #fff7ea; background: rgba(243,235,221,.09); }
-.stButton > button[kind="primary"], .stDownloadButton > button[kind="primary"] { background: linear-gradient(180deg, #eab092, #cf7f5c); color: #1f1712; border: 0; font-weight: 600; }
+.stButton > button[kind="primary"], .stDownloadButton > button[kind="primary"] { background: linear-gradient(180deg, #e8bcae, #e1ad9d); color: #2a1d17; border: 0; font-weight: 600; }
 .stButton > button[kind="primary"] p, .stDownloadButton > button[kind="primary"] p { color: #1f1712 !important; font-weight: 650; }
 .stButton > button[kind="primary"]:hover { filter: brightness(1.05); transform: translateY(-1px); }
 .stButton > button:disabled { opacity: .45; }
@@ -247,3 +247,10 @@ hr { border-color: var(--line) !important; }
 }
 </style>
 """
+CSS += """<style>
+div[class*="st-key-card_search"] { max-height: 360px; overflow: auto; }
+.sn-card, div[class*="st-key-card"] { background: linear-gradient(180deg, rgba(26,78,91,.72), rgba(16,57,67,.88)); }
+.sn-stat { background: rgba(244,233,219,.08); border-color: rgba(233,217,201,.18); }
+.sn-act .ic.sim { background: rgba(120,166,183,.22); }
+[data-testid="stToast"] { border-left: 4px solid #b9805d !important; }
+</style>"""

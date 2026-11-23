@@ -20,6 +20,7 @@
       <div class="lg-demo">Demo environment · fictional accounts · runs on 127.0.0.1 only</div>
       <h2>Sign in</h2>
       <p class="muted">Use your NEXUS account.</p>
+      {% if warning %}<div class="warn" role="alert"><b>Security alert</b><br>Multiple failed sign-in attempts detected. This activity has been reported for review.</div>{% endif %}
       {% if error %}<div class="err" role="alert">{{ error }}</div>{% endif %}
       <label for="username">Username</label>
       <input id="username" name="username" maxlength="64" required autofocus list="nx-users" autocomplete="off"

@@ -52,3 +52,4 @@ input,select{width:100%;padding:10px 12px;border:1px solid var(--line);border-ra
 .lg-submit:focus-visible{outline:3px solid rgba(199,113,79,.4);outline-offset:2px}
 .lg-submit:disabled{opacity:.55;cursor:not-allowed;transform:none}
 @media (max-width:900px){.lg{grid-template-columns:1fr}.lg-brand{padding:90px 28px 28px}.lg-mark{left:28px;top:28px}.lg-hero h1{font-size:30px;margin-top:10px}.lg-arch{display:none}}
+.warn{background:#fbe9d8;border:1px solid #c7714f;color:#6e3b1f;padding:11px 13px;border-radius:12px;margin:8px 0 10px;font-size:13.5px;line-height:1.45}

@@ -163,7 +163,7 @@ powershell -ExecutionPolicy Bypass -File scripts\start_demo.ps1   # live demo: N
 ## How to test
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest -q                       # 113 tests
+.\.venv\Scripts\python.exe -m pytest -q                       # 114 tests
 .\.venv\Scripts\python.exe scripts\evaluate.py                # synthetic accuracy, comparison, ablation
 .\.venv\Scripts\python.exe scripts\external_eval.py           # public attack recordings (after download)
 .\.venv\Scripts\python.exe scripts\slm_benchmark.py [--cpu]   # local model, verification, self-repair
