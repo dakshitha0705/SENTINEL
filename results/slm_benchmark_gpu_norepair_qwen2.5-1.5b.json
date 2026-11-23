@@ -1,0 +1,407 @@
+{
+ "summary": {
+  "datasets": [
+   "test_seed101",
+   "test_seed202",
+   "test_seed303"
+  ],
+  "model": "qwen2.5:1.5b",
+  "prompt_version": "v7",
+  "inference_mode": [
+   "GPU"
+  ],
+  "placement": {
+   "model_loaded": true,
+   "size_gb": 1.17,
+   "vram_gb": 1.17,
+   "gpu_share": 1.0,
+   "mode": "GPU"
+  },
+  "forced_cpu": false,
+  "self_repair": false,
+  "incidents": 6,
+  "slm_answers": 6,
+  "fallbacks": 0,
+  "factual_claims": 19,
+  "verified": 3,
+  "verification_rate": 0.158,
+  "repair": {
+   "incidents_with_failures": 0,
+   "initial_claims": 19,
+   "initial_verified": 3,
+   "initial_rate": 0.158,
+   "final_claims": 19,
+   "final_verified": 3,
+   "final_rate": 0.158,
+   "claims_still_failing": 16,
+   "repaired_kept": 0,
+   "mean_extra_latency_s": 0.0
+  },
+  "mean_wall_s": 3.37,
+  "mean_tokens_per_s": 154.0,
+  "mean_prompt_tokens": 2497,
+  "mean_output_tokens": 384,
+  "resources": {
+   "ollama_cpu_pct_of_machine_mean_busy": 1.2,
+   "ollama_cpu_pct_of_machine_peak": 1.2,
+   "ollama_rss_peak_mb": 104.4,
+   "samples": 43
+  },
+  "hardware": {
+   "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+   "logical_cpus": 20,
+   "ram_gb": 23.7
+  },
+  "recorded_at": "2026-11-23 07:06:53",
+  "ollama": {
+   "host": "http://127.0.0.1:11434",
+   "model": "qwen2.5:1.5b",
+   "reachable": true,
+   "model_installed": true,
+   "models": [
+    {
+     "name": "qwen2.5:1.5b",
+     "size_gb": 0.99,
+     "quant": "Q4_K_M",
+     "params": "1.5B"
+    },
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.68,
+     "quant": "Q4_K_M",
+     "params": "7.6B"
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 1.93,
+     "quant": "Q4_K_M",
+     "params": "3.1B"
+    }
+   ],
+   "loaded": [
+    {
+     "name": "qwen2.5:1.5b",
+     "size_gb": 1.17,
+     "vram_gb": 1.17,
+     "gpu_share": 1.0
+    }
+   ],
+   "error": null,
+   "version": "0.40.16"
+  }
+ },
+ "incidents": [
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0001",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 5.86,
+   "tokens_per_s": 154.3,
+   "output_tokens": 304,
+   "prompt_tokens": 2346,
+   "load_s": 3.48,
+   "prompt_eval_s": 0.3,
+   "factual_claims": 2,
+   "verified": 0,
+   "unverified": [
+    {
+     "text": "Between 03:33 UTC and 04:09 UTC, admin02 logged in to FIN-SRV01 from a new source IP (10.0.60.126) at an unusual time of day.",
+     "problems": [
+      "time 04:09 not found in cited facts",
+      "typed end_time 04:09 not found in cited facts"
+     ]
+    },
+    {
+     "text": "The unusual login time and new source IP indicate a potential compromise or unauthorized access attempt.",
+     "problems": [
+      "typed source_ip '10.0.60.126' not in cited facts",
+      "typed start_time 03:33 not found in cited facts",
+      "typed end_time 04:09 not found in cited facts",
+      "statement content not supported by cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 1,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 0,
+    "final_claims": 2,
+    "final_verified": 0,
+    "latency_s": 0.0,
+    "initial_rate": 0.0,
+    "final_rate": 0.0,
+    "still_failing": 2
+   }
+  },
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 3.16,
+   "tokens_per_s": 155.1,
+   "output_tokens": 442,
+   "prompt_tokens": 2727,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.21,
+   "factual_claims": 4,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "Between 01:04:31 UTC on October 16, 2026 and 01:19:03 UTC, deepak.gupta attempted to brute force logon from WS-ENG-13.",
+     "problems": [
+      "time 01:04 not found in cited facts",
+      "time 01:19 not found in cited facts",
+      "typed start_time 01:04 not found in cited facts",
+      "typed end_time 01:19 not found in cited facts"
+     ]
+    },
+    {
+     "text": "This was followed by a successful logon attempt at 01:17:06 UTC with the same source IP (185.220.101.134).",
+     "problems": [
+      "time 01:17 not found in cited facts",
+      "typed start_time 01:04 not found in cited facts",
+      "typed end_time 01:19 not found in cited facts"
+     ]
+    },
+    {
+     "text": "The account's login time deviates significantly, suggesting unusual activity.",
+     "problems": [
+      "typed start_time 01:04 not found in cited facts",
+      "typed end_time 01:19 not found in cited facts",
+      "statement content not supported by cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.25,
+   "hypotheses": 1,
+   "grounded_hypotheses": 0,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 4,
+    "initial_verified": 1,
+    "final_claims": 4,
+    "final_verified": 1,
+    "latency_s": 0.0,
+    "initial_rate": 0.25,
+    "final_rate": 0.25,
+    "still_failing": 3
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0001",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 2.61,
+   "tokens_per_s": 157.9,
+   "output_tokens": 370,
+   "prompt_tokens": 2339,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.16,
+   "factual_claims": 3,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "Between 02:40 UTC and 03:21 UTC, admin02 logged in to FIN-SRV01 at unusual times (08, 09, 10, 11, 13, 14, 15, 16, 17) with no prior logons within +-1h.",
+     "problems": [
+      "time 03:21 not found in cited facts",
+      "typed end_time 03:21 not found in cited facts"
+     ]
+    },
+    {
+     "text": "The account was then cleared from the audit logs by admin02 using wevtutil.exe at 03:21 UTC.",
+     "problems": [
+      "time 03:21 not found in cited facts",
+      "typed end_time 03:21 not found in cited facts",
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.3333333333333333,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 3,
+    "initial_verified": 1,
+    "final_claims": 3,
+    "final_verified": 1,
+    "latency_s": 0.0,
+    "initial_rate": 0.333,
+    "final_rate": 0.333,
+    "still_failing": 2
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0005",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 3.33,
+   "tokens_per_s": 151.4,
+   "output_tokens": 459,
+   "prompt_tokens": 2712,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.21,
+   "factual_claims": 4,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "Between 21:02 UTC on November 13, 2026, a brute force attack against priya.shetty's WS-FIN-01 host resulted in 7.4 minutes of failed logon attempts followed by a successful login.",
+     "problems": [
+      "typed end_time 21:33 not found in cited facts"
+     ]
+    },
+    {
+     "text": "The attacker, using the source IP address 185.220.101.108, managed to bypass security measures by brute forcing priya.shetty's account within a short time frame.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 9%)"
+     ]
+    },
+    {
+     "text": "After successfully gaining access, the attacker changed the user's privileged group on WS-FIN-01 and added themselves as an administrator without proper authorization.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.25,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 4,
+    "initial_verified": 1,
+    "final_claims": 4,
+    "final_verified": 1,
+    "latency_s": 0.0,
+    "initial_rate": 0.25,
+    "final_rate": 0.25,
+    "still_failing": 3
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0002",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 2.39,
+   "tokens_per_s": 151.5,
+   "output_tokens": 324,
+   "prompt_tokens": 2329,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.17,
+   "factual_claims": 2,
+   "verified": 0,
+   "unverified": [
+    {
+     "text": "Between 03:00 UTC and 03:04 UTC, admin02 logged in to FIN-SRV01 for the first time at an unusual hour (03:00) with a new source IP of 10.0.38.38.",
+     "problems": [
+      "time 03:04 not found in cited facts",
+      "typed count 5 not found in cited facts",
+      "typed end_time 03:04 not found in cited facts"
+     ]
+    },
+    {
+     "text": "The unusual login time and new source IP indicate that admin02 is accessing the system from a different location or at an unexpected hour.",
+     "problems": [
+      "typed end_time 03:04 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 1,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 0,
+    "final_claims": 2,
+    "final_verified": 0,
+    "latency_s": 0.0,
+    "initial_rate": 0.0,
+    "final_rate": 0.0,
+    "still_failing": 2
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 2.88,
+   "tokens_per_s": 154.0,
+   "output_tokens": 402,
+   "prompt_tokens": 2531,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.19,
+   "factual_claims": 4,
+   "verified": 0,
+   "unverified": [
+    {
+     "text": "Between 12:28 and 12:50 UTC, deepak.joshi attempted to brute force into WS-HR-07 using R1.",
+     "problems": [
+      "time 12:50 not found in cited facts",
+      "typed end_time 12:50 not found in cited facts"
+     ]
+    },
+    {
+     "text": "The attack was detected by the logon failures from 19 failed attempts within a minute (peak of 19 in 10 minutes).",
+     "problems": [
+      "typed end_time 12:50 not found in cited facts"
+     ]
+    },
+    {
+     "text": "After these failures, deepak.joshi successfully logged on at 12:32 UTC with no further authentication issues.",
+     "problems": [
+      "typed end_time 12:50 not found in cited facts"
+     ]
+    },
+    {
+     "text": "The brute force attack was detected by the logon failures, and deepak.joshi successfully logged on after these attempts.",
+     "problems": [
+      "typed start_time 12:28 not found in cited facts",
+      "typed end_time 12:50 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 4,
+    "initial_verified": 0,
+    "final_claims": 4,
+    "final_verified": 0,
+    "latency_s": 0.0,
+    "initial_rate": 0.0,
+    "final_rate": 0.0,
+    "still_failing": 4
+   }
+  }
+ ]
+}

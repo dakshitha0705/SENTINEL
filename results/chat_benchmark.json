@@ -1,19 +1,22 @@
 {
  "summary": {
-  "questions": 25,
-  "empty_replies": 6,
-  "sentences": 18,
-  "verified": 15,
-  "verification_rate": 0.833,
-  "mean_wall_s": 0.61
+  "questions": 35,
+  "silent_replies": 0,
+  "answered_by_slm": 20,
+  "answered_by_deterministic_fallback": 6,
+  "explicit_cannot_answer": 9,
+  "sentences": 54,
+  "verified": 53,
+  "verification_rate": 0.981,
+  "mean_wall_s": 0.82
  },
  "rows": [
   {
    "incident": "INC-0001",
    "question": "What happened after the successful login?",
-   "attempts": 1,
+   "source": "slm",
    "error": null,
-   "wall_s": 1.36,
+   "wall_s": 5.14,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -24,22 +27,22 @@
   {
    "incident": "INC-0001",
    "question": "Why was this incident classified with this severity?",
-   "attempts": 1,
-   "error": null,
-   "wall_s": 1.25,
+   "source": "deterministic",
+   "error": "the model returned no verifiable sentence",
+   "wall_s": 1.32,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
    "answer": [
-    "This incident was classified with a Critical (score 100/100) severity based on factors R4 Unusual login time for this user +5; R5 New device or source IP for this user +5; R7 Suspicious process execution +25; R8 Audit log cleared +25; Log cleared after suspicious activity +10; Credential dumping observed +20; Privileged account involved +15."
+    "Severity Critical (score 100/100): R4 Unusual login time for this user +5; R5 New device or source IP for this user +5; R7 Suspicious process execution +25; R8 Audit log cleared +25; Log cleared after suspicious activity +10; Credential dumping observed +20; Privileged account involved +15; Critical asset involved +..."
    ]
   },
   {
    "incident": "INC-0001",
    "question": "Which devices were involved?",
-   "attempts": 1,
+   "source": "slm",
    "error": null,
-   "wall_s": 1.1,
+   "wall_s": 1.13,
    "sentences": 3,
    "verified": 3,
    "cannot_answer": "",
@@ -52,9 +55,9 @@
   {
    "incident": "INC-0001",
    "question": "What evidence contradicts the hypothesis?",
-   "attempts": 1,
-   "error": null,
-   "wall_s": 0.32,
+   "source": "deterministic",
+   "error": "the model declined: There are no contradicting facts provided in the given evidence pack.",
+   "wall_s": 0.3,
    "sentences": 0,
    "verified": 0,
    "cannot_answer": "There are no contradicting facts provided in the given evidence pack.",
@@ -63,79 +66,144 @@
   {
    "incident": "INC-0001",
    "question": "What is the attacker's home country?",
-   "attempts": 2,
-   "error": null,
-   "wall_s": 0.16,
+   "source": "deterministic",
+   "error": "the model returned an empty answer",
+   "wall_s": 0.15,
    "sentences": 0,
    "verified": 0,
-   "cannot_answer": "",
+   "cannot_answer": "The evidence pack does not contain information that answers this question. Try asking about severity, hosts, accounts, the timeline, the evidence, contradicting evidence or next steps.",
    "answer": []
+  },
+  {
+   "incident": "INC-0001",
+   "question": "Which events support this conclusion?",
+   "source": "slm",
+   "error": null,
+   "wall_s": 1.81,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "Events 4672 (special privileges at logon), EVT-000958 (R4 Unusual login time for this user and R5 New device or source IP for this user), EVT-000959 (CTX Special privileges assigned at logon), EVT-000960 (R7 Suspicious process execution - mimikatz.exe), EVT-000961 (R7 Suspicious process execution - wevtutil.exe), and EVT-000962 (R8 Audit log cleared) support this conclusion."
+   ]
+  },
+  {
+   "incident": "INC-0001",
+   "question": "What should be investigated?",
+   "source": "slm",
+   "error": null,
+   "wall_s": 1.38,
+   "sentences": 2,
+   "verified": 1,
+   "cannot_answer": "null",
+   "answer": [
+    "Investigate suspicious activity involving admin02 with strong links to ALR-0045 (R4), ALR-0046 (R5), and ALR-0047 (CTX) on FIN-SRV01, as well as the R7 Suspicious process execution event related to mimikatz.exe and R8 Audit log cleared event.",
+    "Additionally, investigate credential dumping observed in EVT-000960."
+   ]
   },
   {
    "incident": "INC-0005",
    "question": "What happened after the successful login?",
-   "attempts": 2,
+   "source": "slm",
    "error": null,
-   "wall_s": 0.15,
-   "sentences": 0,
-   "verified": 0,
+   "wall_s": 1.32,
+   "sentences": 1,
+   "verified": 1,
    "cannot_answer": "",
-   "answer": []
+   "answer": [
+    "After the successful login, kavya.shetty added herself to the privileged group 'Administrators' on WS-SALES-09 (R6), and executed a suspicious PowerShell command via powershell.exe (parent cmd.exe) that was encoded for obfuscation (R7)."
+   ]
   },
   {
    "incident": "INC-0005",
    "question": "Why was this incident classified with this severity?",
-   "attempts": 2,
-   "error": null,
-   "wall_s": 1.27,
+   "source": "deterministic",
+   "error": "the model returned no verifiable sentence",
+   "wall_s": 1.51,
    "sentences": 1,
-   "verified": 0,
+   "verified": 1,
    "cannot_answer": "",
    "answer": [
-    "This incident was classified with Severity Critical (score 100/100) due to multiple independent high-signal detections including R1 Brute force +15, R3 Successful logon after failures +25, R4 Unusual login time for this user +5, R5 New device or source IP for this user +5, R6 Unauthorised privileged group change +25, and R7 Suspicious process execution +25."
+    "Severity Critical (score 100/100): R1 Brute force +15; R3 Successful logon after failures +25; R4 Unusual login time for this user +5; R5 New device or source IP for this user +5; R6 Unauthorised privileged group change +25; R7 Suspicious process execution +25; Privileged account involved +15; Full attack chain +20...."
    ]
   },
   {
    "incident": "INC-0005",
    "question": "Which devices were involved?",
-   "attempts": 2,
-   "error": null,
-   "wall_s": 0.85,
+   "source": "deterministic",
+   "error": "the model returned no verifiable sentence",
+   "wall_s": 0.84,
    "sentences": 1,
-   "verified": 0,
+   "verified": 1,
    "cannot_answer": "",
    "answer": [
-    "The device WS-SALES-09 was involved as it is mentioned in multiple alerts and detections related to this incident involving kavya.shetty's activities on that host."
+    "Hosts involved: WS-SALES-09."
    ]
   },
   {
    "incident": "INC-0005",
    "question": "What evidence contradicts the hypothesis?",
-   "attempts": 2,
-   "error": null,
-   "wall_s": 0.16,
+   "source": "deterministic",
+   "error": "the model returned an empty answer",
+   "wall_s": 0.18,
    "sentences": 0,
    "verified": 0,
-   "cannot_answer": "",
+   "cannot_answer": "SENTINEL found no contradicting evidence for this incident in the supplied logs.",
    "answer": []
   },
   {
    "incident": "INC-0005",
    "question": "What is the attacker's home country?",
-   "attempts": 2,
-   "error": null,
-   "wall_s": 0.32,
+   "source": "deterministic",
+   "error": "the model returned an empty answer",
+   "wall_s": 0.12,
    "sentences": 0,
    "verified": 0,
-   "cannot_answer": "No information about the attacker's identity, location, or intent is provided in the given facts.",
+   "cannot_answer": "The evidence pack does not contain information that answers this question. Try asking about severity, hosts, accounts, the timeline, the evidence, contradicting evidence or next steps.",
    "answer": []
+  },
+  {
+   "incident": "INC-0005",
+   "question": "Which events support this conclusion?",
+   "source": "deterministic",
+   "error": "the model returned no verifiable sentence",
+   "wall_s": 1.18,
+   "sentences": 11,
+   "verified": 11,
+   "cannot_answer": "",
+   "answer": [
+    "2026-11-20 22:03:17-22:05:50 UTC: R1 Brute force - 18 failed logons for kavya.shetty from 45.155.205.220 in 2.5 min (peak 18 within 10 min; threshold 8).",
+    "Events: EVT-001589 ...",
+    "EVT-001606 (18 events).",
+    "2026-11-20 22:09:05 UTC: R3 Successful logon after failures - kavya.shetty logged on successfully from 45.155.205.220 3.2 min after 18 failed attempts from the same source (R1 burst).",
+    "Events: EVT-001607.",
+    "2026-11-20 22:09:05 UTC: R4 Unusual login time for this user - kavya.shetty logged on at 22:09 UTC; no prior logon within +-1h of this hour in 14 earlier logons (usual hours: 09, 10, 11, 12, 14, 15, 17, 18).",
+    "Events: EVT-001607.",
+    "2026-11-20 22:09:05 UTC: R5 New device or source IP for this user - First time kavya.shetty logged on from/to source IP 45.155.205.220 in 14 earlier logons.",
+    "Events: EVT-001607.",
+    "2026-11-20 22:19:51 UTC: R6 Unauthorised privileged group change - kavya.shetty added to privileged group 'Administrators' on WS-SALES-09 by kavya.shetty (self-added); actor kavya.shetty is not an authorised administrator; change made outside any approved change window.",
+    "Events: EVT-001608."
+   ]
+  },
+  {
+   "incident": "INC-0005",
+   "question": "What should be investigated?",
+   "source": "slm",
+   "error": null,
+   "wall_s": 0.63,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "Investigate suspected credential compromise as per PB-01, which is linked to multiple detections including R1 Brute force and R3 Successful logon after failures."
+   ]
   },
   {
    "incident": "INC-0004",
    "question": "What happened after the successful login?",
-   "attempts": 1,
+   "source": "slm",
    "error": null,
-   "wall_s": 0.94,
+   "wall_s": 0.96,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -146,9 +214,9 @@
   {
    "incident": "INC-0004",
    "question": "Why was this incident classified with this severity?",
-   "attempts": 1,
+   "source": "slm",
    "error": null,
-   "wall_s": 0.79,
+   "wall_s": 0.78,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -159,9 +227,9 @@
   {
    "incident": "INC-0004",
    "question": "Which devices were involved?",
-   "attempts": 1,
+   "source": "slm",
    "error": null,
-   "wall_s": 0.43,
+   "wall_s": 0.41,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -172,57 +240,84 @@
   {
    "incident": "INC-0004",
    "question": "What evidence contradicts the hypothesis?",
-   "attempts": 2,
-   "error": null,
-   "wall_s": 0.14,
+   "source": "deterministic",
+   "error": "the model returned an empty answer",
+   "wall_s": 0.16,
    "sentences": 0,
    "verified": 0,
-   "cannot_answer": "",
+   "cannot_answer": "SENTINEL found no contradicting evidence for this incident in the supplied logs.",
    "answer": []
   },
   {
    "incident": "INC-0004",
    "question": "What is the attacker's home country?",
-   "attempts": 2,
-   "error": null,
+   "source": "deterministic",
+   "error": "the model returned an empty answer",
    "wall_s": 0.15,
    "sentences": 0,
    "verified": 0,
-   "cannot_answer": "",
+   "cannot_answer": "The evidence pack does not contain information that answers this question. Try asking about severity, hosts, accounts, the timeline, the evidence, contradicting evidence or next steps.",
    "answer": []
   },
   {
-   "incident": "INC-0002",
-   "question": "What happened after the successful login?",
-   "attempts": 1,
+   "incident": "INC-0004",
+   "question": "Which events support this conclusion?",
+   "source": "slm",
    "error": null,
-   "wall_s": 0.6,
+   "wall_s": 0.58,
+   "sentences": 2,
+   "verified": 2,
+   "cannot_answer": "",
+   "answer": [
+    "Events EVT-001570 ...",
+    "EVT-001585 (16 events) support this conclusion for R2 Password spraying."
+   ]
+  },
+  {
+   "incident": "INC-0004",
+   "question": "What should be investigated?",
+   "source": "slm",
+   "error": null,
+   "wall_s": 0.66,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
    "answer": [
-    "Privileged group change occurred after the successful login of isha.gupta on DC01."
+    "Investigate password spraying across accounts (PB-04) as it is a high-signal detection linked to previous password spraying activity and involves multiple failed attempts."
+   ]
+  },
+  {
+   "incident": "INC-0002",
+   "question": "What happened after the successful login?",
+   "source": "slm",
+   "error": null,
+   "wall_s": 0.71,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "After the successful login, isha.gupta added themselves to the privileged group 'Domain Admins' on DC01."
    ]
   },
   {
    "incident": "INC-0002",
    "question": "Why was this incident classified with this severity?",
-   "attempts": 1,
+   "source": "slm",
    "error": null,
-   "wall_s": 0.92,
+   "wall_s": 0.96,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
    "answer": [
-    "Severity High (score 65/100): R5 New device or source IP for this user +5; R6 Unauthorised privileged group change +25; Privileged account involved +15; Domain-wide admin group targeted +10; Critical asset involved +10."
+    "Severity High (score 70/100): R5 New device or source IP for this user +5; R6 Unauthorised privileged group change +25; R14 Privileged group discovery +5; Privileged account involved +15; Domain-wide admin group targeted +10; Critical asset involved +10."
    ]
   },
   {
    "incident": "INC-0002",
    "question": "Which devices were involved?",
-   "attempts": 1,
+   "source": "slm",
    "error": null,
-   "wall_s": 0.37,
+   "wall_s": 0.36,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -233,9 +328,9 @@
   {
    "incident": "INC-0002",
    "question": "What evidence contradicts the hypothesis?",
-   "attempts": 1,
+   "source": "slm",
    "error": null,
-   "wall_s": 0.62,
+   "wall_s": 0.64,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -246,33 +341,66 @@
   {
    "incident": "INC-0002",
    "question": "What is the attacker's home country?",
-   "attempts": 1,
-   "error": null,
-   "wall_s": 0.32,
+   "source": "deterministic",
+   "error": "the model returned no verifiable sentence",
+   "wall_s": 0.41,
    "sentences": 0,
    "verified": 0,
-   "cannot_answer": "No information about the attacker's home country is provided in the evidence pack.",
+   "cannot_answer": "The evidence pack does not contain information that answers this question. Try asking about severity, hosts, accounts, the timeline, the evidence, contradicting evidence or next steps.",
    "answer": []
+  },
+  {
+   "incident": "INC-0002",
+   "question": "Which events support this conclusion?",
+   "source": "deterministic",
+   "error": "the model returned no verifiable sentence",
+   "wall_s": 0.69,
+   "sentences": 7,
+   "verified": 7,
+   "cannot_answer": "",
+   "answer": [
+    "2026-11-19 12:49:12 UTC: R5 New device or source IP for this user - First time isha.gupta logged on from/to host DC01 in 11 earlier logons.",
+    "Events: EVT-001123.",
+    "2026-11-19 12:57:12 UTC: R6 Unauthorised privileged group change - isha.gupta added to privileged group 'Domain Admins' on DC01 by isha.gupta (self-added); actor isha.gupta is not an authorised administrator; change made outside any approved change window.",
+    "Events: EVT-001127.",
+    "2026-11-19 13:01:33 UTC: R14 Privileged group discovery - isha.gupta on DC01: domain privileged group enumerated.",
+    "Command: net group \"Domain Admins\" /domain.",
+    "Events: EVT-001129."
+   ]
+  },
+  {
+   "incident": "INC-0002",
+   "question": "What should be investigated?",
+   "source": "slm",
+   "error": null,
+   "wall_s": 0.88,
+   "sentences": 2,
+   "verified": 2,
+   "cannot_answer": "",
+   "answer": [
+    "Privileged account involved +15; Domain-wide admin group targeted +10; Critical asset involved +10.",
+    "These factors indicate that investigating suspected credential compromise (PB-01) and validating privileged group change against approval records (PB-06) are important steps."
+   ]
   },
   {
    "incident": "INC-0003",
    "question": "What happened after the successful login?",
-   "attempts": 1,
+   "source": "slm",
    "error": null,
-   "wall_s": 1.37,
+   "wall_s": 1.03,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
    "answer": [
-    "After a successful login, kavya.gupta logged on again from/to source IP 10.0.71.135 at unusual times (01:48 and 01:58 UTC) with no prior logon within +-1h of these hours in the previous 10 earlier logons."
+    "After a successful login, kavya.gupta logged on again from/to source IP 10.0.71.135 at 01:48 UTC and then at 01:58 UTC."
    ]
   },
   {
    "incident": "INC-0003",
    "question": "Why was this incident classified with this severity?",
-   "attempts": 1,
+   "source": "slm",
    "error": null,
-   "wall_s": 0.78,
+   "wall_s": 0.75,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -283,38 +411,69 @@
   {
    "incident": "INC-0003",
    "question": "Which devices were involved?",
-   "attempts": 1,
+   "source": "slm",
    "error": null,
-   "wall_s": 0.47,
+   "wall_s": 0.49,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
    "answer": [
-    "Devices FIN-SRV01, FS01 were involved in this incident as mentioned in fact F1."
+    "Devices FIN-SRV01, FS01 were involved in the security incident as mentioned in fact F1."
    ]
   },
   {
    "incident": "INC-0003",
    "question": "What evidence contradicts the hypothesis?",
-   "attempts": 2,
-   "error": null,
+   "source": "deterministic",
+   "error": "the model returned an empty answer",
    "wall_s": 0.15,
    "sentences": 0,
    "verified": 0,
-   "cannot_answer": "",
+   "cannot_answer": "SENTINEL found no contradicting evidence for this incident in the supplied logs.",
    "answer": []
   },
   {
    "incident": "INC-0003",
    "question": "What is the attacker's home country?",
-   "attempts": 1,
-   "error": null,
-   "wall_s": 0.38,
-   "sentences": 1,
+   "source": "deterministic",
+   "error": "the model returned no verifiable sentence",
+   "wall_s": 0.36,
+   "sentences": 0,
    "verified": 0,
+   "cannot_answer": "The evidence pack does not contain information that answers this question. Try asking about severity, hosts, accounts, the timeline, the evidence, contradicting evidence or next steps.",
+   "answer": []
+  },
+  {
+   "incident": "INC-0003",
+   "question": "Which events support this conclusion?",
+   "source": "deterministic",
+   "error": "the model returned an empty answer",
+   "wall_s": 0.13,
+   "sentences": 8,
+   "verified": 8,
    "cannot_answer": "",
    "answer": [
-    "Information about the attacker's home country is missing based on provided evidence."
+    "2026-11-20 01:48:51 UTC: R4 Unusual login time for this user - kavya.gupta logged on at 01:48 UTC; no prior logon within +-1h of this hour in 10 earlier logons (usual hours: 09, 10, 11, 12, 14, 16, 17).",
+    "Events: EVT-001288.",
+    "2026-11-20 01:48:51 UTC: R5 New device or source IP for this user - First time kavya.gupta logged on from/to source IP 10.0.71.135 in 10 earlier logons.",
+    "Events: EVT-001288.",
+    "2026-11-20 01:58:48 UTC: R4 Unusual login time for this user - kavya.gupta logged on at 01:58 UTC; no prior logon within +-1h of this hour in 10 earlier logons (usual hours: 09, 10, 11, 12, 14, 16, 17).",
+    "Events: EVT-001290.",
+    "2026-11-20 01:58:48 UTC: R5 New device or source IP for this user - First time kavya.gupta logged on from/to source IP 10.0.71.135 in 10 earlier logons.",
+    "Events: EVT-001290."
+   ]
+  },
+  {
+   "incident": "INC-0003",
+   "question": "What should be investigated?",
+   "source": "slm",
+   "error": null,
+   "wall_s": 0.6,
+   "sentences": 1,
+   "verified": 1,
+   "cannot_answer": "",
+   "answer": [
+    "Severity Low (score 20/100) indicates that investigating credential compromise is appropriate as it aligns with R4 and R5 anomalies."
    ]
   }
  ]

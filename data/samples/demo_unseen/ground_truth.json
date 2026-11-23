@@ -36,7 +36,9 @@
    1,
    4
   ],
-  "description": "Demo dataset in an unseen SIEM-export format (IST timestamps, different column names)."
+  "extended": false,
+  "geo": true,
+  "description": "Demo dataset in an unseen SIEM-export format (IST timestamps, different column names, synthetic SIEM geo-enrichment columns)."
  },
  "week_start": "2026-11-16",
  "events": 1716,

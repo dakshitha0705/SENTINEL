@@ -1,0 +1,60 @@
+{
+ "recorded_at": "2026-11-23 07:08:22",
+ "dataset": "scale_100k",
+ "generator": {
+  "accounts": 425,
+  "hosts": 210,
+  "days": 35,
+  "seconds": 1.94
+ },
+ "input_bytes": {
+  "auth_logs.csv": 3598823,
+  "endpoint_logs.json": 32182142
+ },
+ "events": 126919,
+ "records_read": 126919,
+ "timings_s": {
+  "parse_s": 1.297,
+  "normalise_s": 6.87,
+  "ingest_total_s": 8.536,
+  "detection_s": 8.484,
+  "correlation_s": 0.028,
+  "severity_s": 0.0,
+  "evidence_s": 0.404,
+  "analysis_total_s": 8.917,
+  "end_to_end_s": 17.453
+ },
+ "throughput_events_per_s": {
+  "ingest": 14868,
+  "analysis": 14234,
+  "end_to_end": 7272
+ },
+ "peak_rss_mb": 528.6,
+ "rss_before_mb": 93.7,
+ "alerts": 527,
+ "alerts_by_rule": {
+  "R1": 1,
+  "R2": 1,
+  "R3": 1,
+  "R4": 129,
+  "R5": 51,
+  "R6": 2,
+  "R7": 4,
+  "R8": 1,
+  "R14": 1
+ },
+ "incidents": 5,
+ "incident_levels": {
+  "Critical": 2,
+  "High": 1,
+  "Medium": 1,
+  "Low": 1
+ },
+ "hardware": {
+  "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+  "logical_cpus": 20,
+  "ram_gb": 23.7,
+  "python": "3.13.5"
+ },
+ "method": "single run, wall-clock perf_counter per stage, peak RSS sampled every 50 ms; SLM not involved"
+}

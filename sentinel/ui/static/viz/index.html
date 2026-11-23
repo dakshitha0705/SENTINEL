@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SENTINEL viz</title>
+<!-- All assets are local files served by Streamlit; no network access is required or attempted. -->
+<style>
+  :root {
+    --bg: #0D1716; --surface: #1C2B29; --elev: #273734; --sage: #819B8D; --mint: #A7BFAF;
+    --cream: #E8DDC9; --gold: #C8AA7C; --rose: #B98780; --muted: #A9B6AE; --line: rgba(232,221,201,.10);
+  }
+  html, body { margin: 0; padding: 0; background: transparent; color: var(--cream); overflow: hidden;
+    font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; }
+  #wrap { position: relative; width: 100%; border-radius: 22px; overflow: hidden;
+    background: radial-gradient(ellipse at 50% 45%, #1A2A27 0%, #111D1B 55%, #0D1716 100%); }
+  #stage { width: 100%; }
+  .bar { position: absolute; left: 14px; bottom: 14px; display: flex; gap: 8px; z-index: 5; flex-wrap: wrap; }
+  .btn { background: rgba(28,43,41,.78); border: 1px solid var(--line); color: var(--cream); font-size: 12px;
+    padding: 7px 12px; border-radius: 999px; cursor: pointer; backdrop-filter: blur(6px);
+    transition: background .2s ease, border-color .2s ease; user-select: none; }
+  .btn:hover { background: rgba(39,55,52,.95); border-color: rgba(200,170,124,.45); }
+  .btn.on { border-color: rgba(200,170,124,.65); color: #F3EBDD; }
+  .chip { position: absolute; top: 14px; left: 14px; z-index: 5; font-size: 11.5px; letter-spacing: .4px;
+    color: var(--muted); background: rgba(13,23,22,.55); border: 1px solid var(--line); padding: 6px 11px;
+    border-radius: 999px; backdrop-filter: blur(6px); max-width: 70%; }
+  .chip b { color: var(--cream); font-weight: 600; }
+  .legend { position: absolute; top: 14px; right: 14px; z-index: 5; font-size: 11px; color: var(--muted);
+    background: rgba(13,23,22,.55); border: 1px solid var(--line); padding: 7px 11px; border-radius: 14px; }
+  .legend span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin: 0 5px 0 9px; }
+  .tip { background: rgba(20,32,30,.95); border: 1px solid rgba(200,170,124,.35); border-radius: 10px;
+    padding: 8px 10px; font-size: 12px; color: var(--cream); line-height: 1.45; max-width: 280px; }
+  .tip .k { color: var(--muted); }
+  .empty { position: absolute; left: 50%; bottom: 58px; transform: translateX(-50%); z-index: 5; font-size: 12px;
+    color: var(--muted); background: rgba(13,23,22,.6); border: 1px solid var(--line); padding: 7px 14px;
+    border-radius: 999px; white-space: nowrap; }
+  #graph { width: 100%; }
+  div.vis-tooltip { background: rgba(20,32,30,.96) !important; color: var(--cream) !important;
+    border: 1px solid rgba(200,170,124,.35) !important; border-radius: 10px !important; font-family: inherit !important;
+    font-size: 12px !important; padding: 7px 10px !important; box-shadow: none !important; white-space: pre-line; }
+  div.vis-network div.vis-navigation div.vis-button { filter: sepia(.4) saturate(.4) brightness(1.1); opacity: .7; }
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage"></div></div>
+<script src="./globe.gl.min.js"></script>
+<script src="./vis-network.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  // ---------------------------------------------------------------- Streamlit component protocol (v1)
+  function send(type, data) { window.parent.postMessage(Object.assign({ isStreamlitMessage: true, type: type }, data), "*"); }
+  function setValue(v) { send("streamlit:setComponentValue", { value: v, dataType: "json" }); }
+  function setHeight(h) { send("streamlit:setFrameHeight", { height: h }); }
+
+  var SEV = { Critical: "#D4968C", High: "#D6B88A", Medium: "#A7BFAF", Low: "#8FA3A8", none: "#C9BFAE" };
+  var state = { mode: null, globe: null, net: null, countries: null, arcsOn: true, args: null, key: null };
+  var wrap = document.getElementById("wrap"), stage = document.getElementById("stage");
+
+  function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+
+  // ---------------------------------------------------------------- point-in-polygon (region selection)
+  function inRing(pt, ring) {
+    var x = pt[0], y = pt[1], inside = false;
+    for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      var xi = ring[i][0], yi = ring[i][1], xj = ring[j][0], yj = ring[j][1];
+      if (((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi)) inside = !inside;
+    }
+    return inside;
+  }
+  function inFeature(lng, lat, f) {
+    var g = f.geometry, polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
+    for (var p = 0; p < polys.length; p++) {
+      if (inRing([lng, lat], polys[p][0])) {
+        var hole = false;
+        for (var h = 1; h < polys[p].length; h++) if (inRing([lng, lat], polys[p][h])) hole = true;
+        if (!hole) return true;
+      }
+    }
+    return false;
+  }
+
+  // ---------------------------------------------------------------- globe
+  function buildGlobe(args) {
+    stage.innerHTML = "";
+    var h = args.height || 560;
+    stage.style.height = h + "px";
+    var overlay = [];
+    var markers = args.markers || [];
+    var arcs = args.arcs || [];
+    var chip = el("div", "chip", args.mode === "intel"
+      ? "<b>Geographic intelligence</b> &middot; " + (args.markers || []).length + " log-provided locations"
+      : "<b>Exploration mode</b> &middot; " + esc(args.provenance || "no location data in these logs"));
+    overlay.push(chip);
+    if (args.mode === "intel") {
+      overlay.push(el("div", "legend", "<span style='background:" + SEV.Critical + "'></span>Critical" +
+        "<span style='background:" + SEV.High + "'></span>High<span style='background:" + SEV.Medium + "'></span>Medium" +
+        "<span style='background:" + SEV.Low + "'></span>Low<span style='background:" + SEV.none + "'></span>no incident"));
+    } else {
+      overlay.push(el("div", "empty", "Geographic attribution unavailable &mdash; the globe is a reference view only"));
+    }
+    var bar = el("div", "bar");
+    var bReset = el("div", "btn", "Reset view"), bArcs = el("div", "btn on", "Connections"),
+        bSpin = el("div", "btn on", "Auto-rotate"), bClear = el("div", "btn", "Clear selection");
+    bar.appendChild(bReset); if (args.mode === "intel") bar.appendChild(bArcs); bar.appendChild(bSpin);
+    if (args.mode === "intel") bar.appendChild(bClear);
+    overlay.push(bar);
+    overlay.forEach(function (o) { wrap.appendChild(o); });
+
+    var POV = args.pov || { lat: 16, lng: 96, altitude: 1.8 };
+    var selected = args.selected || null, hoverPoly = null, selPoly = null;
+    var W = stage.clientWidth || wrap.clientWidth || 900;
+    var g = Globe({ animateIn: false })(stage)
+      .width(W).height(h)
+      .backgroundColor("rgba(0,0,0,0)")
+      .showAtmosphere(true).atmosphereColor("#A7BFAF").atmosphereAltitude(0.13)
+      .showGraticules(true)
+      .polygonsData(state.countries ? state.countries.features : [])
+      .polygonAltitude(function (d) { return d === hoverPoly || d === selPoly ? 0.012 : 0.006; })
+      .polygonCapColor(function (d) { return d === selPoly ? "rgba(200,170,124,.92)" : d === hoverPoly ? "rgba(240,231,214,.96)" : "rgba(232,221,201,.88)"; })
+      .polygonSideColor(function () { return "rgba(129,155,141,.25)"; })
+      .polygonStrokeColor(function () { return "rgba(13,23,22,.38)"; })
+      .polygonLabel(function (d) { return "<div class='tip'><b>" + esc(d.properties.name) + "</b><br><span class='k'>" + esc(d.properties.subregion || "") + "</span></div>"; })
+      .onPolygonHover(function (d) { hoverPoly = d; g.polygonAltitude(g.polygonAltitude()); g.polygonCapColor(g.polygonCapColor()); stage.style.cursor = d ? "pointer" : "grab"; })
+      .onPolygonClick(function (d) {
+        selPoly = d; g.polygonCapColor(g.polygonCapColor()); g.polygonAltitude(g.polygonAltitude());
+        var ids = markers.filter(function (m) { return inFeature(m.lng, m.lat, d); }).map(function (m) { return m.id; });
+        setValue({ type: "region", name: d.properties.name, iso: d.properties.iso, marker_ids: ids, t: Date.now() });
+      })
+      .pointsData(markers)
+      .pointLat("lat").pointLng("lng")
+      .pointColor(function (d) { return SEV[d.level] || SEV.none; })
+      .pointAltitude(function (d) { return 0.015 + Math.min(0.08, 0.012 * Math.log2(1 + d.count)); })
+      .pointRadius(function (d) { return d.id === selected ? 0.75 : 0.45; })
+      .pointResolution(16)
+      .pointLabel(function (d) {
+        return "<div class='tip'><b>" + esc(d.label) + "</b><br><span class='k'>events</span> " + d.count +
+          (d.incidents && d.incidents.length ? "<br><span class='k'>incidents</span> " + esc(d.incidents.join(", ")) : "") +
+          "<br><span class='k'>source IPs</span> " + esc((d.ips || []).slice(0, 4).join(", ")) +
+          "<br><span class='k'>first / last</span> " + esc(d.first) + " &rarr; " + esc(d.last) + "<br><span class='k'>click to inspect records</span></div>";
+      })
+      .onPointClick(function (d) { selected = d.id; g.pointRadius(g.pointRadius()); g.ringsData([d]); setValue({ type: "marker", id: d.id, t: Date.now() }); })
+      .onPointHover(function (d) { stage.style.cursor = d ? "pointer" : "grab"; })
+      .ringsData(markers.filter(function (m) { return m.id === selected; }))
+      .ringColor(function () { return function (t) { return "rgba(200,170,124," + (1 - t) * 0.8 + ")"; }; })
+      .ringMaxRadius(3.2).ringPropagationSpeed(1.4).ringRepeatPeriod(1400)
+      .arcsData(arcs)
+      .arcColor(function () { return ["rgba(200,170,124,.15)", "rgba(214,190,150,.85)"]; })
+      .arcStroke(0.45).arcAltitudeAutoScale(0.42)
+      .arcDashLength(0.5).arcDashGap(0.25).arcDashAnimateTime(4200)
+      .arcLabel(function (d) { return "<div class='tip'>" + esc(d.label) + "</div>"; })
+      .onArcClick(function (d) { if (d.incident) setValue({ type: "arc", incident: d.incident, t: Date.now() }); })
+      .pointOfView(POV, 0);
+    var mat = g.globeMaterial();
+    if (mat && mat.color) { mat.color.set("#5E7A6F"); }
+    if (mat && mat.emissive) { mat.emissive.set("#1E302B"); mat.emissiveIntensity = 0.35; }
+    if (mat && "shininess" in mat) { mat.shininess = 6; }
+    var c = g.controls();
+    c.autoRotate = true; c.autoRotateSpeed = 0.28; c.enableDamping = true; c.dampingFactor = 0.08;
+    c.minDistance = 130; c.maxDistance = 720; c.zoomSpeed = 0.8; c.rotateSpeed = 0.6;
+    var spinTimer = null;
+    stage.addEventListener("pointerdown", function () { c.autoRotate = false; clearTimeout(spinTimer); });
+    stage.addEventListener("wheel", function () { c.autoRotate = false; }, { passive: true });
+    bReset.onclick = function () { g.pointOfView(POV, 900); };
+    bArcs.onclick = function () { state.arcsOn = !state.arcsOn; bArcs.classList.toggle("on", state.arcsOn); g.arcsData(state.arcsOn ? arcs : []); };
+    bSpin.onclick = function () { c.autoRotate = !c.autoRotate; bSpin.classList.toggle("on", c.autoRotate); };
+    bClear.onclick = function () { selected = null; selPoly = null; g.ringsData([]); g.pointRadius(g.pointRadius()); g.polygonCapColor(g.polygonCapColor()); setValue({ type: "clear", t: Date.now() }); };
+    if (selected) {
+      var m = markers.filter(function (x) { return x.id === selected; })[0];
+      if (m) { g.pointOfView({ lat: m.lat, lng: m.lng, altitude: 1.7 }, 0); c.autoRotate = false; bSpin.classList.remove("on"); }
+    }
+    window.addEventListener("resize", function () { g.width(stage.clientWidth || W); });
+    state.globe = g;
+    // Expose a tiny hook for automated UI tests (camera distance / point of view).
+    window.__sentinelGlobe = { pov: function () { return g.pointOfView(); }, zoom: function (alt) { g.pointOfView({ altitude: alt }, 0); },
+      reset: function () { bReset.onclick(); }, markers: markers.length, arcs: arcs.length,
+      list: markers.map(function (m) { return { id: m.id, lat: m.lat, lng: m.lng, label: m.label }; }),
+      screen: function (lat, lng) { return g.getScreenCoords(lat, lng, 0.02); },
+      stopSpin: function () { c.autoRotate = false; } };
+    setHeight(h);
+  }
+
+  // ---------------------------------------------------------------- attack graph
+  function buildGraph(args) {
+    stage.innerHTML = "";
+    var h = args.height || 600;
+    stage.style.height = h + "px";
+    var div = el("div"); div.id = "graph"; div.style.height = h + "px"; stage.appendChild(div);
+    var shapes = { incident: "hexagon", alert: "dot", user: "ellipse", host: "box", ip: "diamond" };
+    var nodes = (args.nodes || []).map(function (n) {
+      var col = n.color || "#819B8D";
+      return { id: n.id, label: n.label, title: n.title, group: n.type, shape: shapes[n.type] || "dot",
+        size: n.type === "incident" ? 22 : n.type === "alert" ? 10 : 14,
+        color: { background: col, border: "rgba(232,221,201,.35)", highlight: { background: "#E8DDC9", border: "#C8AA7C" },
+                 hover: { background: "#F0E7D6", border: "#C8AA7C" } },
+        font: { color: n.type === "host" || n.type === "user" ? "#0D1716" : "#E8DDC9", size: 12, face: "Segoe UI" },
+        borderWidth: 1, borderWidthSelected: 2 };
+    });
+    var edges = (args.edges || []).map(function (e, i) {
+      var weak = e.strength === "weak";
+      return { id: "e" + i, from: e.from, to: e.to, title: e.title, dashes: weak || e.kind === "context",
+        width: e.kind === "link" ? (weak ? 1 : 2.2) : 1,
+        color: { color: e.kind === "link" ? "rgba(200,170,124,.85)" : "rgba(169,182,174,.35)", highlight: "#C8AA7C", hover: "#C8AA7C" },
+        arrows: e.kind === "link" ? { to: { enabled: true, scaleFactor: 0.5 } } : undefined,
+        smooth: { type: "continuous" } };
+    });
+    var data = { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
+    var net = new vis.Network(div, data, {
+      autoResize: true,
+      interaction: { hover: true, navigationButtons: true, keyboard: true, tooltipDelay: 120, multiselect: false },
+      physics: { solver: "forceAtlas2Based", forceAtlas2Based: { gravitationalConstant: -48, springLength: 90, springConstant: 0.06 },
+                 stabilization: { iterations: 260 } },
+      layout: { improvedLayout: nodes.length < 160 }
+    });
+    net.once("stabilizationIterationsDone", function () { net.setOptions({ physics: false }); if (args.focus) { try { net.selectNodes([args.focus]); net.focus(args.focus, { scale: 1.1, animation: true }); } catch (e) {} } });
+    net.on("click", function (p) { if (p.nodes && p.nodes.length) setValue({ type: "node", id: p.nodes[0], t: Date.now() }); });
+    state.net = net;
+    window.__sentinelGraph = { nodes: nodes.length, edges: edges.length, scale: function () { return net.getScale(); },
+      zoom: function (s) { net.moveTo({ scale: s }); },
+      ids: function () { return nodes.map(function (n) { return n.id; }); },
+      nodePos: function (id) { var p = net.getPositions([id])[id]; return p ? net.canvasToDOM(p) : null; } };
+    setHeight(h);
+  }
+
+  // ---------------------------------------------------------------- render loop
+  function clearOverlay() { Array.prototype.slice.call(wrap.children).forEach(function (c) { if (c !== stage) wrap.removeChild(c); }); }
+
+  function render(args) {
+    var key = JSON.stringify([args.kind, args.data_key || ""]);
+    if (key === state.key) { setHeight(args.height || 560); return; }   // same data: keep camera / layout
+    state.key = key;
+    clearOverlay();
+    if (state.globe && state.globe._destructor) { try { state.globe._destructor(); } catch (e) {} }
+    state.globe = null; state.net = null;
+    if (args.kind === "graph") { buildGraph(args); return; }
+    if (state.countries) { buildGlobe(args); return; }
+    fetch("./countries.json").then(function (r) { return r.json(); }).then(function (gj) { state.countries = gj; buildGlobe(args); })
+      .catch(function () { state.countries = { features: [] }; buildGlobe(args); });
+  }
+
+  window.addEventListener("message", function (ev) {
+    var d = ev.data || {};
+    if (d.type === "streamlit:render") render(d.args || {});
+  });
+  send("streamlit:componentReady", { apiVersion: 1 });
+})();
+</script>
+</body>
+</html>

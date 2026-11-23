@@ -197,8 +197,9 @@ def verify_claim(claim: dict, pack: dict, known_entities: set, require_grounding
     for ip in IP_RE.findall(text):
         if ip.lower() not in ents:
             problems.append(f"IP {ip} is not in the cited facts")
+    cited_text = " ".join(f["text"] for f in valid).lower()
     for h in HOSTLIKE_RE.findall(text):
-        if h.lower() not in ents and h.lower() not in {e.lower() for e in all_known} and not h.startswith(("EVT", "ALR", "INC", "PB")):
+        if h.lower() not in ents and h.lower() not in {e.lower() for e in all_known} and h.lower() not in cited_text                 and not h.startswith(("EVT", "ALR", "INC", "PB")):
             problems.append(f"unknown host/name '{h}'")
     # event / alert / incident IDs named in the sentence must belong to the cited facts
     cited_ids = set()

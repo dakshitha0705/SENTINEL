@@ -1,0 +1,325 @@
+{
+ "summary": {
+  "datasets": [
+   "test_seed101",
+   "test_seed202",
+   "test_seed303"
+  ],
+  "model": "qwen2.5:3b",
+  "prompt_version": "v7",
+  "inference_mode": [
+   "GPU"
+  ],
+  "placement": {
+   "model_loaded": true,
+   "size_gb": 2.16,
+   "vram_gb": 2.16,
+   "gpu_share": 1.0,
+   "mode": "GPU"
+  },
+  "forced_cpu": false,
+  "self_repair": false,
+  "incidents": 6,
+  "slm_answers": 6,
+  "fallbacks": 0,
+  "factual_claims": 13,
+  "verified": 8,
+  "verification_rate": 0.615,
+  "repair": {
+   "incidents_with_failures": 0,
+   "initial_claims": 13,
+   "initial_verified": 8,
+   "initial_rate": 0.615,
+   "final_claims": 13,
+   "final_verified": 8,
+   "final_rate": 0.615,
+   "claims_still_failing": 5,
+   "repaired_kept": 0,
+   "mean_extra_latency_s": 0.0
+  },
+  "mean_wall_s": 5.48,
+  "mean_tokens_per_s": 91.6,
+  "mean_prompt_tokens": 2497,
+  "mean_output_tokens": 486,
+  "resources": {
+   "ollama_cpu_pct_of_machine_mean_busy": 0.0,
+   "ollama_cpu_pct_of_machine_peak": 0.6,
+   "ollama_rss_peak_mb": 102.2,
+   "samples": 68
+  },
+  "hardware": {
+   "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+   "logical_cpus": 20,
+   "ram_gb": 23.7
+  },
+  "recorded_at": "2026-11-23 06:54:53",
+  "ollama": {
+   "host": "http://127.0.0.1:11434",
+   "model": "qwen2.5:3b",
+   "reachable": true,
+   "model_installed": true,
+   "models": [
+    {
+     "name": "qwen2.5:1.5b",
+     "size_gb": 0.99,
+     "quant": "Q4_K_M",
+     "params": "1.5B"
+    },
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.68,
+     "quant": "Q4_K_M",
+     "params": "7.6B"
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 1.93,
+     "quant": "Q4_K_M",
+     "params": "3.1B"
+    }
+   ],
+   "loaded": [
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 2.16,
+     "vram_gb": 2.16,
+     "gpu_share": 1.0
+    }
+   ],
+   "error": null,
+   "version": "0.40.16"
+  }
+ },
+ "incidents": [
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0001",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 7.45,
+   "tokens_per_s": 93.1,
+   "output_tokens": 656,
+   "prompt_tokens": 2346,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.21,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "admin02 logged in from FIN-SRV01 at 03:33 UTC with a new source IP (10.0.60.126) and executed suspicious processes, leading to audit log clearing.",
+     "problems": [
+      "time 03:33 not found in cited facts",
+      "'10.0.60.126' is not in the cited facts",
+      "IP 10.0.60.126 is not in the cited facts",
+      "typed source_ip '10.0.60.126' not in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 3,
+   "grounded_hypotheses": 3,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 0.0,
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  },
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 4.83,
+   "tokens_per_s": 91.7,
+   "output_tokens": 432,
+   "prompt_tokens": 2727,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.01,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "Between 00:52:31 UTC and 01:19:03 UTC, deepak.gupta successfully logged on from source IP 185.220.101.134 after multiple failed attempts.",
+     "problems": [
+      "time 01:19 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 0.0,
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0001",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 5.68,
+   "tokens_per_s": 93.1,
+   "output_tokens": 514,
+   "prompt_tokens": 2339,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.02,
+   "factual_claims": 3,
+   "verified": 3,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 2,
+   "grounded_hypotheses": 2,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 3,
+    "initial_verified": 3,
+    "final_claims": 3,
+    "final_verified": 3,
+    "latency_s": 0.0,
+    "initial_rate": 1.0,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0005",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 5.3,
+   "tokens_per_s": 92.6,
+   "output_tokens": 476,
+   "prompt_tokens": 2712,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.02,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "Between 20:54 and 21:33 UTC, priya.shetty experienced a brute force attack followed by a successful login from source IP 185.220.101.108.",
+     "problems": [
+      "time 21:33 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 0.0,
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0002",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 4.76,
+   "tokens_per_s": 88.2,
+   "output_tokens": 409,
+   "prompt_tokens": 2329,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.02,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "admin02 authenticated at an unexpected time from a new device, indicating potential unauthorized access or credential misuse.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 12%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 2,
+   "grounded_hypotheses": 2,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 0.0,
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 4.87,
+   "tokens_per_s": 90.9,
+   "output_tokens": 431,
+   "prompt_tokens": 2531,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.01,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "Between 12:28 and 12:51 UTC, deepak.joshi experienced multiple failed logon attempts followed by a successful login from the same source IP address.",
+     "problems": [
+      "time 12:51 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 0.0,
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  }
+ ]
+}

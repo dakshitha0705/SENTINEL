@@ -17,14 +17,14 @@ import pandas as pd
 SCHEMA_FIELDS = [
     "event_id", "source_file", "source_row", "record_id", "timestamp", "log_type", "event_code",
     "action", "user", "target_user", "actor", "host", "src_ip", "group", "process",
-    "parent_process", "command_line", "outcome", "raw",
+    "parent_process", "command_line", "outcome", "src_lat", "src_lon", "src_geo", "dst_lat", "dst_lon", "dst_geo", "raw",
 ]
 
 # Fields the analyst can map from input columns (order = assignment priority).
 MAPPABLE_FIELDS = [
     "timestamp", "event_code", "record_id", "action", "user", "actor", "target_user", "host",
     "src_ip", "group", "process", "parent_process", "command_line", "outcome", "log_type",
-    "src_lat", "src_lon", "src_geo",
+    "src_lat", "src_lon", "src_geo", "dst_lat", "dst_lon", "dst_geo",
 ]
 
 ACTIONS = [
@@ -69,12 +69,18 @@ _SYNONYMS = {
                  "source", "type"],
     # Optional geographic enrichment supplied by the log source (e.g. a SIEM export). SENTINEL never
     # derives coordinates itself; without these columns the globe stays in exploration mode.
-    "src_lat": ["srclat", "sourcelat", "sourcelatitude", "geolat", "latitude", "lat", "srcgeolat",
+    "src_lat": ["srclat", "srclatitude", "sourcelat", "sourcelatitude", "geolat", "latitude", "lat", "srcgeolat",
                 "sourcegeolocationlat", "clientlat"],
-    "src_lon": ["srclon", "sourcelon", "srclng", "sourcelongitude", "geolon", "geolng", "longitude", "lon",
+    "src_lon": ["srclon", "srclongitude", "sourcelon", "srclng", "sourcelongitude", "geolon", "geolng", "longitude", "lon",
                 "lng", "srcgeolon", "sourcegeolocationlon", "clientlon"],
     "src_geo": ["srclocation", "sourcelocation", "geolocation", "srccountry", "sourcecountry", "geocountry",
                 "country", "srccity", "geocity", "location"],
+    "dst_lat": ["dstlat", "destlat", "destinationlat", "devicelatitude", "devicelat", "hostlatitude", "hostlat",
+                "dstlatitude", "destinationlatitude"],
+    "dst_lon": ["dstlon", "destlon", "destinationlon", "devicelongitude", "devicelon", "hostlongitude", "hostlon",
+                "dstlongitude", "destinationlongitude", "dstlng"],
+    "dst_geo": ["dstlocation", "destlocation", "destinationlocation", "devicelocation", "hostlocation", "site",
+                "dstcountry"],
 }
 
 _FALLBACK = {"user": ["subjectusername"], "process": ["image", "callerprocessname"],
@@ -389,6 +395,11 @@ def normalize(load: FileLoad, mapping: dict) -> tuple[pd.DataFrame, list]:
     bad_geo = ~(out["src_lat"].between(-90, 90) & out["src_lon"].between(-180, 180))
     out.loc[bad_geo, ["src_lat", "src_lon"]] = float("nan")
     out["src_geo"] = col("src_geo").str.strip().replace({"-": ""})
+    out["dst_lat"] = pd.to_numeric(col("dst_lat").str.strip(), errors="coerce")
+    out["dst_lon"] = pd.to_numeric(col("dst_lon").str.strip(), errors="coerce")
+    bad_geo = ~(out["dst_lat"].between(-90, 90) & out["dst_lon"].between(-180, 180))
+    out.loc[bad_geo, ["dst_lat", "dst_lon"]] = float("nan")
+    out["dst_geo"] = col("dst_geo").str.strip().replace({"-": ""})
 
     # Per-row fallback: mixed-source files (e.g. Sysmon + Security in one export) carry the same
     # information under different columns. Fill empty values from other recognised columns.

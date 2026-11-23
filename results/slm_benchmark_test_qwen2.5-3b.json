@@ -1,0 +1,644 @@
+{
+ "summary": {
+  "datasets": [
+   "test_seed101",
+   "test_seed202",
+   "test_seed303"
+  ],
+  "model": "qwen2.5:3b",
+  "prompt_version": "v7",
+  "inference_mode": [
+   "GPU"
+  ],
+  "placement": {
+   "model_loaded": true,
+   "size_gb": 2.16,
+   "vram_gb": 2.16,
+   "gpu_share": 1.0,
+   "mode": "GPU"
+  },
+  "forced_cpu": false,
+  "self_repair": true,
+  "incidents": 15,
+  "slm_answers": 15,
+  "fallbacks": 0,
+  "factual_claims": 30,
+  "verified": 25,
+  "verification_rate": 0.833,
+  "repair": {
+   "incidents_with_failures": 8,
+   "initial_claims": 30,
+   "initial_verified": 22,
+   "initial_rate": 0.733,
+   "final_claims": 30,
+   "final_verified": 25,
+   "final_rate": 0.833,
+   "claims_still_failing": 5,
+   "repaired_kept": 8,
+   "mean_extra_latency_s": 5.2
+  },
+  "mean_wall_s": 8.13,
+  "mean_tokens_per_s": 93.2,
+  "mean_prompt_tokens": 1974,
+  "mean_output_tokens": 448,
+  "resources": {
+   "ollama_cpu_pct_of_machine_mean_busy": 1.2,
+   "ollama_cpu_pct_of_machine_peak": 1.2,
+   "ollama_rss_peak_mb": 278.2,
+   "samples": 244
+  },
+  "hardware": {
+   "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+   "logical_cpus": 20,
+   "ram_gb": 23.7
+  },
+  "recorded_at": "2026-11-23 07:20:45",
+  "ollama": {
+   "host": "http://127.0.0.1:11434",
+   "model": "qwen2.5:3b",
+   "reachable": true,
+   "model_installed": true,
+   "models": [
+    {
+     "name": "qwen2.5:1.5b",
+     "size_gb": 0.99,
+     "quant": "Q4_K_M",
+     "params": "1.5B"
+    },
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.68,
+     "quant": "Q4_K_M",
+     "params": "7.6B"
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 1.93,
+     "quant": "Q4_K_M",
+     "params": "3.1B"
+    }
+   ],
+   "loaded": [
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 2.16,
+     "vram_gb": 2.16,
+     "gpu_share": 1.0
+    }
+   ],
+   "error": null,
+   "version": "0.40.16"
+  }
+ },
+ "incidents": [
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0001",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 16.44,
+   "tokens_per_s": 92.9,
+   "output_tokens": 606,
+   "prompt_tokens": 2346,
+   "load_s": 2.54,
+   "prompt_eval_s": 0.54,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "admin02 logged in from FIN-SRV01 with a new source IP (10.0.60.126) and executed suspicious processes including credential dumping tool mimikatz.exe followed by clearing the audit log.",
+     "problems": [
+      "'10.0.60.126' is not in the cited facts",
+      "IP 10.0.60.126 is not in the cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 3,
+   "grounded_hypotheses": 3,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 6.77,
+    "feedback": [
+     "- supported_conclusions claim 1 \"admin02 logged in from FIN-SRV01 with a new source IP (10.0.60.126) and executed suspicious processes including credential dumping tool mimikatz.exe followed by clearing the audit log.\": '10.0.60.126' is not in the cited facts; IP 10.0.60.126 is not in the cited facts. (F5 says: 2026-10-15 03:52:09 UTC: R7 Suspicious process execution - mimikatz.exe (parent cmd.exe) by admin02 on FIN-SRV01 matched: Credential dumping tool (Mimikatz). Command: mimikatz.exe \"privilege::debug\" \"sekurlsa::logonpassw; F6 says: 2026-10-15 04:09:20 UTC: R7 Suspicious process execution - wevtutil.exe (parent cmd.exe) by admin02 on FIN-SRV01 matched: Event log cleared from command line. Command: wevtutil.exe cl Security. Events: EVT-000944.; F7 says: 2026-10-15 04:09:21 UTC: R8 Audit log cleared - Audit log cleared on FIN-SRV01 by admin02; preceded by 2 suspicious alert(s) on the same host/user within 4 h (R7). Events: EVT-000945.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  },
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 10.96,
+   "tokens_per_s": 92.5,
+   "output_tokens": 472,
+   "prompt_tokens": 2727,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.4,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 2,
+    "latency_s": 5.33,
+    "feedback": [
+     "- summary claim 1 \"Between 00:52:31 UTC and 01:19:03 UTC, deepak.gupta successfully logged on from source IP 185.220.101.134 after multiple failed attempts.\": time 01:19 not found in cited facts. (F2 says: 2026-10-16 00:52:31-00:55:53 UTC: R1 Brute force - 21 failed logons for deepak.gupta from 185.220.101.134 in 3.4 min (peak 21 within 10 min; threshold 8). Events: EVT-001257 ... EVT-001277 (21 events).; F3 says: 2026-10-16 00:57:15 UTC: R3 Successful logon after failures - deepak.gupta logged on successfully from 185.220.101.134 1.4 min after 21 failed attempts from the same source (R1 burst). Events: EVT-001278.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.5,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0002",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 9.41,
+   "tokens_per_s": 95.1,
+   "output_tokens": 423,
+   "prompt_tokens": 1762,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.22,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "Between 06:49 and 06:55, 203.0.113.222 attempted to logon unsuccessfully six times against five accounts on DC01.",
+     "problems": [
+      "time 06:55 not found in cited facts",
+      "typed end_time 06:55 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 4.64,
+    "feedback": [
+     "- summary claim 1 \"Between 06:49 and 06:55, 203.0.113.222 attempted to logon unsuccessfully six times against five accounts on DC01.\": time 06:55 not found in cited facts; typed end_time 06:55 not found in cited facts. (F2 says: 2026-10-15 06:44:07-06:49:58 UTC: R2 Password spraying - 203.0.113.222 failed against 6 distinct accounts with 7 attempts (max 2 per account) - spraying pattern (threshold 5 accounts). Events: EVT-000949 ... EVT-000955 ()"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  },
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0003",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 9.86,
+   "tokens_per_s": 94.9,
+   "output_tokens": 445,
+   "prompt_tokens": 1643,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.19,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "On October 15, 2026, from 11:39 to 11:44 UTC, tara.menon logged on to DC01 and added themselves to the 'Domain Admins' group.",
+     "problems": [
+      "time 11:44 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 4.89,
+    "feedback": [
+     "- summary claim 1 \"On October 15, 2026, from 11:39 to 11:44 UTC, tara.menon logged on to DC01 and added themselves to the 'Domain Admins' group.\": time 11:44 not found in cited facts. (F2 says: 2026-10-15 11:39:30 UTC: R5 New device or source IP for this user - First time tara.menon logged on from/to host DC01 in 10 earlier logons. Events: EVT-001063.; F3 says: 2026-10-15 11:59:13 UTC: R6 Unauthorised privileged group change - tara.menon added to privileged group 'Domain Admins' on DC01 by tara.menon (self-added); actor tara.menon is not an authorised administrator; change made)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  },
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0005",
+   "level": "Low",
+   "source": "slm",
+   "error": null,
+   "wall_s": 4.8,
+   "tokens_per_s": 94.3,
+   "output_tokens": 422,
+   "prompt_tokens": 1781,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.23,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 2,
+    "final_claims": 2,
+    "final_verified": 2,
+    "latency_s": 0.0,
+    "initial_rate": 1.0,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0001",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 5.49,
+   "tokens_per_s": 91.7,
+   "output_tokens": 464,
+   "prompt_tokens": 2339,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.34,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 2,
+   "grounded_hypotheses": 2,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 2,
+    "final_claims": 2,
+    "final_verified": 2,
+    "latency_s": 0.0,
+    "initial_rate": 1.0,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0005",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 10.58,
+   "tokens_per_s": 92.0,
+   "output_tokens": 450,
+   "prompt_tokens": 2712,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.42,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "Between 20:54 and 21:33 UTC, priya.shetty experienced a brute force attack followed by a successful login from source IP 185.220.101.108.",
+     "problems": [
+      "time 21:33 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 5.15,
+    "feedback": [
+     "- summary claim 1 \"Between 20:54 and 21:33 UTC, priya.shetty experienced a brute force attack followed by a successful login from source IP 185.220.101.108.\": time 21:33 not found in cited facts. (F2 says: 2026-11-13 20:50:19-20:54:55 UTC: R1 Brute force - 23 failed logons for priya.shetty from 185.220.101.108 in 4.6 min (peak 23 within 10 min; threshold 8). Events: EVT-001286 ... EVT-001308 (23 events).; F3 says: 2026-11-13 21:02:19 UTC: R3 Successful logon after failures - priya.shetty logged on successfully from 185.220.101.108 7.4 min after 23 failed attempts from the same source (R1 burst). Events: EVT-001309.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0002",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 5.5,
+   "tokens_per_s": 93.9,
+   "output_tokens": 490,
+   "prompt_tokens": 1651,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.19,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 2,
+   "grounded_hypotheses": 2,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 2,
+    "final_claims": 2,
+    "final_verified": 2,
+    "latency_s": 0.0,
+    "initial_rate": 1.0,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0004",
+   "level": "Medium",
+   "source": "slm",
+   "error": null,
+   "wall_s": 4.73,
+   "tokens_per_s": 94.6,
+   "output_tokens": 428,
+   "prompt_tokens": 1270,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.13,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 2,
+    "final_claims": 2,
+    "final_verified": 2,
+    "latency_s": 0.0,
+    "initial_rate": 1.0,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0003",
+   "level": "Low",
+   "source": "slm",
+   "error": null,
+   "wall_s": 10.14,
+   "tokens_per_s": 93.0,
+   "output_tokens": 450,
+   "prompt_tokens": 1791,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.22,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 2,
+    "latency_s": 5.0,
+    "feedback": [
+     "- summary claim 1 \"On November 13, 2026, shalini.bose logged on to FIN-SRV01 at 01:15 UTC from source IP 10.0.81.206 for the first time in a week.\": 'fin-srv01' is not in the cited facts. (F4 says: 2026-11-13 01:15:03 UTC: R4 Unusual login time for this user - shalini.bose logged on at 01:15 UTC; no prior logon within +-1h of this hour in 10 earlier logons (usual hours: 08, 09, 12, 15, 16). Events: EVT-001032.; F5 says: 2026-11-13 01:15:03 UTC: R5 New device or source IP for this user - First time shalini.bose logged on from/to source IP 10.0.81.206 in 10 earlier logons. Events: EVT-001032.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.5,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0002",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 4.65,
+   "tokens_per_s": 91.3,
+   "output_tokens": 383,
+   "prompt_tokens": 2329,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.33,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 2,
+    "final_claims": 2,
+    "final_verified": 2,
+    "latency_s": 0.0,
+    "initial_rate": 1.0,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 10.08,
+   "tokens_per_s": 91.6,
+   "output_tokens": 428,
+   "prompt_tokens": 2531,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.38,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 2,
+    "latency_s": 4.92,
+    "feedback": [
+     "- summary claim 1 \"Between 12:28 and 12:51 UTC, deepak.joshi experienced multiple failed logon attempts followed by a successful login from the same source IP address.\": time 12:51 not found in cited facts. (F2 says: 2026-11-20 12:28:02-12:30:28 UTC: R1 Brute force - 19 failed logons for deepak.joshi from 192.0.2.228 in 2.4 min (peak 19 within 10 min; threshold 8). Events: EVT-001528 ... EVT-001546 (19 events).; F3 says: 2026-11-20 12:32:30 UTC: R3 Successful logon after failures - deepak.joshi logged on successfully from 192.0.2.228 2.0 min after 19 failed attempts from the same source (R1 burst). Events: EVT-001547.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.5,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0001",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 9.86,
+   "tokens_per_s": 93.2,
+   "output_tokens": 438,
+   "prompt_tokens": 1632,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.18,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "On November 18, 2026, from 15:52 to 15:54 UTC, varun.das added themselves to the 'Domain Admins' group on DC01.",
+     "problems": [
+      "time 15:54 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 4.87,
+    "feedback": [
+     "- summary claim 1 \"On November 18, 2026, from 15:50 to 15:54 UTC, varun.das logged on to DC01 and added themselves to the 'Domain Admins' group.\": time 15:54 not found in cited facts; time 15:50 not found in cited facts. (F3 says: 2026-11-18 15:52:55 UTC: R6 Unauthorised privileged group change - varun.das added to privileged group 'Domain Admins' on DC01 by varun.das (self-added); actor varun.das is not an authorised administrator; change made ou; F7 says: Severity High (score 70/100): R5 New device or source IP for this user +5; R6 Unauthorised privileged group change +25; R14 Privileged group discovery +5; Privileged account involved +15; Domain-wide admin group targeted)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0005",
+   "level": "Medium",
+   "source": "slm",
+   "error": null,
+   "wall_s": 5.04,
+   "tokens_per_s": 94.2,
+   "output_tokens": 454,
+   "prompt_tokens": 1298,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.13,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 2,
+    "final_claims": 2,
+    "final_verified": 2,
+    "latency_s": 0.0,
+    "initial_rate": 1.0,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0003",
+   "level": "Low",
+   "source": "slm",
+   "error": null,
+   "wall_s": 4.34,
+   "tokens_per_s": 92.4,
+   "output_tokens": 371,
+   "prompt_tokens": 1798,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.23,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 2,
+    "final_claims": 2,
+    "final_verified": 2,
+    "latency_s": 0.0,
+    "initial_rate": 1.0,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  }
+ ]
+}

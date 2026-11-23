@@ -1,0 +1,911 @@
+{
+ "summary": {
+  "datasets": [
+   "test_seed101",
+   "test_seed202",
+   "test_seed303"
+  ],
+  "model": "qwen2.5:1.5b",
+  "prompt_version": "v7",
+  "inference_mode": [
+   "GPU"
+  ],
+  "placement": {
+   "model_loaded": true,
+   "size_gb": 1.17,
+   "vram_gb": 1.17,
+   "gpu_share": 1.0,
+   "mode": "GPU"
+  },
+  "forced_cpu": false,
+  "self_repair": true,
+  "incidents": 15,
+  "slm_answers": 15,
+  "fallbacks": 0,
+  "factual_claims": 47,
+  "verified": 15,
+  "verification_rate": 0.319,
+  "repair": {
+   "incidents_with_failures": 13,
+   "initial_claims": 49,
+   "initial_verified": 12,
+   "initial_rate": 0.245,
+   "final_claims": 47,
+   "final_verified": 15,
+   "final_rate": 0.319,
+   "claims_still_failing": 32,
+   "repaired_kept": 13,
+   "mean_extra_latency_s": 2.71
+  },
+  "mean_wall_s": 5.31,
+  "mean_tokens_per_s": 154.1,
+  "mean_prompt_tokens": 1974,
+  "mean_output_tokens": 382,
+  "resources": {
+   "ollama_cpu_pct_of_machine_mean_busy": 1.5,
+   "ollama_cpu_pct_of_machine_peak": 2.1,
+   "ollama_rss_peak_mb": 103.7,
+   "samples": 161
+  },
+  "hardware": {
+   "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+   "logical_cpus": 20,
+   "ram_gb": 23.7
+  },
+  "recorded_at": "2026-11-23 07:01:00",
+  "ollama": {
+   "host": "http://127.0.0.1:11434",
+   "model": "qwen2.5:1.5b",
+   "reachable": true,
+   "model_installed": true,
+   "models": [
+    {
+     "name": "qwen2.5:1.5b",
+     "size_gb": 0.99,
+     "quant": "Q4_K_M",
+     "params": "1.5B"
+    },
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.68,
+     "quant": "Q4_K_M",
+     "params": "7.6B"
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 1.93,
+     "quant": "Q4_K_M",
+     "params": "3.1B"
+    }
+   ],
+   "loaded": [
+    {
+     "name": "qwen2.5:1.5b",
+     "size_gb": 1.17,
+     "vram_gb": 1.17,
+     "gpu_share": 1.0
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 2.17,
+     "vram_gb": 0.0,
+     "gpu_share": 0.0
+    }
+   ],
+   "error": null,
+   "version": "0.40.16"
+  }
+ },
+ "incidents": [
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0001",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 7.92,
+   "tokens_per_s": 153.2,
+   "output_tokens": 304,
+   "prompt_tokens": 2346,
+   "load_s": 3.52,
+   "prompt_eval_s": 0.3,
+   "factual_claims": 2,
+   "verified": 0,
+   "unverified": [
+    {
+     "text": "Between 03:33 UTC and 04:09 UTC, admin02 logged in to FIN-SRV01 from a new source IP (10.0.60.126) at an unusual time of day.",
+     "problems": [
+      "time 03:33 not found in cited facts",
+      "time 04:09 not found in cited facts",
+      "'10.0.60.126' is not in the cited facts",
+      "IP 10.0.60.126 is not in the cited facts",
+      "typed source_ip '10.0.60.126' not in cited facts",
+      "typed start_time 03:33 not found in cited facts",
+      "typed end_time 04:09 not found in cited facts",
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    },
+    {
+     "text": "The unusual login time and new source IP indicate a potential compromise or unauthorized access attempt.",
+     "problems": [
+      "typed source_ip '10.0.60.126' not in cited facts",
+      "typed start_time 03:33 not found in cited facts",
+      "typed end_time 04:09 not found in cited facts",
+      "statement content not supported by cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 1,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 2,
+    "initial_verified": 0,
+    "final_claims": 2,
+    "final_verified": 0,
+    "latency_s": 2.04,
+    "feedback": [
+     "- summary claim 1 \"Between 03:33 UTC and 04:09 UTC, admin02 logged in to FIN-SRV01 from a new source IP (10.0.60.126) at an unusual time of day.\": time 04:09 not found in cited facts; typed end_time 04:09 not found in cited facts. (F2 says: 2026-10-15 03:33:20 UTC: R4 Unusual login time for this user - admin02 logged on at 03:33 UTC; no prior logon within +-1h of this hour in 18 earlier logons (usual hours: 08, 09, 10, 11, 12, 13, 14, 15, 16). Events: EVT-0; F3 says: 2026-10-15 03:33:20 UTC: R5 New device or source IP for this user - First time admin02 logged on from/to host FIN-SRV01 and source IP 10.0.60.126 in 18 earlier logons. Events: EVT-000940.)",
+     "- supported_conclusions claim 1 \"The unusual login time and new source IP indicate a potential compromise or unauthorized access attempt.\": typed source_ip '10.0.60.126' not in cited facts; typed start_time 03:33 not found in cited facts; typed end_time 04:09 not found in cited facts. (F5 says: 2026-10-15 03:52:09 UTC: R7 Suspicious process execution - mimikatz.exe (parent cmd.exe) by admin02 on FIN-SRV01 matched: Credential dumping tool (Mimikatz). Command: mimikatz.exe \"privilege::debug\" \"sekurlsa::logonpassw)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.0,
+    "final_rate": 0.0,
+    "still_failing": 2
+   }
+  },
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 6.24,
+   "tokens_per_s": 155.2,
+   "output_tokens": 442,
+   "prompt_tokens": 2727,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.21,
+   "factual_claims": 4,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "Between 01:04:31 UTC on October 16, 2026 and 01:19:03 UTC, deepak.gupta attempted to brute force logon from WS-ENG-13.",
+     "problems": [
+      "time 01:04 not found in cited facts",
+      "time 01:19 not found in cited facts",
+      "typed start_time 01:04 not found in cited facts",
+      "typed end_time 01:19 not found in cited facts"
+     ]
+    },
+    {
+     "text": "This was followed by a successful logon attempt at 01:17:06 UTC with the same source IP (185.220.101.134).",
+     "problems": [
+      "time 01:17 not found in cited facts",
+      "typed start_time 01:04 not found in cited facts",
+      "typed end_time 01:19 not found in cited facts"
+     ]
+    },
+    {
+     "text": "The account's login time deviates significantly, suggesting unusual activity.",
+     "problems": [
+      "typed start_time 01:04 not found in cited facts",
+      "typed end_time 01:19 not found in cited facts",
+      "statement content not supported by cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.25,
+   "hypotheses": 1,
+   "grounded_hypotheses": 0,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 4,
+    "initial_verified": 1,
+    "final_claims": 4,
+    "final_verified": 1,
+    "latency_s": 3.06,
+    "feedback": [
+     "- summary claim 1 \"Between 01:04:31 UTC on October 16, 2026 and 01:19:03 UTC, deepak.gupta attempted to brute force logon from WS-ENG-13.\": time 01:04 not found in cited facts; time 01:19 not found in cited facts; typed start_time 01:04 not found in cited facts. (F2 says: 2026-10-16 00:52:31-00:55:53 UTC: R1 Brute force - 21 failed logons for deepak.gupta from 185.220.101.134 in 3.4 min (peak 21 within 10 min; threshold 8). Events: EVT-001257 ... EVT-001277 (21 events).; F3 says: 2026-10-16 00:57:15 UTC: R3 Successful logon after failures - deepak.gupta logged on successfully from 185.220.101.134 1.4 min after 21 failed attempts from the same source (R1 burst). Events: EVT-001278.)",
+     "- summary claim 2 \"This was followed by a successful logon attempt at 01:17:06 UTC with the same source IP (185.220.101.134).\": time 01:17 not found in cited facts; typed start_time 01:04 not found in cited facts; typed end_time 01:19 not found in cited facts. (F2 says: 2026-10-16 00:52:31-00:55:53 UTC: R1 Brute force - 21 failed logons for deepak.gupta from 185.220.101.134 in 3.4 min (peak 21 within 10 min; threshold 8). Events: EVT-001257 ... EVT-001277 (21 events).; F3 says: 2026-10-16 00:57:15 UTC: R3 Successful logon after failures - deepak.gupta logged on successfully from 185.220.101.134 1.4 min after 21 failed attempts from the same source (R1 burst). Events: EVT-001278.)",
+     "- summary claim 3 \"The account's login time deviates significantly, suggesting unusual activity.\": typed start_time 01:04 not found in cited facts; typed end_time 01:19 not found in cited facts; statement content not supported by cited facts (overlap 0%). (F2 says: 2026-10-16 00:52:31-00:55:53 UTC: R1 Brute force - 21 failed logons for deepak.gupta from 185.220.101.134 in 3.4 min (peak 21 within 10 min; threshold 8). Events: EVT-001257 ... EVT-001277 (21 events).; F3 says: 2026-10-16 00:57:15 UTC: R3 Successful logon after failures - deepak.gupta logged on successfully from 185.220.101.134 1.4 min after 21 failed attempts from the same source (R1 burst). Events: EVT-001278.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.25,
+    "final_rate": 0.25,
+    "still_failing": 3
+   }
+  },
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0002",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 4.16,
+   "tokens_per_s": 158.7,
+   "output_tokens": 294,
+   "prompt_tokens": 1762,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.12,
+   "factual_claims": 3,
+   "verified": 0,
+   "unverified": [
+    {
+     "text": "Between 06:44 and 06:52 UTC, R2 detected password spraying against six distinct accounts with seven failed attempts.",
+     "problems": [
+      "time 06:52 not found in cited facts",
+      "typed user 'R2' not in cited facts",
+      "typed end_time 06:52 not found in cited facts"
+     ]
+    },
+    {
+     "text": "The attacker then successfully logged in to one account from the same source IP after failing five times.",
+     "problems": [
+      "typed user 'R2' not in cited facts",
+      "typed end_time 06:52 not found in cited facts",
+      "statement content weakly related to cited facts (overlap 14%)"
+     ]
+    },
+    {
+     "text": "The password spraying activity was detected by R2, and the attacker successfully logged in to one account after five failed attempts.",
+     "problems": [
+      "number 5 not found in cited facts",
+      "typed end_time 06:52 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 1,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 3,
+    "initial_verified": 0,
+    "final_claims": 3,
+    "final_verified": 0,
+    "latency_s": 2.07,
+    "feedback": [
+     "- summary claim 1 \"Between 06:44 and 06:52 UTC, R2 detected password spraying against six distinct accounts with seven failed attempts.\": time 06:52 not found in cited facts; typed user 'R2' not in cited facts; typed end_time 06:52 not found in cited facts. (F1 says: Incident INC-0002 spans 2026-10-15 06:44:07-06:55:53 UTC with 3 alerts over 8 log events. Accounts: aditya.bose, admin02, karthik.kulkarni, naveen.menon, pooja.gupta, suresh.verma. Hosts: DC01. Source IPs: 203.0.113.222.; F2 says: 2026-10-15 06:44:07-06:49:58 UTC: R2 Password spraying - 203.0.113.222 failed against 6 distinct accounts with 7 attempts (max 2 per account) - spraying pattern (threshold 5 accounts). Events: EVT-000949 ... EVT-000955 ()",
+     "- summary claim 2 \"The attacker then successfully logged in to one account from the same source IP after failing five times.\": typed user 'R2' not in cited facts; typed end_time 06:52 not found in cited facts; statement content weakly related to cited facts (overlap 14%). (F1 says: Incident INC-0002 spans 2026-10-15 06:44:07-06:55:53 UTC with 3 alerts over 8 log events. Accounts: aditya.bose, admin02, karthik.kulkarni, naveen.menon, pooja.gupta, suresh.verma. Hosts: DC01. Source IPs: 203.0.113.222.; F2 says: 2026-10-15 06:44:07-06:49:58 UTC: R2 Password spraying - 203.0.113.222 failed against 6 distinct accounts with 7 attempts (max 2 per account) - spraying pattern (threshold 5 accounts). Events: EVT-000949 ... EVT-000955 ()",
+     "- supported_conclusions claim 1 \"The password spraying activity was detected by R2, and the attacker successfully logged in to one account after five failed attempts.\": number 5 not found in cited facts; typed end_time 06:52 not found in cited facts. (F1 says: Incident INC-0002 spans 2026-10-15 06:44:07-06:55:53 UTC with 3 alerts over 8 log events. Accounts: aditya.bose, admin02, karthik.kulkarni, naveen.menon, pooja.gupta, suresh.verma. Hosts: DC01. Source IPs: 203.0.113.222.; F3 says: 2026-10-15 06:55:53 UTC: R3 Successful logon after failures - karthik.kulkarni logged on successfully from 203.0.113.222 6.8 min after 1 failed attempts from the same source (R2 burst). Events: EVT-000956.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.0,
+    "final_rate": 0.0,
+    "still_failing": 3
+   }
+  },
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0003",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 4.47,
+   "tokens_per_s": 151.1,
+   "output_tokens": 326,
+   "prompt_tokens": 1643,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.1,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "Between 11:39:30 UTC on October 15, 2026, tara.menon attempted to log in from DC01.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 1,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 3,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 2.07,
+    "feedback": [
+     "- summary claim 1 \"Between 11:39:30 UTC on October 15, 2026, tara.menon attempted to log in from DC01.\": statement content weakly related to cited facts (overlap 0%). (F1 says: Incident INC-0003 spans 2026-10-15 11:39:30-12:04:24 UTC with 3 alerts over 3 log events. Accounts: tara.menon. Hosts: DC01. Source IPs: 10.0.4.23.)",
+     "- summary claim 2 \"This is a new device for her and the first time she has logged in since previous attempts.\": statement content not supported by cited facts (overlap 0%). (F1 says: Incident INC-0003 spans 2026-10-15 11:39:30-12:04:24 UTC with 3 alerts over 3 log events. Accounts: tara.menon. Hosts: DC01. Source IPs: 10.0.4.23.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.333,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  },
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0005",
+   "level": "Low",
+   "source": "slm",
+   "error": null,
+   "wall_s": 4.26,
+   "tokens_per_s": 148.8,
+   "output_tokens": 309,
+   "prompt_tokens": 1781,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.12,
+   "factual_claims": 2,
+   "verified": 0,
+   "unverified": [
+    {
+     "text": "Between 03:45 UTC on October 16, 2026, Rahul Verma attempted to authenticate from FIN-SRV01 using a new device or IP address.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    },
+    {
+     "text": "Rahul Verma authenticated successfully from 10.0.76.57 after repeated failures at other times.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 1,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 3,
+    "initial_verified": 0,
+    "final_claims": 2,
+    "final_verified": 0,
+    "latency_s": 1.98,
+    "feedback": [
+     "- summary claim 1 \"Between 03:45 UTC on October 16, 2026, Rahul Verma attempted to authenticate from FIN-SRV01 using a new device or IP address.\": statement content weakly related to cited facts (overlap 0%). (F1 says: Incident INC-0005 spans 2026-10-16 03:45:10-03:58:55 UTC with 4 alerts over 2 log events. Accounts: rahul.verma. Hosts: FIN-SRV01, FS01. Source IPs: 10.0.76.57.; F3 says: 2026-10-16 03:45:10 UTC: R5 New device or source IP for this user - First time rahul.verma logged on from/to source IP 10.0.76.57 in 11 earlier logons. Events: EVT-001289.)",
+     "- summary claim 2 \"This is unusual as he had previously logged in at various times of the day but never before at this hour.\": statement content not supported by cited facts (overlap 14%). (F1 says: Incident INC-0005 spans 2026-10-16 03:45:10-03:58:55 UTC with 4 alerts over 2 log events. Accounts: rahul.verma. Hosts: FIN-SRV01, FS01. Source IPs: 10.0.76.57.; F3 says: 2026-10-16 03:45:10 UTC: R5 New device or source IP for this user - First time rahul.verma logged on from/to source IP 10.0.76.57 in 11 earlier logons. Events: EVT-001289.)",
+     "- supported_conclusions claim 1 \"Rahul Verma authenticated successfully from 10.0.76.57 after repeated failures at other times.\": statement content weakly related to cited facts (overlap 0%). (F2 says: 2026-10-16 03:45:10 UTC: R4 Unusual login time for this user - rahul.verma logged on at 03:45 UTC; no prior logon within +-1h of this hour in 11 earlier logons (usual hours: 09, 10, 13, 17, 18). Events: EVT-001289.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.0,
+    "final_rate": 0.0,
+    "still_failing": 2
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0001",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 6.4,
+   "tokens_per_s": 147.9,
+   "output_tokens": 438,
+   "prompt_tokens": 2339,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.17,
+   "factual_claims": 3,
+   "verified": 0,
+   "unverified": [
+    {
+     "text": "Between 02:40 UTC and 03:21 UTC, admin02 logged in to FIN-SRV01 at unusual times (08, 09, 10, 11, 13, 14, 15, 16, 17) with no prior logons within +-1h of this hour.",
+     "problems": [
+      "time 03:21 not found in cited facts",
+      "typed end_time 03:21 not found in cited facts"
+     ]
+    },
+    {
+     "text": "The account was then cleared from the audit logs by admin02 using wevtutil.exe cl Security at 03:21 UTC.",
+     "problems": [
+      "time 03:21 not found in cited facts",
+      "typed end_time 03:21 not found in cited facts",
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    },
+    {
+     "text": "The account admin02 was logged in to FIN-SRV01 at unusual times and then cleared from the audit logs.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 3,
+    "initial_verified": 0,
+    "final_claims": 3,
+    "final_verified": 0,
+    "latency_s": 3.15,
+    "feedback": [
+     "- summary claim 1 \"Between 02:40 UTC and 03:21 UTC, admin02 logged in to FIN-SRV01 at unusual times (08, 09, 10, 11, 13, 14, 15, 16, 17) with no prior logons within +-1h.\": time 03:21 not found in cited facts; typed end_time 03:21 not found in cited facts. (F2 says: 2026-11-12 02:40:41 UTC: R4 Unusual login time for this user - admin02 logged on at 02:40 UTC; no prior logon within +-1h of this hour in 15 earlier logons (usual hours: 08, 09, 10, 11, 13, 14, 15, 16, 17). Events: EVT-0; F3 says: 2026-11-12 02:40:41 UTC: R5 New device or source IP for this user - First time admin02 logged on from/to source IP 10.0.53.181 in 15 earlier logons. Events: EVT-000766.)",
+     "- summary claim 2 \"The account was then cleared from the audit logs by admin02 using wevtutil.exe cl Security at 03:21 UTC.\": time 03:21 not found in cited facts; typed end_time 03:21 not found in cited facts; statement content weakly related to cited facts (overlap 0%). (F2 says: 2026-11-12 02:40:41 UTC: R4 Unusual login time for this user - admin02 logged on at 02:40 UTC; no prior logon within +-1h of this hour in 15 earlier logons (usual hours: 08, 09, 10, 11, 13, 14, 15, 16, 17). Events: EVT-0; F3 says: 2026-11-12 02:40:41 UTC: R5 New device or source IP for this user - First time admin02 logged on from/to source IP 10.0.53.181 in 15 earlier logons. Events: EVT-000766.)",
+     "- supported_conclusions claim 1 \"The account admin02 was logged in to FIN-SRV01 at unusual times and then cleared from the audit logs.\": statement content weakly related to cited facts (overlap 0%). (F4 says: 2026-11-12 02:40:42 UTC: CTX Special privileges assigned at logon (4672) - Special privileges assigned to logon of admin02 on FIN-SRV01 (context only; not evidence of escalation). Events: EVT-000767.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.0,
+    "final_rate": 0.0,
+    "still_failing": 3
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0005",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 5.08,
+   "tokens_per_s": 147.9,
+   "output_tokens": 344,
+   "prompt_tokens": 2712,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.22,
+   "factual_claims": 2,
+   "verified": 0,
+   "unverified": [
+    {
+     "text": "Between 21:02 UTC on November 13, 2026, a brute force attack followed by a successful logon attempt for priya.shetty from source IP 185.220.101.108.",
+     "problems": [
+      "typed end_time 'Not D' is not a HH:MM time"
+     ]
+    },
+    {
+     "text": "The brute force attack and successful logon attempt for priya.shetty were both made from the same source IP, indicating a coordinated cyber-attack.",
+     "problems": [
+      "typed end_time 'Not D' is not a HH:MM time"
+     ]
+    }
+   ],
+   "verification_rate": 0.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 1,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 2,
+    "initial_verified": 0,
+    "final_claims": 2,
+    "final_verified": 0,
+    "latency_s": 2.43,
+    "feedback": [
+     "- summary claim 1 \"Between 21:02 UTC on November 13, 2026, a brute force attack followed by a successful logon attempt for priya.shetty from source IP 185.220.101.108.\": typed end_time 'Not D' is not a HH:MM time. (F2 says: 2026-11-13 20:50:19-20:54:55 UTC: R1 Brute force - 23 failed logons for priya.shetty from 185.220.101.108 in 4.6 min (peak 23 within 10 min; threshold 8). Events: EVT-001286 ... EVT-001308 (23 events).; F3 says: 2026-11-13 21:02:19 UTC: R3 Successful logon after failures - priya.shetty logged on successfully from 185.220.101.108 7.4 min after 23 failed attempts from the same source (R1 burst). Events: EVT-001309.)",
+     "- supported_conclusions claim 1 \"The brute force attack and successful logon attempt for priya.shetty were both made from the same source IP, indicating a coordinated cyber-attack.\": typed end_time 'Not D' is not a HH:MM time. (F3 says: 2026-11-13 21:02:19 UTC: R3 Successful logon after failures - priya.shetty logged on successfully from 185.220.101.108 7.4 min after 23 failed attempts from the same source (R1 burst). Events: EVT-001309.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.0,
+    "final_rate": 0.0,
+    "still_failing": 2
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0002",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 4.5,
+   "tokens_per_s": 157.9,
+   "output_tokens": 331,
+   "prompt_tokens": 1651,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.1,
+   "factual_claims": 2,
+   "verified": 0,
+   "unverified": [
+    {
+     "text": "Between 13:30:32 UTC and 13:48:41 UTC, user naveen.bose attempted to log in three times from DC01 but was denied access each time.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    },
+    {
+     "text": "The user naveen.bose attempted to log in three times from DC01 but was denied access each time.",
+     "problems": [
+      "number 3 not found in cited facts",
+      "typed end_time 13:48 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 2,
+    "initial_verified": 0,
+    "final_claims": 2,
+    "final_verified": 0,
+    "latency_s": 2.21,
+    "feedback": [
+     "- summary claim 1 \"Between 13:30:32 UTC and 13:48:41 UTC, user naveen.bose attempted to log in three times from DC01 but was denied access each time.\": statement content weakly related to cited facts (overlap 0%). (F1 says: Incident INC-0002 spans 2026-11-12 13:30:32-13:48:41 UTC with 3 alerts over 3 log events. Accounts: naveen.bose. Hosts: DC01. Source IPs: 10.0.4.23.)",
+     "- supported_conclusions claim 1 \"The user naveen.bose attempted to log in three times from DC01 but was denied access each time.\": number 3 not found in cited facts; typed end_time 13:48 not found in cited facts. (F2 says: 2026-11-12 13:30:32 UTC: R5 New device or source IP for this user - First time naveen.bose logged on from/to host DC01 in 8 earlier logons (LOW-CONFIDENCE baseline: limited history). Events: EVT-000914.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.0,
+    "final_rate": 0.0,
+    "still_failing": 2
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0004",
+   "level": "Medium",
+   "source": "slm",
+   "error": null,
+   "wall_s": 2.54,
+   "tokens_per_s": 159.1,
+   "output_tokens": 381,
+   "prompt_tokens": 1270,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.06,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 2,
+    "final_claims": 2,
+    "final_verified": 2,
+    "latency_s": 0.0,
+    "initial_rate": 1.0,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0003",
+   "level": "Low",
+   "source": "slm",
+   "error": null,
+   "wall_s": 2.27,
+   "tokens_per_s": 160.7,
+   "output_tokens": 329,
+   "prompt_tokens": 1791,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.11,
+   "factual_claims": 3,
+   "verified": 3,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 1,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 3,
+    "initial_verified": 3,
+    "final_claims": 3,
+    "final_verified": 3,
+    "latency_s": 0.0,
+    "initial_rate": 1.0,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0002",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 5.23,
+   "tokens_per_s": 151.7,
+   "output_tokens": 369,
+   "prompt_tokens": 2329,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.18,
+   "factual_claims": 2,
+   "verified": 0,
+   "unverified": [
+    {
+     "text": "Between 03:00 UTC and 03:04 UTC, admin02 logged in to FIN-SRV01 for the first time at an unusual hour (03:00) with a new source IP of 10.0.38.38.",
+     "problems": [
+      "time 03:04 not found in cited facts",
+      "typed count 5 not found in cited facts",
+      "typed end_time 03:04 not found in cited facts"
+     ]
+    },
+    {
+     "text": "The unusual login time and new source IP indicate that admin02 is accessing the system from a different location or at an unexpected hour.",
+     "problems": [
+      "typed end_time 03:04 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 2,
+    "initial_verified": 0,
+    "final_claims": 2,
+    "final_verified": 0,
+    "latency_s": 2.52,
+    "feedback": [
+     "- summary claim 1 \"Between 03:00 UTC and 03:04 UTC, admin02 logged in to FIN-SRV01 for the first time at an unusual hour (03:00) with a new source IP of 10.0.38.38.\": time 03:04 not found in cited facts; typed count 5 not found in cited facts; typed end_time 03:04 not found in cited facts. (F2 says: 2026-11-19 03:00:03 UTC: R4 Unusual login time for this user - admin02 logged on at 03:00 UTC; no prior logon within +-1h of this hour in 15 earlier logons (usual hours: 08, 09, 10, 11, 12, 13, 14, 15). Events: EVT-00103; F3 says: 2026-11-19 03:00:03 UTC: R5 New device or source IP for this user - First time admin02 logged on from/to source IP 10.0.38.38 in 15 earlier logons. Events: EVT-001035.)",
+     "- supported_conclusions claim 1 \"The unusual login time and new source IP indicate that admin02 is accessing the system from a different location or at an unexpected hour.\": typed end_time 03:04 not found in cited facts. (F2 says: 2026-11-19 03:00:03 UTC: R4 Unusual login time for this user - admin02 logged on at 03:00 UTC; no prior logon within +-1h of this hour in 15 earlier logons (usual hours: 08, 09, 10, 11, 12, 13, 14, 15). Events: EVT-00103; F3 says: 2026-11-19 03:00:03 UTC: R5 New device or source IP for this user - First time admin02 logged on from/to source IP 10.0.38.38 in 15 earlier logons. Events: EVT-001035.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.0,
+    "final_rate": 0.0,
+    "still_failing": 2
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 6.12,
+   "tokens_per_s": 158.3,
+   "output_tokens": 397,
+   "prompt_tokens": 2531,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.2,
+   "factual_claims": 3,
+   "verified": 2,
+   "unverified": [
+    {
+     "text": "Between 12:28 and 12:51 UTC, deepak.joshi attempted to brute force login into WS-HR-07 from IP address 192.0.2.228 twice within a minute.",
+     "problems": [
+      "time 12:51 not found in cited facts",
+      "typed count 4 not found in cited facts",
+      "typed end_time 12:51 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.6666666666666666,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 3,
+    "initial_verified": 2,
+    "final_claims": 3,
+    "final_verified": 2,
+    "latency_s": 3.3,
+    "feedback": [
+     "- summary claim 1 \"Between 12:28 and 12:51 UTC, deepak.joshi attempted to brute force login into WS-HR-07 from IP address 192.0.2.228 twice within a minute.\": time 12:51 not found in cited facts; typed count 4 not found in cited facts; typed end_time 12:51 not found in cited facts. (F2 says: 2026-11-20 12:28:02-12:30:28 UTC: R1 Brute force - 19 failed logons for deepak.joshi from 192.0.2.228 in 2.4 min (peak 19 within 10 min; threshold 8). Events: EVT-001528 ... EVT-001546 (19 events).)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.667,
+    "final_rate": 0.667,
+    "still_failing": 1
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0001",
+   "level": "High",
+   "source": "slm",
+   "error": null,
+   "wall_s": 10.42,
+   "tokens_per_s": 153.8,
+   "output_tokens": 774,
+   "prompt_tokens": 1632,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.09,
+   "factual_claims": 11,
+   "verified": 5,
+   "unverified": [
+    {
+     "text": "Between 15:50:45 UTC and 15:54:23 UTC, varun.das attempted to change their privileged group on DC01 from 'Users' to 'Domain Admins'.",
+     "problems": [
+      "time 15:54 not found in cited facts",
+      "typed count 4 not found in cited facts",
+      "typed end_time 15:54 not found in cited facts"
+     ]
+    },
+    {
+     "text": "This unauthorized privilege change was made by the same user who had previously logged in at least three times.",
+     "problems": [
+      "number 3 not found in cited facts",
+      "typed count 4 not found in cited facts",
+      "typed end_time 15:54 not found in cited facts"
+     ]
+    },
+    {
+     "text": "The incident spans over a period of 3 log events and is linked with two other incidents: R5, which records varun.das's first login attempt on DC01; and R6,",
+     "problems": [
+      "number 2 not found in cited facts",
+      "number 3 not found in cited facts",
+      "typed count 4 not found in cited facts",
+      "typed end_time 15:54 not found in cited facts",
+      "statement content weakly related to cited facts (overlap 14%)"
+     ]
+    },
+    {
+     "text": "The change was made outside of an approved window, indicating potential insider threat.",
+     "problems": [
+      "statement content not supported by cited facts (overlap 0%)"
+     ]
+    },
+    {
+     "text": "The unauthorized privilege change was made by varun.das, who also attempted to log in three times before this incident.",
+     "problems": [
+      "no fact IDs cited",
+      "number 3 not found in cited facts",
+      "'varun.das' is not in the cited facts",
+      "typed count 4 not found in cited facts"
+     ]
+    },
+    {
+     "text": "The privilege change was made outside of any approved window, indicating potential insider activity.",
+     "problems": [
+      "no fact IDs cited",
+      "typed count 2 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.45454545454545453,
+   "hypotheses": 2,
+   "grounded_hypotheses": 0,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 11,
+    "initial_verified": 2,
+    "final_claims": 11,
+    "final_verified": 5,
+    "latency_s": 5.17,
+    "feedback": [
+     "- summary claim 1 \"Between 15:50:45 UTC and 15:54:23 UTC, varun.das attempted to change their privileged group on DC01 from 'Users' to 'Domain Admins'.\": time 15:54 not found in cited facts; typed count 4 not found in cited facts; typed end_time 15:54 not found in cited facts. (F2 says: 2026-11-18 15:50:45 UTC: R5 New device or source IP for this user - First time varun.das logged on from/to host DC01 in 10 earlier logons. Events: EVT-000941.; F3 says: 2026-11-18 15:52:55 UTC: R6 Unauthorised privileged group change - varun.das added to privileged group 'Domain Admins' on DC01 by varun.das (self-added); actor varun.das is not an authorised administrator; change made ou)",
+     "- summary claim 2 \"This unauthorized privilege change was made by the same user who had previously logged in at least three times.\": number 3 not found in cited facts; typed count 4 not found in cited facts; typed end_time 15:54 not found in cited facts. (F2 says: 2026-11-18 15:50:45 UTC: R5 New device or source IP for this user - First time varun.das logged on from/to host DC01 in 10 earlier logons. Events: EVT-000941.; F3 says: 2026-11-18 15:52:55 UTC: R6 Unauthorised privileged group change - varun.das added to privileged group 'Domain Admins' on DC01 by varun.das (self-added); actor varun.das is not an authorised administrator; change made ou)",
+     "- summary claim 3 \"The incident spans over a period of 3 log events and is linked with two other incidents: R5, which records varun.das's first login attempt on DC01; and R6,\": number 2 not found in cited facts; number 3 not found in cited facts; typed count 4 not found in cited facts. (F2 says: 2026-11-18 15:50:45 UTC: R5 New device or source IP for this user - First time varun.das logged on from/to host DC01 in 10 earlier logons. Events: EVT-000941.; F3 says: 2026-11-18 15:52:55 UTC: R6 Unauthorised privileged group change - varun.das added to privileged group 'Domain Admins' on DC01 by varun.das (self-added); actor varun.das is not an authorised administrator; change made ou)",
+     "- summary claim 4 \"The change was made outside of an approved window, indicating a potential insider threat.\": typed count 2 not found in cited facts; typed start_time 15:54 not found in cited facts; typed end_time 15:56 not found in cited facts. (F3 says: 2026-11-18 15:52:55 UTC: R6 Unauthorised privileged group change - varun.das added to privileged group 'Domain Admins' on DC01 by varun.das (self-added); actor varun.das is not an authorised administrator; change made ou)",
+     "- summary claim 5 \"The privilege change is linked to another incident where varun.das's group membership on DC01 was discovered.\": typed count 2 not found in cited facts; typed start_time 15:54 not found in cited facts; typed end_time 15:56 not found in cited facts. (F3 says: 2026-11-18 15:52:55 UTC: R6 Unauthorised privileged group change - varun.das added to privileged group 'Domain Admins' on DC01 by varun.das (self-added); actor varun.das is not an authorised administrator; change made ou)",
+     "- summary claim 6 \"The logon attempt by varun.das at 15:50:45 UTC, which is recorded as a new device or source IP for this user in R5, falls within their usual login hours.\": typed count 2 not found in cited facts; typed end_time 15:54 not found in cited facts. (F8 says: Logon EVT-000941 by varun.das at 15:50:45 falls within the account's usual logon hours.)",
+     "- summary claim 7 \"This discrepancy suggests that the incident may be an anomaly.\": typed count 2 not found in cited facts; typed end_time 15:54 not found in cited facts; statement content not supported by cited facts (overlap 0%). (F8 says: Logon EVT-000941 by varun.das at 15:50:45 falls within the account's usual logon hours.)",
+     "- supported_conclusions claim 1 \"The unauthorized privilege change was made by varun.das, who also attempted to log in three times before this incident.\": number 3 not found in cited facts. (F3 says: 2026-11-18 15:52:55 UTC: R6 Unauthorised privileged group change - varun.das added to privileged group 'Domain Admins' on DC01 by varun.das (self-added); actor varun.das is not an authorised administrator; change made ou)",
+     "- supported_conclusions claim 3 \"The privilege change was made outside of any approved window, indicating potential insider activity.\": statement content not supported by cited facts (overlap 0%). (F8 says: Logon EVT-000941 by varun.das at 15:50:45 falls within the account's usual logon hours.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.182,
+    "final_rate": 0.455,
+    "still_failing": 6
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0005",
+   "level": "Medium",
+   "source": "slm",
+   "error": null,
+   "wall_s": 4.85,
+   "tokens_per_s": 154.3,
+   "output_tokens": 355,
+   "prompt_tokens": 1298,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.07,
+   "factual_claims": 4,
+   "verified": 0,
+   "unverified": [
+    {
+     "text": "Between 17:55 UTC and 18:00 UTC, R2 Password spraying activity occurred on DC01.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    },
+    {
+     "text": "The attacker attempted to log in as one of eleven distinct accounts with a total of sixteen failed attempts (maximum two per account).",
+     "problems": [
+      "number 2 not found in cited facts",
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    },
+    {
+     "text": "The attacker attempted to log in as one of eleven distinct accounts with a total of sixteen failed attempts (maximum two per account).",
+     "problems": [
+      "number 16 not found in cited facts",
+      "number 2 not found in cited facts",
+      "number 11 not found in cited facts",
+      "typed start_time 17:55 not found in cited facts",
+      "typed end_time 18:00 not found in cited facts",
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    },
+    {
+     "text": "The activity was detected by R2 Password spraying, which is rated Medium severity and has been confirmed.",
+     "problems": [
+      "typed start_time 17:55 not found in cited facts",
+      "typed end_time 18:00 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 4,
+    "initial_verified": 0,
+    "final_claims": 4,
+    "final_verified": 0,
+    "latency_s": 2.38,
+    "feedback": [
+     "- summary claim 1 \"Between 17:55:20 UTC and 18:00:29 UTC, R2 Password spraying activity occurred on DC01.\": statement content weakly related to cited facts (overlap 0%). (F1 says: Incident INC-0005 spans 2026-11-20 17:55:20-18:00:29 UTC with 1 alerts over 16 log events. Accounts: admin01, admin02, ajay.das, ananya.gupta, isha.gupta, meera.gupta, pooja.reddy, ritu.rao, rohan.iyer, varun.das, vikram)",
+     "- summary claim 2 \"The attacker attempted to log in as one of eleven distinct accounts with a total of sixteen failed attempts (maximum two per account).\": number 2 not found in cited facts; statement content weakly related to cited facts (overlap 0%). (F1 says: Incident INC-0005 spans 2026-11-20 17:55:20-18:00:29 UTC with 1 alerts over 16 log events. Accounts: admin01, admin02, ajay.das, ananya.gupta, isha.gupta, meera.gupta, pooja.reddy, ritu.rao, rohan.iyer, varun.das, vikram)",
+     "- supported_conclusions claim 1 \"The attacker attempted to log in as one of eleven distinct accounts with a total of sixteen failed attempts (maximum two per account).\": number 16 not found in cited facts; number 2 not found in cited facts; number 11 not found in cited facts. (F3 says: Severity Medium (score 50/100): R2 Password spraying +25; Privileged account involved +15; Critical asset involved +10. Confidence that the activity is malicious: Medium (one high-signal detection; intent not established)",
+     "- supported_conclusions claim 2 \"The activity was detected by R2 Password spraying, which is rated Medium severity and has been confirmed.\": typed start_time 17:55 not found in cited facts; typed end_time 18:00 not found in cited facts. (F3 says: Severity Medium (score 50/100): R2 Password spraying +25; Privileged account involved +15; Critical asset involved +10. Confidence that the activity is malicious: Medium (one high-signal detection; intent not established)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.0,
+    "final_rate": 0.0,
+    "still_failing": 4
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0003",
+   "level": "Low",
+   "source": "slm",
+   "error": null,
+   "wall_s": 5.23,
+   "tokens_per_s": 153.0,
+   "output_tokens": 335,
+   "prompt_tokens": 1798,
+   "load_s": 0.01,
+   "prompt_eval_s": 0.11,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "The logon attempt from 10.0.62.22 was an unusual event, suggesting a potential compromise or unauthorized access.",
+     "problems": [
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 1,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": true,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 2.84,
+    "feedback": [
+     "- supported_conclusions claim 1 \"The logon attempt from 10.0.62.22 was an unusual event, suggesting a potential compromise or unauthorized access.\": statement content weakly related to cited facts (overlap 0%). (F3 says: 2026-11-20 03:57:43 UTC: R5 New device or source IP for this user - First time gaurav.bose logged on from/to source IP 10.0.62.22 in 13 earlier logons. Events: EVT-001369.)"
+    ],
+    "kept": "repaired",
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  }
+ ]
+}

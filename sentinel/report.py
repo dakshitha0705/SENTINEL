@@ -85,9 +85,12 @@ Report generated {{ generated }} &middot; Explanation source: <b>{{ source_label
 <ol>{% for s in a.steps %}<li>{{ s }}</li>{% endfor %}</ol></div>{% endfor %}
 <p class="note">Recommendations come only from SENTINEL's offline playbook library. Nothing is executed automatically; every action requires analyst approval.</p>
 
+{% if handoff %}<h2>Analyst handoff note</h2><div class="box"><pre style="white-space:pre-wrap;font-family:Consolas,monospace;font-size:12px;margin:0">{{ handoff }}</pre></div>{% endif %}
+
 <h2>Evidence verification</h2>
 <p>{{ stats.verified }} of {{ stats.factual_claims }} factual statements verified{% if stats.verification_rate is not none %} ({{ '%.0f'|format(100*stats.verification_rate) }}%){% endif %};
 {{ stats.grounded_hypotheses }} of {{ stats.hypotheses }} hypotheses grounded in cited facts; {{ stats.actions_rejected }} recommended action(s) rejected as outside the playbook library.</p>
+{% if repair and repair.attempted %}<p class="note">Self-repair: {{ repair.initial_verified }}/{{ repair.initial_claims }} statements verified on the first attempt; after one repair round with the verifier's specific errors {{ repair.final_verified }}/{{ repair.final_claims }} ({{ repair.still_failing }} still failing and shown as unverified).</p>{% endif %}
 {% if error %}<p class="note">SLM note: {{ error }}</p>{% endif %}
 <details><summary>Evidence pack facts ({{ facts|length }})</summary><table><tr><th>ID</th><th>Kind</th><th>Fact</th></tr>
 {% for f in facts %}<tr><td class="mono">{{ f.id }}</td><td>{{ f.kind }}</td><td>{{ f.text }}</td></tr>{% endfor %}</table></details>
@@ -138,7 +141,7 @@ def _ts(x):
     return pd.Timestamp(x).strftime("%Y-%m-%d %H:%M:%S")
 
 
-def render_report(analysis, incident_id: str, explanation: dict, verification: dict) -> str:
+def render_report(analysis, incident_id: str, explanation: dict, verification: dict, handoff: str | None = None) -> str:
     inc = analysis.incident(incident_id)
     pack = analysis.packs[incident_id]
     ev = analysis.events.set_index("event_id")
@@ -176,4 +179,5 @@ def render_report(analysis, incident_id: str, explanation: dict, verification: d
         unverified=[c for c in verification["summary"] + verification["conclusions"] if c["status"] != "Verified"],
         mitre=[mitre_info(t) for t in inc["mitre"]], actions=actions, stats=verification["stats"],
         error=explanation.get("error"), facts=pack["facts"], steps=steps, evidence=evidence,
-        limitations=pack["limitations"], files=analysis.dataset.files)
+        limitations=pack["limitations"], files=analysis.dataset.files, handoff=handoff,
+        repair=explanation.get("repair"))

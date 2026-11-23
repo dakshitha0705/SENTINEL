@@ -1,0 +1,6 @@
+{
+ "note": "Analyst-created column-mapping profile for the unseen-format demo export. SENTINEL's automatic guess leaves these two columns unmapped; the analyst corrected them in Log Intelligence and saved the profile. Delete this file to see the uncorrected guess.",
+ "files": {
+  "siem_auth_export.csv": {"actor": "Initiated By", "target_user": "Member Added"}
+ }
+}

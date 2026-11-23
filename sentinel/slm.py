@@ -101,9 +101,23 @@ def status(cfg) -> dict:
     return out
 
 
+def unload(cfg, model: str | None = None) -> bool:
+    """Ask Ollama to unload a model (keep_alive=0) so the next request loads it with the current options
+    (e.g. after switching between CPU-only and GPU inference)."""
+    body = json.dumps({"model": model or cfg["slm"]["model"], "keep_alive": 0}).encode()
+    req = urllib.request.Request(_url(cfg, "/api/generate"), data=body, headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=20) as r:
+            r.read()
+        return True
+    except (urllib.error.URLError, TimeoutError, ConnectionError, OSError):
+        return False
+
+
 def cache_key(pack: dict, cfg: dict) -> str:
     view = slm_view(pack)
-    blob = json.dumps({"m": cfg["slm"]["model"], "p": PROMPT_VERSION, "v": view}, sort_keys=True, default=str)
+    blob = json.dumps({"m": cfg["slm"]["model"], "p": PROMPT_VERSION, "v": view, "g": cfg["slm"].get("num_gpu")},
+                      sort_keys=True, default=str)
     return hashlib.sha256(blob.encode()).hexdigest()[:24]
 
 
@@ -130,6 +144,10 @@ def _chat(cfg, messages, fmt, on_token=None, seed=42, temperature=None) -> tuple
             "options": {"temperature": s["temperature"] if temperature is None else temperature,
                         "num_ctx": s["num_ctx"], "num_predict": s["num_predict"],
                         "repeat_penalty": 1.15, "seed": seed}}
+    if s.get("num_gpu") is not None:      # 0 = CPU-only inference (limited-compute benchmark / setting)
+        body["options"]["num_gpu"] = int(s["num_gpu"])
+    if s.get("num_thread"):
+        body["options"]["num_thread"] = int(s["num_thread"])
     req = urllib.request.Request(_url(cfg, "/api/chat"), data=json.dumps(body).encode(),
                                  headers={"Content-Type": "application/json"})
     t0 = time.perf_counter()

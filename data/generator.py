@@ -579,8 +579,27 @@ class Generator:
 
 
 DEMO = GenParams(seed=2024, name="demo_unseen", start="2026-11-16", n_regular=22, n_workstations=13,
-                 bf_failures=(14, 22), bf_duration_min=(2, 4), spray_users=(8, 11), spray_success_prob=1.0,
-                 description="Demo dataset in an unseen SIEM-export format (IST timestamps, different column names).")
+                 bf_failures=(14, 22), bf_duration_min=(2, 4), spray_users=(8, 11), spray_success_prob=1.0, geo=True,
+                 description="Demo dataset in an unseen SIEM-export format (IST timestamps, different column names, "
+                             "synthetic SIEM geo-enrichment columns).")
+
+# Synthetic SIEM geo-enrichment for the demo export ONLY (fictional organisation; the external addresses are
+# RFC 5737 documentation ranges, so these locations are illustrative, not real attribution). Internal
+# subnets map to the fictional company's sites; unknown subnets get no location, as a real SIEM would.
+DEMO_GEO = [("10.0.10.", "Mumbai data centre (IN)", 19.08, 72.88), ("10.0.9.", "Bengaluru HQ - IT (IN)", 12.97, 77.59),
+            ("10.0.20.", "Bengaluru HQ (IN)", 12.97, 77.59), ("10.0.1.", "Bengaluru HQ (IN)", 12.97, 77.59),
+            ("10.0.2.", "Bengaluru HQ (IN)", 12.97, 77.59), ("10.0.3.", "Hyderabad office (IN)", 17.39, 78.49),
+            ("10.0.4.", "Chennai office (IN)", 13.08, 80.27), ("10.0.5.", "Pune office (IN)", 18.52, 73.86),
+            ("203.0.113.", "Singapore (SG)", 1.35, 103.82), ("198.51.100.", "Frankfurt (DE)", 50.11, 8.68),
+            ("192.0.2.", "Sao Paulo (BR)", -23.55, -46.63), ("185.220.101.", "Amsterdam (NL)", 52.37, 4.90),
+            ("45.155.205.", "Tokyo (JP)", 35.68, 139.69)]
+
+
+def demo_geo(ip: str):
+    for prefix, label, lat, lon in DEMO_GEO:
+        if ip.startswith(prefix):
+            return label, lat, lon
+    return "", "", ""
 
 
 def write_alt_format(g: "Generator", out_dir: Path) -> None:
@@ -591,15 +610,18 @@ def write_alt_format(g: "Generator", out_dir: Path) -> None:
     endp = [x for x in recs if x["log"] == "endpoint"]
     with open(out_dir / "siem_auth_export.csv", "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
+        geo_cols = (["Src Location", "Src Latitude", "Src Longitude", "Device Location", "Device Latitude",
+                     "Device Longitude"] if g.p.geo else [])
         w.writerow(["Event Time (IST)", "Event ID", "Record", "Device", "Account", "Initiated By", "Member Added",
-                     "Source Address", "Logon Type", "Result"])
+                     "Source Address", "Logon Type", "Result"] + geo_cols)
         for x in auth:
             res = "Failure" if x["EventID"] == "4625" else "Success"
             w.writerow([(x["ts"] + ist).strftime("%d-%m-%Y %H:%M:%S") + " +05:30", x["EventID"], x["EventRecordID"],
                         x["Computer"], "CORP\\" + x["TargetUserName"],
                         x["SubjectUserName"] if x["EventID"] in ("4728", "4732", "4756") else "",
                         x["MemberName"].split(",")[0].replace("CN=", "") if x["MemberName"] else "",
-                        x["IpAddress"], x["LogonType"], res])
+                        x["IpAddress"], x["LogonType"], res]
+                       + (list(demo_geo(x["IpAddress"])) + list(demo_geo(g.ip_of(x["Computer"]) or "")) if g.p.geo else []))
     with open(out_dir / "edr_process_events.jsonl", "w", encoding="utf-8") as fh:
         for x in endp:
             doc = {"time": (x["ts"] + ist).strftime("%Y-%m-%dT%H:%M:%S+05:30"), "event_id": int(x["EventID"]),

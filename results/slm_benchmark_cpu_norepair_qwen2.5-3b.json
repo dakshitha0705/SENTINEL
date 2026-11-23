@@ -1,0 +1,328 @@
+{
+ "summary": {
+  "datasets": [
+   "test_seed101",
+   "test_seed202",
+   "test_seed303"
+  ],
+  "model": "qwen2.5:3b",
+  "prompt_version": "v7",
+  "inference_mode": [
+   "CPU"
+  ],
+  "placement": {
+   "model_loaded": true,
+   "size_gb": 2.17,
+   "vram_gb": 0.0,
+   "gpu_share": 0.0,
+   "mode": "CPU"
+  },
+  "forced_cpu": true,
+  "self_repair": false,
+  "incidents": 6,
+  "slm_answers": 6,
+  "fallbacks": 0,
+  "factual_claims": 12,
+  "verified": 7,
+  "verification_rate": 0.583,
+  "repair": {
+   "incidents_with_failures": 0,
+   "initial_claims": 12,
+   "initial_verified": 7,
+   "initial_rate": 0.583,
+   "final_claims": 12,
+   "final_verified": 7,
+   "final_rate": 0.583,
+   "claims_still_failing": 5,
+   "repaired_kept": 0,
+   "mean_extra_latency_s": 0.0
+  },
+  "mean_wall_s": 46.74,
+  "mean_tokens_per_s": 15.5,
+  "mean_prompt_tokens": 2497,
+  "mean_output_tokens": 417,
+  "resources": {
+   "ollama_cpu_pct_of_machine_mean_busy": 1.2,
+   "ollama_cpu_pct_of_machine_peak": 1.2,
+   "ollama_rss_peak_mb": 382.7,
+   "samples": 552
+  },
+  "hardware": {
+   "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+   "logical_cpus": 20,
+   "ram_gb": 23.7
+  },
+  "recorded_at": "2026-11-23 06:59:37",
+  "ollama": {
+   "host": "http://127.0.0.1:11434",
+   "model": "qwen2.5:3b",
+   "reachable": true,
+   "model_installed": true,
+   "models": [
+    {
+     "name": "qwen2.5:1.5b",
+     "size_gb": 0.99,
+     "quant": "Q4_K_M",
+     "params": "1.5B"
+    },
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.68,
+     "quant": "Q4_K_M",
+     "params": "7.6B"
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 1.93,
+     "quant": "Q4_K_M",
+     "params": "3.1B"
+    }
+   ],
+   "loaded": [
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 2.17,
+     "vram_gb": 0.0,
+     "gpu_share": 0.0
+    }
+   ],
+   "error": null,
+   "version": "0.40.16"
+  }
+ },
+ "incidents": [
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0001",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 47.42,
+   "tokens_per_s": 16.7,
+   "output_tokens": 406,
+   "prompt_tokens": 2346,
+   "load_s": 2.66,
+   "prompt_eval_s": 20.45,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "admin02 authenticated successfully on FIN-SRV01 from 10.0.60.126 at 03:33 UTC.",
+     "problems": [
+      "time 03:33 not found in cited facts",
+      "'10.0.60.126' is not in the cited facts",
+      "IP 10.0.60.126 is not in the cited facts",
+      "typed source_ip '10.0.60.126' not in cited facts",
+      "statement content weakly related to cited facts (overlap 0%)"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 0.0,
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  },
+  {
+   "dataset": "test_seed101",
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 51.66,
+   "tokens_per_s": 15.2,
+   "output_tokens": 452,
+   "prompt_tokens": 2727,
+   "load_s": 0.01,
+   "prompt_eval_s": 21.87,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 2,
+    "final_claims": 2,
+    "final_verified": 2,
+    "latency_s": 0.0,
+    "initial_rate": 1.0,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0001",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 39.27,
+   "tokens_per_s": 15.9,
+   "output_tokens": 384,
+   "prompt_tokens": 2339,
+   "load_s": 0.01,
+   "prompt_eval_s": 15.05,
+   "factual_claims": 2,
+   "verified": 2,
+   "unverified": [],
+   "verification_rate": 1.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 2,
+    "final_claims": 2,
+    "final_verified": 2,
+    "latency_s": 0.0,
+    "initial_rate": 1.0,
+    "final_rate": 1.0,
+    "still_failing": 0
+   }
+  },
+  {
+   "dataset": "test_seed202",
+   "incident_id": "INC-0005",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 52.24,
+   "tokens_per_s": 14.8,
+   "output_tokens": 466,
+   "prompt_tokens": 2712,
+   "load_s": 0.01,
+   "prompt_eval_s": 20.7,
+   "factual_claims": 2,
+   "verified": 0,
+   "unverified": [
+    {
+     "text": "Between 20:54:55 UTC and 21:33:57 UTC, priya.shetty experienced a brute force attack with multiple failed logon attempts from source IP 185.220.101.108 followed by a successful logon at 21:33:57 UTC.",
+     "problems": [
+      "time 21:33 not found in cited facts"
+     ]
+    },
+    {
+     "text": "Priya.shetty authenticated successfully from source IP 185.220.101.108 at 21:33:57 UTC after multiple failed attempts.",
+     "problems": [
+      "time 21:33 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.0,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 0,
+    "final_claims": 2,
+    "final_verified": 0,
+    "latency_s": 0.0,
+    "initial_rate": 0.0,
+    "final_rate": 0.0,
+    "still_failing": 2
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0002",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 40.37,
+   "tokens_per_s": 15.3,
+   "output_tokens": 348,
+   "prompt_tokens": 2329,
+   "load_s": 0.01,
+   "prompt_eval_s": 17.53,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "admin02 authenticated successfully at 03:00 UTC from source IP 10.0.38.38 with special privileges.",
+     "problems": [
+      "time 03:00 not found in cited facts",
+      "'10.0.38.38' is not in the cited facts",
+      "IP 10.0.38.38 is not in the cited facts",
+      "typed source_ip '10.0.38.38' not in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 0.0,
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  },
+  {
+   "dataset": "test_seed303",
+   "incident_id": "INC-0004",
+   "level": "Critical",
+   "source": "slm",
+   "error": null,
+   "wall_s": 49.5,
+   "tokens_per_s": 15.2,
+   "output_tokens": 447,
+   "prompt_tokens": 2531,
+   "load_s": 0.0,
+   "prompt_eval_s": 20.02,
+   "factual_claims": 2,
+   "verified": 1,
+   "unverified": [
+    {
+     "text": "Between 12:30 and 12:48, deepak.joshi successfully logged in from source IP 192.0.2.228 after multiple failed attempts.",
+     "problems": [
+      "time 12:48 not found in cited facts"
+     ]
+    }
+   ],
+   "verification_rate": 0.5,
+   "hypotheses": 1,
+   "grounded_hypotheses": 1,
+   "actions_accepted": 2,
+   "actions_rejected": 0,
+   "repair": {
+    "attempted": false,
+    "initial_claims": 2,
+    "initial_verified": 1,
+    "final_claims": 2,
+    "final_verified": 1,
+    "latency_s": 0.0,
+    "initial_rate": 0.5,
+    "final_rate": 0.5,
+    "still_failing": 1
+   }
+  }
+ ]
+}
