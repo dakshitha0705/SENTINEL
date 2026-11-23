@@ -1,0 +1,283 @@
+{
+ "recorded_at": "2026-11-23 06:04:35",
+ "internet_reachable": false,
+ "internet_reachable_after": false,
+ "test_type": "offline test",
+ "total_seconds": 25.93,
+ "host": "local machine",
+ "system": {
+  "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+  "logical_cpus": 20,
+  "cpu_percent": 2.7,
+  "ram_total_gb": 23.7,
+  "ram_used_percent": 73.1,
+  "process_rss_mb": 177.2,
+  "gpu": {
+   "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+   "memory_used_mb": 2183,
+   "memory_total_mb": 8188,
+   "utilization_percent": 0
+  }
+ },
+ "steps": {
+  "ollama_status": {
+   "reachable": true,
+   "model_installed": true,
+   "version": "0.40.16",
+   "models": [
+    {
+     "name": "qwen2.5:7b",
+     "size_gb": 4.68,
+     "quant": "Q4_K_M",
+     "params": "7.6B"
+    },
+    {
+     "name": "qwen2.5:3b",
+     "size_gb": 1.93,
+     "quant": "Q4_K_M",
+     "params": "3.1B"
+    }
+   ]
+  },
+  "ingest": {
+   "seconds": 0.241,
+   "records_read": 1716,
+   "accepted": 1716,
+   "rejected": 0,
+   "duplicates": 0,
+   "formats": [
+    "csv",
+    "jsonl"
+   ]
+  },
+  "analysis": {
+   "seconds": 0.271,
+   "alerts": 109,
+   "incidents": [
+    [
+     "INC-0001",
+     "Critical",
+     100,
+     "Suspicious execution -> Log clearing (admin02 on FIN-SRV01)"
+    ],
+    [
+     "INC-0005",
+     "Critical",
+     100,
+     "Brute force -> Logon after failures -> Privilege change -> Suspicious execution (kavya.shetty on WS-SALES-09)"
+    ],
+    [
+     "INC-0004",
+     "Critical",
+     85,
+     "Password spraying -> Logon after failures (11 accounts on DC01)"
+    ],
+    [
+     "INC-0002",
+     "High",
+     65,
+     "Privilege change (isha.gupta on DC01)"
+    ],
+    [
+     "INC-0003",
+     "Low",
+     20,
+     "Off-hours logon from new device/IP (kavya.gupta on FS01)"
+    ]
+   ],
+   "timings": {
+    "detection_s": 0.176,
+    "correlation_s": 0.004,
+    "severity_s": 0.0,
+    "evidence_s": 0.091,
+    "analysis_total_s": 0.271
+   }
+  },
+  "report": {
+   "file": "reports\\offline_INC-0001.html",
+   "bytes": 21238,
+   "external_refs": 3
+  },
+  "slm": [
+   {
+    "incident": "INC-0001",
+    "source": "slm",
+    "error": null,
+    "wall_s": 10.46,
+    "tokens_per_s": 91.9,
+    "output_tokens": 668,
+    "load_s": 2.69,
+    "verified": 3,
+    "claims": 4
+   },
+   {
+    "incident": "INC-0005",
+    "source": "slm",
+    "error": null,
+    "wall_s": 6.97,
+    "tokens_per_s": 92.5,
+    "output_tokens": 602,
+    "load_s": 0.01,
+    "verified": 2,
+    "claims": 2
+   },
+   {
+    "incident": "INC-0004",
+    "source": "slm",
+    "error": null,
+    "wall_s": 5.69,
+    "tokens_per_s": 94.0,
+    "output_tokens": 499,
+    "load_s": 0.01,
+    "verified": 2,
+    "claims": 4
+   }
+  ],
+  "evaluation": {
+   "seconds": 2.172,
+   "results": [
+    {
+     "dataset": "test_seed101",
+     "incident_precision": 1.0,
+     "incident_recall": 1.0,
+     "f1": 1.0,
+     "false_positive_rate": 0.0
+    },
+    {
+     "dataset": "test_seed202",
+     "incident_precision": 1.0,
+     "incident_recall": 1.0,
+     "f1": 1.0,
+     "false_positive_rate": 0.0
+    },
+    {
+     "dataset": "test_seed303",
+     "incident_precision": 1.0,
+     "incident_recall": 1.0,
+     "f1": 1.0,
+     "false_positive_rate": 0.0
+    }
+   ]
+  }
+ },
+ "monitor": {
+  "started": "2026-11-23 06:04:09",
+  "ended": "2026-11-23 06:04:35",
+  "samples": 117,
+  "peak_sentinel_rss_mb": 181.4,
+  "peak_ollama_rss_mb": 342.3,
+  "connections": [
+   {
+    "process": "ollama.exe",
+    "pid": 24600,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:60994",
+    "status": "CLOSING",
+    "scope": "loopback",
+    "first_seen": "06:04:09"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 24600,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:60998",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "06:04:10"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 36772,
+    "local": "127.0.0.1:60998",
+    "remote": "127.0.0.1:11434",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "06:04:10"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 24600,
+    "local": "127.0.0.1:61010",
+    "remote": "127.0.0.1:60999",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "06:04:12"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 24600,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:61011",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "06:04:20"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 24600,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:61017",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "06:04:27"
+   }
+  ],
+  "external_connections": [],
+  "loopback_connections": [
+   {
+    "process": "ollama.exe",
+    "pid": 24600,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:60994",
+    "status": "CLOSING",
+    "scope": "loopback",
+    "first_seen": "06:04:09"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 24600,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:60998",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "06:04:10"
+   },
+   {
+    "process": "sentinel (python)",
+    "pid": 36772,
+    "local": "127.0.0.1:60998",
+    "remote": "127.0.0.1:11434",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "06:04:10"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 24600,
+    "local": "127.0.0.1:61010",
+    "remote": "127.0.0.1:60999",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "06:04:12"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 24600,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:61011",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "06:04:20"
+   },
+   {
+    "process": "ollama.exe",
+    "pid": 24600,
+    "local": "127.0.0.1:11434",
+    "remote": "127.0.0.1:61017",
+    "status": "ESTABLISHED",
+    "scope": "loopback",
+    "first_seen": "06:04:27"
+   }
+  ]
+ }
+}

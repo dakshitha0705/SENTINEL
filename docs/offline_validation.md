@@ -32,11 +32,11 @@ SENTINEL claims offline operation only for runs that were actually recorded. Eve
 | When (local) | Type | Internet reachable | External connections | Loopback connections | Total time | Peak RAM (SENTINEL / Ollama server) | SLM tokens/s |
 |---|---|---|---|---|---|---|---|
 | 2026-11-22 22:3x | online rehearsal | yes | **0** | 5 | 40.2 s | 179 MB / 97 MB | 91.6–93.1 |
-| *(pending)* | **offline test (Wi-Fi disconnected)** | – | – | – | – | – | – |
+| 2026-11-23 06:04 | **offline test (Wi-Fi disconnected)** | **no** (before and after) | **0** | 6 | 25.9 s | 181 MB / 342 MB | 91.9–94.0 |
 
 > The Ollama server process stays small because the model weights live in GPU memory: `ollama ps` / the monitor page report 100% of qwen2.5:3b in VRAM (about 2.2 GB).
 
-The rehearsal shows that even **with** internet available, the full workflow opened no external connections. The disconnected run is recorded separately, and this table is updated only from its results file.
+The rehearsal shows that even **with** internet available, the full workflow opened no external connections. The disconnected run (`results/offline_runs/20261123_060435.json`) repeated the same workflow with the internet unreachable before and after the run: Ollama and the model loaded from local disk, 3 live SLM explanations completed (verified 3/4, 2/2, 2/4 sentences), the HTML report was written, and the held-out evaluation reproduced P = R = F1 = 1.0. This table is updated only from results files.
 
 ## How to reproduce
 
