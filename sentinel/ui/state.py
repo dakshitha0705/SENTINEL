@@ -303,7 +303,7 @@ def sync_notifications(snap: dict) -> list[dict]:
         n = dict(n)
         n["uid"] = f"{k[0]}:{k[1]}"
         hist.insert(0, n)
-        if time.time() - n["t"] < 90:          # do not pop up stale notifications after a reconnect
+        if time.time() - n["t"] < 15:          # pop up only fresh ones: a page reload starts a new session; history keeps all
             fresh.append(n)
     del hist[25:]
     return fresh

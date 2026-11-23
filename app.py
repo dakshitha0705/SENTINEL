@@ -57,9 +57,13 @@ elif _qp.get("sample") and S.get("_qp_done") != _qp.get("sample"):
     if _qp.get("incident", "").isdigit() and S.analysis and S.analysis.incidents:
         S.selected = S.analysis.incidents[min(int(_qp["incident"]), len(S.analysis.incidents) - 1)]["incident_id"]
 elif S.analysis is None and S.dataset is None:
-    # First visit: open the bundled unseen-format demo dataset (deterministic analysis only, no SLM call).
+    # First visit: if the live demo worker is running, monitor the live NEXUS stream (so incidents and
+    # notifications appear without choosing it); otherwise open the bundled unseen-format demo dataset.
+    from sentinel.live import LiveReader
     names = state.list_datasets()
-    if names:
+    if LiveReader.worker_alive():
+        state.select_live()
+    elif names:
         state.load_dataset("demo_unseen" if "demo_unseen" in names else names[0])
 
 
@@ -68,7 +72,7 @@ def _toast(n):
     icon = ":material/crisis_alert:" if n["kind"] == "escalated" or n["level"] in ("Critical", "High") else ":material/notifications:"
     head = "New incident detected" if n["kind"] == "new" else "Incident escalated"
     st.toast(f"**{head}** · {n['level']} {n.get('score', '')}  \n{n.get('summary') or n['text']}  \n"
-             "Open the bell (top right) to investigate.", icon=icon)
+             "Open the bell (top right) to investigate.", icon=icon, duration="long")
 
 
 if state.is_live():

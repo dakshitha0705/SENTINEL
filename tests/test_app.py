@@ -25,6 +25,10 @@ def test_page_renders(app, page):
 
 
 def test_first_visit_loads_demo_dataset(app):
+    from sentinel.live import LiveReader
+    if LiveReader.worker_alive():          # with the live demo running, a first visit monitors the live stream
+        assert app.session_state["dataset"].startswith("LIVE")
+        return
     assert app.session_state["dataset"] == "demo_unseen"
     a = app.session_state["analysis"]
     assert a is not None and len(a.incidents) == 5
