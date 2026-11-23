@@ -204,10 +204,10 @@ def _analysis_panels(a):
             m &= ev[col].isin(vals)
     if only:
         m &= ev["event_id"].isin(set(in_inc))
-    hits = ev[m].sort_values("timestamp", kind="stable")
+    hits = ev[m].sort_values("timestamp", ascending=False, kind="stable")
     page_size = 400
     pages = max(1, (len(hits) - 1) // page_size + 1)
-    pg = min(int(S.get("li_page", pages) or pages), pages)
+    pg = min(int(S.get("li_page", 1) or 1), pages)
     view = hits.iloc[(pg - 1) * page_size: pg * page_size]
     table = pd.DataFrame({
         "Time": view["timestamp"].dt.strftime("%Y-%m-%d %H:%M:%S"),
@@ -221,12 +221,12 @@ def _analysis_panels(a):
         sel = st.dataframe(table, hide_index=True, use_container_width=True, height=400, on_select="rerun",
                            selection_mode="single-row", key=f"li_table_{pg}")
         if pages > 1:
-            S.setdefault("li_page", pages)
+            S.setdefault("li_page", 1)
             if S.li_page > pages:
                 S.li_page = pages
-            st.number_input(f"Page (of {pages}; {len(hits):,} matching events, oldest first)", 1, pages, key="li_page")
+            st.number_input(f"Page (of {pages}; {len(hits):,} matching events, newest first)", 1, pages, key="li_page")
         else:
-            st.caption(f"{len(hits):,} matching events. Select a row to see its details.")
+            st.caption(f"{len(hits):,} matching events, newest first. Select a row to see its details.")
     with right:
         rows = list(getattr(getattr(sel, "selection", None), "rows", []) or [])
         if not rows:

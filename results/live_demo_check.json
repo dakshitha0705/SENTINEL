@@ -1,7 +1,9 @@
 {
- "recorded_at": "2026-11-23 18:38:49",
+ "recorded_at": "2026-11-24 00:28:42",
  "scenario": "G",
- "session": "20261123-183850-57b9",
+ "internet_reachable": true,
+ "test_type": "online rehearsal",
+ "session": "20261124-002844-1c6b",
  "baseline_events": 231,
  "runner": {
   "state": "completed",
@@ -14,7 +16,7 @@
  "incidents": [
   {
    "incident_id": "INC-0001",
-   "latency_s": 1.0,
+   "latency_s": 1.58,
    "level": "Critical",
    "rules": [
     "R1",
@@ -28,18 +30,20 @@
    "title": "Brute force -> Logon after failures -> Privilege change -> Suspicious execution -> Log clearing (maya.fernandes on NEXUS-WEB01)"
   }
  ],
- "first_incident_after_s": 5.8,
+ "first_incident_after_s": 7.5,
  "engine_latency_s": [
-  1.0
+  1.58
  ],
  "ui_shows_incident_mode": true,
+ "notification_bell_count": "3",
  "ui_lists_incident": true,
  "investigation_opened": true,
- "qwen_explanation_s": 9.0,
+ "qwen_explanation_s": 18.0,
  "qwen_source_live_or_cached": true,
  "verification_shown": true,
  "chat_answered": true,
  "report_rendered": true,
  "external_requests_blocked": 0,
- "blocked_urls": []
+ "blocked_urls": [],
+ "internet_reachable_after": true
 }

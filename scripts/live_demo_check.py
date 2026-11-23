@@ -44,6 +44,12 @@ def wait_idle(page, timeout=60):
         time.sleep(0.3)
 
 
+def seg(page, label):
+    """Click a segmented-control option (view switchers in Investigation Studio / Reports & Evaluation)."""
+    page.locator("[data-testid='stButtonGroup'] button").filter(has_text=label).first.click()
+    time.sleep(0.5)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--shots", action="store_true")
@@ -112,19 +118,22 @@ def main():
             nx.screenshot(path=str(SHOTS / "n04_controller_done.png"))
             sen.screenshot(path=str(SHOTS / "s02_command_center_live_incident.png"))
         body = sen.locator("body").inner_text()
-        out["ui_shows_incident_mode"] = "Investigate" in body and "Critical" in body
+        out["ui_shows_incident_mode"] = sen.locator("div[class*='st-key-cc_investigate'] button").count() > 0 and "/100" in body
         top = (se.get("incidents") or [{}])[0].get("incident_id")
         out["notification_bell_count"] = sen.locator("[data-testid='stPopover'] button").first.inner_text().replace("notifications", "").replace("expand_more", "").strip()
         out["ui_lists_incident"] = bool(top)
         # open the investigation for the top incident (the hero card's Investigate button)
-        sen.get_by_role("button", name="Investigate").first.click()
-        wait_idle(sen)
-        time.sleep(1.5)
-        out["investigation_opened"] = "Playback" in sen.locator("body").inner_text() and top in sen.locator("body").inner_text()
+        sen.locator("div[class*='st-key-cc_investigate'] button").first.click()
+        try:
+            sen.wait_for_selector("text=Playback", timeout=30000)
+            wait_idle(sen)
+            out["investigation_opened"] = top in sen.locator("body").inner_text()
+        except Exception as exc:  # noqa: BLE001
+            out["investigation_error"] = str(exc)[:200]
         if a.shots:
             sen.screenshot(path=str(SHOTS / "s03_investigation_live.png"), full_page=False)
         # AI investigation (inside Investigation Studio): local Qwen explanation + Evidence Contract, then one question
-        sen.get_by_text("AI investigation", exact=True).first.click()
+        seg(sen, "AI investigation")
         wait_idle(sen)
         time.sleep(1)
         t0 = time.time()
@@ -140,7 +149,7 @@ def main():
             out["qwen_error"] = str(exc)[:200]
         if a.shots:
             sen.screenshot(path=str(SHOTS / "s04_ai_lab_live.png"))
-        sen.get_by_text("Ask SENTINEL", exact=True).first.click()
+        seg(sen, "Ask SENTINEL")
         wait_idle(sen)
         sen.get_by_placeholder("Ask about this incident").fill("What happened after the successful logon?")
         sen.get_by_role("button", name="Ask", exact=True).click()
@@ -174,7 +183,7 @@ def main():
         g.goto(f"{SENT}/?live=1&page=3")
         wait_idle(g, 120)
         time.sleep(3)
-        g.get_by_text("Attack graph", exact=True).first.click()
+        seg(g, "Attack graph")
         time.sleep(10)
         if a.shots:
             g.screenshot(path=str(SHOTS / "s07_attack_graph_live.png"))

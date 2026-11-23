@@ -212,11 +212,12 @@ def create_app(root: Path | None = None, base_url: str = "http://127.0.0.1:8502"
         st["elapsed_s"] = round(((st["finished_at"] or time.time()) - st["started_at"]), 1) if st["started_at"] else 0
         sp = stream.dir / "sentinel_status.json"
         sentinel = None
-        if sp.exists():
+        for _ in range(5):                   # the worker replaces the file atomically; Windows may briefly deny reads
             try:
-                sentinel = json.loads(sp.read_text(encoding="utf-8"))
-            except ValueError:
-                sentinel = None
+                sentinel = json.loads(sp.read_text(encoding="utf-8")) if sp.exists() else None
+                break
+            except (OSError, ValueError):
+                time.sleep(0.03)
         return jsonify(session=stream.session_id, events_emitted=stream.seq, runner=st, sentinel=sentinel)
 
     @app.get("/api/health")

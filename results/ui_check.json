@@ -1,0 +1,48 @@
+{
+ "summary": {
+  "recorded_at": "2026-11-24 00:23:41",
+  "internet_reachable_after": true,
+  "external_requests_blocked": 0,
+  "local_requests": 189,
+  "pages": {
+   "Command Center": "ok",
+   "Live Demo": "ok",
+   "Log Intelligence": "ok",
+   "Investigation Studio": "ok",
+   "Investigation Studio / Evidence": "ok",
+   "Investigation Studio / Severity": "ok",
+   "Investigation Studio / Next steps": "ok",
+   "Investigation Studio / Notes": "ok",
+   "Investigation Studio / Export": "ok",
+   "Investigation Studio / AI investigation": "ok",
+   "Threat Hunting": "ok",
+   "Reports & Evaluation": "ok",
+   "Reports & Evaluation / Evaluation": "ok",
+   "Reports & Evaluation / Offline evidence": "ok"
+  },
+  "checks": {
+   "globe_rendered": true,
+   "globe_markers": 7,
+   "globe_arcs": 3,
+   "globe_drag_rotates": true,
+   "globe_wheel_zooms_in": true,
+   "globe_wheel_zooms_out": true,
+   "globe_reset_restores_view": true,
+   "globe_reset_pov": {
+    "lat": 18.05,
+    "lng": 91.73,
+    "altitude": 1.75
+   },
+   "globe_marker_click_opens_records": true,
+   "globe_marker_clicked": "Chennai office (IN)",
+   "graph_rendered": true,
+   "graph_wheel_zooms": true,
+   "graph_node_click_opens_inspector": true,
+   "hunt_card_runs_query": true,
+   "report_rendered": true
+  },
+  "javascript_errors": [],
+  "test_type": "online rehearsal"
+ },
+ "blocked_urls": []
+}

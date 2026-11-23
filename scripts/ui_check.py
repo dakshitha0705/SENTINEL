@@ -24,8 +24,7 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 SHOTS = ROOT / "docs" / "screenshots" / "v2"
-PAGES = ["Command Center", "Log Intelligence", "Incident Investigation", "Attack Graph", "AI Investigation Lab",
-         "Threat Intelligence", "Evaluation & Benchmarks", "Report Studio", "System & Settings"]
+PAGES = ["Command Center", "Live Demo", "Log Intelligence", "Investigation Studio", "Threat Hunting", "Reports & Evaluation"]
 
 
 def wait_idle(page, timeout=90):
@@ -57,6 +56,12 @@ def viz_frame(page, kind, timeout=30):
 def goto_page(page, name):
     page.locator("[data-testid='stSidebar'] [role='radiogroup'] label").nth(PAGES.index(name)).click()
     wait_idle(page)
+
+
+def seg(page, label):
+    """Click a segmented-control option (view switchers in Investigation Studio / Reports & Evaluation)."""
+    page.locator("[data-testid='stButtonGroup'] button").filter(has_text=label).first.click()
+    time.sleep(0.5)
 
 
 def main():
@@ -149,7 +154,17 @@ def main():
             goto_page(pg, name)
             exc = pg.locator("[data-testid='stException']").count()
             pages[name] = "ok" if not exc else "EXCEPTION"
-            if name == "Attack Graph":
+            if name == "Reports & Evaluation":
+                time.sleep(4)          # let the report preview iframe render
+            if a.shots:
+                pg.screenshot(path=str(SHOTS / f"p{PAGES.index(name) + 1:02d}_{name.split()[0].lower()}.png"))
+            if name == "Investigation Studio":
+                for view in ("Evidence", "Severity", "Next steps", "Notes", "Export"):
+                    seg(pg, view)
+                    wait_idle(pg)
+                    pages[f"{name} / {view}"] = "ok" if not pg.locator("[data-testid='stException']").count() else "EXCEPTION"
+                seg(pg, "Attack graph")
+                wait_idle(pg)
                 gf = viz_frame(pg, "graph", 40)
                 checks["graph_rendered"] = gf is not None
                 if gf:
@@ -166,29 +181,37 @@ def main():
                     pg.mouse.click(gb["x"] + pos["x"], gb["y"] + pos["y"])
                     wait_idle(pg, 30)
                     checks["graph_node_click_opens_inspector"] = pg.get_by_role("button", name="Open investigation").count() > 0
-            if name == "AI Investigation Lab" and a.explain:
-                pg.get_by_role("button", name="Explain with local Qwen").click()
-                pg.wait_for_selector("text=Model summary", timeout=240000)
-                wait_idle(pg, 120)
-                checks["ai_explanation_rendered"] = pg.get_by_text("Self-repair").count() > 0 or pg.get_by_text("VERIFIED").count() > 0
-            if name == "Threat Intelligence" and a.shots:
-                pg.get_by_role("combobox", name="Prepared hunt").click()
-                pg.get_by_role("option", name="Encoded or hidden PowerShell").click()
+                seg(pg, "AI investigation")
                 wait_idle(pg)
-            if name == "Report Studio":
-                time.sleep(4)          # let the report preview iframe render
-            if a.shots:
-                pg.screenshot(path=str(SHOTS / f"p{PAGES.index(name) + 1:02d}_{name.split()[0].lower()}.png"))
-            if name == "AI Investigation Lab" and a.explain:
-                pg.get_by_role("tab", name="Ask SENTINEL").click()
+                pages[f"{name} / AI investigation"] = "ok" if not pg.locator("[data-testid='stException']").count() else "EXCEPTION"
+                if a.explain:
+                    pg.get_by_role("button", name="Explain with local Qwen").click()
+                    pg.wait_for_selector("text=against the original logs", timeout=240000)
+                    wait_idle(pg, 120)
+                    checks["ai_explanation_rendered"] = pg.get_by_text("What we know").count() > 0
+                    if a.shots:
+                        pg.screenshot(path=str(SHOTS / "p04b_ai_investigation.png"))
+                    seg(pg, "Ask SENTINEL")
+                    wait_idle(pg)
+                    pg.get_by_placeholder("Ask about this incident").fill("Why is this incident critical?")
+                    pg.get_by_role("button", name="Ask", exact=True).click()
+                    pg.wait_for_selector("text=You:", timeout=180000)
+                    wait_idle(pg, 60)
+                    checks["chat_answer_rendered"] = pg.get_by_text("SENTINEL ·").count() > 0
+                    if a.shots:
+                        pg.screenshot(path=str(SHOTS / "p04c_ai_chat.png"))
+            if name == "Threat Hunting":
+                pg.get_by_role("button", name="Suspicious Execution").first.click()
                 wait_idle(pg)
-                pg.get_by_placeholder("Ask about this incident").fill("Why is the severity high?")
-                pg.get_by_role("button", name="Ask", exact=True).click()
-                pg.wait_for_selector("text=You:", timeout=180000)
-                wait_idle(pg, 60)
-                checks["chat_answer_rendered"] = pg.get_by_text("SENTINEL ·").count() > 0
-                if a.shots:
-                    pg.screenshot(path=str(SHOTS / "p05_ai_chat.png"))
+                checks["hunt_card_runs_query"] = "matching events" in pg.locator("body").inner_text()
+            if name == "Reports & Evaluation":
+                checks["report_rendered"] = "Download HTML report" in pg.locator("body").inner_text()
+                seg(pg, "Evaluation")
+                wait_idle(pg)
+                pages[f"{name} / Evaluation"] = "ok" if not pg.locator("[data-testid='stException']").count() else "EXCEPTION"
+                seg(pg, "Offline evidence")
+                wait_idle(pg)
+                pages[f"{name} / Offline evidence"] = "ok" if not pg.locator("[data-testid='stException']").count() else "EXCEPTION"
         b.close()
     from sentinel.perf import internet_reachable
     summary = {"recorded_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -196,7 +219,10 @@ def main():
                "local_requests": local, "pages": pages, "checks": checks, "javascript_errors": errors[:10]}
     out = {"summary": summary, "blocked_urls": blocked}
     (ROOT / "results").mkdir(exist_ok=True)
-    (ROOT / "results" / "offline_ui_check.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
+    summary["test_type"] = "online rehearsal" if summary["internet_reachable_after"] else "offline test"
+    (ROOT / "results" / "ui_check.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
+    if not summary["internet_reachable_after"]:          # keep the offline record only for a disconnected run
+        (ROOT / "results" / "offline_ui_check.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
     print(json.dumps(summary, indent=1))
 
 

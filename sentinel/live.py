@@ -47,6 +47,18 @@ RULE_PHRASE = {
 }
 
 
+def _replace(tmp: Path, dst: Path, attempts: int = 20):
+    """os.replace with short retries: on Windows a reader holding the destination open makes it fail briefly."""
+    for k in range(attempts):
+        try:
+            os.replace(tmp, dst)
+            return
+        except PermissionError:
+            if k == attempts - 1:
+                raise
+            time.sleep(0.02)
+
+
 def plain_summary(inc: dict, kind: str = "new") -> str:
     """One readable sentence describing an incident for a notification."""
     rules = [r for r in inc["rules"] if r != "CTX"]
@@ -151,7 +163,7 @@ class LiveEngine:
         tmp = self._cursor_path().with_suffix(".tmp")
         tmp.write_text(json.dumps({"session_id": self.session_id, "offset": self.offset, "events": len(self.records),
                                    "updated": time.strftime("%Y-%m-%d %H:%M:%S")}), encoding="utf-8")
-        os.replace(tmp, self._cursor_path())
+        _replace(tmp, self._cursor_path())
 
     # ----------------------------------------------------------------- analysis
     def live_cfg(self) -> dict:
@@ -220,7 +232,7 @@ class LiveEngine:
         p = self.sdir() / "sentinel_status.json"
         tmp = p.with_suffix(".tmp")
         tmp.write_text(json.dumps(st, default=str), encoding="utf-8")
-        os.replace(tmp, p)
+        _replace(tmp, p)
 
     def _track_of(self, inc):
         a = self.analysis
@@ -279,7 +291,7 @@ class LiveEngine:
         tmp = p.with_suffix(".tmp")
         with open(tmp, "wb") as fh:
             pickle.dump(snap, fh, protocol=pickle.HIGHEST_PROTOCOL)
-        os.replace(tmp, p)
+        _replace(tmp, p)
 
     def recent_events(self, n=40) -> list[dict]:
         with self.lock:

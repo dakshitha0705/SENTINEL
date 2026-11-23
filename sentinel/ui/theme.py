@@ -229,5 +229,16 @@ div[class*="st-key-case"] .stButton > button p { font-size: .84rem; color: var(-
 div[class*="st-key-casesel"] .stButton > button { background: rgba(169,195,209,.18); border-color: rgba(169,195,209,.5); }
 iframe { border-radius: 20px; }
 hr { border-color: var(--line) !important; }
+[data-testid="stButtonGroup"] > div, [data-testid="stButtonGroup"] [role="radiogroup"], [data-testid="stButtonGroup"] [role="group"] { flex-wrap: wrap; row-gap: 6px; }
+@media (max-width: 1500px) {
+  [data-testid="stSidebar"] { min-width: 200px !important; max-width: 200px !important; }
+  .block-container { padding-left: 1.4rem !important; padding-right: 1.4rem !important; }
+  [data-testid="stButtonGroup"] button { padding: 4px 10px !important; }
+  [data-testid="stButtonGroup"] button p { font-size: .82rem !important; }
+  .sn-title { font-size: 1.3rem; } .sn-brand { font-size: 1.2rem; letter-spacing: 4px; }
+  [data-testid="stSidebar"] [role="radiogroup"] label { padding: 8px 8px; }
+  [data-testid="stSidebar"] [role="radiogroup"] label p { font-size: .84rem; white-space: nowrap; }
+  .sn-scn .d { font-size: .78rem; } .sn-hero { padding: 18px 20px 14px; }
+}
 </style>
 """
