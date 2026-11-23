@@ -35,6 +35,48 @@ from sentinel.slm import answer, explain, status  # noqa: E402
 from sentinel.verifier import verify_output  # noqa: E402
 
 
+def live_step(cfg) -> dict:
+    """Run scenario G against an in-process NEXUS on a free loopback port (temporary demo root, never the
+    real demo_data) and let the live engine detect it."""
+    import socket
+    import tempfile
+    import threading
+    from werkzeug.serving import make_server
+    from demo_target.app import create_app
+    from sentinel.live import LiveEngine
+    t0 = time.perf_counter()
+    with tempfile.TemporaryDirectory(prefix="sentinel_offline_live_") as tmp:
+        sock = socket.socket()
+        sock.bind(("127.0.0.1", 0))
+        port = sock.getsockname()[1]
+        sock.close()
+        app = create_app(root=Path(tmp), base_url=f"http://127.0.0.1:{port}")
+        srv = make_server("127.0.0.1", port, app, threaded=True)
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        try:
+            client = app.test_client()
+            client.post("/api/demo/start")
+            eng = LiveEngine(cfg, root=Path(tmp))
+            eng.poll()
+            runner = app.extensions["nexus"]["runner"]
+            runner.speed = 0.25
+            runner.start("G")
+            while runner.busy():
+                eng.poll()
+                time.sleep(0.2)
+            eng.poll()
+            a = eng.analysis
+            incs = [{"id": i["incident_id"], "level": i["severity"]["level"], "score": i["severity"]["score"],
+                     "rules": i["rules"], "latency_s": eng._track_of(i).get("latency_s")} for i in a.incidents]
+            return {"seconds": round(time.perf_counter() - t0, 2), "scenario": "G", "runner_state": runner.status["state"],
+                    "events_emitted": app.extensions["nexus"]["stream"].seq, "events_ingested": len(eng.records),
+                    "incidents": incs, "notifications": [n["text"] for n in eng.notifications][-4:]}
+        except Exception as exc:  # noqa: BLE001
+            return {"error": f"{type(exc).__name__}: {exc}"}
+        finally:
+            srv.shutdown()
+
+
 def main():
     cfg = load_config()
     online = internet_reachable()
@@ -94,6 +136,8 @@ def main():
         steps["handoff"] = {"verified": hv["verified"], "claims": hv["factual_claims"]}
         js, cs = exports.incidents_json(a, a.incidents), exports.incidents_csv(a, a.incidents)
         steps["exports"] = {"json_incidents": len(json.loads(js)["incidents"]), "csv_bytes": len(cs)}
+        # Live pipeline: NEXUS (in-process, loopback) -> event stream -> live engine, full storyline scenario
+        steps["live"] = live_step(cfg)
         # EVTX conversion + detection on a public attack recording (if downloaded)
         evtx = ROOT / "data" / "public" / "evtx_attack_samples" / "kerberos_pwd_spray_4771.evtx"
         if evtx.exists():
@@ -129,6 +173,9 @@ def main():
         print(f"   SLM {s['incident']}: {s['source']} {s['wall_s']} s, {s['tokens_per_s']} tok/s, verified {s['verified']}/{s['claims']}")
     print(f"   chat: {steps['chat']['silent']} silent replies; handoff verified {steps['handoff']['verified']}/"
           f"{steps['handoff']['claims']}; EVTX: {steps.get('evtx', {}).get('rules_fired')}")
+    lv = steps.get("live", {})
+    print(f"   live NEXUS pipeline: {lv.get('events_ingested')}/{lv.get('events_emitted')} events ingested, incidents "
+          f"{[(i['id'], i['level'], i['latency_s']) for i in lv.get('incidents', [])]} {lv.get('error') or ''}")
     print("wrote results/offline_run.json")
 
 

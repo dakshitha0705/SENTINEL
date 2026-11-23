@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-23T01:16:48+00:00",
+ "generated_at": "2026-11-23T13:03:50+00:00",
  "method": "scenario detection on technique-labelled recordings; no event-level ground truth, so no precision/recall",
  "sources": {
   "evtx_attack_samples": {
@@ -150,7 +150,7 @@
      "title": "Log clearing (user01 on PC01)"
     }
    ],
-   "seconds": 0.056,
+   "seconds": 0.06,
    "status": "detected"
   },
   {
@@ -199,7 +199,7 @@
      "title": "Log clearing (user01 on PC01)"
     }
    ],
-   "seconds": 0.033,
+   "seconds": 0.036,
    "status": "detected"
   },
   {
@@ -248,7 +248,7 @@
      "title": "Privilege change (ieuser on MSEDGEWIN10)"
     }
    ],
-   "seconds": 0.037,
+   "seconds": 0.04,
    "status": "detected"
   },
   {
@@ -301,7 +301,7 @@
      "title": "Suspicious execution (ieuser on MSEDGEWIN10)"
     }
    ],
-   "seconds": 0.049,
+   "seconds": 0.056,
    "status": "detected"
   },
   {
@@ -342,7 +342,7 @@
    ],
    "rules_fired": {},
    "incidents": [],
-   "seconds": 0.033,
+   "seconds": 0.039,
    "status": "missed",
    "why_missed": "no event types SENTINEL analyses (top codes: 10x7, 8x2); the behaviour is only visible in telemetry outside the supported schema"
   },
@@ -387,7 +387,7 @@
     "R14": 1
    },
    "incidents": [],
-   "seconds": 0.035,
+   "seconds": 0.037,
    "status": "detected"
   },
   {
@@ -488,7 +488,7 @@
    ],
    "rules_fired": {},
    "incidents": [],
-   "seconds": 0.037,
+   "seconds": 0.041,
    "status": "missed",
    "why_missed": "supported events present (process_start=4) but no expected rule matched: the technique is outside the rule patterns"
   },
@@ -544,7 +544,7 @@
      "title": "Log clearing (user01 on PC01)"
     }
    ],
-   "seconds": 0.044,
+   "seconds": 0.05,
    "status": "missed",
    "why_missed": "supported events present (process_start=3, log_cleared=1, login_success=1, privilege_logon=1) but no expected rule matched: the technique is outside the rule patterns"
   },
@@ -594,7 +594,7 @@
    ],
    "rules_fired": {},
    "incidents": [],
-   "seconds": 0.053,
+   "seconds": 0.061,
    "status": "missed",
    "why_missed": "supported events present (process_start=7) but no expected rule matched: the technique is outside the rule patterns"
   },
@@ -635,7 +635,7 @@
    ],
    "rules_fired": {},
    "incidents": [],
-   "seconds": 0.042,
+   "seconds": 0.05,
    "status": "control (no rule expected)"
   },
   {
@@ -695,7 +695,7 @@
      "title": "Suspicious execution (ieuser on MSEDGEWIN10)"
     }
    ],
-   "seconds": 0.239,
+   "seconds": 0.244,
    "status": "detected"
   },
   {
@@ -738,7 +738,7 @@
      "title": "Log clearing (unknown on WORKSTATION5)"
     }
    ],
-   "seconds": 0.167,
+   "seconds": 0.187,
    "status": "detected"
   },
   {
@@ -767,7 +767,7 @@
    "evtx": [],
    "rules_fired": {},
    "incidents": [],
-   "seconds": 3.284,
+   "seconds": 3.231,
    "status": "missed",
    "why_missed": "supported events present (privilege_logon=10, login_success=10, process_start=2) but no expected rule matched: the technique is outside the rule patterns"
   }

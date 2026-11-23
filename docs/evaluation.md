@@ -163,16 +163,23 @@ The SLM benchmarks below use the 15 incidents of the test seeds, prompt v7 (type
 
 ### Verification and self-repair (qwen2.5:3b, GPU)
 
+The saved run is `results/slm_benchmark_test_qwen2.5-3b.json`, recorded 23 Nov 18:36 on Ollama 0.40.17.
+
 | | Value |
 |---|---|
 | Factual claims verified, first attempt | 22 / 30 = **73.3%** |
-| After one self-repair round | 25 / 30 = **83.3%** (5 claims still failing; they stay Unverified) |
-| Incidents that needed repair | 8 of 15; repaired output kept in all 8 (never fewer verified claims) |
-| Extra latency when a repair runs | 5.2 s mean |
-| Mean latency per incident (incl. repairs) / generation speed | 8.1 s / 93 tokens/s |
+| After one self-repair round | 24 / 30 = **80.0%** (6 claims still failing; they stay Unverified) |
+| Incidents that needed repair | 8 of 15; the repaired output was kept in all 8 (it never verified fewer claims) |
+| Extra latency when a repair runs | 5.1 s mean |
+| Mean latency per incident (incl. repairs) / generation speed | 8.2 s / 95 tokens/s |
 | Template fallbacks | 0 / 15 |
 
-**Run-to-run variation is real.** An earlier run of the same configuration the same morning gave 76.7% → 86.7%. GPU inference is not bit-deterministic, so treat the effect as roughly **+10 percentage points** from one repair round, not as a precise constant.
+**Run-to-run variation is real.** Three runs of the same configuration on 23 Nov gave:
+- 76.7% → 86.7% (morning, Ollama 0.40.16);
+- 73.3% → 83.3% (morning, Ollama 0.40.16);
+- 73.3% → 80.0% (evening, Ollama 0.40.17; the saved file).
+
+GPU inference is not bit-deterministic. Treat the effect as roughly **+7 to +10 percentage points** from one repair round, not as a precise constant.
 
 The repaired output is used only if it verifies at least as many claims as the first attempt. The verifier, not the model, decides what is shown as fact.
 
@@ -204,8 +211,8 @@ How to read this table:
 | Answered by local Qwen with verified sentences | 20 |
 | Answered by the deterministic evidence fallback (labelled) | 6 |
 | Explicit "cannot answer from the evidence" | 9, e.g. the attacker's home country |
-| Sentences verified | 53 / 54 = 98.1% |
-| Mean answer time | 0.8 s |
+| Sentences verified | 56 / 56 = 100% (an earlier run: 53 / 54) |
+| Mean answer time | 0.7 s |
 
 The deterministic fallback recognises the common analyst intents:
 - why the severity is high;

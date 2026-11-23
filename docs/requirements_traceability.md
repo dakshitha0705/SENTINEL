@@ -22,7 +22,7 @@
 | Threat detection accuracy, few false positives | Precision/recall/F1/FPR on test seeds and on fresh seeds generated after the upgrade freeze; before/after; naive comparison and ablation; 10 look-alike types; external real recordings (scenario detection) | `docs/evaluation.md`, Evaluation & Benchmarks page |
 | Event correlation and prioritisation | Storyline with link reasons; per-scenario Jaccard; alert compression 88.3%; ranked queue; executive summary | Evaluation §3–4; Command Center |
 | SLM utilisation | Explains incidents, weighs supporting vs. contradicting evidence, adapts playbooks, answers questions; measured latency and tokens/s; 7B vs 3B comparison | Evaluation §4–5; Analyst workspace |
-| Evidence reliability | Evidence Contract: typed claims, per-sentence verification, one bounded self-repair round (73% → 83% verified), Verified/Unverified labels, chat with 0 silent replies, template fallback | `sentinel/verifier.py`, `sentinel/slm.py`; `test_evidence_verifier.py`, `test_upgrade.py` |
+| Evidence reliability | Evidence Contract: typed claims, per-sentence verification, one bounded self-repair round (73% → 80% verified), Verified/Unverified labels, chat with 0 silent replies, template fallback | `sentinel/verifier.py`, `sentinel/slm.py`; `test_evidence_verifier.py`, `test_upgrade.py` |
 | Offline performance | GPU vs CPU-only inference, 1.5B/3B/7B, 126,919-event scale test, peak RAM, connection log, disconnected runs | `results/*.json`; Evaluation & Benchmarks; System & Settings |
 | Usability and practicality | Nine-page dashboard with an interactive offline globe and attack graph, global search, dataset/time filters, analyst workflow (status, notes, dispositions, handoff), exports | `docs/feature_traceability.md`; `docs/screenshots/v2/` |
 
@@ -52,6 +52,7 @@
 | SHA-256 input fingerprints in reports | P2 | Done |
 | YAML rule files | P2 | Partial: all thresholds, groups, allowlists, windows and R7 process patterns are in validated YAML; not a full Sigma rule engine |
 | Lateral movement and USB/bulk-copy rules | P2 | Done (R9 context, R10, R11 context; R10/R11 unit-tested only, not in synthetic data) |
+| Live attack demonstration (23 Nov): NEXUS portal, scenario controller A–H, live event stream, incremental engine, worker process, start/stop scripts | Live demo brief | Done; see `docs/live_demo.md` and `docs/feature_traceability.md` |
 | Upgrade (23 Nov): R12–R14, EVTX, external evaluation, comparison/ablation, typed claims + self-repair, chat fallback, handoff, CPU/scale benchmarks, globe + 9-page UI | Upgrade brief | Done; see `docs/feature_traceability.md` for per-feature status |
 | PDF export | P2 | Done (local Edge print-to-PDF) |
 
@@ -72,3 +73,5 @@
 | 11 | Upgrade brief asked for the globe to show geographic sources, but the logs have no trustworthy locations and online geolocation is forbidden | Globe plots only coordinates present in the logs (demo export carries synthetic SIEM geo columns, labelled as such); otherwise exploration mode with an explicit notice | The brief itself forbids fabricated locations |
 | 12 | Upgrade brief: "do not tune against the final held-out test set", but the stress seeds had motivated the new rules | Stress seeds were re-labelled *diagnostic*; ten fresh seeds were generated after the upgrade freeze and are the held-out set | Keeps one untouched held-out set |
 | 13 | Upgrade brief referenced an approved dashboard screenshot | No screenshot was in the workspace; the written design specification (palette, layout, globe) was followed | As the brief instructs when the image is unavailable |
+| 14 | Live demo brief: show an attack "as it happens", but suspicious process execution and audit-log clearing must not really be performed | Authentication, access and group-change events are genuine NEXUS application events driven by real HTTP requests; endpoint process and log-clear events are synthetic, labelled `simulated-endpoint`, and attacker addresses are simulated and flagged | The brief requires both safety and honest labelling |
+| 15 | Frontend ownership changed on 23 Nov 18:30 IST | The participant maintains `app.py` and `sentinel/ui/**`; Claude records UI needs in `docs/progress.md` instead of editing them | Participant instruction |

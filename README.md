@@ -49,10 +49,10 @@ A **locally running small language model** (Qwen2.5-3B via Ollama) then explains
 
 | Local SLM (qwen2.5:3b Q4_K_M) | Value |
 |---|---|
-| Factual claims verified, first attempt → after one self-repair round | **73% → 83%** (15 held-out incidents; another run gave 77% → 87%) |
+| Factual claims verified, first attempt → after one self-repair round | **73% → 80%** in the saved run (15 held-out incidents; other runs gave 73% → 83% and 77% → 87%) |
 | Latency per incident, GPU (RTX 4060 Laptop, 100% in VRAM) | about 6 s (8 s incl. repairs), about 93 tokens/s |
 | Latency per incident, **CPU only** (num_gpu = 0, 0 bytes in VRAM) | about 46 s, about 16 tokens/s |
-| Incident chat | 35 questions, **0 silent replies**, 53/54 sentences verified |
+| Incident chat | 35 questions, **0 silent replies**, 56/56 sentences verified (20 answered by Qwen, 6 by the deterministic fallback, 9 explicit "cannot answer") |
 
 | Deterministic pipeline | Value |
 |---|---|

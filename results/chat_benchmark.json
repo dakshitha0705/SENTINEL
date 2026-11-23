@@ -5,10 +5,10 @@
   "answered_by_slm": 20,
   "answered_by_deterministic_fallback": 6,
   "explicit_cannot_answer": 9,
-  "sentences": 54,
-  "verified": 53,
-  "verification_rate": 0.981,
-  "mean_wall_s": 0.82
+  "sentences": 56,
+  "verified": 56,
+  "verification_rate": 1.0,
+  "mean_wall_s": 0.69
  },
  "rows": [
   {
@@ -16,7 +16,7 @@
    "question": "What happened after the successful login?",
    "source": "slm",
    "error": null,
-   "wall_s": 5.14,
+   "wall_s": 1.42,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -27,14 +27,14 @@
   {
    "incident": "INC-0001",
    "question": "Why was this incident classified with this severity?",
-   "source": "deterministic",
-   "error": "the model returned no verifiable sentence",
-   "wall_s": 1.32,
+   "source": "slm",
+   "error": null,
+   "wall_s": 1.26,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
    "answer": [
-    "Severity Critical (score 100/100): R4 Unusual login time for this user +5; R5 New device or source IP for this user +5; R7 Suspicious process execution +25; R8 Audit log cleared +25; Log cleared after suspicious activity +10; Credential dumping observed +20; Privileged account involved +15; Critical asset involved +..."
+    "This incident was classified with a Critical (score 100/100) severity based on factors R4 Unusual login time for this user +5; R5 New device or source IP for this user +5; R7 Suspicious process execution +25; R8 Audit log cleared +25; Log cleared after suspicious activity +10; Credential dumping observed +20; Privileged account involved +15."
    ]
   },
   {
@@ -42,7 +42,7 @@
    "question": "Which devices were involved?",
    "source": "slm",
    "error": null,
-   "wall_s": 1.13,
+   "wall_s": 1.12,
    "sentences": 3,
    "verified": 3,
    "cannot_answer": "",
@@ -68,7 +68,7 @@
    "question": "What is the attacker's home country?",
    "source": "deterministic",
    "error": "the model returned an empty answer",
-   "wall_s": 0.15,
+   "wall_s": 0.16,
    "sentences": 0,
    "verified": 0,
    "cannot_answer": "The evidence pack does not contain information that answers this question. Try asking about severity, hosts, accounts, the timeline, the evidence, contradicting evidence or next steps.",
@@ -79,12 +79,12 @@
    "question": "Which events support this conclusion?",
    "source": "slm",
    "error": null,
-   "wall_s": 1.81,
+   "wall_s": 1.09,
    "sentences": 1,
    "verified": 1,
-   "cannot_answer": "",
+   "cannot_answer": "null",
    "answer": [
-    "Events 4672 (special privileges at logon), EVT-000958 (R4 Unusual login time for this user and R5 New device or source IP for this user), EVT-000959 (CTX Special privileges assigned at logon), EVT-000960 (R7 Suspicious process execution - mimikatz.exe), EVT-000961 (R7 Suspicious process execution - wevtutil.exe), and EVT-000962 (R8 Audit log cleared) support this conclusion."
+    "Events EVT-000958 (R4 Unusual login time for this user), EVT-000961 (R7 Suspicious process execution - wevtutil.exe), and EVT-000962 (R8 Audit log cleared) support the conclusion."
    ]
   },
   {
@@ -92,13 +92,12 @@
    "question": "What should be investigated?",
    "source": "slm",
    "error": null,
-   "wall_s": 1.38,
-   "sentences": 2,
+   "wall_s": 1.33,
+   "sentences": 1,
    "verified": 1,
    "cannot_answer": "null",
    "answer": [
-    "Investigate suspicious activity involving admin02 with strong links to ALR-0045 (R4), ALR-0046 (R5), and ALR-0047 (CTX) on FIN-SRV01, as well as the R7 Suspicious process execution event related to mimikatz.exe and R8 Audit log cleared event.",
-    "Additionally, investigate credential dumping observed in EVT-000960."
+    "Investigate suspicious activity involving admin02 with strong links to ALR-0045 (R4), ALR-0046 (R5), and ALR-0047 (CTX) on FIN-SRV01, as well as the linked R7 Suspicious process execution event EVT-000960 involving mimikatz.exe."
    ]
   },
   {
@@ -106,7 +105,7 @@
    "question": "What happened after the successful login?",
    "source": "slm",
    "error": null,
-   "wall_s": 1.32,
+   "wall_s": 0.93,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -118,8 +117,8 @@
    "incident": "INC-0005",
    "question": "Why was this incident classified with this severity?",
    "source": "deterministic",
-   "error": "the model returned no verifiable sentence",
-   "wall_s": 1.51,
+   "error": "the model returned an empty answer",
+   "wall_s": 0.16,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -132,7 +131,7 @@
    "question": "Which devices were involved?",
    "source": "deterministic",
    "error": "the model returned no verifiable sentence",
-   "wall_s": 0.84,
+   "wall_s": 0.82,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -145,7 +144,7 @@
    "question": "What evidence contradicts the hypothesis?",
    "source": "deterministic",
    "error": "the model returned an empty answer",
-   "wall_s": 0.18,
+   "wall_s": 0.17,
    "sentences": 0,
    "verified": 0,
    "cannot_answer": "SENTINEL found no contradicting evidence for this incident in the supplied logs.",
@@ -156,7 +155,7 @@
    "question": "What is the attacker's home country?",
    "source": "deterministic",
    "error": "the model returned an empty answer",
-   "wall_s": 0.12,
+   "wall_s": 0.13,
    "sentences": 0,
    "verified": 0,
    "cannot_answer": "The evidence pack does not contain information that answers this question. Try asking about severity, hosts, accounts, the timeline, the evidence, contradicting evidence or next steps.",
@@ -167,7 +166,7 @@
    "question": "Which events support this conclusion?",
    "source": "deterministic",
    "error": "the model returned no verifiable sentence",
-   "wall_s": 1.18,
+   "wall_s": 1.21,
    "sentences": 11,
    "verified": 11,
    "cannot_answer": "",
@@ -190,12 +189,12 @@
    "question": "What should be investigated?",
    "source": "slm",
    "error": null,
-   "wall_s": 0.63,
+   "wall_s": 0.81,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
    "answer": [
-    "Investigate suspected credential compromise as per PB-01, which is linked to multiple detections including R1 Brute force and R3 Successful logon after failures."
+    "Investigate suspected credential compromise as per PB-01, since multiple detections indicate a brute force attack followed by unauthorized privileged group change and suspicious process execution involving kavya.shetty on WS-SALES-09."
    ]
   },
   {
@@ -203,7 +202,7 @@
    "question": "What happened after the successful login?",
    "source": "slm",
    "error": null,
-   "wall_s": 0.96,
+   "wall_s": 0.94,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -216,7 +215,7 @@
    "question": "Why was this incident classified with this severity?",
    "source": "slm",
    "error": null,
-   "wall_s": 0.78,
+   "wall_s": 0.79,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -227,14 +226,14 @@
   {
    "incident": "INC-0004",
    "question": "Which devices were involved?",
-   "source": "slm",
-   "error": null,
-   "wall_s": 0.41,
+   "source": "deterministic",
+   "error": "the model returned no verifiable sentence",
+   "wall_s": 0.49,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
    "answer": [
-    "Hosts DC01 were involved in the security incident as mentioned in fact F1."
+    "Hosts involved: DC01."
    ]
   },
   {
@@ -242,7 +241,7 @@
    "question": "What evidence contradicts the hypothesis?",
    "source": "deterministic",
    "error": "the model returned an empty answer",
-   "wall_s": 0.16,
+   "wall_s": 0.13,
    "sentences": 0,
    "verified": 0,
    "cannot_answer": "SENTINEL found no contradicting evidence for this incident in the supplied logs.",
@@ -253,7 +252,7 @@
    "question": "What is the attacker's home country?",
    "source": "deterministic",
    "error": "the model returned an empty answer",
-   "wall_s": 0.15,
+   "wall_s": 0.14,
    "sentences": 0,
    "verified": 0,
    "cannot_answer": "The evidence pack does not contain information that answers this question. Try asking about severity, hosts, accounts, the timeline, the evidence, contradicting evidence or next steps.",
@@ -264,13 +263,14 @@
    "question": "Which events support this conclusion?",
    "source": "slm",
    "error": null,
-   "wall_s": 0.58,
-   "sentences": 2,
-   "verified": 2,
+   "wall_s": 1.09,
+   "sentences": 3,
+   "verified": 3,
    "cannot_answer": "",
    "answer": [
     "Events EVT-001570 ...",
-    "EVT-001585 (16 events) support this conclusion for R2 Password spraying."
+    "EVT-001585 (16 events) support the conclusion of password spraying as R2.",
+    "Event EVT-001586 supports the conclusion of successful logon after failures by sanjay.reddy from 192.0.2.37."
    ]
   },
   {
@@ -278,12 +278,12 @@
    "question": "What should be investigated?",
    "source": "slm",
    "error": null,
-   "wall_s": 0.66,
+   "wall_s": 0.75,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
    "answer": [
-    "Investigate password spraying across accounts (PB-04) as it is a high-signal detection linked to previous password spraying activity and involves multiple failed attempts."
+    "Investigate password spraying across accounts (PB-04) as it is a high-signal detection linked to previous password spraying activity and involves multiple failed attempts followed by a successful logon."
    ]
   },
   {
@@ -291,7 +291,7 @@
    "question": "What happened after the successful login?",
    "source": "slm",
    "error": null,
-   "wall_s": 0.71,
+   "wall_s": 0.74,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -304,7 +304,7 @@
    "question": "Why was this incident classified with this severity?",
    "source": "slm",
    "error": null,
-   "wall_s": 0.96,
+   "wall_s": 1.01,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -317,12 +317,13 @@
    "question": "Which devices were involved?",
    "source": "slm",
    "error": null,
-   "wall_s": 0.36,
-   "sentences": 1,
-   "verified": 1,
+   "wall_s": 0.82,
+   "sentences": 2,
+   "verified": 2,
    "cannot_answer": "",
    "answer": [
-    "The device involved in this security incident is DC01."
+    "Incident INC-0002 spans 2026-11-19 12:49:12-13:01:33 UTC with 3 alerts over 3 log events.",
+    "Hosts: DC01."
    ]
   },
   {
@@ -330,7 +331,7 @@
    "question": "What evidence contradicts the hypothesis?",
    "source": "slm",
    "error": null,
-   "wall_s": 0.64,
+   "wall_s": 0.63,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -354,7 +355,7 @@
    "question": "Which events support this conclusion?",
    "source": "deterministic",
    "error": "the model returned no verifiable sentence",
-   "wall_s": 0.69,
+   "wall_s": 0.68,
    "sentences": 7,
    "verified": 7,
    "cannot_answer": "",
@@ -373,7 +374,7 @@
    "question": "What should be investigated?",
    "source": "slm",
    "error": null,
-   "wall_s": 0.88,
+   "wall_s": 0.9,
    "sentences": 2,
    "verified": 2,
    "cannot_answer": "",
@@ -387,7 +388,7 @@
    "question": "What happened after the successful login?",
    "source": "slm",
    "error": null,
-   "wall_s": 1.03,
+   "wall_s": 1.05,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -400,7 +401,7 @@
    "question": "Why was this incident classified with this severity?",
    "source": "slm",
    "error": null,
-   "wall_s": 0.75,
+   "wall_s": 0.72,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
@@ -413,12 +414,12 @@
    "question": "Which devices were involved?",
    "source": "slm",
    "error": null,
-   "wall_s": 0.49,
+   "wall_s": 0.44,
    "sentences": 1,
    "verified": 1,
    "cannot_answer": "",
    "answer": [
-    "Devices FIN-SRV01, FS01 were involved in the security incident as mentioned in fact F1."
+    "Devices FIN-SRV01, FS01 were involved based on fact F1."
    ]
   },
   {
@@ -426,7 +427,7 @@
    "question": "What evidence contradicts the hypothesis?",
    "source": "deterministic",
    "error": "the model returned an empty answer",
-   "wall_s": 0.15,
+   "wall_s": 0.16,
    "sentences": 0,
    "verified": 0,
    "cannot_answer": "SENTINEL found no contradicting evidence for this incident in the supplied logs.",
@@ -437,7 +438,7 @@
    "question": "What is the attacker's home country?",
    "source": "deterministic",
    "error": "the model returned no verifiable sentence",
-   "wall_s": 0.36,
+   "wall_s": 0.35,
    "sentences": 0,
    "verified": 0,
    "cannot_answer": "The evidence pack does not contain information that answers this question. Try asking about severity, hosts, accounts, the timeline, the evidence, contradicting evidence or next steps.",
@@ -448,7 +449,7 @@
    "question": "Which events support this conclusion?",
    "source": "deterministic",
    "error": "the model returned an empty answer",
-   "wall_s": 0.13,
+   "wall_s": 0.14,
    "sentences": 8,
    "verified": 8,
    "cannot_answer": "",
@@ -468,12 +469,13 @@
    "question": "What should be investigated?",
    "source": "slm",
    "error": null,
-   "wall_s": 0.6,
-   "sentences": 1,
-   "verified": 1,
+   "wall_s": 0.92,
+   "sentences": 2,
+   "verified": 2,
    "cannot_answer": "",
    "answer": [
-    "Severity Low (score 20/100) indicates that investigating credential compromise is appropriate as it aligns with R4 and R5 anomalies."
+    "Severity Low (score 20/100) indicates that investigating this incident is appropriate as it involves unusual login times and a new device or source IP, which are considered suspicious behaviors.",
+    "However, due to the low confidence level in determining malicious intent based on behavioral anomalies alone, further investigation should be conducted."
    ]
   }
  ]

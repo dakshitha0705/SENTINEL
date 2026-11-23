@@ -168,3 +168,21 @@ Severity measures *how bad it would be*. **Confidence** is reported separately a
 - `baselines`: R4/R5/R9 and the known-source checks of R12/R13;
 - `context`: context-only alerts become ordinary detections, and the benign-context discount is off;
 - `allowlists`: authorised admins, service accounts and change windows are emptied.
+
+
+## Live monitoring (NEXUS demo)
+
+See `docs/live_demo.md` for the full description. In short, the event path is:
+
+`demo_target/` (NEXUS, Flask on 127.0.0.1:8502) → `demo_data/sessions/<id>/events.jsonl` (append-only, fsync per event) → `sentinel/live.py` `LiveEngine`.
+
+**The live engine**
+- **Reading:** it reads only bytes after its persisted cursor, only complete lines, and de-duplicates by `event_uid`.
+- **Analysis:** it runs the *unchanged* ingestion → rules → storyline → severity → evidence pipeline over the current session window (at most 20,000 events).
+- **Outputs:** it writes `sentinel_status.json` for the NEXUS controller and `live_snapshot.pkl` for the dashboard.
+- **Process:** it runs as its own process (`python -m sentinel.live`, started by `scripts/start_demo.ps1`), so dashboard rendering does not delay detection.
+- **Fallback:** without a heartbeat from that worker, the dashboard runs the same engine in-process.
+
+**Rule support.** Approved change tickets registered by the demo are absolute change windows (`{start, end}`), supported by `rules.in_change_window` alongside the recurring weekday windows.
+
+**Isolation.** Live data never enters evaluation datasets or results.

@@ -116,6 +116,25 @@ Status values: **Implemented and tested** · **Implemented with limitations** ·
 | Offline validation history, UI check summary | same | – | `results/offline_runs/*.json`, `results/offline_ui_check.json` | `test_page_renders` | Implemented and tested |
 | Credits and application info | same | – | – | `test_page_renders` | Implemented and tested |
 
+
+## Live attack demonstration (NEXUS → SENTINEL)
+
+| Feature | Frontend | Backend | Data source | Test | Status |
+|---|---|---|---|---|---|
+| NEXUS portal: login, dashboard, account, resources (access-controlled), activity history, admin group management, logout | `demo_target/templates/*` | `demo_target/app.py`, `auth.py` (scrypt hashes, lockout at 15) | fictional identities, `demo_data/nexus_credentials.json` | `test_nexus_auth_hashing_lockout_and_header_spoofing` | Implemented and tested |
+| Security events from NEXUS actions (4624/4625/4634/4740/4732/4663/4656) with provenance | – | `demo_target/events.py` (append-only JSONL, fsync) | `demo_data/sessions/<id>/events.jsonl` | `test_event_schema_ordering_and_provenance` | Implemented and tested |
+| Scenario controller: start, reset, A–H, pause, resume, stop, live status | `/demo` page | `demo_target/simulator.py` (bounded steps, safe cancellation) | the event stream + `sentinel_status.json` | `test_runner_control_pause_resume_stop_and_conflicts`, `test_attack_scenarios_detected`, `test_normal_and_benign_scenarios_create_no_incident` | Implemented and tested |
+| Synthetic endpoint events (encoded PowerShell, certutil, wevtutil, 1102), labelled `simulated-endpoint` | – | `simulator._endpoint`, `_log_clear` | event stream | `test_event_schema_ordering_and_provenance` | Implemented and tested (synthetic by design) |
+| Incremental ingestion with a durable cursor, duplicate and partial-line handling, restart recovery | – | `sentinel/live.py` `LiveEngine` | cursor file per session | `test_incremental_ingestion_duplicates_partial_lines_and_restart`, `test_nexus_restart_continues_the_session_stream` | Implemented and tested |
+| Live detection worker (separate process) + dashboard reader + in-process fallback | (live mode in the dashboard) | `sentinel/live.py` `run_worker`, `LiveReader` | `live_snapshot.pkl`, `live_worker.json` heartbeat | `scripts/live_demo_check.py` (real services), `test_live_mode_pages_render` (fallback) | Implemented and tested |
+| New/escalated incident notifications from real data; detection latency per incident | dashboard toasts / mode strip | `LiveEngine._notify`, tracking | engine state | `test_full_storyline_uses_generated_event_ids_and_escalates` | Implemented and tested |
+| Approved change tickets as absolute change windows | – | `rules.in_change_window`, `LiveEngine.live_cfg` | `change_windows.json` | `test_normal_and_benign_scenarios_create_no_incident` (approved change not flagged), `test_attack_scenarios_detected` (unauthorised one flagged) | Implemented and tested |
+| Demo isolation and reset (session folders; evaluation data untouched) | controller *Reset* | `EventStream.new_session` | `demo_data/` | `test_reset_isolation` | Implemented and tested |
+| One-command start / stop (no duplicates, only own processes stopped) | – | `scripts/start_demo.ps1`, `stop_demo.ps1` | `demo_data/pids.json` | manual stop/start cycles (23 Nov 18:2x), `live_demo_check.py` | Implemented with limitations (Windows PowerShell only; not unit-tested) |
+| Live pipeline in the offline check | – | `scripts/offline_check.py` `live_step` | temporary demo root | offline check runs | Implemented and tested |
+
+**Frontend ownership.** From 23 Nov 18:30 IST the dashboard frontend (`app.py`, `sentinel/ui/**`) is maintained by the participant. The frontend rows above describe the state at that hand-over; open UI items are listed in `docs/progress.md`.
+
 ## Not implemented (stated, not hidden)
 
 - Offline IP geolocation database (no location is inferred from an IP address).

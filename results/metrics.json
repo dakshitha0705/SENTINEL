@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-23T01:12:10+00:00",
+ "generated_at": "2026-11-23T13:03:44+00:00",
  "matching_rule": ">=50% of ground-truth event IDs; benign flagged on any overlap",
  "dataset_roles": {
   "dev": "tuning",
@@ -137,7 +137,7 @@
    },
    {
     "incident_id": "INC-0004",
-    "title": "Off-hours logon from new device/IP (deepak.bose on FIN-SRV01)",
+    "title": "Off-hours logon from new device/IP (deepak.bose on FS01)",
     "level": "Low",
     "score": 20,
     "events": 2,
@@ -240,11 +240,11 @@
    "endpoint_logs.json"
   ],
   "timings_s": {
-   "detection_s": 0.2587,
-   "correlation_s": 0.0038,
+   "detection_s": 0.2621,
+   "correlation_s": 0.004,
    "severity_s": 0.0001,
-   "evidence_s": 0.0459,
-   "analysis_total_s": 0.3085
+   "evidence_s": 0.0475,
+   "analysis_total_s": 0.3137
   },
   "compression": {
    "alerts": 35,
@@ -384,7 +384,7 @@
    },
    {
     "incident_id": "INC-0004",
-    "title": "Off-hours logon from new device/IP (deepak.bose on FIN-SRV01)",
+    "title": "Off-hours logon from new device/IP (deepak.bose on FS01)",
     "level": "Low",
     "score": 20,
     "events": 2,
@@ -487,11 +487,11 @@
    "endpoint_logs.json"
   ],
   "timings_s": {
-   "detection_s": 0.2908,
-   "correlation_s": 0.0042,
+   "detection_s": 0.2984,
+   "correlation_s": 0.0038,
    "severity_s": 0.0001,
-   "evidence_s": 0.0461,
-   "analysis_total_s": 0.3412
+   "evidence_s": 0.0456,
+   "analysis_total_s": 0.3479
   },
   "compression": {
    "alerts": 40,
@@ -632,7 +632,7 @@
     },
     {
      "incident_id": "INC-0005",
-     "title": "Off-hours logon from new device/IP (rahul.verma on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (rahul.verma on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -735,11 +735,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2496,
-    "correlation_s": 0.004,
-    "severity_s": 0.0001,
-    "evidence_s": 0.042,
-    "analysis_total_s": 0.2958
+    "detection_s": 0.2489,
+    "correlation_s": 0.0039,
+    "severity_s": 0.0002,
+    "evidence_s": 0.0432,
+    "analysis_total_s": 0.2964
    },
    "compression": {
     "alerts": 39,
@@ -879,7 +879,7 @@
     },
     {
      "incident_id": "INC-0003",
-     "title": "Off-hours logon from new device/IP (shalini.bose on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (shalini.bose on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -982,11 +982,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2168,
-    "correlation_s": 0.0041,
+    "detection_s": 0.2385,
+    "correlation_s": 0.004,
     "severity_s": 0.0001,
-    "evidence_s": 0.041,
-    "analysis_total_s": 0.262
+    "evidence_s": 0.0446,
+    "analysis_total_s": 0.2872
    },
    "compression": {
     "alerts": 34,
@@ -1126,7 +1126,7 @@
     },
     {
      "incident_id": "INC-0003",
-     "title": "Off-hours logon from new device/IP (gaurav.bose on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (gaurav.bose on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -1229,11 +1229,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2899,
+    "detection_s": 0.2921,
     "correlation_s": 0.0046,
     "severity_s": 0.0001,
-    "evidence_s": 0.0493,
-    "analysis_total_s": 0.344
+    "evidence_s": 0.0491,
+    "analysis_total_s": 0.3459
    },
    "compression": {
     "alerts": 43,
@@ -1470,7 +1470,7 @@
     },
     {
      "incident_id": "INC-0003",
-     "title": "Off-hours logon from new device/IP (neha.rao on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (neha.rao on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -1573,11 +1573,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2448,
-    "correlation_s": 0.0049,
+    "detection_s": 0.2403,
+    "correlation_s": 0.004,
     "severity_s": 0.0001,
-    "evidence_s": 0.0448,
-    "analysis_total_s": 0.2946
+    "evidence_s": 0.0428,
+    "analysis_total_s": 0.2872
    },
    "compression": {
     "alerts": 42,
@@ -1717,7 +1717,7 @@
     },
     {
      "incident_id": "INC-0002",
-     "title": "Off-hours logon from new device/IP (meera.pillai on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (meera.pillai on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -1820,11 +1820,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2531,
-    "correlation_s": 0.0049,
-    "severity_s": 0.0002,
-    "evidence_s": 0.0415,
-    "analysis_total_s": 0.2997
+    "detection_s": 0.2344,
+    "correlation_s": 0.0036,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0386,
+    "analysis_total_s": 0.2767
    },
    "compression": {
     "alerts": 32,
@@ -1964,7 +1964,7 @@
     },
     {
      "incident_id": "INC-0005",
-     "title": "Off-hours logon from new device/IP (aditya.rao on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (aditya.rao on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -2067,11 +2067,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2718,
+    "detection_s": 0.2829,
     "correlation_s": 0.004,
-    "severity_s": 0.0003,
-    "evidence_s": 0.0436,
-    "analysis_total_s": 0.3197
+    "severity_s": 0.0001,
+    "evidence_s": 0.0424,
+    "analysis_total_s": 0.3294
    },
    "compression": {
     "alerts": 39,
@@ -2211,7 +2211,7 @@
     },
     {
      "incident_id": "INC-0005",
-     "title": "Off-hours logon from new device/IP (vikram.rao on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (vikram.rao on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -2314,11 +2314,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2519,
-    "correlation_s": 0.0042,
+    "detection_s": 0.2505,
+    "correlation_s": 0.0037,
     "severity_s": 0.0001,
-    "evidence_s": 0.0488,
-    "analysis_total_s": 0.3049
+    "evidence_s": 0.0443,
+    "analysis_total_s": 0.2987
    },
    "compression": {
     "alerts": 40,
@@ -2458,7 +2458,7 @@
     },
     {
      "incident_id": "INC-0003",
-     "title": "Off-hours logon from new device/IP (varun.joshi on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (varun.joshi on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -2561,11 +2561,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2762,
-    "correlation_s": 0.0037,
+    "detection_s": 0.268,
+    "correlation_s": 0.0038,
     "severity_s": 0.0001,
-    "evidence_s": 0.0443,
-    "analysis_total_s": 0.3244
+    "evidence_s": 0.046,
+    "analysis_total_s": 0.3179
    },
    "compression": {
     "alerts": 42,
@@ -2719,7 +2719,7 @@
     },
     {
      "incident_id": "INC-0004",
-     "title": "Off-hours logon from new device/IP (kavya.iyer on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (kavya.iyer on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -2833,11 +2833,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2729,
+    "detection_s": 0.2708,
     "correlation_s": 0.0045,
     "severity_s": 0.0001,
-    "evidence_s": 0.051,
-    "analysis_total_s": 0.3285
+    "evidence_s": 0.0507,
+    "analysis_total_s": 0.3262
    },
    "compression": {
     "alerts": 40,
@@ -2986,7 +2986,7 @@
     },
     {
      "incident_id": "INC-0003",
-     "title": "Off-hours logon from new device/IP (manoj.joshi on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (manoj.joshi on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -3089,11 +3089,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2398,
-    "correlation_s": 0.004,
+    "detection_s": 0.2407,
+    "correlation_s": 0.0037,
     "severity_s": 0.0001,
     "evidence_s": 0.0353,
-    "analysis_total_s": 0.2791
+    "analysis_total_s": 0.2797
    },
    "compression": {
     "alerts": 41,
@@ -3233,7 +3233,7 @@
     },
     {
      "incident_id": "INC-0004",
-     "title": "Off-hours logon from new device/IP (tara.nair on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (tara.nair on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -3336,11 +3336,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2471,
-    "correlation_s": 0.0037,
+    "detection_s": 0.2533,
+    "correlation_s": 0.0036,
     "severity_s": 0.0001,
-    "evidence_s": 0.0434,
-    "analysis_total_s": 0.2943
+    "evidence_s": 0.0388,
+    "analysis_total_s": 0.2959
    },
    "compression": {
     "alerts": 38,
@@ -3499,7 +3499,7 @@
     },
     {
      "incident_id": "INC-0005",
-     "title": "Off-hours logon from new device/IP (ananya.sharma on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (ananya.sharma on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -3602,11 +3602,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2475,
-    "correlation_s": 0.005,
+    "detection_s": 0.2542,
+    "correlation_s": 0.0047,
     "severity_s": 0.0001,
-    "evidence_s": 0.05,
-    "analysis_total_s": 0.3026
+    "evidence_s": 0.0486,
+    "analysis_total_s": 0.3076
    },
    "compression": {
     "alerts": 44,
@@ -3746,7 +3746,7 @@
     },
     {
      "incident_id": "INC-0005",
-     "title": "Off-hours logon from new device/IP (swati.iyer on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (swati.iyer on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -3849,11 +3849,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.266,
-    "correlation_s": 0.006,
+    "detection_s": 0.2368,
+    "correlation_s": 0.0037,
     "severity_s": 0.0001,
-    "evidence_s": 0.0423,
-    "analysis_total_s": 0.3144
+    "evidence_s": 0.0428,
+    "analysis_total_s": 0.2834
    },
    "compression": {
     "alerts": 34,
@@ -4223,7 +4223,7 @@
     },
     {
      "incident_id": "INC-0004",
-     "title": "Off-hours logon from new device/IP (rahul.das on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (rahul.das on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -4326,11 +4326,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.319,
-    "correlation_s": 0.0042,
+    "detection_s": 0.3298,
+    "correlation_s": 0.0041,
     "severity_s": 0.0001,
-    "evidence_s": 0.0649,
-    "analysis_total_s": 0.3881
+    "evidence_s": 0.05,
+    "analysis_total_s": 0.3841
    },
    "compression": {
     "alerts": 49,
@@ -4470,7 +4470,7 @@
     },
     {
      "incident_id": "INC-0005",
-     "title": "Off-hours logon from new device/IP (manoj.mehta on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (manoj.mehta on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -4573,11 +4573,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.3029,
-    "correlation_s": 0.0043,
+    "detection_s": 0.3006,
+    "correlation_s": 0.0042,
     "severity_s": 0.0001,
-    "evidence_s": 0.0406,
-    "analysis_total_s": 0.3479
+    "evidence_s": 0.0391,
+    "analysis_total_s": 0.344
    },
    "compression": {
     "alerts": 49,
@@ -4717,7 +4717,7 @@
     },
     {
      "incident_id": "INC-0003",
-     "title": "Off-hours logon from new device/IP (isha.joshi on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (isha.joshi on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -4820,11 +4820,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2978,
-    "correlation_s": 0.0041,
+    "detection_s": 0.2928,
+    "correlation_s": 0.0042,
     "severity_s": 0.0001,
-    "evidence_s": 0.0465,
-    "analysis_total_s": 0.3486
+    "evidence_s": 0.047,
+    "analysis_total_s": 0.3442
    },
    "compression": {
     "alerts": 44,
@@ -5001,7 +5001,7 @@
     },
     {
      "incident_id": "INC-0002",
-     "title": "Off-hours logon from new device/IP (ananya.reddy on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (ananya.reddy on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -5115,11 +5115,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2856,
-    "correlation_s": 0.0062,
+    "detection_s": 0.2929,
+    "correlation_s": 0.0058,
     "severity_s": 0.0001,
-    "evidence_s": 0.055,
-    "analysis_total_s": 0.3469
+    "evidence_s": 0.0576,
+    "analysis_total_s": 0.3565
    },
    "compression": {
     "alerts": 49,
@@ -5259,7 +5259,7 @@
     },
     {
      "incident_id": "INC-0003",
-     "title": "Off-hours logon from new device/IP (ananya.reddy on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (ananya.reddy on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -5362,11 +5362,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2687,
-    "correlation_s": 0.0048,
-    "severity_s": 0.0002,
-    "evidence_s": 0.0373,
-    "analysis_total_s": 0.311
+    "detection_s": 0.28,
+    "correlation_s": 0.0043,
+    "severity_s": 0.0001,
+    "evidence_s": 0.0395,
+    "analysis_total_s": 0.3238
    },
    "compression": {
     "alerts": 45,
@@ -5506,7 +5506,7 @@
     },
     {
      "incident_id": "INC-0004",
-     "title": "Off-hours logon from new device/IP (arjun.kumar on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (arjun.kumar on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -5609,11 +5609,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.3113,
-    "correlation_s": 0.0042,
+    "detection_s": 0.3131,
+    "correlation_s": 0.0039,
     "severity_s": 0.0001,
-    "evidence_s": 0.0417,
-    "analysis_total_s": 0.3572
+    "evidence_s": 0.0408,
+    "analysis_total_s": 0.3579
    },
    "compression": {
     "alerts": 40,
@@ -5772,7 +5772,7 @@
     },
     {
      "incident_id": "INC-0006",
-     "title": "Off-hours logon from new device/IP (kavya.das on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (kavya.das on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -5875,11 +5875,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2845,
+    "detection_s": 0.2905,
     "correlation_s": 0.0047,
     "severity_s": 0.0001,
-    "evidence_s": 0.0598,
-    "analysis_total_s": 0.3491
+    "evidence_s": 0.0551,
+    "analysis_total_s": 0.3504
    },
    "compression": {
     "alerts": 44,
@@ -6019,7 +6019,7 @@
     },
     {
      "incident_id": "INC-0003",
-     "title": "Off-hours logon from new device/IP (sneha.pillai on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (sneha.pillai on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -6122,11 +6122,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2934,
-    "correlation_s": 0.0042,
+    "detection_s": 0.332,
+    "correlation_s": 0.0041,
     "severity_s": 0.0001,
-    "evidence_s": 0.0457,
-    "analysis_total_s": 0.3433
+    "evidence_s": 0.0444,
+    "analysis_total_s": 0.3806
    },
    "compression": {
     "alerts": 46,
@@ -6359,11 +6359,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.3156,
-    "correlation_s": 0.0034,
+    "detection_s": 0.3095,
+    "correlation_s": 0.0038,
     "severity_s": 0.0001,
     "evidence_s": 0.0424,
-    "analysis_total_s": 0.3615
+    "analysis_total_s": 0.3558
    },
    "compression": {
     "alerts": 47,
@@ -6503,7 +6503,7 @@
     },
     {
      "incident_id": "INC-0005",
-     "title": "Off-hours logon from new device/IP (varun.kumar on FIN-SRV01)",
+     "title": "Off-hours logon from new device/IP (varun.kumar on FS01)",
      "level": "Low",
      "score": 20,
      "events": 2,
@@ -6606,11 +6606,11 @@
     "endpoint_logs.json"
    ],
    "timings_s": {
-    "detection_s": 0.2968,
-    "correlation_s": 0.0039,
+    "detection_s": 0.314,
+    "correlation_s": 0.0056,
     "severity_s": 0.0001,
-    "evidence_s": 0.0421,
-    "analysis_total_s": 0.3428
+    "evidence_s": 0.0438,
+    "analysis_total_s": 0.3635
    },
    "compression": {
     "alerts": 42,

@@ -16,7 +16,9 @@ function Start-Detached($cmdline, $log) {
     # output is captured; the service writes to its own log file. Returns the PID of the cmd.exe wrapper
     # (stop_demo.ps1 stops that process tree).
     $full = "cmd.exe /c `"$cmdline > `"$log`" 2>&1`""
-    $r = Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{ CommandLine = $full; CurrentDirectory = $Root }
+    # hidden window: a visible console could be closed or receive Ctrl+C and silently stop the service
+    $si = New-CimInstance -ClassName Win32_ProcessStartup -ClientOnly -Property @{ ShowWindow = [uint16]0 }
+    $r = Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{ CommandLine = $full; CurrentDirectory = $Root; ProcessStartupInformation = $si }
     if ($r.ReturnValue -ne 0) { throw "could not start: $cmdline (code $($r.ReturnValue))" }
     return [int]$r.ProcessId
 }
@@ -88,7 +90,7 @@ for ($i = 0; $i -lt 40 -and -not ($ok1 -and $ok2); $i++) {
     if (-not $ok1) { $ok1 = Test-Url "http://127.0.0.1:8502/api/health" }
     if (-not $ok2) { $ok2 = Test-Url "http://127.0.0.1:8501/_stcore/health" }
 }
-Write-Host ("    NEXUS    " + ($(if ($ok1) { "healthy" } else { "NOT responding - see demo_data\logs\nexus.err.log" })))
+Write-Host ("    NEXUS    " + ($(if ($ok1) { "healthy" } else { "NOT responding - see demo_data\logs\nexus.log" })))
 Write-Host ("    SENTINEL " + ($(if ($ok2) { "healthy" } else { "NOT responding - see demo_data\logs\sentinel.log" })))
 
 Write-Host "6/6 Event pipeline" -ForegroundColor DarkYellow

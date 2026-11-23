@@ -69,7 +69,7 @@ Times are IST. Build window: 22 Nov 16:30 to 24 Nov 06:00.
   - naive detector: 1,651 items, strict F1 0.058;
   - ablation: no baselines 0.797, no allowlists 0.889, no context 0.341, full 0.970;
   - alert compression 88.3%.
-- **Evidence Contract v7:** typed claims and one bounded self-repair round (73% → 83% verified). Chat gets a deterministic evidence fallback (0 silent replies in 35 questions). Handoff notes added.
+- **Evidence Contract v7:** typed claims and one bounded self-repair round (73% → 80% verified in the saved run; 73% → 83% and 77% → 87% in earlier runs). Chat gets a deterministic evidence fallback (0 silent replies in 35 questions). Handoff notes added.
 - **Verifier bug** found by a new test: tokens like "LOW-CONFIDENCE" that appear in the cited fact were rejected as unknown host names. Fixed.
 - **Benchmarks:**
   - qwen2.5:3b CPU-only, about 46 s per incident vs about 6 s on GPU; placement confirmed by `/api/ps`;
