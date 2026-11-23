@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block body %}
+<div class="card"><h1>Administration</h1><p class="muted">Group membership management ({{ 'administrator' if u.role=='admin' else 'delegated group manager' }}).</p>
+<form method="post" action="{{ url_for('add_member') }}" style="display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end">
+<div><label>Group</label><select name="group">{% for g in groups %}<option>{{ g }}</option>{% endfor %}</select></div>
+<div><label>Member</label><select name="member">{% for n in users %}<option>{{ n }}</option>{% endfor %}</select></div>
+<div><button class="btn" type="submit">Add member</button><br><br></div></form></div>
+<div class="card"><h2>Groups</h2><table><tr><th>Group</th><th>Members</th></tr>
+{% for g, m in groups.items() %}<tr><td>{{ g }}</td><td>{{ m|join(', ') }}</td></tr>{% endfor %}</table></div>{% endblock %}

@@ -86,6 +86,10 @@ def validate_config(cfg: dict) -> None:
             except (KeyError, re.error) as exc:
                 raise ConfigError(f"bad regex in suspicious_processes/{rule.get('id')}: {exc}")
     for w in cfg["allowlists"]["change_windows"]:
+        if "weekday" not in w:            # absolute change ticket {start, end}
+            if not (w.get("start") and w.get("end")):
+                raise ConfigError(f"change ticket needs start and end: {w}")
+            continue
         if not (0 <= int(w["weekday"]) <= 6):
             raise ConfigError(f"change window weekday out of range: {w}")
         for k in ("start", "end"):

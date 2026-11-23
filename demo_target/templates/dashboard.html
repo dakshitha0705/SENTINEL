@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block body %}
+<div class="card"><h1>Welcome, {{ u.name }}</h1><div class="muted">{{ u.dept }} · {{ u.role }} · signed in from {{ session_ip }} · groups: {{ groups|join(', ') or 'none' }}</div></div>
+<div class="card"><h2>Resources</h2><div class="grid">
+{% for key, title, ok in resources %}<div class="tile {{ '' if ok else 'locked' }}"><b>{{ title }}</b><span class="muted">{{ 'Available' if ok else 'Restricted' }}</span><br><br><a href="{{ url_for('resource', name=key) }}">Open</a></div>{% endfor %}
+</div></div>{% endblock %}

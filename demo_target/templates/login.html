@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in - NEXUS</title><link rel="stylesheet" href="{{ url_for('static', filename='nexus.css') }}"></head>
+<body><div class="login"><div class="side"><div><h1>NEXUS</h1><div style="opacity:.8">Corporate Access Portal</div></div>
+<div style="font-size:13px;opacity:.75;line-height:1.6">Fictional company for the SENTINEL demonstration.<br>Sign-ins, failures, access and group changes are recorded as security events.</div></div>
+<div class="form"><h1>Sign in</h1><p class="muted">Use a demo identity from the controller page.</p>
+{% if error %}<div class="err">{{ error }}</div>{% endif %}
+<form method="post" autocomplete="off"><label>Username</label><input name="username" maxlength="64" required autofocus>
+<label>Password</label><input name="password" type="password" maxlength="128" required>
+<button class="btn" type="submit" style="width:100%">Sign in</button></form>
+<p class="muted" style="margin-top:24px;font-size:12px">Accounts lock for 15 minutes after 15 failed attempts.</p></div></div></body></html>

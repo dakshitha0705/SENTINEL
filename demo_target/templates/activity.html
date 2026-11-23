@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block body %}
+<div class="card"><h1>Your recent activity</h1><p class="muted">From the portal's security event stream (most recent first).</p><table>
+<tr><th>Time (UTC)</th><th>Event</th><th>Outcome</th><th>Source address</th><th>Origin</th></tr>
+{% for e in rows %}<tr><td>{{ e.TimeCreated[:19] }}</td><td>{{ e.event_type }} ({{ e.EventID }})</td><td><span class="pill {{ 'fail' if e.outcome=='failure' else 'ok' }}">{{ e.outcome }}</span></td><td>{{ e.IpAddress }}{% if e.source_address_simulated %} <span class="pill">simulated</span>{% endif %}</td><td>{{ e.origin }}</td></tr>{% else %}<tr><td colspan="5" class="muted">No activity yet.</td></tr>{% endfor %}
+</table></div>{% endblock %}

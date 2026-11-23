@@ -36,3 +36,4 @@ data/samples/fresh_seed*/
 data/samples/dev_ext_seed7/
 data/samples/scale_*/
 .cache/
+demo_data/

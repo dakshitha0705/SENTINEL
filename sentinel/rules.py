@@ -59,9 +59,17 @@ def _alert(rule, events: pd.DataFrame, reason, confidence="high", details=None, 
 
 
 def in_change_window(ts, cfg) -> bool:
+    """Recurring windows {weekday, start "HH:MM", end "HH:MM"} or approved change tickets with absolute
+    {start, end} ISO timestamps (e.g. registered by a change-management feed)."""
     ts = pd.Timestamp(ts)
     minutes = ts.hour * 60 + ts.minute
     for w in cfg["allowlists"]["change_windows"]:
+        if "weekday" not in w:
+            lo, hi = pd.Timestamp(w["start"]), pd.Timestamp(w["end"])
+            t = ts if ts.tzinfo else ts.tz_localize("UTC")
+            if lo <= t <= hi:
+                return True
+            continue
         if ts.weekday() != int(w["weekday"]):
             continue
         sh, sm = map(int, w["start"].split(":"))

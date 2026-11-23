@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}NEXUS Corporate Access Portal{% endblock %}</title><link rel="stylesheet" href="{{ url_for('static', filename='nexus.css') }}"></head>
+<body><div class="top"><div class="logo">NEXUS<small>Corporate Access Portal</small></div>
+<nav>{% if session.user %}<a href="{{ url_for('dashboard') }}">Dashboard</a><a href="{{ url_for('account') }}">Account</a><a href="{{ url_for('activity') }}">Activity</a><a href="{{ url_for('admin') }}">Admin</a><a href="{{ url_for('logout') }}">Sign out ({{ session.user }})</a>{% else %}<a href="{{ url_for('login') }}">Sign in</a>{% endif %}</nav></div>
+<div class="wrap"><div class="banner">Fictional demo company. Every account and record here is invented; the portal runs on 127.0.0.1 only and its security events stream to SENTINEL.</div><br>
+{% block body %}{% endblock %}</div></body></html>

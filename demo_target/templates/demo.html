@@ -1,0 +1,78 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXUS scenario controller</title>
+<style>
+:root{--bg:#070d0b;--panel:#101816;--line:rgba(239,230,210,.10);--ivory:#efe6d2;--mute:#9fada6;--sage:#86a091;--mint:#b5d3c0;--copper:#b87a55;--amber:#d9a35b;--red:#c0574b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(1000px 600px at 70% -10%,#13201c,var(--bg) 60%);color:var(--ivory);font-family:"Segoe UI",system-ui,sans-serif;font-size:13.5px}
+.wrap{max-width:1250px;margin:0 auto;padding:22px}
+h1{font-family:Bahnschrift,"Segoe UI",sans-serif;font-weight:500;letter-spacing:5px;font-size:20px;margin:0}
+.sub{color:var(--mute);font-size:12px;letter-spacing:1px;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:1.15fr 1fr;gap:16px;margin-top:16px}
+.panel{background:linear-gradient(180deg,rgba(28,40,37,.75),rgba(16,24,22,.9));border:1px solid var(--line);border-radius:16px;padding:16px 18px;position:relative}
+.panel h2{margin:0 0 10px;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--copper)}
+.sc{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+button{font:inherit;cursor:pointer;border-radius:12px;border:1px solid var(--line);background:rgba(39,55,52,.55);color:var(--ivory);padding:11px 12px;text-align:left;transition:.15s}
+button:hover{border-color:rgba(217,163,91,.55);background:rgba(39,55,52,.9)}
+button b{display:block;font-size:13.5px}button span{color:var(--mute);font-size:11.5px}
+button.attack b::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin-right:7px;vertical-align:1px}
+button.benign b::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--mint);margin-right:7px;vertical-align:1px}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row button{text-align:center;padding:9px 14px}
+.primary{background:linear-gradient(180deg,#d4b27f,#b8925e);color:#16201d;border:0;font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi{background:rgba(7,13,11,.45);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.kpi .v{font-family:Bahnschrift,sans-serif;font-size:24px}.kpi .l{color:var(--mute);font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase}
+.bar{height:6px;border-radius:6px;background:rgba(239,230,210,.08);overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:var(--amber);transition:width .4s}
+.log{font-family:"Cascadia Mono",Consolas,monospace;font-size:12px;color:#d7cfbd;max-height:250px;overflow:auto;background:rgba(7,13,11,.5);border-radius:10px;padding:8px 10px;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}td,th{padding:6px 6px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--mute);font-weight:500}
+.sev{padding:1px 8px;border-radius:999px;font-size:11px;border:1px solid}.Critical{color:#e09083;border-color:#c0574b}.High{color:var(--amber);border-color:#a17a45}.Medium{color:var(--mint);border-color:#5f7c6c}.Low{color:#a9b8b1;border-color:#56645f}
+.state{display:inline-block;padding:2px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px}
+a{color:var(--amber)}.cred{font-family:Consolas,monospace;font-size:12px}
+.note{color:var(--mute);font-size:11.5px;line-height:1.5}
+</style></head><body><div class="wrap">
+<div style="display:flex;justify-content:space-between;align-items:end">
+<div><h1>NEXUS · SCENARIO CONTROLLER</h1><div class="sub">Isolated demo target · 127.0.0.1 only · bounded simulated scenarios</div></div>
+<div class="row"><a href="/login" target="_blank">Open NEXUS portal ↗</a> &nbsp; <a href="http://127.0.0.1:8501/?live=1" target="_blank">Open SENTINEL ↗</a></div></div>
+<div class="grid">
+<div class="panel"><h2>Session</h2>
+<div class="row"><button class="primary" onclick="post('/api/demo/start')">Start demo (new session + baseline history)</button>
+<button onclick="if(confirm('Reset demo session? Only demo_data is affected.'))post('/api/demo/reset')">Reset demo session</button>
+<button onclick="post('/api/demo/pause')">Pause</button><button onclick="post('/api/demo/resume')">Resume</button><button onclick="post('/api/demo/stop')">Stop</button></div>
+<p class="note">Session <b id="sid">–</b>. Start writes 7 days of <i>synthetic</i> baseline logons (labelled <code>baseline-backfill</code>) so per-user baselines exist. Reset starts a new, empty session; earlier sessions stay on disk under demo_data/.</p>
+<h2 style="margin-top:14px">Scenarios</h2><div class="sc">
+{% for sid, (name, desc) in scenarios.items() %}<button class="{{ 'benign' if sid in 'AH' else 'attack' }}" onclick="post('/api/demo/run/{{ sid }}')"><b>{{ sid }} · {{ name }}</b><span>{{ desc }}</span></button>{% endfor %}
+</div>
+<p class="note">Authentication, access and group-change events are produced by NEXUS's own code handling real HTTP requests (<code>origin: nexus-app</code>); attacker addresses are simulated (RFC 5737 ranges) and flagged. Endpoint process and log-clearing events are <b>synthetic</b> (<code>origin: simulated-endpoint</code>): nothing is executed and no real log is cleared.</p>
+</div>
+<div class="panel"><h2>Live status</h2>
+<div class="kpis"><div class="kpi"><div class="v" id="emitted">0</div><div class="l">events emitted</div></div>
+<div class="kpi"><div class="v" id="ingested">–</div><div class="l">ingested by SENTINEL</div></div>
+<div class="kpi"><div class="v" id="detections">–</div><div class="l">detections</div></div>
+<div class="kpi"><div class="v" id="incidents">–</div><div class="l">incidents</div></div></div>
+<div style="margin-top:12px">Scenario: <b id="scn">–</b> &nbsp; <span class="state" id="state">idle</span> &nbsp; <span class="note" id="elapsed"></span></div>
+<div class="bar"><i id="prog" style="width:0%"></i></div>
+<div class="log" id="log">No scenario run yet.</div>
+<div id="err" style="color:#e09083;margin-top:6px"></div>
+<h2 style="margin-top:14px">Incidents detected by SENTINEL</h2>
+<table id="inc"><tr><th>Incident</th><th>Severity</th><th>Title</th><th>Detection latency</th></tr></table>
+<p class="note" id="sentinel_note">Waiting for SENTINEL's live engine (open SENTINEL with live monitoring on).</p>
+</div></div>
+<div class="panel" style="margin-top:16px"><h2>Fictional demo identities (generated locally for this demo)</h2>
+<table><tr><th>Username</th><th>Role</th><th>Department</th><th>Password</th></tr>
+{% for u, p in creds.items() %}<tr><td>{{ u }}</td><td>{{ users[u].role }}</td><td>{{ users[u].dept }}</td><td class="cred">{{ p if users[u].role != 'service' else '(no interactive logon)' }}</td></tr>{% endfor %}</table></div>
+</div>
+<script>
+async function post(u){const r=await fetch(u,{method:'POST'});const j=await r.json().catch(()=>({}));if(!r.ok)document.getElementById('err').textContent=j.message||('HTTP '+r.status);else document.getElementById('err').textContent='';tick();}
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+async function tick(){try{const r=await fetch('/api/demo/status');const s=await r.json();const st=s.runner;
+document.getElementById('sid').textContent=s.session;document.getElementById('emitted').textContent=s.events_emitted;
+document.getElementById('scn').textContent=st.scenario?st.scenario+' · '+st.name:'–';document.getElementById('state').textContent=st.state;
+document.getElementById('elapsed').textContent=st.started_at?(st.elapsed_s+' s · step '+st.step+'/'+st.steps+' · '+st.emitted+' events'):'';
+document.getElementById('prog').style.width=(st.steps?100*st.step/st.steps:0)+'%';
+if(st.log&&st.log.length)document.getElementById('log').innerHTML=st.log.map(esc).join('<br>');
+if(st.error)document.getElementById('err').textContent=st.error;
+const se=s.sentinel;if(se&&se.session_id===s.session){document.getElementById('ingested').textContent=se.events_ingested;
+document.getElementById('detections').textContent=se.alerts;document.getElementById('incidents').textContent=se.incidents.length;
+document.getElementById('sentinel_note').textContent='SENTINEL last processed '+se.last_poll+' (batch '+se.last_batch+' events, analysis '+se.analysis_s+' s).';
+document.getElementById('inc').innerHTML='<tr><th>Incident</th><th>Severity</th><th>Title</th><th>Detection latency</th></tr>'+se.incidents.map(i=>'<tr><td>'+esc(i.incident_id)+'</td><td><span class="sev '+esc(i.level)+'">'+esc(i.level)+' '+i.score+'</span></td><td>'+esc(i.title)+'</td><td>'+(i.latency_s!=null?i.latency_s.toFixed(1)+' s':'–')+'</td></tr>').join('');}
+}catch(e){}}
+setInterval(tick,1000);tick();
+</script></body></html>
