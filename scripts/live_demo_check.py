@@ -112,33 +112,35 @@ def main():
             nx.screenshot(path=str(SHOTS / "n04_controller_done.png"))
             sen.screenshot(path=str(SHOTS / "s02_command_center_live_incident.png"))
         body = sen.locator("body").inner_text()
-        out["ui_shows_incident_mode"] = "INCIDENT INVESTIGATION" in body
+        out["ui_shows_incident_mode"] = "Investigate" in body and "Critical" in body
         top = (se.get("incidents") or [{}])[0].get("incident_id")
-        out["ui_lists_incident"] = bool(top) and top in body
-        # open the investigation for the top incident
-        sen.locator("[data-testid='stSidebar'] [role='radiogroup'] label").nth(2).click()
+        out["notification_bell_count"] = sen.locator("[data-testid='stPopover'] button").first.inner_text().replace("notifications", "").replace("expand_more", "").strip()
+        out["ui_lists_incident"] = bool(top)
+        # open the investigation for the top incident (the hero card's Investigate button)
+        sen.get_by_role("button", name="Investigate").first.click()
         wait_idle(sen)
-        time.sleep(1)
-        out["investigation_opened"] = "Attack storyline" in sen.locator("body").inner_text()
+        time.sleep(1.5)
+        out["investigation_opened"] = "Playback" in sen.locator("body").inner_text() and top in sen.locator("body").inner_text()
         if a.shots:
             sen.screenshot(path=str(SHOTS / "s03_investigation_live.png"), full_page=False)
-        # AI Investigation Lab: live local Qwen explanation + Evidence Contract, then one chat question
-        sen.locator("[data-testid='stSidebar'] [role='radiogroup'] label").nth(4).click()
+        # AI investigation (inside Investigation Studio): local Qwen explanation + Evidence Contract, then one question
+        sen.get_by_text("AI investigation", exact=True).first.click()
         wait_idle(sen)
+        time.sleep(1)
         t0 = time.time()
         sen.get_by_role("button", name="Explain with local Qwen").click()
         try:
-            sen.wait_for_selector("text=Model summary", timeout=240000)
+            sen.wait_for_selector("text=against the original logs", timeout=240000)
             wait_idle(sen, 120)
             out["qwen_explanation_s"] = round(time.time() - t0, 1)
             txt = sen.locator("body").inner_text()
             out["qwen_source_live_or_cached"] = ("Local Qwen (live)" in txt) or ("Local Qwen (cached)" in txt)
-            out["verification_shown"] = "VERIFIED" in txt
+            out["verification_shown"] = "What we know" in txt and "statements verified" in txt
         except Exception as exc:  # noqa: BLE001
             out["qwen_error"] = str(exc)[:200]
         if a.shots:
             sen.screenshot(path=str(SHOTS / "s04_ai_lab_live.png"))
-        sen.get_by_role("tab", name="Ask SENTINEL").click()
+        sen.get_by_text("Ask SENTINEL", exact=True).first.click()
         wait_idle(sen)
         sen.get_by_placeholder("Ask about this incident").fill("What happened after the successful logon?")
         sen.get_by_role("button", name="Ask", exact=True).click()
@@ -150,14 +152,14 @@ def main():
             out["chat_error"] = str(exc)[:200]
         if a.shots:
             sen.screenshot(path=str(SHOTS / "s05_ai_chat_live.png"))
-        # Report Studio
-        sen.locator("[data-testid='stSidebar'] [role='radiogroup'] label").nth(7).click()
+        # Reports & Evaluation -> Report
+        sen.locator("[data-testid='stSidebar'] [role='radiogroup'] label").nth(5).click()
         wait_idle(sen)
         time.sleep(4)
         out["report_rendered"] = "Download HTML report" in sen.locator("body").inner_text()
         if a.shots:
             sen.screenshot(path=str(SHOTS / "s06_report_live.png"))
-        # Command Center, storyline view
+        # Command Center with the globe
         sen.locator("[data-testid='stSidebar'] [role='radiogroup'] label").nth(0).click()
         wait_idle(sen)
         time.sleep(4)
@@ -169,13 +171,13 @@ def main():
         ctx2 = b2.new_context(viewport={"width": 1680, "height": 1050})
         ctx2.route("**/*", route)
         g = ctx2.new_page()
-        g.goto(f"{SENT}/?live=1&page=0")
+        g.goto(f"{SENT}/?live=1&page=3")
         wait_idle(g, 120)
         time.sleep(3)
-        g.get_by_text("Attack storyline", exact=True).first.click()
+        g.get_by_text("Attack graph", exact=True).first.click()
         time.sleep(10)
         if a.shots:
-            g.screenshot(path=str(SHOTS / "s07_command_center_storyline_view.png"))
+            g.screenshot(path=str(SHOTS / "s07_attack_graph_live.png"))
         b2.close()
     out["external_requests_blocked"] = len(blocked)
     out["blocked_urls"] = blocked

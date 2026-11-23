@@ -7,32 +7,32 @@
 <!-- All assets are local files served by Streamlit; no network access is required or attempted. -->
 <style>
   :root {
-    --bg: #0D1716; --surface: #1C2B29; --elev: #273734; --sage: #819B8D; --mint: #A7BFAF;
-    --cream: #E8DDC9; --gold: #C8AA7C; --rose: #B98780; --muted: #A9B6AE; --line: rgba(232,221,201,.10);
+    --bg: #0B2226; --surface: #12323A; --elev: #163B44; --sage: #8FB0AD; --mint: #B7D1CC;
+    --cream: #F3EBDD; --gold: #E3A587; --rose: #C7714F; --muted: #9DB1B2; --line: rgba(243,235,221,.12);
   }
   html, body { margin: 0; padding: 0; background: transparent; color: var(--cream); overflow: hidden;
     font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; }
   #wrap { position: relative; width: 100%; border-radius: 22px; overflow: hidden;
-    background: radial-gradient(ellipse at 50% 46%, #15221e 0%, #0b1411 52%, #060b09 100%); }
+    background: radial-gradient(ellipse at 50% 46%, #17404a 0%, #0c2a31 45%, #071a1e 100%); }
   #stage { width: 100%; }
   .bar { position: absolute; left: 14px; bottom: 14px; display: flex; gap: 8px; z-index: 5; flex-wrap: wrap; }
-  .btn { background: rgba(28,43,41,.78); border: 1px solid var(--line); color: var(--cream); font-size: 12px;
+  .btn { background: rgba(11,34,38,.72); border: 1px solid var(--line); color: var(--cream); font-size: 12px;
     padding: 7px 12px; border-radius: 999px; cursor: pointer; backdrop-filter: blur(6px);
     transition: background .2s ease, border-color .2s ease; user-select: none; }
-  .btn:hover { background: rgba(39,55,52,.95); border-color: rgba(200,170,124,.45); }
-  .btn.on { border-color: rgba(200,170,124,.65); color: #F3EBDD; }
+  .btn:hover { background: rgba(22,59,68,.95); border-color: rgba(227,165,135,.55); }
+  .btn.on { border-color: rgba(227,165,135,.65); color: #F3EBDD; }
   .chip { position: absolute; top: 14px; left: 14px; z-index: 5; font-size: 11.5px; letter-spacing: .4px;
-    color: var(--muted); background: rgba(13,23,22,.55); border: 1px solid var(--line); padding: 6px 11px;
+    color: var(--muted); background: rgba(7,26,30,.55); border: 1px solid var(--line); padding: 5px 10px;
     border-radius: 999px; backdrop-filter: blur(6px); max-width: 70%; }
   .chip b { color: var(--cream); font-weight: 600; }
   .legend { position: absolute; top: 14px; right: 14px; z-index: 5; font-size: 11px; color: var(--muted);
-    background: rgba(13,23,22,.55); border: 1px solid var(--line); padding: 7px 11px; border-radius: 14px; }
+    background: rgba(7,26,30,.55); border: 1px solid var(--line); padding: 6px 10px; border-radius: 14px; }
   .legend span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin: 0 5px 0 9px; }
-  .tip { background: rgba(20,32,30,.95); border: 1px solid rgba(200,170,124,.35); border-radius: 10px;
+  .tip { background: rgba(11,34,38,.96); border: 1px solid rgba(227,165,135,.35); border-radius: 10px;
     padding: 8px 10px; font-size: 12px; color: var(--cream); line-height: 1.45; max-width: 280px; }
   .tip .k { color: var(--muted); }
   .empty { position: absolute; left: 50%; bottom: 58px; transform: translateX(-50%); z-index: 5; font-size: 12px;
-    color: var(--muted); background: rgba(13,23,22,.6); border: 1px solid var(--line); padding: 7px 14px;
+    color: var(--muted); background: rgba(7,26,30,.6); border: 1px solid var(--line); padding: 6px 13px;
     border-radius: 999px; white-space: nowrap; }
   #graph { width: 100%; }
   div.vis-tooltip { background: rgba(20,32,30,.96) !important; color: var(--cream) !important;
@@ -53,7 +53,7 @@
   function setValue(v) { send("streamlit:setComponentValue", { value: v, dataType: "json" }); }
   function setHeight(h) { send("streamlit:setFrameHeight", { height: h }); }
 
-  var SEV = { Critical: "#D06B5E", High: "#D9A35B", Medium: "#9FC2AE", Low: "#8A9A94", none: "#D8CDB6" };
+  var SEV = { Critical: "#E0766A", High: "#E39A6E", Medium: "#D9BC7E", Low: "#A9C3D1", none: "#F3EBDD" };
   var state = { mode: null, globe: null, net: null, countries: null, arcsOn: true, args: null, key: null };
   var wrap = document.getElementById("wrap"), stage = document.getElementById("stage");
 
@@ -91,20 +91,20 @@
     var arcs = (args.arcs || []).slice();
     var lowq = args.quality === "low";
     var chip = el("div", "chip", args.mode === "intel"
-      ? "<b>Geographic intelligence</b> &middot; " + (args.markers || []).length + " log-provided locations"
-      : "<b>Exploration mode</b> &middot; " + esc(args.provenance || "no location data in these logs"));
+      ? (args.markers || []).length + " locations from the logs"
+      : "<span title='" + esc(args.provenance || "These logs carry no location fields. SENTINEL never guesses a location from an IP address.") + "'>&#9432; No location data in these logs</span>");
     overlay.push(chip);
     if (args.mode === "intel") {
       overlay.push(el("div", "legend", "<span style='background:" + SEV.Critical + "'></span>Critical" +
         "<span style='background:" + SEV.High + "'></span>High<span style='background:" + SEV.Medium + "'></span>Medium" +
         "<span style='background:" + SEV.Low + "'></span>Low<span style='background:" + SEV.none + "'></span>no incident"));
     } else {
-      overlay.push(el("div", "empty", "Geographic attribution unavailable &mdash; the globe is a reference view only"));
+      
     }
     var bar = el("div", "bar");
-    var bReset = el("div", "btn", "Reset view"), bArcs = el("div", "btn on", "Connections"),
-        bSpin = el("div", "btn on", "Auto-rotate"), bClear = el("div", "btn", "Clear selection");
-    bar.appendChild(bReset); if (args.mode === "intel") bar.appendChild(bArcs); bar.appendChild(bSpin);
+    var bReset = el("div", "btn", "Reset view"), bArcs = el("div", "btn on", "Routes"),
+        bSpin = el("div", "btn on", "Rotate"), bClear = el("div", "btn", "Clear");
+    bar.appendChild(bReset); if (args.mode === "intel" && arcs.length) bar.appendChild(bArcs); bar.appendChild(bSpin);
     if (args.mode === "intel") bar.appendChild(bClear);
     overlay.push(bar);
     overlay.forEach(function (o) { wrap.appendChild(o); });
@@ -115,13 +115,13 @@
     var g = Globe({ animateIn: false })(stage)
       .width(W).height(h)
       .backgroundColor("rgba(0,0,0,0)")
-      .showAtmosphere(!lowq).atmosphereColor("#B5D3C0").atmosphereAltitude(0.2)
+      .showAtmosphere(!lowq).atmosphereColor("#A9C3D1").atmosphereAltitude(0.18)
       .showGraticules(true)
       .polygonsData(state.countries ? state.countries.features : [])
       .polygonAltitude(function (d) { return d === hoverPoly || d === selPoly ? 0.02 : (lowq ? 0.004 : 0.01); })
-      .polygonCapColor(function (d) { return d === selPoly ? "rgba(217,163,91,.92)" : d === hoverPoly ? "rgba(245,237,220,.97)" : "rgba(226,214,190,.9)"; })
-      .polygonSideColor(function () { return lowq ? "rgba(0,0,0,0)" : "rgba(92,112,101,.85)"; })
-      .polygonStrokeColor(function () { return "rgba(13,23,22,.38)"; })
+      .polygonCapColor(function (d) { return d === selPoly ? "rgba(227,165,135,.95)" : d === hoverPoly ? "rgba(250,244,233,.98)" : "rgba(232,220,198,.92)"; })
+      .polygonSideColor(function () { return lowq ? "rgba(0,0,0,0)" : "rgba(120,104,84,.75)"; })
+      .polygonStrokeColor(function () { return "rgba(11,34,38,.35)"; })
       .polygonLabel(function (d) { return "<div class='tip'><b>" + esc(d.properties.name) + "</b><br><span class='k'>" + esc(d.properties.subregion || "") + "</span></div>"; })
       .onPolygonHover(function (d) { hoverPoly = d; g.polygonAltitude(g.polygonAltitude()); g.polygonCapColor(g.polygonCapColor()); stage.style.cursor = d ? "pointer" : "grab"; })
       .onPolygonClick(function (d) {
@@ -144,19 +144,19 @@
       .onPointClick(function (d) { selected = d.id; g.pointRadius(g.pointRadius()); g.ringsData([d]); setValue({ type: "marker", id: d.id, t: Date.now() }); })
       .onPointHover(function (d) { stage.style.cursor = d ? "pointer" : "grab"; })
       .ringsData(markers.filter(function (m) { return m.id === selected; }))
-      .ringColor(function () { return function (t) { return "rgba(200,170,124," + (1 - t) * 0.8 + ")"; }; })
+      .ringColor(function () { return function (t) { return "rgba(227,165,135," + (1 - t) * 0.85 + ")"; }; })
       .ringMaxRadius(3.2).ringPropagationSpeed(1.4).ringRepeatPeriod(1400)
       .arcsData(arcs)
-      .arcColor(function (d) { return d.level === "Critical" ? ["rgba(208,107,94,.15)", "rgba(226,140,120,.9)"] : ["rgba(217,163,91,.15)", "rgba(226,186,120,.9)"]; })
+      .arcColor(function (d) { return d.level === "Critical" ? ["rgba(224,118,106,.15)", "rgba(236,150,130,.95)"] : ["rgba(227,165,135,.15)", "rgba(240,196,160,.95)"]; })
       .arcStroke(0.45).arcAltitudeAutoScale(0.42)
       .arcDashLength(0.5).arcDashGap(0.25).arcDashAnimateTime(4200)
       .arcLabel(function (d) { return "<div class='tip'>" + esc(d.label) + "</div>"; })
       .onArcClick(function (d) { if (d.incident) setValue({ type: "arc", incident: d.incident, t: Date.now() }); })
       .pointOfView(POV, 0);
     var mat = g.globeMaterial();
-    if (mat && mat.color) { mat.color.set("#4F6B61"); }
-    if (mat && mat.emissive) { mat.emissive.set("#0E1A17"); mat.emissiveIntensity = 0.5; }
-    if (mat && "shininess" in mat) { mat.shininess = 22; if (mat.specular) mat.specular.set("#3B4F48"); }
+    if (mat && mat.color) { mat.color.set("#1F5561"); }
+    if (mat && mat.emissive) { mat.emissive.set("#0A2328"); mat.emissiveIntensity = 0.5; }
+    if (mat && "shininess" in mat) { mat.shininess = 22; if (mat.specular) mat.specular.set("#5D8590"); }
     // Real 3D shading: a key light offset from the camera gives a visible terminator and specular highlight.
     try {
       (g.lights() || []).forEach(function (l) {
@@ -165,7 +165,7 @@
       });
     } catch (e) {}
     var c = g.controls();
-    c.autoRotate = true; c.autoRotateSpeed = 0.28; c.enableDamping = true; c.dampingFactor = 0.08;
+    c.autoRotate = true; c.autoRotateSpeed = 0.22; c.enableDamping = true; c.dampingFactor = 0.08;
     c.minDistance = 130; c.maxDistance = 720; c.zoomSpeed = 0.8; c.rotateSpeed = 0.6;
     var spinTimer = null;
     stage.addEventListener("pointerdown", function () { c.autoRotate = false; clearTimeout(spinTimer); });
@@ -208,8 +208,8 @@
       var col = n.color || "#819B8D";
       return { id: n.id, label: n.label, title: n.title, group: n.type, shape: shapes[n.type] || "dot",
         size: n.type === "incident" ? 22 : n.type === "alert" ? 10 : 14,
-        color: { background: col, border: "rgba(232,221,201,.35)", highlight: { background: "#E8DDC9", border: "#C8AA7C" },
-                 hover: { background: "#F0E7D6", border: "#C8AA7C" } },
+        color: { background: col, border: "rgba(232,221,201,.35)", highlight: { background: "#F3EBDD", border: "#E3A587" },
+                 hover: { background: "#F6EFE3", border: "#E3A587" } },
         font: { color: n.type === "host" || n.type === "user" ? "#0D1716" : "#E8DDC9", size: 12, face: "Segoe UI" },
         borderWidth: 1, borderWidthSelected: 2 };
     });
@@ -217,7 +217,7 @@
       var weak = e.strength === "weak";
       return { id: "e" + i, from: e.from, to: e.to, title: e.title, dashes: weak || e.kind === "context",
         width: e.kind === "link" ? (weak ? 1 : 2.2) : 1,
-        color: { color: e.kind === "link" ? "rgba(200,170,124,.85)" : "rgba(169,182,174,.35)", highlight: "#C8AA7C", hover: "#C8AA7C" },
+        color: { color: e.kind === "link" ? "rgba(227,165,135,.9)" : "rgba(169,195,209,.35)", highlight: "#E3A587", hover: "#E3A587" },
         arrows: e.kind === "link" ? { to: { enabled: true, scaleFactor: 0.5 } } : undefined,
         smooth: { type: "continuous" } };
     });

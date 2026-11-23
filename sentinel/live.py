@@ -33,6 +33,28 @@ MAPPING = {"timestamp": "TimeCreated", "event_code": "EventID", "record_id": "Ev
            "command_line": "CommandLine", "outcome": "outcome", "log_type": None,
            "src_lat": "SrcLatitude", "src_lon": "SrcLongitude", "src_geo": "SrcLocation",
            "dst_lat": "DeviceLatitude", "dst_lon": "DeviceLongitude", "dst_geo": "DeviceLocation"}
+LEVELS = ["Low", "Medium", "High", "Critical"]
+
+# Plain-language phrases for notifications (what the detection means, not how it is implemented)
+RULE_PHRASE = {
+    "R1": "repeated failed logins against one account", "R2": "failed logins spread across many accounts",
+    "R3": "a successful login right after those failures", "R4": "a login at an unusual hour",
+    "R5": "a login from a new device or address", "R6": "an account added to a privileged group",
+    "R7": "a suspicious command on an endpoint", "R8": "an audit log being cleared",
+    "R9": "one account reaching several new hosts", "R10": "bulk copying to removable or shared storage",
+    "R11": "an external storage device", "R12": "slow, sustained failed logins", "R13": "a small password spray",
+    "R14": "enumeration of privileged groups",
+}
+
+
+def plain_summary(inc: dict, kind: str = "new") -> str:
+    """One readable sentence describing an incident for a notification."""
+    rules = [r for r in inc["rules"] if r != "CTX"]
+    phrases = [RULE_PHRASE[r] for r in rules if r in RULE_PHRASE][:3]
+    who = ", ".join(list(inc["users"])[:2]) or ", ".join(list(inc["hosts"])[:2])
+    what = (", ".join(phrases[:-1]) + " and " + phrases[-1]) if len(phrases) > 1 else (phrases[0] if phrases else "suspicious activity")
+    lead = "New evidence raised the severity: " if kind == "escalated" else "Detected "
+    return f"{lead}{what}" + (f" involving {who}." if who else ".")
 
 
 class LiveEngine:
@@ -160,10 +182,9 @@ class LiveEngine:
                 t = {"key": key, "first_seen": now, "latency_s": round(now - trig, 2) if trig else None,
                      "history": []}
                 self.tracked[key] = t
-                self._notify("new", inc)
-            elif t["level"] != sev["level"] and ["Low", "Medium", "High", "Critical"].index(sev["level"]) > \
-                    ["Low", "Medium", "High", "Critical"].index(t["level"]):
-                self._notify("escalated", inc, t["level"])
+                self._notify("new", inc, key=key)
+            elif t["level"] in LEVELS and LEVELS.index(sev["level"]) > LEVELS.index(t["level"]):
+                self._notify("escalated", inc, t["level"], key=key)
             if not t["history"] or t["history"][-1]["score"] != sev["score"] or t["history"][-1]["events"] != len(rids):
                 t["history"].append({"t": round(now, 2), "score": sev["score"], "level": sev["level"], "events": len(rids),
                                      "rules": inc["rules"]})
@@ -173,7 +194,7 @@ class LiveEngine:
             if k not in live_keys:
                 self.tracked[k]["level"] = "merged"
 
-    def _notify(self, kind, inc, prev=None):
+    def _notify(self, kind, inc, prev=None, key=None):
         sev = inc["severity"]
         stages = " -> ".join(inc["stages"]) or inc["title"]
         if kind == "new":
@@ -181,7 +202,11 @@ class LiveEngine:
         else:
             text = f"{inc['incident_id']} escalated from {prev} to {sev['level']}: {stages}"
         self.notifications.append({"id": len(self.notifications) + 1, "t": time.time(), "kind": kind,
-                                   "level": sev["level"], "incident_id": inc["incident_id"], "text": text})
+                                   "level": sev["level"], "prev_level": prev, "score": sev["score"],
+                                   "incident_id": inc["incident_id"], "key": key, "session_id": self.session_id,
+                                   "users": list(inc["users"])[:3], "hosts": list(inc["hosts"])[:3],
+                                   "rules": [r for r in inc["rules"] if r != "CTX"],
+                                   "summary": plain_summary(inc, kind), "text": text})
 
     def _write_status(self):
         a = self.analysis

@@ -1,10 +1,53 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sign in - NEXUS</title><link rel="stylesheet" href="{{ url_for('static', filename='nexus.css') }}"></head>
-<body><div class="login"><div class="side"><div><h1>NEXUS</h1><div style="opacity:.8">Corporate Access Portal</div></div>
-<div style="font-size:13px;opacity:.75;line-height:1.6">Fictional company for the SENTINEL demonstration.<br>Sign-ins, failures, access and group changes are recorded as security events.</div></div>
-<div class="form"><h1>Sign in</h1><p class="muted">Use a demo identity from the controller page.</p>
-{% if error %}<div class="err">{{ error }}</div>{% endif %}
-<form method="post" autocomplete="off"><label>Username</label><input name="username" maxlength="64" required autofocus>
-<label>Password</label><input name="password" type="password" maxlength="128" required>
-<button class="btn" type="submit" style="width:100%">Sign in</button></form>
-<p class="muted" style="margin-top:24px;font-size:12px">Accounts lock for 15 minutes after 15 failed attempts.</p></div></div></body></html>
+<body class="lg-body">
+<main class="lg">
+  <section class="lg-brand" aria-hidden="false">
+    <div class="lg-mark"><span class="lg-glyph" aria-hidden="true"></span><span>NEXUS</span></div>
+    <div class="lg-hero">
+      <h1>Everything your team needs, in one secure place.</h1>
+      <p>Finance, people and operations workspaces for Nexus Meridian Group — a fictional company.</p>
+    </div>
+    <ul class="lg-points">
+      <li><b>Single sign-in</b> for finance, HR and operations</li>
+      <li><b>Role-based access</b> to sensitive records</li>
+      <li><b>Every sign-in is recorded</b> as a security event</li>
+    </ul>
+    <div class="lg-arch" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  </section>
+  <section class="lg-panel">
+    <form class="lg-card" method="post" autocomplete="off" novalidate>
+      <div class="lg-demo">Demo environment · fictional accounts · runs on 127.0.0.1 only</div>
+      <h2>Sign in</h2>
+      <p class="muted">Use your NEXUS account.</p>
+      {% if error %}<div class="err" role="alert">{{ error }}</div>{% endif %}
+      <label for="username">Username</label>
+      <input id="username" name="username" maxlength="64" required autofocus list="nx-users" autocomplete="off"
+             placeholder="e.g. arjun.rao" aria-describedby="uhelp">
+      <datalist id="nx-users">
+        <option value="arjun.rao"><option value="maya.fernandes"><option value="leela.menon"><option value="vikram.shah">
+        <option value="nisha.kapoor"><option value="rahul.iyer"><option value="divya.pillai"><option value="omar.khan">
+        <option value="admin01"><option value="analyst.kiran">
+      </datalist>
+      <div id="uhelp" class="hint">Fictional demo accounts. The presenter finds their passwords in the local scenario controller.</div>
+      <label for="password">Password</label>
+      <div class="pw">
+        <input id="password" name="password" type="password" maxlength="128" required autocomplete="off">
+        <button type="button" id="pwtoggle" class="pw-t" aria-pressed="false" aria-controls="password">Show</button>
+      </div>
+      <button class="btn lg-submit" type="submit" id="submit">Sign in</button>
+      <p class="hint" style="margin-top:16px">Accounts lock for 15 minutes after 15 failed attempts.</p>
+    </form>
+  </section>
+</main>
+<script>
+(function(){
+  var t=document.getElementById('pwtoggle'), p=document.getElementById('password'), f=document.querySelector('form'),
+      u=document.getElementById('username'), s=document.getElementById('submit');
+  t.addEventListener('click',function(){var show=p.type==='password';p.type=show?'text':'password';t.textContent=show?'Hide':'Show';t.setAttribute('aria-pressed',show);p.focus();});
+  function upd(){s.disabled=!(u.value.trim()&&p.value);}
+  u.addEventListener('input',upd);p.addEventListener('input',upd);upd();
+  f.addEventListener('submit',function(){s.disabled=true;s.textContent='Signing in…';});
+})();
+</script>
+</body></html>

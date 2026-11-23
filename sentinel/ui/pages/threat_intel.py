@@ -6,21 +6,13 @@ import re
 import pandas as pd
 import streamlit as st
 
+from ...hunting import HUNTS, custom, prepared
 from ...playbooks import load_mitre, mitre_info
 from ...rules import CONTEXT_RULES, RULES
 from .. import esc, section, tag
 from .. import state
 from ..state import S
 
-HUNTS = {
-    "Encoded or hidden PowerShell": ("command_line", r"powershell.*\s-(e|en|enc|encodedcommand)\s|-w(indowstyle)?\s+hidden"),
-    "Credential dumping tools / LSASS access": ("command_line", r"mimikatz|sekurlsa|lsadump|procdump.*lsass|comsvcs.*minidump"),
-    "Privileged group enumeration": ("command_line", r"net1?(\.exe)?\s+(local)?group\b.*admin|get-adgroupmember"),
-    "Downloads via LOLBins (certutil, bitsadmin)": ("command_line", r"certutil.*-urlcache|bitsadmin.*/transfer"),
-    "Failed logons from external addresses": ("auth_fail_external", ""),
-    "Log clearing": ("action", "log_cleared"),
-    "Logons outside 07:00-19:00 UTC": ("offhours", ""),
-}
 RULE_EXPLAIN = {
     "R1": "Many failed logons for one account from one source in a short window (dense brute force).",
     "R2": "One source failing against many accounts with few attempts each (password spraying).",
@@ -50,7 +42,7 @@ def _thresholds(rule, cfg):
 
 def render():
     a = S.analysis
-    t1, t2, t3 = st.tabs(["Threat hunting", "MITRE ATT&CK explorer", "Detection rules"])
+    t1, t2, t3 = st.tabs(["Custom & prepared hunts", "MITRE ATT&CK explorer", "Detection rules"])
     with t1:
         if a is None:
             st.info("Load a dataset to hunt.")
@@ -67,21 +59,11 @@ def render():
             label = ""
             try:
                 if hunt != "(custom)":
-                    kind, rx = HUNTS[hunt]
                     label = hunt
-                    if kind == "auth_fail_external":
-                        hits = ev[(ev["action"] == "login_failure") & (ev["src_ip"] != "") &
-                                  ~ev["src_ip"].str.match(r"^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|127\.)")]
-                    elif kind == "offhours":
-                        hits = ev[(ev["action"] == "login_success") & ~ev["timestamp"].dt.hour.between(7, 18)]
-                    elif kind == "action":
-                        hits = ev[ev["action"] == rx]
-                    else:
-                        hits = ev[ev[kind].str.contains(rx, case=False, regex=True, na=False)]
+                    hits = prepared(ev, hunt)
                 elif pattern:
-                    re.compile(pattern)
                     label = f"{field} ~ /{pattern}/"
-                    hits = ev[ev[field].astype(str).str.contains(pattern, case=False, regex=True, na=False)]
+                    hits = custom(ev, field, pattern)
             except re.error as exc:
                 st.error(f"Invalid regular expression: {exc}")
             if label:
@@ -106,7 +88,7 @@ def render():
                     if incs:
                         pick = st.selectbox("Open related incident", incs, key="ti_inc")
                         if st.button("Investigate", key="ti_go"):
-                            state.goto("Incident Investigation", pick)
+                            state.goto("Investigation Studio", pick, view="Story")
                             st.rerun()
     with t2:
         mitre = load_mitre()
@@ -150,8 +132,8 @@ def render():
         for r, (name, techs, weight) in RULES.items():
             rows.append({"rule": r, "name": name, "MITRE": ", ".join(techs), "weight": weight,
                          "role": "context only" if r in CONTEXT_RULES else "detection",
-                         "alerts (current dataset)": cov.get(r, {}).get("alerts", "-") if r != "CTX" else "-",
-                         "evaluated": cov.get(r, {}).get("evaluated", "-") if r != "CTX" else "-"})
+                         "alerts (current dataset)": str(cov.get(r, {}).get("alerts", "-")) if r != "CTX" else "-",
+                         "evaluated": str(cov.get(r, {}).get("evaluated", "-")) if r != "CTX" else "-"})
         st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
         pick = st.selectbox("Rule", list(RULES), key="ti_rule", format_func=lambda r: f"{r} · {RULES[r][0]}")
         st.markdown(f'<div class="sn-card"><h4>{esc(pick)} &middot; {esc(RULES[pick][0])}</h4>{esc(RULE_EXPLAIN.get(pick, ""))}'
@@ -159,7 +141,7 @@ def render():
                        if pick in cov else "") + "</div>", unsafe_allow_html=True)
         th = _thresholds(pick, cfg)
         if th:
-            st.markdown("Current thresholds (edit them in System & Settings):")
+            st.markdown("Current thresholds (edit them in System status → Open advanced panel):")
             st.json(th)
         if pick == "R7":
             st.dataframe(pd.DataFrame(cfg["detection"]["suspicious_processes"]), hide_index=True, use_container_width=True)

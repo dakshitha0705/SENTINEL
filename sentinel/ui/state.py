@@ -20,11 +20,16 @@ PUBLIC = ROOT / "data" / "public"
 RESULTS = ROOT / "results"
 REPORTS = ROOT / "reports"
 
-PAGES = ["Command Center", "Log Intelligence", "Incident Investigation", "Attack Graph", "AI Investigation Lab",
-         "Threat Intelligence", "Evaluation & Benchmarks", "Report Studio", "System & Settings"]
-ICONS = {"Command Center": "public", "Log Intelligence": "database", "Incident Investigation": "policy",
-         "Attack Graph": "hub", "AI Investigation Lab": "psychology", "Threat Intelligence": "travel_explore",
-         "Evaluation & Benchmarks": "monitoring", "Report Studio": "description", "System & Settings": "tune"}
+PAGES = ["Command Center", "Live Demo", "Log Intelligence", "Investigation Studio", "Threat Hunting",
+         "Reports & Evaluation"]
+ICONS = {"Command Center": "public", "Live Demo": "sensors", "Log Intelligence": "database",
+         "Investigation Studio": "policy", "Threat Hunting": "travel_explore", "Reports & Evaluation": "description"}
+# Older page names (still used by deep links / buttons) -> (page, view inside that page)
+ALIASES = {"Incident Investigation": ("Investigation Studio", "Story"), "Attack Graph": ("Investigation Studio", "Attack graph"),
+           "AI Investigation Lab": ("Investigation Studio", "AI investigation"),
+           "Threat Intelligence": ("Threat Hunting", None), "Report Studio": ("Reports & Evaluation", "Report"),
+           "Evaluation & Benchmarks": ("Reports & Evaluation", "Evaluation")}
+VIEW_KEY = {"Investigation Studio": "studio_view", "Reports & Evaluation": "re_view"}
 TIME_RANGES = {"All data": None, "Last 24 h": 24, "Last 72 h": 72, "Last 7 days": 168}
 UPLOADED = "Uploaded files"
 LIVE = "LIVE · NEXUS demo stream"
@@ -121,6 +126,11 @@ def refresh_live() -> dict:
 
 def select_live():
     S.dataset = LIVE
+    try:
+        st.query_params["live"] = "1"
+        st.query_params.pop("sample", None)
+    except Exception:  # noqa: BLE001
+        pass
     S.files, S.mappings, S.profile_note = {}, {}, ""
     S.analysis = None
     S.explanations, S.chat = {}, {}
@@ -168,6 +178,10 @@ def load_dataset(name: str, run: bool = True):
         return
     S.files = dataset_files(name)
     S.dataset = name
+    try:                                    # an explicit switch leaves live mode (also in the URL)
+        st.query_params.pop("live", None)
+    except Exception:  # noqa: BLE001
+        pass
     prof = mapping_profile(name)
     S.mappings = {}
     notes = []
@@ -251,10 +265,75 @@ def explanation_for(iid, use_slm=True, on_token=None, force=False):
     return S.explanations[iid][:2]
 
 
-def goto(page: str, incident: str | None = None):
+def goto(page: str, incident: str | None = None, view: str | None = None):
+    """Navigate to a page (old page names are mapped to the new six destinations) and optionally an incident/view."""
     if incident:
         S.selected = incident
+    if page in ALIASES:
+        page, v = ALIASES[page]
+        view = view or v
+    if view and page in VIEW_KEY:
+        S["_goto_view"] = (VIEW_KEY[page], view)
     S.goto = page
+
+
+# --------------------------------------------------------------------------- live notifications
+
+def live_status() -> dict:
+    """Honest description of where live data comes from right now."""
+    from ..live import LiveReader
+    worker = LiveReader.worker_alive()
+    snap = live_engine().snapshot()
+    return {"worker": worker, "engine": "worker process" if worker else "in-process engine",
+            "running": bool(snap.get("running")), "session_id": snap.get("session_id"), "events": snap.get("events", 0),
+            "last_poll": snap.get("last_poll"), "error": snap.get("error")}
+
+
+def sync_notifications(snap: dict) -> list[dict]:
+    """Record the live engine's real `new`/`escalated` notifications in this browser session.
+    Returns the ones not shown before (each notification is shown once; history keeps the last 25)."""
+    seen = S.setdefault("notif_seen", set())
+    hist = S.setdefault("notif_history", [])
+    fresh = []
+    for n in snap.get("notifications", []):
+        k = (n.get("session_id") or snap.get("session_id"), n["id"])
+        if k in seen:
+            continue
+        seen.add(k)
+        n = dict(n)
+        n["uid"] = f"{k[0]}:{k[1]}"
+        hist.insert(0, n)
+        if time.time() - n["t"] < 90:          # do not pop up stale notifications after a reconnect
+            fresh.append(n)
+    del hist[25:]
+    return fresh
+
+
+def notify_tick(snap: dict):
+    """Inside a live auto-refresh fragment: if the engine produced new notifications, refresh the whole page once
+    (bell, counters, incident list) and show them as toasts there. One auto-refresh fragment per page only."""
+    fresh = sync_notifications(snap)
+    if fresh:
+        S._pending_toasts = S.get("_pending_toasts", []) + fresh
+        st.rerun(scope="app")
+
+
+def unread_notifications() -> list[dict]:
+    ack = S.setdefault("notif_ack", set())
+    return [n for n in S.get("notif_history", []) if n["uid"] not in ack]
+
+
+def resolve_incident(n: dict) -> str | None:
+    """Current incident id for a notification (ids are re-ranked as incidents grow; the tracking key is stable)."""
+    a = S.get("analysis")
+    if a is None:
+        return None
+    ids = [i["incident_id"] for i in a.incidents]
+    if n.get("key"):
+        t = live_engine().snapshot().get("tracked", {}).get(n["key"])
+        if t and t.get("incident_id") in ids and t.get("level") != "merged":
+            return t["incident_id"]
+    return n.get("incident_id") if n.get("incident_id") in ids else (ids[0] if ids else None)
 
 
 def selected_incident(a, candidates=None):

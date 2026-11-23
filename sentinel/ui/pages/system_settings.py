@@ -220,24 +220,7 @@ def render():
         st.dataframe(pd.DataFrame(ws.history(con)) if ws.history(con) else pd.DataFrame([{"audit": "empty"}]),
                      hide_index=True, use_container_width=True)
     with tabs[4]:
-        runs = sorted((RESULTS / "offline_runs").glob("*.json")) if (RESULTS / "offline_runs").exists() else []
-        rows = []
-        for p in runs:
-            r = json.loads(p.read_text(encoding="utf-8"))
-            rows.append({"file": p.name, "recorded": r.get("recorded_at"), "type": r.get("test_type"),
-                         "internet reachable": r.get("internet_reachable"),
-                         "external connections": len(r.get("monitor", {}).get("external_connections", [])),
-                         "loopback connections": len(r.get("monitor", {}).get("loopback_connections", [])),
-                         "total s": r.get("total_seconds"),
-                         "SLM runs": len(r.get("steps", {}).get("slm", [])),
-                         "peak SENTINEL MB": r.get("monitor", {}).get("peak_sentinel_rss_mb")})
-        st.markdown(section("Recorded offline runs", "Written by scripts/offline_check.py. 'offline test' only when the "
-                            "internet was unreachable before and after the run."), unsafe_allow_html=True)
-        st.dataframe(pd.DataFrame(rows) if rows else pd.DataFrame([{"runs": "none"}]), hide_index=True, use_container_width=True)
-        ui = RESULTS / "offline_ui_check.json"
-        if ui.exists():
-            st.markdown("**Offline UI check** (browser automation, external requests blocked and counted)")
-            st.json(json.loads(ui.read_text(encoding="utf-8")).get("summary", {}))
+        offline_validation()
     with tabs[5]:
         st.markdown(f"""
 <div class="sn-card"><h4>SENTINEL v{__version__}</h4>
@@ -255,3 +238,26 @@ Synthetic logs from SENTINEL's own generator (with ground truth). External evalu
 Offline MITRE ATT&amp;CK descriptions summarised from attack.mitre.org.</div>
 <div class="sn-card"><h4>AI assistance</h4>Built with the help of Claude Code (Anthropic). See docs/credits.md.</div>
 """, unsafe_allow_html=True)
+
+
+
+def offline_validation():
+    """Recorded offline runs (also shown in Reports & Evaluation -> Offline evidence)."""
+    runs = sorted((RESULTS / "offline_runs").glob("*.json")) if (RESULTS / "offline_runs").exists() else []
+    rows = []
+    for p in runs:
+        r = json.loads(p.read_text(encoding="utf-8"))
+        rows.append({"file": p.name, "recorded": r.get("recorded_at"), "type": r.get("test_type"),
+                     "internet reachable": r.get("internet_reachable"),
+                     "external connections": len(r.get("monitor", {}).get("external_connections", [])),
+                     "loopback connections": len(r.get("monitor", {}).get("loopback_connections", [])),
+                     "total s": r.get("total_seconds"),
+                     "SLM runs": len(r.get("steps", {}).get("slm", [])),
+                     "peak SENTINEL MB": r.get("monitor", {}).get("peak_sentinel_rss_mb")})
+    st.markdown(section("Recorded offline runs", "Written by scripts/offline_check.py. 'offline test' only when the "
+                        "internet was unreachable before and after the run."), unsafe_allow_html=True)
+    st.dataframe(pd.DataFrame(rows) if rows else pd.DataFrame([{"runs": "none"}]), hide_index=True, use_container_width=True)
+    ui = RESULTS / "offline_ui_check.json"
+    if ui.exists():
+        st.markdown("**Offline UI check** (browser automation, external requests blocked and counted)")
+        st.json(json.loads(ui.read_text(encoding="utf-8")).get("summary", {}))

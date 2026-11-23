@@ -10,21 +10,23 @@ from .. import components, state
 from ..state import S
 
 
-def render():
+def render(embedded: bool = False):
     a = S.analysis
     if a is None or not a.incidents:
         st.info("No incidents to graph. Load a dataset with detections first.")
         return
     incs = state.visible_incidents(a)
-    st.markdown(section("Attack relationship graph",
-                        "Incidents, detections and the accounts, hosts and source IPs they involve. Gold arrows are the "
-                        "Storyline Engine's links between detections (dashed = weak); grey lines connect a detection to its "
-                        "own entities. Scroll to zoom, drag to pan, click a node to inspect its evidence."),
-                unsafe_allow_html=True)
+    if True:
+        st.caption("Incidents, detections and the accounts, devices and addresses involved. Peach arrows are the storyline's "
+                   "links between detections (dashed = weak). Scroll to zoom, drag to pan, click a node to see its records.")
     f = st.columns([2.6, 1.6, 2.2, 1.4])
     ids = [i["incident_id"] for i in incs]
     default = [S.selected] if S.selected in ids else ids[:3]
-    chosen = f[0].multiselect("Incidents", ids, default=default, key="ag_incs",
+    if S.get("_ag_for") != S.selected or "ag_incs" not in S:      # follow the studio's selected incident
+        S._ag_for = S.selected
+        S["ag_incs"] = default
+    S["ag_incs"] = [x for x in S["ag_incs"] if x in ids] or default
+    chosen = f[0].multiselect("Incidents", ids, key="ag_incs",
                               format_func=lambda x: f"{x} · {a.incident(x)['severity']['level']}")
     lv = f[1].multiselect("Severity", ["Critical", "High", "Medium", "Low"], default=["Critical", "High", "Medium", "Low"],
                           key="ag_sev")
@@ -55,7 +57,7 @@ def render():
                         f'<div style="margin-top:6px">{esc(inc["title"])}</div><div class="sn-muted">{ts(inc["start"])} &middot; '
                         f'{len(inc["event_ids"])} events &middot; {len(inc["alert_ids"])} alerts</div></div>', unsafe_allow_html=True)
             if st.button("Open investigation", type="primary", use_container_width=True):
-                state.goto("Incident Investigation", inc["incident_id"])
+                state.goto("Investigation Studio", inc["incident_id"], view="Story")
                 st.rerun()
         elif d["type"] == "alert":
             al = d["alert"]

@@ -1,25 +1,42 @@
-"""Command Center: KPIs, interactive 3D globe (or storyline view), severity, detections, urgent incidents,
-live monitoring of the NEXUS demo stream, and the four primary actions."""
+"""Command Center: the headline incident as a story, the interactive 3D globe, four real counters, recent
+activity, a small detection overview and four quick actions. Live mode refreshes every 2 s."""
 from __future__ import annotations
 
-import time
+import json
 from collections import Counter
 
+import pandas as pd
 import streamlit as st
 
 from ... import geospatial
-from ... import graph as gmod
-from ...rules import RULES
-from .. import SEV_COLOR, esc, pill
+from ...hunting import CATEGORIES
+from ...live import RULE_PHRASE, plain_summary
+from .. import SEV_COLOR, esc
 from .. import components, state
 from ..state import S
 
-ORIGIN_TAG = {"nexus-app": "APP", "simulated-endpoint": "SIM", "baseline-backfill": "HIST"}
+ACTION_TEXT = {"login_failure": "Failed sign-in", "login_success": "Signed in", "logout": "Signed out",
+               "group_add": "Added to a group", "group_enum": "Listed group members", "process_start": "Process started",
+               "log_cleared": "Audit log cleared", "privilege_logon": "Privileged sign-in", "file_copy": "Files copied",
+               "usb_insert": "USB device connected"}
+NEXUS_TEXT = {"auth.login_failure": "Failed sign-in to NEXUS", "auth.login_success": "Signed in to NEXUS",
+              "auth.logout": "Signed out of NEXUS", "auth.account_locked": "Account locked", "resource.access": "Opened a resource", "group.change_denied": "Group change refused",
+              "resource.access_denied": "Access denied to a resource", "group.member_added": "Added to a privileged group",
+              "process.start": "Process started (synthetic)", "audit.log_cleared": "Audit log cleared (synthetic)"}
 
 
-def _kpi(label, value, sub, k):
-    return (f'<div class="sn-kpi {k}"><div class="l">{esc(label)}</div><div class="v">{esc(value)}</div>'
-            f'<div class="s">{esc(sub)}</div></div>')
+def headline(inc) -> tuple[str, str]:
+    """Human-readable headline and description for an incident."""
+    rules = [r for r in inc["rules"] if r != "CTX"]
+    phrases = [RULE_PHRASE[r] for r in rules if r in RULE_PHRASE]
+    who = (list(inc["users"])[:1] or list(inc["hosts"])[:1] or ["the environment"])[0]
+    if len(phrases) >= 3:
+        h = f"{phrases[0][0].upper() + phrases[0][1:]}, escalating to {phrases[-1]}"
+    elif phrases:
+        h = phrases[0][0].upper() + phrases[0][1:] + (f" and {phrases[1]}" if len(phrases) > 1 else "")
+    else:
+        h = inc["title"]
+    return f"{h} — {who}", plain_summary(inc)
 
 
 def render():
@@ -32,200 +49,186 @@ def render():
 @st.fragment(run_every=2)
 def _live():
     snap = state.refresh_live()
-    seen = S.get("_notified", 0)
-    for n in snap["notifications"]:
-        if n["id"] > seen and (time.time() - n["t"]) < 60:
-            st.toast(n["text"], icon=":material/crisis_alert:" if n["level"] in ("Critical", "High") else ":material/notifications:")
-    S._notified = max([seen] + [n["id"] for n in snap["notifications"]])
+    state.notify_tick(snap)
     _body(snap)
-
-
-def _mode_strip(a, incs, snap):
-    if snap is None:
-        return
-    crit = [i for i in incs if i["severity"]["level"] in ("Critical", "High")]
-    if crit:
-        top = crit[0]
-        cls, label = "incident", f"<b>INCIDENT INVESTIGATION</b> &middot; {esc(top['incident_id'])} {esc(top['severity']['level'])} " \
-                                 f"{top['severity']['score']} &middot; {esc(' -> '.join(top['stages']))}"
-    else:
-        cls, label = "", "<b>LIVE MONITORING</b> &middot; no high-severity incident in the demo stream"
-    lat = [t.get("latency_s") for t in snap["tracked"].values() if t.get("latency_s") is not None]
-    st.markdown(f'<div class="sn-mode {cls}"><span class="sn-chip live"><i></i>LIVE · NEXUS DEMO</span>{label}'
-                f'<span style="margin-left:auto">session {esc(snap["session_id"] or "-")} &middot; {snap["events"]:,} events '
-                f'&middot; last poll {esc(snap["last_poll"] or "-")}'
-                + (f' &middot; detection latency {min(lat):.1f}–{max(lat):.1f} s' if lat else "") + "</span></div>",
-                unsafe_allow_html=True)
-    if snap["error"]:
-        st.error(f"Live engine error: {snap['error']}")
-
-
-def _feed(snap):
-    rows = []
-    for e in state.live_engine().recent_events(14):
-        if e.get("origin") == "baseline-backfill":
-            continue
-        cls = "f" if e.get("outcome") == "failure" else "s"
-        who = e.get("TargetUserName") or e.get("SubjectUserName") or ""
-        if e.get("EventID") == "4732":
-            who = f'{e.get("SubjectUserName")} +{e.get("MemberName")} -> {e.get("TargetUserName")}'
-        ip = e.get("IpAddress", "-")
-        rows.append(f'<div><span class="x">{esc(e["TimeCreated"][11:19])}</span><span class="{cls}">{esc(e["EventID"])}</span>'
-                    f'<span>{esc(e["event_type"])} · {esc(who)} · {esc(ip)} <span class="tag">[{ORIGIN_TAG.get(e.get("origin"), "?")}]</span>'
-                    + (' <span class="tag">sim-src</span>' if e.get("source_address_simulated") else "") + "</span></div>")
-    body = "".join(rows) or '<div class="sn-muted">Waiting for NEXUS events. Start a scenario in the NEXUS controller.</div>'
-    st.markdown(f'<div class="sn-card"><h4>Live event stream &middot; NEXUS</h4><div class="sn-feed">{body}</div>'
-                '<div class="sn-muted" style="margin-top:6px">APP = produced by NEXUS application code · SIM = synthetic endpoint '
-                f'telemetry · sim-src = simulated client address &middot; <a href="{state.NEXUS_URL}/demo" target="_blank">open controller</a></div></div>',
-                unsafe_allow_html=True)
 
 
 def _body(snap):
     a = S.analysis
+    if snap is not None:
+        _live_strip(snap)
     if a is None:
-        if snap is not None:
-            st.markdown('<div class="sn-mode"><span class="sn-chip live"><i></i>LIVE · NEXUS DEMO</span>'
-                        '<b>Waiting for events</b> &middot; start the NEXUS demo (scripts\\start_demo.ps1) and press "Start demo"</div>',
-                        unsafe_allow_html=True)
-            _feed(snap)
-        else:
-            st.info("No dataset loaded. Choose one in the dataset selector above or upload logs in Log Intelligence.")
+        left, right = st.columns([1.05, 1.25], gap="large")
+        with left:
+            st.markdown('<div class="sn-hero calm"><div class="eyebrow">Monitoring</div>'
+                        '<div class="h">Waiting for the first events</div>'
+                        '<div class="p">No events have arrived yet. Open <b>Live Demo</b> to start a NEXUS demo session, or '
+                        'choose saved data in the selector above.</div></div>', unsafe_allow_html=True)
+            _quick_actions(None)
+        with right:
+            components.globe({"mode": "explore", "markers": [], "arcs": [], "provenance": ""}, height=520, key="cc_globe")
         return
     incs = state.visible_incidents(a)
     win = state.time_window(a)
     ev = a.events if not win else a.events[(a.events["timestamp"] >= win[0]) & (a.events["timestamp"] <= win[1])]
     users = {u for i in incs for u in i["users"]}
     hosts = {h for i in incs for h in i["hosts"]}
-    lv = Counter(i["severity"]["level"] for i in incs)
-    _mode_strip(a, incs, snap)
 
-    left, center, right = st.columns([1.0, 2.8, 1.35], gap="medium")
+    left, right = st.columns([1.05, 1.25], gap="large")
     with left:
-        st.markdown(_kpi("Total events", f"{len(ev):,}", f"{ev['host'].nunique()} hosts in logs", "")
-                    + _kpi("Active incidents", len(incs), f"{lv.get('Critical', 0)} critical · {lv.get('High', 0)} high", "k3" if lv.get("Critical") else "k2")
-                    + _kpi("Affected identities", len(users), "accounts in incidents", "k2")
-                    + _kpi("Affected hosts", len(hosts), "hosts in incidents", "k4"), unsafe_allow_html=True)
-        span = f"{a.events['timestamp'].min():%d %b %H:%M} – {a.events['timestamp'].max():%d %b %H:%M} UTC" if len(a.events) else "-"
-        st.markdown(f'<div class="sn-muted" style="padding:0 4px;font-family:var(--mono);font-size:.72rem">SPAN {esc(span)}<br>'
-                    f'ANALYSIS {a.timings.get("analysis_total_s", 0):.2f} s · deterministic</div>', unsafe_allow_html=True)
-
-    with center:
-        c1, c2 = st.columns([3, 1.2])
-        view = c1.radio("View", ["Geographic", "Attack storyline"], horizontal=True, key="cc_view", label_visibility="collapsed")
-        quality = c2.radio("Quality", ["high", "low"], horizontal=True, key="cc_quality", label_visibility="collapsed",
-                           help="Rendering quality for the 3D globe (low = no atmosphere/relief, for slower GPUs).")
-        if view == "Geographic":
-            geo = geospatial.markers(a, incidents=incs, time_range=win)
-            ev_click = components.globe(geospatial.for_component(geo), height=560, selected=S.get("geo_sel"), key="cc_globe",
-                                        quality=quality)
-            if ev_click and ev_click.get("t") != S.get("_geo_t"):
-                S._geo_t = ev_click.get("t")
-                if ev_click["type"] == "marker":
-                    S.geo_sel, S.geo_region = ev_click["id"], None
-                elif ev_click["type"] == "region":
-                    S.geo_sel, S.geo_region = None, ev_click
-                elif ev_click["type"] == "arc":
-                    state.goto("Incident Investigation", ev_click["incident"])
-                    st.rerun(scope="app")
-                elif ev_click["type"] == "clear":
-                    S.geo_sel, S.geo_region = None, None
-            if geo["mode"] == "explore":
-                st.caption("Exploration mode: these logs carry no location fields, so nothing is placed on the globe. SENTINEL never "
-                           "guesses a location from an IP address.")
-            else:
-                st.caption(f"Geographic mode: {geo['located_events']:,} of {geo['total_events']:,} events carry coordinates "
-                           f"({geo['provenance']}). Arcs = logged events of one incident whose source and device sites differ.")
-            _selection_panel(a, geo)
-        else:
-            ranked = incs[:4]
-            if not ranked:
-                st.info("No incidents to show as a storyline.")
-            else:
-                data = gmod.build(a, ranked, include=("user", "host", "ip"), include_context=False)
-                clicked = components.graph(data, height=560, key="cc_graph")
-                st.caption("Attack storyline mode: relationships from the correlation engine (incidents, detections, accounts, "
-                           "hosts, source IPs). Positions are a force layout, NOT geography.")
-                if clicked and clicked.get("t") != S.get("_cc_g") and str(clicked.get("id", "")).startswith("INC-"):
-                    S._cc_g = clicked["t"]
-                    state.goto("Incident Investigation", clicked["id"])
-                    st.rerun(scope="app")
-
+        _hero(a, incs, snap)
+        st.markdown('<div class="sn-stats">'
+                    + "".join(f'<div class="sn-stat"><div class="v">{v}</div><div class="l">{esc(l)}</div></div>'
+                              for v, l in ((f"{len(ev):,}", "Total events"), (len(incs), "Incidents"),
+                                           (len(users), "Affected users"), (len(hosts), "Affected devices")))
+                    + "</div>", unsafe_allow_html=True)
+        _quick_actions(incs[0]["incident_id"] if incs else None)
     with right:
-        total = max(1, len(incs))
-        rows = "".join(
-            f'<div class="sn-row"><span>{pill(lvl)}</span><span class="n">{lv.get(lvl, 0)}</span></div>'
-            f'<div class="sn-bar"><i style="width:{100 * lv.get(lvl, 0) / total:.0f}%;background:{SEV_COLOR[lvl]}"></i></div>'
-            for lvl in ("Critical", "High", "Medium", "Low"))
-        st.markdown(f'<div class="sn-card"><h4>Incident severity</h4>{rows}</div>', unsafe_allow_html=True)
-        det = Counter(r for i in incs for r in i["rules"] if r != "CTX")
-        top = det.most_common(5)
-        mx = max([n for _, n in top] or [1])
-        det_rows = "".join(
-            f'<div class="sn-row"><span>{esc(r)} · {esc(RULES[r][0])}</span><span class="n">{n}</span></div>'
-            f'<div class="sn-bar"><i style="width:{100 * n / mx:.0f}%;background:#86a091"></i></div>' for r, n in top) \
-            or '<div class="sn-muted">No detections.</div>'
-        st.markdown(f'<div class="sn-card"><h4>Top active detections</h4>{det_rows}</div>', unsafe_allow_html=True)
-        urgent = [i for i in incs if i["severity"]["level"] in ("Critical", "High")]
-        crit = sum(1 for i in urgent if i["severity"]["level"] == "Critical")
-        headline = (f"{crit} critical incident{'s' if crit != 1 else ''} require{'s' if crit == 1 else ''} investigation."
-                    if crit else f"{len(urgent)} high-severity incident(s) to review." if urgent
-                    else "No critical or high-severity incidents.")
-        body = ""
-        for i in urgent[:3]:
-            scope = a.packs[i["incident_id"]]["facts"][0]
-            focus = i["title"].split("(")[-1].rstrip(")")
-            lat = ""
-            if snap is not None:
-                t = state.live_engine()._track_of(i)
-                if t.get("latency_s") is not None:
-                    lat = f" &middot; detected {t['latency_s']:.1f} s after the triggering event"
-            body += (f'<div class="sn-urgent"><div class="h"><span>{esc(i["incident_id"])}</span>'
-                     f'{pill(i["severity"]["level"], str(i["severity"]["score"]))}</div>'
-                     f'<div class="b">{esc(" -> ".join(i["stages"]))}</div>'
-                     f'<div class="sn-muted">{esc(focus)} &middot; {len(i["event_ids"])} events{lat} '
-                     f'<span class="sn-cite">[{esc(scope["id"])}]</span></div></div>')
-        st.markdown(f'<div class="sn-card"><h4>Urgent incidents</h4><div class="sn-exec">{esc(headline)}</div>{body}</div>',
-                    unsafe_allow_html=True)
-        if urgent:
-            cc = st.columns([3, 2])
-            pick = cc[0].selectbox("Open urgent incident", [i["incident_id"] for i in urgent[:6]], key="cc_urgent",
-                                   label_visibility="collapsed")
-            if cc[1].button("Investigate", key="cc_urgent_go", use_container_width=True):
-                state.goto("Incident Investigation", pick)
-                st.rerun(scope="app")
-        if snap is not None:
-            _feed(snap)
+        geo = geospatial.markers(a, incidents=incs, time_range=win)
+        click = components.globe(geospatial.for_component(geo), height=520, selected=S.get("geo_sel"), key="cc_globe",
+                                 quality=S.get("cc_quality", "high"))
+        _globe_click(click)
+        _selection_panel(a, geo)
 
-    c = st.columns(4, gap="medium")
-    top_iid = incs[0]["incident_id"] if incs else None
-    with c[0]:
-        with st.container(key="action1"):
-            if st.button("**Run Analysis**\n\nRe-run detection and explain the top incidents with local Qwen",
-                         icon=":material/play_arrow:", use_container_width=True):
-                if state.is_live():
-                    state.live_engine().poll()
+    c1, c2 = st.columns([1.6, 1], gap="large")
+    with c1:
+        _activity(a, snap)
+    with c2:
+        _detections(a, incs)
+
+
+def _live_strip(snap):
+    ls = state.live_status()
+    a = snap["analysis"]
+    n_inc = len(a.incidents) if a else 0
+    lat = [t.get("latency_s") for t in snap["tracked"].values() if t.get("latency_s") is not None]
+    status = "Detection running" if (ls["worker"] or ls["running"]) else "Detection stopped — run scripts\\start_demo.ps1"
+    st.markdown(f'<div class="sn-mode{" incident" if n_inc else ""}"><span class="sn-chip live"><i></i>LIVE · NEXUS</span>'
+                f'<b>{snap["events"]:,} events</b> received &middot; <b>{n_inc}</b> incident{"s" if n_inc != 1 else ""}'
+                + (f' &middot; fastest detection <b>{min(lat):.1f} s</b> after the triggering event' if lat else "")
+                + f'<span style="margin-left:auto">{esc(status)}</span></div>', unsafe_allow_html=True)
+    if snap.get("error"):
+        st.error(f"Live engine error: {snap['error']}")
+
+
+def _hero(a, incs, snap):
+    if not incs:
+        st.markdown('<div class="sn-hero calm"><div class="eyebrow">All quiet</div><div class="h">No suspicious activity detected</div>'
+                    f'<div class="p">{len(a.events):,} events checked against 14 detection rules. SENTINEL will raise an '
+                    'incident here as soon as related suspicious events are found.</div></div>', unsafe_allow_html=True)
+        return
+    inc = incs[0]
+    sev = inc["severity"]
+    h, p = headline(inc)
+    eyebrow = "Top incident"
+    if snap is not None:
+        t = state.live_engine()._track_of(inc)
+        if t.get("history") and len(t["history"]) > 1 and t["history"][-1]["level"] != t["history"][0]["level"]:
+            eyebrow = f"Escalated from {t['history'][0]['level']} as new evidence arrived"
+        elif t.get("latency_s") is not None:
+            eyebrow = f"Detected {t['latency_s']:.1f} s after its triggering event"
+    meta = [f"{len(inc['event_ids'])} events", f"{pd.Timestamp(inc['start']):%d %b %H:%M} – {pd.Timestamp(inc['end']):%H:%M} UTC"]
+    if inc["hosts"]:
+        meta.append("Devices: " + ", ".join(list(inc["hosts"])[:2]))
+    if len(incs) > 1:
+        meta.append(f"+{len(incs) - 1} more incident{'s' if len(incs) > 2 else ''}")
+    st.markdown(f'<div class="sn-hero"><div class="eyebrow">{esc(eyebrow)}</div>'
+                f'<div class="h">{esc(h)}</div><div class="p">{esc(p)}</div>'
+                f'<div class="meta"><span class="sn-sev" style="--c:{SEV_COLOR[sev["level"]]}">{esc(sev["level"])} · {sev["score"]}/100</span>'
+                + "".join(f"<span>{esc(m)}</span>" for m in meta) + "</div></div>", unsafe_allow_html=True)
+    if st.button("Investigate", type="primary", icon=":material/arrow_forward:", key="cc_investigate"):
+        state.goto("Investigation Studio", inc["incident_id"], view="Story")
+        st.rerun(scope="app")
+
+
+def _quick_actions(top_iid):
+    c = st.columns(2, gap="small")
+    acts = [("qa1", "Start Live Demo", ":material/sensors:", lambda: state.goto("Live Demo"), False),
+            ("qa2", "Explore Incidents", ":material/policy:", lambda: state.goto("Investigation Studio", top_iid, view="Story"), not top_iid),
+            ("qa3", "Generate Report", ":material/description:", lambda: state.goto("Reports & Evaluation", top_iid, view="Report"), not top_iid),
+            ("qa4", "Ask SENTINEL", ":material/forum:", lambda: state.goto("Investigation Studio", top_iid, view="AI investigation"), not top_iid)]
+    for k, (key, label, icon, fn, dis) in enumerate(acts):
+        with c[k % 2]:
+            with st.container(key=key):
+                if st.button(label, icon=icon, use_container_width=True, disabled=dis, key=f"{key}_b"):
+                    fn()
                     st.rerun(scope="app")
-                bar = st.progress(0.0)
-                state.run_analysis(auto_explain=True, progress=lambda p, t: bar.progress(p, text=t))
-                st.rerun(scope="app")
-    with c[1]:
-        with st.container(key="action2"):
-            if st.button("**Explore Incidents**\n\nQueue, storyline and original evidence", icon=":material/policy:",
-                         use_container_width=True):
-                state.goto("Incident Investigation", top_iid)
-                st.rerun(scope="app")
-    with c[2]:
-        with st.container(key="action3"):
-            if st.button("**Generate Report**\n\nHTML, PDF, JSON and CSV exports", icon=":material/description:",
-                         use_container_width=True, disabled=not top_iid):
-                state.goto("Report Studio", top_iid)
-                st.rerun(scope="app")
-    with c[3]:
-        with st.container(key="action4"):
-            if st.button("**Ask SENTINEL**\n\nEvidence-grounded answers from local Qwen", icon=":material/forum:",
-                         use_container_width=True, disabled=not top_iid):
-                state.goto("AI Investigation Lab", top_iid)
-                st.rerun(scope="app")
+
+
+def _globe_click(ev_click):
+    if ev_click and ev_click.get("t") != S.get("_geo_t"):
+        S._geo_t = ev_click.get("t")
+        if ev_click["type"] == "marker":
+            S.geo_sel, S.geo_region = ev_click["id"], None
+        elif ev_click["type"] == "region":
+            S.geo_sel, S.geo_region = None, ev_click
+        elif ev_click["type"] == "arc":
+            state.goto("Investigation Studio", ev_click["incident"], view="Story")
+            st.rerun(scope="app")
+        elif ev_click["type"] == "clear":
+            S.geo_sel, S.geo_region = None, None
+
+
+def _activity(a, snap):
+    rows, recs = [], []
+    if snap is not None:
+        for e in state.live_engine().recent_events(40):
+            if e.get("origin") == "baseline-backfill":
+                continue
+            fail = e.get("outcome") == "failure"
+            sim = e.get("origin") == "simulated-endpoint"
+            what = NEXUS_TEXT.get(e.get("event_type"), e.get("event_type", "Event"))
+            who = e.get("TargetUserName") or e.get("SubjectUserName") or ""
+            if e.get("EventID") == "4732":
+                who = f'{e.get("SubjectUserName")} added {e.get("MemberName")} to {e.get("TargetUserName")}'
+            where = " · ".join(x for x in (e.get("Computer"), e.get("IpAddress")) if x)
+            rows.append(("sim" if sim else "bad" if fail else "ok", "S" if sim else "!" if fail else "✓", what, f"{who} · {where}",
+                         e["TimeCreated"][11:19]))
+            recs.append((f'{e["TimeCreated"][11:19]} · {what} · {who}', e))
+            if len(rows) >= 7:
+                break
+    else:
+        in_inc = {e for i in a.incidents for e in i["event_ids"]}
+        ev = a.events[a.events["event_id"].isin(in_inc)].sort_values("timestamp").tail(7).iloc[::-1]
+        for _, r in ev.iterrows():
+            fail = r["action"] == "login_failure"
+            what = ACTION_TEXT.get(r["action"], r["action"] or f"Event {r['event_code']}")
+            if r["action"] == "process_start" and r["process"]:
+                what = f"Process started: {str(r['process']).split(chr(92))[-1]}"
+            who = r["user"] or r["actor"]
+            where = " · ".join(x for x in (r["host"], r["src_ip"]) if x)
+            rows.append(("bad" if fail or r["action"] in ("log_cleared", "group_add") else "warn", "!" if fail else "•", what,
+                         f"{who} · {where}", pd.Timestamp(r["timestamp"]).strftime("%d %b %H:%M")))
+            recs.append((f'{pd.Timestamp(r["timestamp"]):%H:%M:%S} · {what} · {who}', json.loads(r["raw"])))
+    title = "Live activity from NEXUS" if snap is not None else "Recent activity in incidents"
+    body = "".join(f'<div class="sn-act"><div class="ic {c}">{esc(i)}</div><div class="d">{esc(w)}<small>{esc(m)}</small></div>'
+                   f'<div class="t">{esc(t)}</div></div>' for c, i, w, m, t in rows) \
+        or '<div class="sn-muted">No activity yet. Start a scenario in Live Demo.</div>'
+    note = ('<div class="sn-muted" style="margin-top:6px">✓/! = real NEXUS sign-ins (success/failure) · S = synthetic endpoint '
+            'event, clearly labelled</div>') if snap is not None else ""
+    st.markdown(f'<div class="sn-card"><h4>{esc(title)}</h4>{body}{note}</div>', unsafe_allow_html=True)
+    if recs:
+        with st.expander("Inspect an original record"):
+            pick = st.selectbox("Record", range(len(recs)), format_func=lambda k: recs[k][0], key="cc_rec",
+                                label_visibility="collapsed")
+            st.json(recs[pick][1], expanded=False)
+
+
+def _detections(a, incs):
+    rules = Counter(r for i in incs for r in i["rules"] if r != "CTX")
+    cats = []
+    for name, c in CATEGORIES.items():
+        n = sum(rules.get(r, 0) for r in c["rules"])
+        if n:
+            cats.append((name, n))
+    cats.sort(key=lambda x: -x[1])
+    mx = max([n for _, n in cats] or [1])
+    body = "".join(f'<div class="sn-row"><span>{esc(n)}</span><span class="n">{k}</span></div>'
+                   f'<div class="sn-bar"><i style="width:{100 * k / mx:.0f}%;background:var(--peach)"></i></div>' for n, k in cats[:4]) \
+        or '<div class="sn-muted">No detections in this data.</div>'
+    st.markdown(f'<div class="sn-card"><h4>What was detected</h4>{body}'
+                '<div class="sn-muted" style="margin-top:6px">Incidents per kind of behaviour. Details in Threat Hunting.</div></div>',
+                unsafe_allow_html=True)
 
 
 def _selection_panel(a, geo):
@@ -243,16 +246,15 @@ def _selection_panel(a, geo):
         recs = geospatial.marker_records(a, geo, sel_ids)
         markers = [x for x in geo["markers"] if x["id"] in sel_ids]
         incs_here = sorted({i for m in markers for i in m["incidents"]})
-        st.markdown(f"**{esc(title)}** · {len(recs):,} located event(s) · incidents: {esc(', '.join(incs_here) or 'none')}",
-                    unsafe_allow_html=True)
+        st.markdown(f"**{esc(title)}** · {len(recs):,} located event(s)", unsafe_allow_html=True)
         if recs.empty:
-            st.caption("No events with coordinates in this selection.")
+            st.caption("No events with coordinates here.")
         else:
             show = recs.copy()
             show["timestamp"] = show["timestamp"].astype(str)
-            st.dataframe(show, hide_index=True, use_container_width=True, height=200)
+            st.dataframe(show, hide_index=True, use_container_width=True, height=180)
         bcols = st.columns(min(4, max(1, len(incs_here))))
         for k, iid in enumerate(incs_here[:4]):
             if bcols[k].button(f"Investigate {iid}", key=f"geo_inv_{iid}"):
-                state.goto("Incident Investigation", iid)
+                state.goto("Investigation Studio", iid, view="Story")
                 st.rerun(scope="app")

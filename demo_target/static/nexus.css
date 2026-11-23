@@ -20,3 +20,35 @@ input,select{width:100%;padding:10px 12px;border:1px solid var(--line);border-ra
 .login .side h1{font-size:34px;letter-spacing:6px}.login .form{width:440px;padding:70px 50px;background:var(--card)}
 .err{background:#f6e2dc;color:var(--bad);padding:10px 12px;border-radius:10px;margin-bottom:12px}
 .banner{background:#efe7d6;border:1px dashed var(--accent);padding:10px 14px;border-radius:10px;font-size:12.5px;color:#6b5435}
+/* ---- sign-in page (same design family as SENTINEL: deep teal, warm ivory, terracotta) ---- */
+.lg-body{background:#0b2226;min-height:100vh}
+.lg{display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
+.lg-brand{position:relative;overflow:hidden;padding:48px 64px;color:#efe6d4;display:flex;flex-direction:column;justify-content:center;gap:30px;
+  background:radial-gradient(900px 600px at 15% 0%,#17404a 0%,#0e2a31 50%,#071a1e 100%)}
+.lg-mark{position:absolute;top:44px;left:64px;display:flex;align-items:center;gap:12px;font-family:"Sitka Heading",Cambria,Georgia,serif;font-weight:700;font-size:22px;letter-spacing:6px}
+.lg-glyph{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#e3a587,#c7714f);box-shadow:inset 0 0 0 6px rgba(11,34,38,.55)}
+.lg-hero h1{font-family:"Sitka Heading",Cambria,Georgia,serif;font-size:46px;line-height:1.1;margin:0 0 16px;max-width:15ch;color:#f6efe3;letter-spacing:0}
+.lg-hero p{font-size:16px;color:#c9d4d2;max-width:44ch;line-height:1.55;margin:0}
+.lg-points{list-style:none;padding:0;margin:0;display:grid;gap:10px;max-width:420px}
+.lg-points li{background:rgba(243,235,221,.06);border:1px solid rgba(243,235,221,.10);border-radius:12px;padding:11px 14px;font-size:14px;color:#d6dedb}
+.lg-points b{color:#f6efe3}
+.lg-arch{position:absolute;right:-120px;bottom:-140px;width:520px;height:520px;pointer-events:none}
+.lg-arch i{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(227,165,135,.22)}
+.lg-arch i:nth-child(2){inset:60px;border-color:rgba(169,195,209,.18)}.lg-arch i:nth-child(3){inset:120px;border-color:rgba(227,165,135,.14)}
+.lg-arch i:nth-child(4){inset:180px;background:radial-gradient(circle,rgba(227,165,135,.12),transparent 70%);border-color:rgba(243,235,221,.10)}
+.lg-panel{display:flex;align-items:center;justify-content:center;padding:40px 28px;background:linear-gradient(160deg,#f5eee2,#e8dcc6)}
+.lg-card{width:100%;max-width:400px;background:#fffdf8;border-radius:20px;padding:34px 34px 26px;box-shadow:0 24px 60px rgba(11,34,38,.18);border:1px solid #e6dccb}
+.lg-card h2{font-family:"Sitka Heading",Cambria,Georgia,serif;font-size:28px;color:#1a2628;margin:10px 0 2px}
+.lg-card label{display:block;font-size:13px;font-weight:600;color:#33403e;margin-top:10px}
+.lg-card input{margin:6px 0 4px;border:1px solid #d9cfbd;padding:11px 12px;border-radius:12px;transition:border-color .15s,box-shadow .15s}
+.lg-card input:focus{outline:none;border-color:#c7714f;box-shadow:0 0 0 3px rgba(199,113,79,.18)}
+.lg-demo{display:inline-block;font-size:11.5px;color:#7a5236;background:#f6e6d7;border-radius:999px;padding:4px 10px}
+.hint{font-size:12px;color:#6b7472;margin:2px 0 6px}
+.pw{position:relative}.pw input{padding-right:70px}
+.pw-t{position:absolute;right:6px;top:10px;border:0;background:#efe6d6;color:#3d4a48;border-radius:9px;padding:6px 10px;font-size:12px;cursor:pointer}
+.pw-t:hover,.pw-t:focus-visible{background:#e3d4bd;outline:2px solid #c7714f;outline-offset:1px}
+.lg-submit{width:100%;margin-top:16px;padding:12px 18px;background:linear-gradient(180deg,#d98a66,#c7714f);color:#fff;font-weight:600;border-radius:12px;transition:filter .15s,transform .15s}
+.lg-submit:hover{filter:brightness(1.05);transform:translateY(-1px);background:linear-gradient(180deg,#d98a66,#c7714f)}
+.lg-submit:focus-visible{outline:3px solid rgba(199,113,79,.4);outline-offset:2px}
+.lg-submit:disabled{opacity:.55;cursor:not-allowed;transform:none}
+@media (max-width:900px){.lg{grid-template-columns:1fr}.lg-brand{padding:90px 28px 28px}.lg-mark{left:28px;top:28px}.lg-hero h1{font-size:30px;margin-top:10px}.lg-arch{display:none}}

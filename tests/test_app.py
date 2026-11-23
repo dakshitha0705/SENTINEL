@@ -5,8 +5,8 @@ import pytest
 from streamlit.testing.v1 import AppTest
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGES = ["Command Center", "Log Intelligence", "Incident Investigation", "Attack Graph", "AI Investigation Lab",
-         "Threat Intelligence", "Evaluation & Benchmarks", "Report Studio", "System & Settings"]
+PAGES = ["Command Center", "Live Demo", "Log Intelligence", "Investigation Studio", "Threat Hunting", "Reports & Evaluation"]
+STUDIO_VIEWS = ["Story", "Evidence", "Severity", "Attack graph", "AI investigation", "Next steps", "Notes", "Export"]
 
 
 @pytest.fixture(scope="module")
@@ -70,11 +70,62 @@ def test_incident_navigation_preserves_selection(app):
     a = app.session_state["analysis"]
     iid = a.incidents[-1]["incident_id"]
     app.session_state["selected"] = iid
-    for page in ("Incident Investigation", "AI Investigation Lab", "Report Studio"):
+    for page in ("Investigation Studio", "Reports & Evaluation", "Command Center"):
         app.session_state["nav"] = page
         app.run()
         assert not app.exception
         assert app.session_state["selected"] == iid
+
+
+@pytest.mark.parametrize("view", STUDIO_VIEWS)
+def test_investigation_studio_views_render(app, view):
+    app.session_state["nav"] = "Investigation Studio"
+    app.session_state["studio_view"] = view
+    app.run()
+    assert not app.exception, (view, [e.value for e in app.exception])
+
+
+@pytest.mark.parametrize("view", ["Report", "Evaluation", "Offline evidence"])
+def test_reports_evaluation_views_render(app, view):
+    app.session_state["nav"] = "Reports & Evaluation"
+    app.session_state["re_view"] = view
+    app.run()
+    assert not app.exception, (view, [e.value for e in app.exception])
+
+
+def test_old_page_names_map_to_new_destinations(app):
+    """Deep links and buttons that still use the former nine page names land on the right destination and view."""
+    from sentinel.ui.state import ALIASES, PAGES as P
+    assert len(P) == 6 and "System & Settings" not in P
+    for old, (new, view) in ALIASES.items():
+        assert new in P
+
+
+def test_threat_hunting_cards_run_real_queries(app):
+    from sentinel.hunting import CATEGORIES, category
+    a = app.session_state["analysis"]
+    app.session_state["nav"] = "Threat Hunting"
+    app.session_state["hunt_sel"] = "Credential Attacks"
+    app.run()
+    assert not app.exception
+    hits = category(a, "Credential Attacks")
+    assert len(hits) > 0 and set(hits["action"]) & {"login_failure", "login_success"}
+    # every card's count equals its backend query
+    for name in CATEGORIES:
+        assert any(f"{len(category(a, name)):,} matching events" in b.label for b in app.button)
+
+
+def test_command_center_counters_match_backend(app):
+    app.session_state["nav"] = "Command Center"
+    app.session_state["time_range"] = "All data"
+    app.run()
+    a = app.session_state["analysis"]
+    html = " ".join(m.value for m in app.markdown)
+    users = {u for i in a.incidents for u in i["users"]}
+    hosts = {h for i in a.incidents for h in i["hosts"]}
+    for v, l in ((f"{len(a.events):,}", "Total events"), (len(a.incidents), "Incidents"), (len(users), "Affected users"),
+                 (len(hosts), "Affected devices")):
+        assert f'<div class="v">{v}</div><div class="l">{l}</div>' in html
 
 
 def test_live_mode_pages_render(tmp_path, monkeypatch):
@@ -100,3 +151,17 @@ def test_live_mode_pages_render(tmp_path, monkeypatch):
         at.session_state["nav"] = page
         at.run()
         assert not at.exception, (page, [e.value for e in at.exception])
+    # refreshing / navigating keeps the live stream selected (the URL is the source of truth)
+    at.session_state["nav"] = "Investigation Studio"
+    at.run()
+    assert at.session_state["dataset"].startswith("LIVE")
+    # the live engine's real notification reaches the session (shown once, kept in the bell history)
+    hist = at.session_state["notif_history"]
+    assert hist and hist[0]["kind"] == "new" and "R1" in hist[0]["rules"] and hist[0]["summary"]
+    n_before = len(hist)
+    at.run()
+    assert len(at.session_state["notif_history"]) == n_before        # no duplicate for the same update
+    # an explicit switch to a saved dataset leaves live mode
+    sb = next(s for s in at.selectbox if s.key == "dataset_pick")
+    sb.set_value("demo_unseen").run()
+    assert at.session_state["dataset"] == "demo_unseen" and "live" not in at.query_params

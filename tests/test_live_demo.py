@@ -249,3 +249,22 @@ def test_nexus_restart_continues_the_session_stream(demo):
     assert evs[-1]["EventRecordID"] == seq + 1 and len({e["event_uid"] for e in evs}) == len(evs)
     demo["eng"].poll()
     assert evs[-1]["event_uid"] in demo["eng"].records
+
+
+def test_nexus_login_page_and_credentials_panel(demo):
+    """The redesigned sign-in page keeps real verification; credentials appear only in the local controller's
+    collapsed demo-accounts panel (never on the login page)."""
+    c, ids = demo["client"], demo["nx"]["ids"]
+    page = c.get("/login").get_data(as_text=True)
+    assert 'id="pwtoggle"' in page and 'type="password"' in page and "Sign in" in page
+    assert not any(p in page for p in ids.passwords.values())                     # no password on the login page
+    r = c.post("/login", data={"username": "maya.fernandes", "password": "wrong"})
+    assert r.status_code == 401 and "Invalid username or password" in r.get_data(as_text=True)
+    assert c.post("/login", data={"username": "maya.fernandes", "password": ids.passwords["maya.fernandes"]}).status_code == 302
+    ctl = c.get("/demo").get_data(as_text=True)
+    i, j = ctl.index('<details class="panel acc" id="accounts"'), ctl.index("</details>")
+    assert "<details" in ctl[i:i + 60] and " open" not in ctl[i:i + 60]          # collapsed by default
+    for u, p in ids.passwords.items():
+        if ids.users[u]["role"] != "service":
+            assert i < ctl.index(p) < j                                            # only inside the panel
+    assert c.get("/login").headers["X-Frame-Options"] == "DENY"
