@@ -1,0 +1,40 @@
+{
+ "summary": {
+  "recorded_at": "2026-11-23 08:25:36",
+  "internet_reachable_after": false,
+  "external_requests_blocked": 0,
+  "local_requests": 188,
+  "pages": {
+   "Command Center": "ok",
+   "Log Intelligence": "ok",
+   "Incident Investigation": "ok",
+   "Attack Graph": "ok",
+   "AI Investigation Lab": "ok",
+   "Threat Intelligence": "ok",
+   "Evaluation & Benchmarks": "ok",
+   "Report Studio": "ok",
+   "System & Settings": "ok"
+  },
+  "checks": {
+   "globe_rendered": true,
+   "globe_markers": 7,
+   "globe_arcs": 3,
+   "globe_drag_rotates": true,
+   "globe_wheel_zooms_in": true,
+   "globe_wheel_zooms_out": true,
+   "globe_reset_restores_view": true,
+   "globe_reset_pov": {
+    "lat": 16.05,
+    "lng": 95.74,
+    "altitude": 1.8
+   },
+   "globe_marker_click_opens_records": true,
+   "globe_marker_clicked": "Chennai office (IN)",
+   "graph_rendered": true,
+   "graph_wheel_zooms": true,
+   "graph_node_click_opens_inspector": false
+  },
+  "javascript_errors": []
+ },
+ "blocked_urls": []
+}

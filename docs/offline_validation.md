@@ -43,9 +43,26 @@ The result is written to `results/offline_ui_check.json`.
 | 2026-11-22 22:3x | online rehearsal | yes | **0** | 5 | 40.2 s | 179 MB / 97 MB | 91.6–93.1 |
 | 2026-11-23 06:04 | **offline test (Wi-Fi disconnected)** | **no** (before and after) | **0** | 6 | 25.9 s | 181 MB / 342 MB | 91.9–94.0 |
 | 2026-11-23 07:21 | online rehearsal, v2 feature set (self-repair, chat fallback, handoff, exports, EVTX) | yes | **0** | 10 | 33.4 s | 185 MB / 103 MB | 90.5–92.3 |
-| *(pending)* | **offline test of the v2 feature set (Wi-Fi disconnected)** | – | – | – | – | – | – |
+| 2026-11-23 08:24 | **offline test of the v2 feature set (Wi-Fi disconnected)** | **no** (before and after) | **0** | 18 | 35.9 s | 183 MB / 103 MB | 88.6–93.1 |
 
-**UI check (online, 23 Nov 07:16):** 0 external requests out of 191 (every non-local request would have been aborted). All 9 pages rendered without exceptions, and all globe and graph interaction checks passed. The disconnected UI check is recorded with the pending offline run.
+**UI check (online, 23 Nov 07:16):** 0 external requests out of 191 (every non-local request would have been aborted). All 9 pages rendered without exceptions, and all globe and graph interaction checks passed. 
+
+**UI check, disconnected (23 Nov 08:25, `results/offline_ui_check_20261123_0825_offline.json`).** Internet was unreachable. 0 external requests were made, out of 188 local requests. All 9 pages rendered without exceptions.
+
+| Check | Result |
+|---|---|
+| Globe renders, rotates on drag, zooms in and out on the wheel | passed |
+| Globe reset restores the default view | passed |
+| Clicking a globe marker opens its records | passed |
+| Attack graph renders and zooms on the wheel | passed |
+| Clicking an attack-graph node opens the inspector | **failed** |
+
+The node-click check passed in the online runs. It was not re-diagnosed offline; the likely cause is click timing, because the graph physics was still settling when the click was sent. The v2 disconnected run itself was also checked:
+- all three live SLM explanations completed;
+- the chat had 0 silent replies;
+- the handoff note verified 8 of 8 claims;
+- the EVTX spray recording was detected (R2);
+- the held-out evaluation reproduced P = R = F1 = 1.0.
 
 > The Ollama server process stays small because the model weights live in GPU memory: `ollama ps` / the monitor page report 100% of qwen2.5:3b in VRAM (about 2.2 GB).
 

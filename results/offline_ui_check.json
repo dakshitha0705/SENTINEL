@@ -1,9 +1,9 @@
 {
  "summary": {
-  "recorded_at": "2026-11-23 07:43:38",
-  "internet_reachable_after": true,
+  "recorded_at": "2026-11-23 08:25:36",
+  "internet_reachable_after": false,
   "external_requests_blocked": 0,
-  "local_requests": 194,
+  "local_requests": 188,
   "pages": {
    "Command Center": "ok",
    "Log Intelligence": "ok",
@@ -24,17 +24,15 @@
    "globe_wheel_zooms_out": true,
    "globe_reset_restores_view": true,
    "globe_reset_pov": {
-    "lat": 16.02,
-    "lng": 95.89,
+    "lat": 16.05,
+    "lng": 95.74,
     "altitude": 1.8
    },
    "globe_marker_click_opens_records": true,
    "globe_marker_clicked": "Chennai office (IN)",
    "graph_rendered": true,
    "graph_wheel_zooms": true,
-   "graph_node_click_opens_inspector": true,
-   "ai_explanation_rendered": true,
-   "chat_answer_rendered": true
+   "graph_node_click_opens_inspector": false
   },
   "javascript_errors": []
  },
